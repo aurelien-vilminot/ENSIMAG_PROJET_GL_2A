@@ -5,7 +5,7 @@ import fr.ensimag.ima.pseudocode.UnaryInstructionToReg;
 
 /**
  * @author Ensimag
- * @date @DATE@
+ * @date 01/01/2022
  */
 public class SHR extends UnaryInstructionToReg {
     public SHR(GPRegister op1) {

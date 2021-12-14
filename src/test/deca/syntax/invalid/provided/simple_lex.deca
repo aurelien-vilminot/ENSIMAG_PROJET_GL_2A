@@ -6,7 +6,7 @@
 //    test_lex ne doit pas donner d'erreur.
 //
 // Historique:
-//    cree le @DATE@
+//    cree le 01/01/2022
 
 idf _autre_idf
 {

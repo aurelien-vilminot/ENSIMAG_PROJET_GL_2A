@@ -4,7 +4,7 @@
  * The code generation itself is implement as methods of the {@link fr.ensimag.deca.tree.Tree}
  * class.
  *
- * @author @AUTHOR@
- * @date @DATE@
+ * @author gl07
+ * @date 01/01/2022
  */
 package fr.ensimag.deca.codegen;

@@ -5,7 +5,7 @@ package fr.ensimag.ima.pseudocode;
  * DVal, and the second a Register.
  *
  * @author Ensimag
- * @date @DATE@
+ * @date 01/01/2022
  */
 public class BinaryInstructionDValToReg extends BinaryInstruction {
     public BinaryInstructionDValToReg(DVal op1, GPRegister op2) {

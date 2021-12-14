@@ -4,7 +4,7 @@ package fr.ensimag.ima.pseudocode;
  * Register operand (including special registers like SP).
  * 
  * @author Ensimag
- * @date @DATE@
+ * @date 01/01/2022
  */
 public class Register extends DVal {
     private String name;

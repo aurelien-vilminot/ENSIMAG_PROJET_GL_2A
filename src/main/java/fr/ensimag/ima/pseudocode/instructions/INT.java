@@ -7,7 +7,7 @@ import fr.ensimag.ima.pseudocode.GPRegister;
 /**
  *
  * @author Ensimag
- * @date @DATE@
+ * @date 01/01/2022
  */
 public class INT extends BinaryInstructionDValToReg {
 

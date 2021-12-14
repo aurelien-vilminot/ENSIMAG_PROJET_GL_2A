@@ -9,8 +9,8 @@ import fr.ensimag.deca.context.EnvironmentExp;
 /**
  * Arithmetic binary operations (+, -, /, ...)
  * 
- * @author @AUTHOR@
- * @date @DATE@
+ * @author gl07
+ * @date 01/01/2022
  */
 public abstract class AbstractOpArith extends AbstractBinaryExpr {
 

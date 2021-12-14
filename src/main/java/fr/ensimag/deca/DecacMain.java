@@ -6,8 +6,8 @@ import org.apache.log4j.Logger;
 /**
  * Main class for the command-line Deca compiler.
  *
- * @author @AUTHOR@
- * @date @DATE@
+ * @author gl07
+ * @date 01/01/2022
  */
 public class DecacMain {
     private static Logger LOG = Logger.getLogger(DecacMain.class);

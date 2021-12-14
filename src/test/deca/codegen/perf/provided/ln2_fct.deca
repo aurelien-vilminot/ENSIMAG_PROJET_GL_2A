@@ -7,7 +7,7 @@
 //  6.93148e-01 = 0x1.62e448p-1
 // 
 // Historique:
-//    cree le @DATE@
+//    cree le 01/01/2022
 
 class Polyexp {
     float pexp (float m) {

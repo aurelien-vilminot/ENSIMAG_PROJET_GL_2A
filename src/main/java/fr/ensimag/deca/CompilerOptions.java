@@ -12,8 +12,8 @@ import org.apache.log4j.Logger;
 /**
  * User-specified options influencing the compilation.
  *
- * @author @AUTHOR@
- * @date @DATE@
+ * @author gl07
+ * @date 01/01/2022
  */
 public class CompilerOptions {
     public static final int QUIET = 0;

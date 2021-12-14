@@ -6,8 +6,8 @@ import org.antlr.v4.runtime.ParserRuleContext;
  * Syntax error for an expression that should be an lvalue (ie that can be
  * assigned), but is not.
  *
- * @author @AUTHOR@
- * @date @DATE@
+ * @author gl07
+ * @date 01/01/2022
  */
 public class InvalidLValue extends DecaRecognitionException {
 

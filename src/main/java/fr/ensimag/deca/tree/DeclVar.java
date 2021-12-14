@@ -10,8 +10,8 @@ import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 
 /**
- * @author @AUTHOR@
- * @date @DATE@
+ * @author gl07
+ * @date 01/01/2022
  */
 public class DeclVar extends AbstractDeclVar {
 

@@ -5,8 +5,8 @@ import java.io.Serializable;
 /**
  * Location in a file (File, line, positionInLine).
  *
- * @author @AUTHOR@
- * @date @DATE@
+ * @author gl07
+ * @date 01/01/2022
  */
 public class Location implements Serializable {
     /*

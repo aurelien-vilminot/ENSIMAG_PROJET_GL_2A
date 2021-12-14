@@ -6,7 +6,7 @@ import java.io.PrintStream;
  * Line of code in an IMA program.
  *
  * @author Ensimag
- * @date @DATE@
+ * @date 01/01/2022
  */
 public class Line extends AbstractLine {
     public Line(Label label, Instruction instruction, String comment) {

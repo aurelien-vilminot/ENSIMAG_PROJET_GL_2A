@@ -16,8 +16,8 @@ import fr.ensimag.deca.tools.SymbolTable.Symbol;
  * 
  * Insertion (through method declare) is always done in the "current" dictionary.
  * 
- * @author @AUTHOR@
- * @date @DATE@
+ * @author gl07
+ * @date 01/01/2022
  */
 public class EnvironmentExp {
     // A FAIRE : implémenter la structure de donnée représentant un

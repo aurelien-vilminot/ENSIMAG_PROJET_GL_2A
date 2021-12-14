@@ -4,7 +4,7 @@
  * href="http://en.wikipedia.org/wiki/Interpreter_pattern">interpreter
  * pattern</a>.
  *
- * @author @AUTHOR@
- * @date @DATE@
+ * @author gl07
+ * @date 01/01/2022
  */
 package fr.ensimag.deca.tree;

@@ -4,7 +4,7 @@ package fr.ensimag.ima.pseudocode;
  * The #null operand.
  *
  * @author Ensimag
- * @date @DATE@
+ * @date 01/01/2022
  */
 public class NullOperand extends DVal {
 

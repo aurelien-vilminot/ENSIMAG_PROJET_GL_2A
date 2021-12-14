@@ -9,8 +9,8 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 /**
  * List of declarations (e.g. int x; float y,z).
  * 
- * @author @AUTHOR@
- * @date @DATE@
+ * @author gl07
+ * @date 01/01/2022
  */
 public class ListDeclVar extends TreeList<AbstractDeclVar> {
 

@@ -4,7 +4,7 @@ package fr.ensimag.ima.pseudocode;
  * Internal error related to IMA code. Should never happen.
  * 
  * @author Ensimag
- * @date @DATE@
+ * @date 01/01/2022
  */
 public class IMAInternalError extends RuntimeException {
     public IMAInternalError(String message, Throwable cause) {

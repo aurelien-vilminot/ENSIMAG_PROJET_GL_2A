@@ -6,7 +6,7 @@ import org.apache.log4j.Logger;
 /**
  *
  * @author Ensimag
- * @date @DATE@
+ * @date 01/01/2022
  */
 class SayHello {
     private static final Logger LOG = Logger.getLogger(SayHello.class);

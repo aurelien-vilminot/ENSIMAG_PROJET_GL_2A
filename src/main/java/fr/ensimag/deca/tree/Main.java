@@ -8,8 +8,8 @@ import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
 /**
- * @author @AUTHOR@
- * @date @DATE@
+ * @author gl07
+ * @date 01/01/2022
  */
 public class Main extends AbstractMain {
     private static final Logger LOG = Logger.getLogger(Main.class);

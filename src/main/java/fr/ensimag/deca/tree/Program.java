@@ -11,8 +11,8 @@ import org.apache.log4j.Logger;
 /**
  * Deca complete program (class definition plus main block)
  *
- * @author @AUTHOR@
- * @date @DATE@
+ * @author gl07
+ * @date 01/01/2022
  */
 public class Program extends AbstractProgram {
     private static final Logger LOG = Logger.getLogger(Program.class);

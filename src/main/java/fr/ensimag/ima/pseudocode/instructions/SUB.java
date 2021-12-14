@@ -6,7 +6,7 @@ import fr.ensimag.ima.pseudocode.GPRegister;
 
 /**
  * @author Ensimag
- * @date @DATE@
+ * @date 01/01/2022
  */
 public class SUB extends BinaryInstructionDValToReg {
     public SUB(DVal op1, GPRegister op2) {

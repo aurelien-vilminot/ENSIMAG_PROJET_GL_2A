@@ -16,7 +16,7 @@ import org.apache.log4j.Logger;
  * Driver to test the contextual analysis (together with lexer/parser)
  * 
  * @author Ensimag
- * @date @DATE@
+ * @date 01/01/2022
  */
 public class ManualTestContext {
     public static void main(String[] args) throws IOException {

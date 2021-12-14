@@ -8,7 +8,7 @@ import fr.ensimag.ima.pseudocode.ImmediateInteger;
 /**
  *
  * @author Ensimag
- * @date @DATE@
+ * @date 01/01/2022
  */
 public class BooleanType extends Type {
 

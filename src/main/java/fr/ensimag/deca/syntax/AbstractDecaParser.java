@@ -17,8 +17,8 @@ import org.apache.log4j.Logger;
  * The super class of the generated parser. It is extended by the generated
  * code because of the superClass option in the .g file.
  *
- * @author @AUTHOR@, Based on template by Jim Idle - Temporal Wave LLC - jimi@temporal-wave.com
- * @date @DATE@
+ * @author gl07, Based on template by Jim Idle - Temporal Wave LLC - jimi@temporal-wave.com
+ * @date 01/01/2022
  */
 public abstract class AbstractDecaParser extends Parser {
     Logger LOG = Logger.getLogger(AbstractDecaParser.class);

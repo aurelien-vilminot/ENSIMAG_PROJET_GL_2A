@@ -8,8 +8,8 @@ import fr.ensimag.deca.tree.Location;
 /**
  * Deca Type (internal representation of the compiler)
  *
- * @author @AUTHOR@
- * @date @DATE@
+ * @author gl07
+ * @date 01/01/2022
  */
 
 public abstract class Type {

@@ -11,7 +11,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
  * Driver to test the Parser (and lexer).
  *
  * @author Ensimag
- * @date @DATE@
+ * @date 01/01/2022
  */
 public class ManualTestSynt {
     public static void main(String[] args) throws IOException {

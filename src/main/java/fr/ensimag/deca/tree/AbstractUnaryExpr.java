@@ -7,8 +7,8 @@ import org.apache.commons.lang.Validate;
 /**
  * Unary expression.
  *
- * @author @AUTHOR@
- * @date @DATE@
+ * @author gl07
+ * @date 01/01/2022
  */
 public abstract class AbstractUnaryExpr extends AbstractExpr {
 

@@ -4,7 +4,7 @@ import fr.ensimag.ima.pseudocode.NullaryInstruction;
 
 /**
  * @author Ensimag
- * @date @DATE@
+ * @date 01/01/2022
  */
 public class WINT extends NullaryInstruction {
 
