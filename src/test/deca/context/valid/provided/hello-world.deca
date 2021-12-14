@@ -1,0 +1,12 @@
+// Description:
+//    Programme minimaliste utilisant println.
+//
+// Resultats:
+//    Hello
+//
+// Historique:
+//    cree le @DATE@
+
+{
+        println("Hello, world!");
+}

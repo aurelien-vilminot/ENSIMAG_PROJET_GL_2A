@@ -1,0 +1,17 @@
+// Description:
+//    ecriture de chaines
+//
+// Resultats:
+//    ok
+//    ok
+//
+// Historique:
+//    cree le @DATE@
+
+{
+   println("ok") ; 
+   print("ok") ; 
+   println() ; 
+}
+
+

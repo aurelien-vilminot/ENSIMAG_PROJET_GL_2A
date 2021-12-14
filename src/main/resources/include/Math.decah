@@ -1,0 +1,23 @@
+// Grenoble INP - Ensimag projet GL -*- mode: java -*-
+// Library for class Math of Deca, coded in Deca
+
+class Math {
+    float sin(float f) {
+        println("sin(f) not yet implemented");
+    }
+    float cos(float f) {
+        println("cos(f) not yet implemented");
+    }
+    float asin(float f) {
+        println("asin(f) not yet implemented");
+    }
+    float atan(float f) {
+        println("atan(f) not yet implemented");
+    }
+    float ulp(float f) {
+        println("ulp(f) not yet implemented");
+    }
+}
+
+
+// End of Deca Math library

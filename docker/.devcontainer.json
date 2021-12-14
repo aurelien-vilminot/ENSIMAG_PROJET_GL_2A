@@ -1,0 +1,18 @@
+{
+    "image" : "gitlab.ensimag.fr:5050/reigniep/dockergl",
+    "extensions": [
+		"ms-azuretools.vscode-docker",
+		"redhat.java",
+		"VisualStudioExptTeam.vscodeintellicode",
+		"vscjava.vscode-java-debug",
+		"vscjava.vscode-java-dependency",
+		"vscjava.vscode-java-pack",
+		"vscjava.vscode-java-test",
+		"vscjava.vscode-maven",
+		"mike-lischke.vscode-antlr4"
+	],
+    "workspaceMount": [
+	"source=${localWorkspaceFolder}/..,target=/home/gl/Projet_GL,type=bind,consistency=cached"
+    ],
+    "workspaceFolder" : "/home/gl/Projet_GL"
+}

@@ -1,0 +1,12 @@
+#!/bin/sh
+
+DECAC_HOME=$(cd "$(dirname "$0")"/../../../ && pwd)
+CP_FILE="$DECAC_HOME"/target/generated-sources/classpath.txt
+
+CP="$DECAC_HOME"/target/classes/:$(cat "$CP_FILE")
+
+# May be useful for debugging: show which decac commands are called in a temporary file
+#echo "$0" "$@" >> /tmp/decac.txt
+
+exec java -enableassertions -cp "$CP" fr.ensimag.deca.DecacMain "$@"
+

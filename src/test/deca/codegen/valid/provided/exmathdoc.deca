@@ -1,0 +1,16 @@
+// Description:
+//    Utilisation simple de la classe Math
+//
+// Resultats:
+//    cos(0.0) = 1.00000e+00
+//
+// Historique:
+//    cree le @DATE@
+
+// Un exemple de programme Deca utilisant la classe Math
+
+#include "Math.decah"
+{
+    Math m = new Math();
+    println("cos(0.0) = ", m.cos(0.0));
+}

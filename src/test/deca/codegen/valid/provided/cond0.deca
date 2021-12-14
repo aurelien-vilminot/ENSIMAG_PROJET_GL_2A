@@ -1,0 +1,17 @@
+// Description:
+//    tests conditionnelle
+//
+// Resultats:
+//    ok
+// 
+// Historique:
+//    cree le @DATE@
+
+{
+   if (1 >= 0) {
+      println("ok"); 
+   } else { 
+      println("erreur");
+   }
+}
+

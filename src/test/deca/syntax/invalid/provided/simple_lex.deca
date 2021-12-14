@@ -1,0 +1,16 @@
+// Description:
+//    tests de programme lexicalement correct.
+//
+// Resultats:
+//    Ligne 11 : Erreur de syntaxe.
+//    test_lex ne doit pas donner d'erreur.
+//
+// Historique:
+//    cree le @DATE@
+
+idf _autre_idf
+{
+}
+(
+)
+// un commentaire.

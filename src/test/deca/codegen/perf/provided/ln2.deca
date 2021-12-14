@@ -1,0 +1,30 @@
+// Description:
+//  Calcul de racine d'un polynôme par dichotomie
+//  On cherche x tq exp(x)=2 donc Ln(2) mais en approximant
+//   exp par son developpement à l'ordre 7
+//
+// Resultats:
+//  6.93148e-01 = 0x1.62e448p-1
+// 
+// Historique:
+//    cree le @DATE@
+
+{
+    float g = 0.0f, d = 1.0f;
+    float fg = -1.0f; float fd = 0.718284f;
+    float m, fm;
+
+    while (d>=(g+0x1.0p-23)) {
+	m = (g+d) / 2.0f;
+ 	fm = m * (m * (m * (m * (m * (m * ( m * (1.0/5040.0) + 1.0/720.0) + 1.0/120.0) + 1.0/24.0) + 1.0/6.0) + 1.0/2.0) + 1.0) -1;
+	if (fm > 0.0) {
+	    d = m;
+	    fd = fm;
+	} else {
+	    g=m;
+	    fg = fm;
+	}
+    }
+    print (g, " = "); printlnx(g);
+
+}

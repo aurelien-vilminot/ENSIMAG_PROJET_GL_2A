@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>fr.ensimag</groupId>
+  <artifactId>Calc</artifactId>
+  <name>Calculator with ANTLR</name>
+  <version>1.0</version>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <compileSource>1.8</compileSource>
+  </properties>
+
+  <prerequisites>
+      <maven>3.0.1</maven>
+  </prerequisites>
+
+  <dependencies>
+    <dependency>
+      <!-- ANTLR needs a runtime library -->
+      <groupId>org.antlr</groupId>
+      <artifactId>antlr4-runtime</artifactId>
+      <version>4.7.2</version>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+
+      <plugin>
+        <!-- usual plugin to compile Java code -->
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.7.0</version>
+        <configuration>
+          <source>${compileSource}</source>
+          <target>${compileSource}</target>
+          <compilerArgs>
+            <arg>-Xlint:all</arg>
+          </compilerArgs>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.antlr</groupId>
+        <artifactId>antlr4-maven-plugin</artifactId>
+        <version>4.7.2</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>antlr4</goal>
+            </goals>
+            <configuration>
+              <visitor>false</visitor>
+              <listener>false</listener>
+              <!-- Uncomment to print details about the grammar when
+                   compiling -->
+              <!--
+              <verbose>true</verbose>
+              <printGrammar>true</printGrammar>
+              -->
+              <!-- Uncomment the following to debug the grammar. With
+                   trace enabled, the execution of the generated code
+                   will produce debug traces when entering/exiting
+                   each grammar rule. You need "mvn clean" for the
+                   option to be taken into account. -->
+              <!-- <trace>true</trace> -->
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

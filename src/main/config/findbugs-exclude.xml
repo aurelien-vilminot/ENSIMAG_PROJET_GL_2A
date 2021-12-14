@@ -1,0 +1,30 @@
+<FindBugsFilter>
+  <Match>
+    <!-- writting to a local file with the default encoding is the right thing to do -->
+    <Or>
+      <Class name="fr.ensimag.deca.DecacCompiler" />
+      <Class name="fr.ensimag.ima.pseudocode.IMAProgram" />
+      <Class name="fr.ensimag.deca.tree.Tree" />
+    </Or>
+    <Bug pattern="DM_DEFAULT_ENCODING" />
+  </Match>
+
+
+  <Match>
+    <!-- Essentially ANTLR generated code -->
+    <Class name="~fr\.ensimag\.deca\.syntax\.Deca(Lexer|Parser).*" />
+  </Match>
+
+
+  <Match>
+    <!-- Casts that have been checked right before with instanceof -->
+    <Class name="fr.ensimag.deca.syntax.AbstractDecaLexer" />
+    <Method name="displayRecognitionError" />
+    <Bug pattern="BC_UNCONFIRMED_CAST" />
+  </Match>
+
+  <Match>
+    <Class name="~fr\.ensimag\.deca\..*\$.*" />
+    <Bug pattern="SIC_INNER_SHOULD_BE_STATIC_ANON" />
+  </Match>
+</FindBugsFilter>

@@ -1,0 +1,24 @@
+// Description:
+//    Suite de Syracuse: temps de vol pour  pour 42
+//
+// Resultats:
+// v = 8
+// 
+// Historique:
+//    cree le @DATE@
+
+{
+    int u = 42, v=0;
+
+    while (!(u==1)) {
+	if (u%2 == 0) {
+	    u = u/2;
+	} else {
+	    u = 2*u +u + 1;
+	}
+	v = v + 1;
+	//	println(u);
+    }
+    println(v);
+
+}

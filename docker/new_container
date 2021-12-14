@@ -1,0 +1,3 @@
+## For a linux environment
+
+docker create --interactive --tty -v `pwd`/..:/home/gl/Projet_GL --name projetgl   projetgl

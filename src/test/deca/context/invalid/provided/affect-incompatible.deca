@@ -1,0 +1,16 @@
+// Description:
+//    Affectation et typage
+//
+// Resultats:
+//    Ligne 15: Affectation de types incompatibles.
+// 
+// Historique:
+//    cree le @DATE@
+
+{
+   int a;
+   boolean b;
+
+   // Doit etre refuse.
+   a = b;
+}
