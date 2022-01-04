@@ -15,8 +15,8 @@ import org.apache.commons.lang.Validate;
 /**
  * Print statement (print, println, ...).
  *
- * @author gl07
- * @date 01/01/2022
+ * @author Aurélien VILMINOT
+ * @date 04/01/2022
  */
 public abstract class AbstractPrint extends AbstractInst {
 
@@ -39,7 +39,17 @@ public abstract class AbstractPrint extends AbstractInst {
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass, Type returnType)
             throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        Validate.notNull(compiler, "Compiler (env_types) object should not be null");
+        Validate.notNull(localEnv, "Env_exp object should not be null");
+
+        for (AbstractExpr listExpr: this.arguments.getList()) {
+            Type argType = listExpr.getType();
+            if (argType.isInt() || argType.isFloat() || argType.isString()) {
+                listExpr.setType(argType);
+            } else {
+                throw new ContextualError("Impossible to print this type of element", this.getLocation());
+            }
+        }
     }
 
     @Override
