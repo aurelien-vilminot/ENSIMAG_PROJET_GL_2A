@@ -16,7 +16,6 @@ import org.apache.commons.lang.Validate;
  */
 public class ListInst extends TreeList<AbstractInst> {
 
-    AbstractInst abstractInst;
     /**
      * Implements non-terminal "list_inst" of [SyntaxeContextuelle] in pass 3
      * @param compiler contains "env_types" attribute
@@ -32,7 +31,9 @@ public class ListInst extends TreeList<AbstractInst> {
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
         Validate.notNull(localEnv, "Env_exp object should not be null");
 
-        this.abstractInst.verifyInst(compiler, localEnv, currentClass, returnType);
+        for (AbstractInst abstractInst: getList()) {
+            abstractInst.verifyInst(compiler, localEnv, currentClass, returnType);
+        }
     }
 
     public void codeGenListInst(DecacCompiler compiler) {
