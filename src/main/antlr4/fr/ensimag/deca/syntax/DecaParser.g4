@@ -65,6 +65,7 @@ block returns[ListDeclVar decls, ListInst insts]
         }
     ;
 
+// hello world: list_decl is empty
 list_decl returns[ListDeclVar tree]
 @init   {
             $tree = new ListDeclVar();
@@ -84,6 +85,7 @@ list_decl_var[ListDeclVar l, AbstractIdentifier t]
       )*
     ;
 
+// $tree = DeclVar(type, varName, initialization); (for non hello world)
 decl_var[AbstractIdentifier t] returns[AbstractDeclVar tree]
 @init   {
         }
@@ -95,31 +97,41 @@ decl_var[AbstractIdentifier t] returns[AbstractDeclVar tree]
         }
     ;
 
+// hello world: done
 list_inst returns[ListInst tree]
 @init {
+    $tree = new ListInst();
 }
     : (inst {
+        assert($inst.tree != null);
+        $tree.add($inst.tree);
         }
       )*
     ;
 
+// hello world: done
 inst returns[AbstractInst tree]
     : e1=expr SEMI {
             assert($e1.tree != null);
+            $tree = $e1.tree;
         }
     | SEMI {
         }
     | PRINT OPARENT list_expr CPARENT SEMI {
             assert($list_expr.tree != null);
+            $tree = Print(false, $list_expr.tree);
         }
     | PRINTLN OPARENT list_expr CPARENT SEMI {
             assert($list_expr.tree != null);
+            $tree = Println(false, $list_expr.tree);
         }
     | PRINTX OPARENT list_expr CPARENT SEMI {
             assert($list_expr.tree != null);
+            $tree = Print(true, $list_expr.tree);
         }
     | PRINTLNX OPARENT list_expr CPARENT SEMI {
             assert($list_expr.tree != null);
+            $tree = Print(true, $list_expr.tree);
         }
     | if_then_else {
             assert($if_then_else.tree != null);
@@ -146,22 +158,31 @@ if_then_else returns[IfThenElse tree]
       )?
     ;
 
+// hello world: done
 list_expr returns[ListExpr tree]
 @init   {
+            $tree = new ListExpr();
         }
     : (e1=expr {
+            assert($e1.tree != null);
+            $tree.add($e1.tree);
         }
        (COMMA e2=expr {
+            assert($e2.tree != null);
+            $tree.add($e2.tree);
         }
        )* )?
     ;
 
+// hello world: done
 expr returns[AbstractExpr tree]
     : assign_expr {
             assert($assign_expr.tree != null);
+            $tree = $assign_expr.tree;
         }
     ;
 
+// hello world: done (pas besoin de lvalue = ...)
 assign_expr returns[AbstractExpr tree]
     : e=or_expr (
         /* condition: expression e must be a "LVALUE" */ {
@@ -175,6 +196,7 @@ assign_expr returns[AbstractExpr tree]
         }
       | /* epsilon */ {
             assert($e.tree != null);
+            $tree = $e.tree;
         }
       )
     ;
@@ -359,7 +381,11 @@ ident returns[AbstractIdentifier tree]
 
 /****     Class related rules     ****/
 
+// hello world: done (no class)
 list_classes returns[ListDeclClass tree]
+@init {
+    $tree = new ListDeclClass();
+}
     :
       (c1=class_decl {
         }
