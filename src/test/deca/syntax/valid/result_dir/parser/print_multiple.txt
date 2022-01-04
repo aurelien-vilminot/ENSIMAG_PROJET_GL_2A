@@ -1,0 +1,17 @@
+‘> [11, 0] Program
+    +> ListDeclClass [List with 0 elements]
+    ‘> [11, 0] Main
+        +> ListDeclVar [List with 0 elements]
+        ‘> ListInst [List with 4 elements]
+            []> [12, 4] Printlnx
+            ||  '> ListExpr [List with 1 elements]
+            ||      []> [12, 13] String ("Bonjour1")
+            []> [13, 4] Println
+            ||  '> ListExpr [List with 1 elements]
+            ||      []> [13, 12] String ("Bonjour2")
+            []> [16, 4] Printx
+            ||  '> ListExpr [List with 1 elements]
+            ||      []> [16, 11] String ("3")
+            []> [17, 4] Print
+                 '> ListExpr [List with 1 elements]
+                    []> [17, 10] String ("4")
