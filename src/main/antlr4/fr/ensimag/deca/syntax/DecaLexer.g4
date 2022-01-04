@@ -91,4 +91,4 @@ MULTI_LINE_COMMENT : '/*' .*? '*/' {skip();};
 
 // Includes
 fragment FILENAME : (LETTER | DIGIT | '.' | '-' | '_')*;
-INCLUDE : '#include' (' ')* '"' FILENAME '"'; // A FAIRE : include .decah file
+INCLUDE : '#include' (' ')* '"' FILENAME '"' {super.doInclude(getText());};
