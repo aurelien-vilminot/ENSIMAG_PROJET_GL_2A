@@ -66,7 +66,7 @@ OR : '||';
 
 // Integers
 fragment POSITIVE_DIGIT : '1'..'9';
-INT : '0' | POSITIVE_DIGIT*; // A FAIRE (?) : Compilation Error if not represented in 32 bits
+INT : '0' | POSITIVE_DIGIT DIGIT*; // A FAIRE (?) : Compilation Error if not represented in 32 bits
 
 // Floats
 fragment NUM : DIGIT+;
