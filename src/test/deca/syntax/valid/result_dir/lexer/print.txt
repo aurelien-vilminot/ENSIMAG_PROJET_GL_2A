@@ -1,0 +1,12 @@
+^PRINT: \[@\d+,\d+:\d+='print',<\d+>,10:0\]
+OPARENT: \[@\d+,\d+:\d+='(',<\d+>,10:5\]
+CPARENT: \[@\d+,\d+:\d+=')',<\d+>,10:6\]
+PRINTLN: \[@\d+,\d+:\d+='println',<\d+>,11:0\]
+PRINTX: \[@\d+,\d+:\d+='printx',<\d+>,12:0\]
+PRINTLNX: \[@\d+,\d+:\d+='printlnx',<\d+>,13:0\]
+OPARENT: \[@\d+,\d+:\d+='(',<\d+>,13:8\]
+CPARENT: \[@\d+,\d+:\d+=')',<\d+>,13:9\]
+PRINT: \[@\d+,\d+:\d+='print',<\d+>,18:0\]
+OPARENT: \[@\d+,\d+:\d+='(',<\d+>,18:5\]
+STRING: \[@\d+,\d+:\d+='"bonjour ! "',<\d+>,18:6\]
+CPARENT: \[@\d+,\d+:\d+=')',<\d+>,18:18\]$

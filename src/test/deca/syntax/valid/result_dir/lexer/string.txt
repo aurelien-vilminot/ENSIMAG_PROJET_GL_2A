@@ -1,0 +1,2 @@
+^STRING: \[@\d+,\d+:\d+='"ceci est une chaine de caractere"',<\d+>,11:0\]
+STRING: \[@\d+,\d+:\d+='"ceci est aussi une chaine"',<\d+>,12:0\]$

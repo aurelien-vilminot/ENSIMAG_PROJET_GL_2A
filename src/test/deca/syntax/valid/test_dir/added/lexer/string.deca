@@ -1,0 +1,12 @@
+// Description:
+//    test of string
+//
+// Results:
+//    test_lex --> no error, return 2 tokens
+//
+// History:
+//    created on 04/01/2022
+
+"ceci est une chaine de caractere"
+
+"ceci est aussi une chaine"

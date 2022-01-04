@@ -1,0 +1,18 @@
+// Description:
+//    test of different print typos
+//
+// Results:
+//    test_lex --> no error, return 12 tokens
+//
+// History:
+//    created on 04/01/2022
+
+print()
+
+println
+
+printx
+
+printlnx()
+
+print("bonjour ! ")

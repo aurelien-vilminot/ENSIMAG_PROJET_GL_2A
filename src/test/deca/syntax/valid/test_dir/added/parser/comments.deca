@@ -2,9 +2,8 @@
 //    test of comments
 //
 // Results:
-//    test_lex must not give errors
-//    test_synt must not give errors
+//    test_lex --> no error, no token
+//    test_synt --> no error, basic tree
 //
 // History:
 //    created on 04/01/2022
-
