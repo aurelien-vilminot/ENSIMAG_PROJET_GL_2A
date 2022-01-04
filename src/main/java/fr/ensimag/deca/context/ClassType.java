@@ -11,7 +11,7 @@ import java.util.Objects;
  * Type defined by a class.
  *
  * @author Aurélien VILMINOT
- * @date 01/01/2022
+ * @date 04/01/2022
  */
 public class ClassType extends Type {
     
@@ -63,7 +63,8 @@ public class ClassType extends Type {
      * Return true if potentialSuperClass is a superclass of this class.
      */
     public boolean isSubClassOf(ClassType potentialSuperClass) {
-        throw new UnsupportedOperationException("not yet implemented"); 
+        Validate.isTrue(potentialSuperClass != null, "The potential superclass should not be null");
+        return this.definition.getSuperClass() == potentialSuperClass.definition;
     }
 
     @Override
