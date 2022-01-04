@@ -1,0 +1,16 @@
+// Description:
+//    test of identifier
+//
+// Results:
+//    test_lex --> no error, return 4 tokens
+//
+// History:
+//    created on 04/01/2022
+
+_iamenidentifier
+
+metooooooo24
+
+andmetoo_$
+
+me8too

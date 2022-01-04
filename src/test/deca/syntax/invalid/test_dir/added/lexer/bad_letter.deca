@@ -1,0 +1,12 @@
+// Description:
+//    test of unexpected char (é)
+//
+// Results:
+//    test_lex --> error line 12
+//
+// History:
+//    created on 04/01/2022
+
+"metoor"
+
+"butnotmeé"

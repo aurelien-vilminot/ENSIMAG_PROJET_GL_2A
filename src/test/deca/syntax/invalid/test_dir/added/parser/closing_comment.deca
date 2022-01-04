@@ -1,0 +1,10 @@
+// Description:
+//    test with too much closing comment
+//
+// Results:
+//    test_synt --> error line 10
+//
+// History:
+//    created on 04/01/2022
+
+/* */ */
