@@ -9,5 +9,5 @@
 //    created on 04/01/2022
 
 {
-    printlnx("Bonjour", "Hey", "YO !");
+    printlnx("Bonjour", "le", "monde !");
 }

@@ -6,5 +6,5 @@
             []> [12, 4] Printlnx
                 '> ListExpr [List with 3 elements]
                     []> [12, 13] String ("Bonjour")
-                    []> [12, 24] String ("Hey")
-                    []> [12, 31] String ("YO !")
+                    []> [12, 24] String ("le")
+                    []> [12, 31] String ("monde !")
