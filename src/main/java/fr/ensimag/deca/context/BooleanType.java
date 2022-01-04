@@ -24,7 +24,7 @@ public class BooleanType extends Type {
 
     @Override
     public boolean sameType(Type otherType) {
-        Validate.isTrue(otherType != null, "otherType object should not be null");
+        Validate.notNull(otherType, "otherType object should not be null");
         return otherType.isBoolean();
     }
 

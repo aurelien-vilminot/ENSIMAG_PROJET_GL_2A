@@ -44,7 +44,7 @@ public class EnvironmentExp {
      * symbol is undefined.
      */
     public ExpDefinition get(Symbol key) {
-        Validate.isTrue(key != null, "The symbol should not be null");
+        Validate.notNull(key, "The symbol should not be null");
         if (this.associationTable.containsKey(key)) {
             // First, search in the current dictionary
             return this.associationTable.get(key).getFirst();
@@ -72,8 +72,8 @@ public class EnvironmentExp {
      *
      */
     public void declare(Symbol name, ExpDefinition def) throws DoubleDefException {
-        Validate.isTrue(name != null, "Symbol name should not be null");
-        Validate.isTrue(def != null, "Definition def should not be null");
+        Validate.notNull(name, "Symbol name should not be null");
+        Validate.notNull(def, "Definition def should not be null");
 
         if (this.associationTable.containsKey(name)) {
             // The symbol is already defined in the current dictionary
