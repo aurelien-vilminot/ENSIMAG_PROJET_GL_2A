@@ -1,6 +1,9 @@
 package fr.ensimag.deca.context;
 
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
+import org.apache.commons.lang.Validate;
+
+import java.util.HashMap;
 
 /**
  * Dictionary associating identifier's ExpDefinition to their names.
@@ -16,8 +19,8 @@ import fr.ensimag.deca.tools.SymbolTable.Symbol;
  * 
  * Insertion (through method declare) is always done in the "current" dictionary.
  * 
- * @author gl07
- * @date 01/01/2022
+ * @author Aurélien VILMINOT
+ * @date 04/01/2022
  */
 public class EnvironmentExp {
     // A FAIRE : implémenter la structure de donnée représentant un
@@ -25,9 +28,11 @@ public class EnvironmentExp {
     // d'empilement).
 
     EnvironmentExp parentEnvironment;
+    private HashMap<Symbol, ExpDefinition> associationTable;
     
     public EnvironmentExp(EnvironmentExp parentEnvironment) {
         this.parentEnvironment = parentEnvironment;
+        this.associationTable = new HashMap<>();
     }
 
     public static class DoubleDefException extends Exception {
@@ -39,7 +44,16 @@ public class EnvironmentExp {
      * symbol is undefined.
      */
     public ExpDefinition get(Symbol key) {
-        throw new UnsupportedOperationException("not yet implemented");
+        Validate.isTrue(key != null, "The symbol should not be null");
+        if (this.associationTable.containsKey(key)) {
+            // First, search in the current dictionary
+            return this.associationTable.get(key);
+        } else if (this.parentEnvironment.associationTable.containsKey(key)) {
+            // Search in the parent environment if key is not found in the current dictionary
+            return this.parentEnvironment.get(key);
+        }
+        // The symbol is undefined
+        return null;
     }
 
     /**
@@ -58,7 +72,17 @@ public class EnvironmentExp {
      *
      */
     public void declare(Symbol name, ExpDefinition def) throws DoubleDefException {
-        throw new UnsupportedOperationException("not yet implemented");
+        Validate.isTrue(name != null, "Symbol name should not be null");
+        Validate.isTrue(def != null, "Definition def should not be null");
+
+        if (this.associationTable.containsKey(name)) {
+            // The symbol is already defined in the current dictionary
+            throw new DoubleDefException();
+        }
+        // Remove the previous symbol declaration in parent environment
+        this.parentEnvironment.associationTable.remove(name);
+        // Add the new association
+        this.associationTable.put(name, def);
     }
 
 }

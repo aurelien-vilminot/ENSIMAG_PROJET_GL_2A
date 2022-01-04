@@ -5,10 +5,12 @@ import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import fr.ensimag.deca.tree.Location;
 import org.apache.commons.lang.Validate;
 
+import java.util.Objects;
+
 /**
  * Type defined by a class.
  *
- * @author gl07
+ * @author Aurélien VILMINOT
  * @date 01/01/2022
  */
 public class ClassType extends Type {
@@ -53,7 +55,8 @@ public class ClassType extends Type {
 
     @Override
     public boolean sameType(Type otherType) {
-        throw new UnsupportedOperationException("not yet implemented");
+        Validate.isTrue(otherType != null, "otherType object should not be null");
+        return otherType.isClass() && this.equals(otherType);
     }
 
     /**
@@ -63,5 +66,16 @@ public class ClassType extends Type {
         throw new UnsupportedOperationException("not yet implemented"); 
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ClassType classType = (ClassType) o;
+        return Objects.equals(definition, classType.definition);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(definition);
+    }
 }
