@@ -3,8 +3,7 @@ package fr.ensimag.deca.context;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import org.apache.commons.lang.Validate;
 
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.*;
 
 /**
  * Dictionary associating identifier's ExpDefinition to their names.
@@ -93,4 +92,20 @@ public class EnvironmentExp {
         }
     }
 
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder("Environnement : \n");
+        Set<Map.Entry<Symbol, LinkedList<ExpDefinition>>> couples = this.associationTable.entrySet();
+        for (Map.Entry<Symbol, LinkedList<ExpDefinition>> couple : couples) {
+            str.append("\t")
+                    .append(couple.getKey())
+                    .append(" : ");
+
+            for (ExpDefinition expDefinition: couple.getValue()) {
+                str.append("\n\t\t").append(expDefinition);
+            }
+        }
+
+        return str.toString();
+    }
 }
