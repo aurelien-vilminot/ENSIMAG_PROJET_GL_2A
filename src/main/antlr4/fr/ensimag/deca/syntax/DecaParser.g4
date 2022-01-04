@@ -119,19 +119,19 @@ inst returns[AbstractInst tree]
         }
     | PRINT OPARENT list_expr CPARENT SEMI {
             assert($list_expr.tree != null);
-            $tree = Print(false, $list_expr.tree);
+            $tree = new Print(false, $list_expr.tree);
         }
     | PRINTLN OPARENT list_expr CPARENT SEMI {
             assert($list_expr.tree != null);
-            $tree = Println(false, $list_expr.tree);
+            $tree = new Println(false, $list_expr.tree);
         }
     | PRINTX OPARENT list_expr CPARENT SEMI {
             assert($list_expr.tree != null);
-            $tree = Print(true, $list_expr.tree);
+            $tree = new Print(true, $list_expr.tree);
         }
     | PRINTLNX OPARENT list_expr CPARENT SEMI {
             assert($list_expr.tree != null);
-            $tree = Print(true, $list_expr.tree);
+            $tree = new Print(true, $list_expr.tree);
         }
     | if_then_else {
             assert($if_then_else.tree != null);
@@ -220,7 +220,7 @@ and_expr returns[AbstractExpr tree]
             $tree = $e.tree;
         }
     |  e1=and_expr AND e2=eq_neq_expr {
-            assert($e1.tree != null);                         
+            assert($e1.tree != null);
             assert($e2.tree != null);
         }
     ;
@@ -292,15 +292,15 @@ mult_expr returns[AbstractExpr tree]
             $tree = $e.tree;
         }
     | e1=mult_expr TIMES e2=unary_expr {
-            assert($e1.tree != null);                                         
+            assert($e1.tree != null);
             assert($e2.tree != null);
         }
     | e1=mult_expr SLASH e2=unary_expr {
-            assert($e1.tree != null);                                         
+            assert($e1.tree != null);
             assert($e2.tree != null);
         }
     | e1=mult_expr PERCENT e2=unary_expr {
-            assert($e1.tree != null);                                                                          
+            assert($e1.tree != null);
             assert($e2.tree != null);
         }
     ;
@@ -379,24 +379,23 @@ type returns[AbstractIdentifier tree]
 // hello world: done
 literal returns[AbstractExpr tree]
     : INT {
-        $tree = IntLiteral(Integer.parseInt($INT.text));
+        $tree = new IntLiteral(Integer.parseInt($INT.text));
         }
     | fd=FLOAT {
-        $tree = FloatLiteral(Float.parseFloat($FLOAT.text));
+        $tree = new FloatLiteral(Float.parseFloat($fd.text));
         }
     | STRING {
-        $tree = StringLiteral($STRING.text);
+        $tree = new StringLiteral($STRING.text);
         }
     | TRUE {
-        $tree = BooleanLiteral(true);
+        $tree = new BooleanLiteral(true);
         }
     | FALSE {
-        $tree = BooleanLiteral(false);
+        $tree = new BooleanLiteral(false);
         }
     | THIS {
         }
     | NULL {
-        $tree = StringLiteral($NULL.text);
         }
     ;
 
