@@ -1,0 +1,10 @@
+// Description:
+//    test of comments
+//
+// Results:
+//    test_lex must not give errors
+//    test_synt must not give errors
+//
+// History:
+//    created on 04/01/2022
+
