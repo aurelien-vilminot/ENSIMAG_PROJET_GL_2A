@@ -41,7 +41,7 @@ public abstract class AbstractPrint extends AbstractInst {
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass, Type returnType)
             throws ContextualError {
-        LOG.debug("verify Print: start");
+        LOG.debug("verify Print" + getSuffix() + ": start");
 
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
         Validate.notNull(localEnv, "Env_exp object should not be null");
@@ -55,7 +55,7 @@ public abstract class AbstractPrint extends AbstractInst {
                 throw new ContextualError("Impossible to print this type of element : " + argType, this.getLocation());
             }
         }
-        LOG.debug("verify Print: end");
+        LOG.debug("verify Print" + getSuffix() + ": end");
     }
 
     @Override
