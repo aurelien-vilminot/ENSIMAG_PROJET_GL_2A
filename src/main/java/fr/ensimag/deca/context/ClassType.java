@@ -55,8 +55,8 @@ public class ClassType extends Type {
 
     @Override
     public boolean sameType(Type otherType) {
-        Validate.isTrue(otherType != null, "otherType object should not be null");
-        return otherType.isClass() && this.equals(otherType);
+        Validate.notNull(otherType, "otherType object should not be null");
+        return otherType.isClass();
     }
 
     /**
@@ -64,7 +64,16 @@ public class ClassType extends Type {
      */
     public boolean isSubClassOf(ClassType potentialSuperClass) {
         Validate.notNull(potentialSuperClass, "The potential superclass should not be null");
-        return this.definition.getSuperClass() == potentialSuperClass.definition;
+        ClassType currentClass = this;
+        // This loop follows all superclasses of this class.
+        // It ends when the superclass is equals of the potential superclass
+        while (!currentClass.isNull()) {
+            if (currentClass.definition.getType().equals(potentialSuperClass.definition.getType())) {
+                return true;
+            }
+            currentClass = currentClass.definition.getSuperClass().getType();
+        }
+        return false;
     }
 
     @Override

@@ -94,7 +94,7 @@ public class EnvironmentExp {
 
     @Override
     public String toString() {
-        StringBuilder str = new StringBuilder("Environnement : \n");
+        StringBuilder str = new StringBuilder("Environnement d'identificateur : \n");
         Set<Map.Entry<Symbol, LinkedList<ExpDefinition>>> couples = this.associationTable.entrySet();
         for (Map.Entry<Symbol, LinkedList<ExpDefinition>> couple : couples) {
             str.append("\t")
