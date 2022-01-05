@@ -41,7 +41,7 @@ public class StringLiteral extends AbstractStringLiteral {
 
         Type stringType = new StringType(new SymbolTable().create("string"));
         this.setType(stringType);
-        LOG.debug("verify StringLiteral: start");
+        LOG.debug("verify StringLiteral: end");
         return stringType;
     }
 
