@@ -7,4 +7,4 @@
                 '> ListExpr [List with 3 elements]
                 |   []> [12, 13] String ("Bonjour")
                 |   []> [12, 24] String ("le")
-                |   []> [12, 31] String ("monde !")
+                |   []> [12, 30] String ("monde !")
