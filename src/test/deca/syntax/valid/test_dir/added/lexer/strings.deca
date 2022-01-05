@@ -7,6 +7,5 @@
 // History:
 //    created on 04/01/2022
 
-"ceci est une chaine de caractere"
-
-"ceci est aussi une chaine"
+"Hello world, I am a string !"
+"Hello world, I am also a string but with special carac \\\\ and \\" !"
