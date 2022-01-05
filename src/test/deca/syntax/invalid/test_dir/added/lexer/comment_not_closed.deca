@@ -1,5 +1,5 @@
 // Description:
-//    test of corrupted string
+//    test with too much closing comment
 //
 // Results:
 //    test_lex --> error line 10
@@ -7,5 +7,4 @@
 // History:
 //    created on 04/01/2022
 
-
-"lalala\\\lalala"
+/* This is an unclosed comment

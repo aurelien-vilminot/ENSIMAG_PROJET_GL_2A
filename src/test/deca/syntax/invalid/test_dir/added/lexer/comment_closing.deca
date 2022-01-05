@@ -2,9 +2,9 @@
 //    test with too much closing comment
 //
 // Results:
-//    test_synt --> error line 10
+//    test_lex --> error line 10
 //
 // History:
-//    created on 04/01/2022
+//    created on 05/01/2022
 
 /* */ */

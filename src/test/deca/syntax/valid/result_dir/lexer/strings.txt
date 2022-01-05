@@ -1,2 +1,2 @@
 ^STRING: \[@\d+,\d+:\d+='"Hello world, I am a string !"',<\d+>,10:0\]
-STRING: \[@\d+,\d+:\d+='"Hello world, I am also a string but with special carac \\" \\\\ \\" !"',<\d+>,11:0\]$
+STRING: \[@\d+,\d+:\d+='"Hello world, I am also a string but with special carac \\" \\\\ éèêàâôûç& \\" !"',<\d+>,11:0\]$
