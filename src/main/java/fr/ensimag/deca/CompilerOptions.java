@@ -2,9 +2,7 @@ package fr.ensimag.deca;
 
 import java.io.File;
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -36,14 +34,73 @@ public class CompilerOptions {
         return Collections.unmodifiableList(sourceFiles);
     }
 
+    public boolean getParse() {
+        return this.parse;
+    }
+
+    public boolean getVerification() {
+        return this.verfication;
+    }
+
+    public int getArgsNumber() {
+        return argsNumber;
+    }
+
     private int debug = 0;
     private boolean parallel = false;
     private boolean printBanner = false;
     private List<File> sourceFiles = new ArrayList<File>();
+    private boolean parse = false;
+    private boolean verfication = false;
+    private int argsNumber = 0;
 
     
     public void parseArgs(String[] args) throws CLIException {
         // A FAIRE : parcourir args pour positionner les options correctement.
+
+        // Convert args into list
+        ArrayList<String> argsList = new ArrayList<>();
+        Collections.addAll(argsList, args);
+        this.argsNumber = argsList.size();
+
+        // Allow banner print
+        if (argsList.contains("-b")) {
+            if (argsList.size() > 1) {
+                throw new CLIException("Impossible to use decac -b with another option");
+            } else {
+                this.printBanner = true;
+            }
+        }
+
+        // Check if some options are incompatible
+        if (argsList.contains("-p") && argsList.contains("-v")) {
+            throw new CLIException("decac -p and -v options are incompatible");
+        }
+
+        if (argsList.contains("-p")) {
+            this.parse = true;
+        }
+
+        if (argsList.contains("-v")) {
+            this.verfication = true;
+        }
+
+        // Allow debug traces
+        if (argsList.contains("-d")) {
+            Set<String> unique = new HashSet<String>(argsList);
+            for (String key : unique) {
+                if (key.equals("-d")) {
+                    // Count -d number, more there are more traces are
+                    this.debug = Collections.frequency(argsList, key);
+                }
+            }
+        }
+
+        // Allow parallelism
+        if (argsList.contains("-P")) {
+            this.parallel = true;
+        }
+
         Logger logger = Logger.getRootLogger();
         // map command-line debug option to log4j's level.
         switch (getDebug()) {
@@ -66,8 +123,6 @@ public class CompilerOptions {
         } else {
             logger.info("Java assertions disabled");
         }
-
-        throw new UnsupportedOperationException("not yet implemented");
     }
 
     protected void displayUsage() {
