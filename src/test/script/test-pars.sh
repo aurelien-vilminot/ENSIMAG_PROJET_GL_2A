@@ -23,7 +23,7 @@ do
 
 
   # Generate output file : (possibly wrong)
-  # test_synt "$i" > "$TEST_LEXER_INVALID_RESULT_PATH"/"$name_test".lis
+  test_synt "$i" > "$TEST_PARSER_INVALID_RESULT_PATH"/"$name_test".lis
 
   grep_result=$(grep -f "$TEST_PARSER_INVALID_RESULT_PATH"/"$name_test".txt "$TEST_PARSER_INVALID_RESULT_PATH"/"$name_test".lis)
   # echo "Result of grep : $grep_result"
@@ -56,7 +56,7 @@ do
   #name_test is the name of the file without path and extension
 
   # Generate output file :
-  # test_lex "$i" > "$TEST_LEXER_VALID_RESULT_PATH"/"$name_test".lis
+  test_synt "$i" 2>&1 > "$TEST_PARSER_VALID_RESULT_PATH"/"$name_test".lis
 
   differences=$(diff "$TEST_PARSER_VALID_RESULT_PATH"/"$name_test".txt "$TEST_PARSER_VALID_RESULT_PATH"/"$name_test".lis)
 
