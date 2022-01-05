@@ -23,7 +23,7 @@ do
 
 
   # Generate output file : (possibly wrong)
-  test_synt "$i" > "$TEST_PARSER_INVALID_RESULT_PATH"/"$name_test".lis
+  test_synt "$i" > "$TEST_PARSER_INVALID_RESULT_PATH"/"$name_test".lis 2>&1
 
   grep_result=$(grep -f "$TEST_PARSER_INVALID_RESULT_PATH"/"$name_test".txt "$TEST_PARSER_INVALID_RESULT_PATH"/"$name_test".lis)
   # echo "Result of grep : $grep_result"
@@ -56,7 +56,7 @@ do
   #name_test is the name of the file without path and extension
 
   # Generate output file :
-  test_synt "$i" 2>&1 > "$TEST_PARSER_VALID_RESULT_PATH"/"$name_test".lis
+  test_synt "$i" > "$TEST_PARSER_VALID_RESULT_PATH"/"$name_test".lis 2>&1
 
   differences=$(diff "$TEST_PARSER_VALID_RESULT_PATH"/"$name_test".txt "$TEST_PARSER_VALID_RESULT_PATH"/"$name_test".lis)
 
@@ -80,6 +80,13 @@ echo "\e[1;36m[PARSER VALID TESTS DONE] Results : $nb_correct_valid / $nb_file_v
 echo ""
 
 # -----------------------------------------------------------------------------
+echo "\e[1;33m[RECAP]\e[1;m"
+echo "\e[1;33m  [PARSER INVALID TESTS DONE] Results : $nb_correct_invalid / $nb_file_invalid\e[1;m"
+echo "\e[1;33m  [PARSER VALID TESTS DONE] Results : $nb_correct_valid / $nb_file_valid\e[1;m"
+echo "\e[1;33m[PARSER TOTAL] Results : $((nb_correct_valid+nb_correct_invalid))  / $((nb_file_valid+nb_file_invalid))\e[1;m"
+
+
+
 if [ "$nb_correct_valid" = "$nb_file_valid" ] && [ "$nb_correct_invalid" = "$nb_file_invalid" ]
   then
     exit 0
