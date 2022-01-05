@@ -21,7 +21,6 @@ do
   name_test="${i%.*}"
   name_test="${name_test##*/}"
 
-
   # Generate output file : (possibly wrong)
   test_synt "$i" > "$TEST_PARSER_INVALID_RESULT_PATH"/"$name_test".lis 2>&1
 
@@ -58,7 +57,7 @@ do
   # Generate output file :
   test_synt "$i" > "$TEST_PARSER_VALID_RESULT_PATH"/"$name_test".lis 2>&1
 
-  differences=$(diff "$TEST_PARSER_VALID_RESULT_PATH"/"$name_test".txt "$TEST_PARSER_VALID_RESULT_PATH"/"$name_test".lis)
+  differences=$(diff "$TEST_PARSER_VALID_RESULT_PATH"/"$name_test".txt "$TEST_PARSER_VALID_RESULT_PATH"/"$name_test".lis | head)
 
   if [ $? -ne 2 ]
     then
@@ -67,7 +66,7 @@ do
         echo "  \e[1;32m[CORRECT] $name_test\e[1;m"
         nb_correct_valid=$((nb_correct_valid+1))
       else
-        echo "  \e[1;31m[INCORRECT] $name_test, here is the differences : \e[1;m"
+        echo "  \e[1;31m[INCORRECT] $name_test, here is the start of differences : \e[1;m"
         echo "$differences"
     fi
 
@@ -83,7 +82,7 @@ echo ""
 echo "\e[1;33m[RECAP]\e[1;m"
 echo "\e[1;33m  [PARSER INVALID TESTS DONE] Results : $nb_correct_invalid / $nb_file_invalid\e[1;m"
 echo "\e[1;33m  [PARSER VALID TESTS DONE] Results : $nb_correct_valid / $nb_file_valid\e[1;m"
-echo "\e[1;33m[PARSER TOTAL] Results : $((nb_correct_valid+nb_correct_invalid))  / $((nb_file_valid+nb_file_invalid))\e[1;m"
+echo "\e[1;33m[PARSER TOTAL] Results : $((nb_correct_valid+nb_correct_invalid)) / $((nb_file_valid+nb_file_invalid))\e[1;m"
 
 
 

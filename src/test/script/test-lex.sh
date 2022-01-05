@@ -12,14 +12,14 @@ PATH=./src/test/script/launchers:"$PATH"
 TEST_LEXER_INVALID_PATH="./src/test/deca/syntax/invalid/test_dir/added/lexer"
 TEST_LEXER_INVALID_RESULT_PATH="./src/test/deca/syntax/invalid/result_dir/lexer"
 
-nb_correct=0
-nb_file=0
+nb_correct_invalid=0
+nb_file_invalid=0
 
 echo "\e[1;36m[BEGIN LEXER INVALID TESTS]\e[1;m"
 
 for i in "$TEST_LEXER_INVALID_PATH"/*.deca
 do
-  nb_file=$((nb_file+1))
+  nb_file_invalid=$((nb_file_invalid+1))
   name_test="${i%.*}"
   name_test="${name_test##*/}"
 
@@ -32,18 +32,50 @@ do
   if ! [ "$grep_result" = "" ]
     then
       echo "  \e[1;32m[CORRECT] $name_test\e[1;m"
-      nb_correct=$((nb_correct+1))
+      nb_correct_invalid=$((nb_correct_invalid+1))
     else
       echo "  \e[1;31m[INCORRECT] $name_test, no match with the error...\e[1;m"
   fi
 
 done
 
-echo "\e[1;36m[LEXER INVALID TESTS DONE] Results : $nb_correct / $nb_file\e[1;m"
+echo "\e[1;36m[LEXER INVALID TESTS DONE] Results : $nb_correct / $nb_file_invalid\e[1;m"
 echo ""
 
 # -----------------------------------------------------------------------------
-if [ "$nb_correct" = "$nb_file" ]
+# Lexer Valid :
+# (need to improve, just print answer here...)
+
+TEST_LEXER_VALID_PATH="./src/test/deca/syntax/invalid/test_dir/added/lexer"
+TEST_LEXER_VALID_RESULT_PATH="./src/test/deca/syntax/invalid/result_dir/lexer"
+
+nb_correct_valid=0
+nb_file_valid=0
+
+echo "\e[1;36m[BEGIN LEXER VALID TESTS]\e[1;m"
+
+for i in "$TEST_LEXER_VALID_PATH"/*.deca
+do
+  nb_file_valid=$((nb_file_valid+1))
+  name_test="${i%.*}"
+  name_test="${name_test##*/}"
+
+  # Generate output file : (possibly wrong)
+  test_lex "$i" > "$TEST_LEXER_VALID_RESULT_PATH"/"$name_test".lis
+
+  # grep_result=$(grep -f "$TEST_LEXER_INVALID_RESULT_PATH"/"$name_test".txt "$TEST_LEXER_INVALID_RESULT_PATH"/"$name_test".lis)
+  # echo "Result of grep : $grep_result"
+  echo "  [ANSWER] $name_test"
+  cat "$TEST_LEXER_VALID_RESULT_PATH"/"$name_test".lis
+  echo ""
+
+done
+
+echo ""
+
+# -----------------------------------------------------------------------------
+
+if [ "$nb_correct" = "$nb_file" ] && [ "$nb_correct_valid" = "$nb_file_valid" ]
   then
     exit 0
   else
