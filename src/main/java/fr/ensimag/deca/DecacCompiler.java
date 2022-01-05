@@ -177,9 +177,19 @@ public class DecacCompiler {
         }
         assert(prog.checkAllLocations());
 
+        if (this.compilerOptions.getParse()) {
+            // Display tree decompilation
+            prog.decompile(out);
+            return false;
+        }
 
         prog.verifyProgram(this);
         assert(prog.checkAllDecorations());
+
+        if (this.compilerOptions.getVerification()) {
+            // Stop program after syntax verification
+            return false;
+        }
 
         addComment("start main program");
         prog.codeGenProgram(this);

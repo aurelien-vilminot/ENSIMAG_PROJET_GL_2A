@@ -1,6 +1,9 @@
 package fr.ensimag.deca;
 
 import java.io.File;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -26,14 +29,20 @@ public class DecacMain {
     }
 
     public static void printBanner() {
-        String banner = "BANNIERE PAR DEFAUT\t|\tG2/GL07";
+        String banner =
+                "  ______ ____  _    _ _____ _____  ______   ______ \n" +
+                " |  ____/ __ \\| |  | |_   _|  __ \\|  ____| |____  |\n" +
+                " | |__ | |  | | |  | | | | | |__) | |__        / / \n" +
+                " |  __|| |  | | |  | | | | |  ___/|  __|      / /  \n" +
+                " | |___| |__| | |__| |_| |_| |    | |____    / /   \n" +
+                " |______\\___\\_\\\\____/|_____|_|    |______|  /_/ ";
         System.out.println(banner);
     }
     
     public static void main(String[] args) {
         // example log4j message.
         LOG.info("Decac compiler started");
-        boolean error = false;
+        final boolean[] error = {false};
         final CompilerOptions options = new CompilerOptions();
         try {
             options.parseArgs(args);
@@ -44,26 +53,43 @@ public class DecacMain {
             System.exit(1);
         }
         if (options.getPrintBanner()) {
-            throw new UnsupportedOperationException("decac -b not yet implemented");
+            // For decac -b option
+            printBanner();
+            System.exit(0);
         }
-        if (options.getSourceFiles().isEmpty()) {
+
+        if (options.getArgsNumber() == 0) {
             printAvailableOptions();
         }
-        // TODO: -p, -v, -n, -r, -d, -P
+
         if (options.getParallel()) {
             // A FAIRE : instancier DecacCompiler pour chaque fichier à
             // compiler, et lancer l'exécution des méthodes compile() de chaque
             // instance en parallèle. Il est conseillé d'utiliser
             // java.util.concurrent de la bibliothèque standard Java.
-            throw new UnsupportedOperationException("Parallel build not yet implemented");
+
+            // Nb threads = size of source files list
+            ExecutorService executorService = Executors.newFixedThreadPool(options.getSourceFiles().size());
+            for (File source : options.getSourceFiles()) {
+                DecacCompiler compiler = new DecacCompiler(options, source);
+                executorService.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (compiler.compile()) {
+                            error[0] = true;
+                        }
+                    }
+                });
+            }
+            executorService.shutdown();
         } else {
             for (File source : options.getSourceFiles()) {
                 DecacCompiler compiler = new DecacCompiler(options, source);
                 if (compiler.compile()) {
-                    error = true;
+                    error[0] = true;
                 }
             }
         }
-        System.exit(error ? 1 : 0);
+        System.exit(error[0] ? 1 : 0);
     }
 }
