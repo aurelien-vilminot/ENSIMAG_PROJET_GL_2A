@@ -90,5 +90,5 @@ SINGLE_LINE_COMMENT : '//'(.*?)('\n') {skip();}; // ignore comments
 MULTI_LINE_COMMENT : '/*' .*? '*/' {skip();};
 
 // Includes
-fragment FILENAME : (LETTER | DIGIT | '.' | '-' | '_')*;
+fragment FILENAME : (LETTER | DIGIT | '.' | '-' | '_')+;
 INCLUDE : '#include' (' ')* '"' FILENAME '"' {super.doInclude(getText());};
