@@ -3,6 +3,8 @@ package fr.ensimag.deca;
 import java.io.File;
 import java.io.PrintStream;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -57,6 +59,7 @@ public class CompilerOptions {
     
     public void parseArgs(String[] args) throws CLIException {
         // A FAIRE : parcourir args pour positionner les options correctement.
+        // TODO: treat uneccessary options
 
         // Convert args into list
         ArrayList<String> argsList = new ArrayList<>();
@@ -99,6 +102,15 @@ public class CompilerOptions {
         // Allow parallelism
         if (argsList.contains("-P")) {
             this.parallel = true;
+        }
+
+        // Add sources files to the files list
+        Pattern pattern = Pattern.compile("^-([a-z]|[A-Z])+");
+        for (String arg: argsList) {
+            Matcher matcher = pattern.matcher(arg);
+            if (!matcher.find()) {
+                this.sourceFiles.add(new File(arg));
+            }
         }
 
         Logger logger = Logger.getRootLogger();
