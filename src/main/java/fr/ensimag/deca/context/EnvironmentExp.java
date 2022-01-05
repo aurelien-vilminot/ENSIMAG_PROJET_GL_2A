@@ -78,7 +78,7 @@ public class EnvironmentExp {
         if (this.associationTable.containsKey(name)) {
             // The symbol is already defined in the current dictionary
             throw new DoubleDefException();
-        } else if (this.parentEnvironment.associationTable.containsKey(name)) {
+        } else if (this.parentEnvironment != null && this.parentEnvironment.associationTable.containsKey(name)) {
             // Get the previous symbol declaration in parent environment
             LinkedList<ExpDefinition> expDefinitionLinkedList = this.parentEnvironment.associationTable.get(name);
             // Add the new declaration at the top of the linked-list in the current directory

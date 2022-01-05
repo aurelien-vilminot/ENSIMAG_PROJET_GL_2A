@@ -47,7 +47,7 @@ public class DecacCompiler {
 
     private EnvironmentExp environmentExp;
     private EnvironmentTypes environmentTypes;
-    private SymbolTable symbolTable;
+    private SymbolTable symbolTable = new SymbolTable();
 
     public DecacCompiler(CompilerOptions compilerOptions, File source) {
         super();
