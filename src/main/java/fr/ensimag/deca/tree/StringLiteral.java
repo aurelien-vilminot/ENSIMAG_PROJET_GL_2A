@@ -8,6 +8,7 @@ import fr.ensimag.ima.pseudocode.ImmediateString;
 import fr.ensimag.ima.pseudocode.instructions.WSTR;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
+import org.apache.log4j.Logger;
 
 /**
  * String literal
@@ -23,6 +24,7 @@ public class StringLiteral extends AbstractStringLiteral {
     }
 
     private String value;
+    private static final Logger LOG = Logger.getLogger(Program.class);
 
     public StringLiteral(String value) {
         Validate.notNull(value);
@@ -32,11 +34,14 @@ public class StringLiteral extends AbstractStringLiteral {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
+        LOG.debug("verify StringLiteral: start");
+
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
         Validate.notNull(localEnv, "Env_exp object should not be null");
 
         Type stringType = new StringType(new SymbolTable().create("string"));
         this.setType(stringType);
+        LOG.debug("verify StringLiteral: start");
         return stringType;
     }
 

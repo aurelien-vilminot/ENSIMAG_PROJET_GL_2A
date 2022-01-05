@@ -11,6 +11,7 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.Label;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
+import org.apache.log4j.Logger;
 
 /**
  * Print statement (print, println, ...).
@@ -19,6 +20,7 @@ import org.apache.commons.lang.Validate;
  * @date 04/01/2022
  */
 public abstract class AbstractPrint extends AbstractInst {
+    private static final Logger LOG = Logger.getLogger(Main.class);
 
     private boolean printHex;
     private ListExpr arguments = new ListExpr();
@@ -39,18 +41,21 @@ public abstract class AbstractPrint extends AbstractInst {
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass, Type returnType)
             throws ContextualError {
+        LOG.debug("verify Print: start");
+
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
         Validate.notNull(localEnv, "Env_exp object should not be null");
 
         for (AbstractExpr listExpr: this.arguments.getList()) {
             // Check if args types are printable
             Type argType = listExpr.verifyExpr(compiler, localEnv, currentClass);
-            if (argType.isInt() && argType.isFloat() && argType.isString()) {
+            if (argType.isInt() || argType.isFloat() || argType.isString()) {
                 listExpr.setType(argType);
             } else {
                 throw new ContextualError("Impossible to print this type of element : " + argType, this.getLocation());
             }
         }
+        LOG.debug("verify Print: end");
     }
 
     @Override

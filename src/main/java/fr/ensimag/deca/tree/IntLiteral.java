@@ -5,6 +5,7 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable;
 import org.apache.commons.lang.Validate;
+import org.apache.log4j.Logger;
 
 import java.io.PrintStream;
 
@@ -20,6 +21,7 @@ public class IntLiteral extends AbstractExpr {
     }
 
     private int value;
+    private static final Logger LOG = Logger.getLogger(Main.class);
 
     public IntLiteral(int value) {
         this.value = value;
@@ -28,11 +30,15 @@ public class IntLiteral extends AbstractExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
+        LOG.debug("verify InteralLiteral: start");
+
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
         Validate.notNull(localEnv, "Env_exp object should not be null");
 
         Type intType = new IntType(new SymbolTable().create("int"));
         this.setType(intType);
+
+        LOG.debug("verify InteralLiteral: end");
         return intType;
     }
 
