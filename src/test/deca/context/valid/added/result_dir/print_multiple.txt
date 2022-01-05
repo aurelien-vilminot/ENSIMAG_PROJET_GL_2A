@@ -6,12 +6,16 @@
             []> [12, 4] Println
             ||  '> ListExpr [List with 1 elements]
             ||      []> [12, 13] String ("Hello world 1 !")
+            ||          type : string
             []> [13, 4] Println
             ||  '> ListExpr [List with 1 elements]
             ||      []> [13, 12] String ("Hello world 2 !")
+            ||          type : string
             []> [16, 4] Print
             ||  '> ListExpr [List with 1 elements]
             ||      []> [14, 11] String ("Hello")
+            ||          type : string
             []> [17, 4] Print
                  '> ListExpr [List with 1 elements]
                     []> [15, 10] String ("world !")
+                        type : string
