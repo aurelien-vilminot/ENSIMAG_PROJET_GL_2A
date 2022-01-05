@@ -9,10 +9,8 @@
 //    created on 04/01/2022
 
 {
-    printlnx("Bonjour1");
-    println("Bonjour2");
-
-
-    printx("3");
-    print("4");
+    printlnx("Hello world 1 !");
+    println("Hello world 2 !");
+    printx("Hello");
+    print("world !");
 }

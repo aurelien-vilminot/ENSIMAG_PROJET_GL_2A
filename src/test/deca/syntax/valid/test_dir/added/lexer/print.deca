@@ -8,11 +8,7 @@
 //    created on 04/01/2022
 
 print()
-
 println
-
 printx
-
 printlnx()
-
-print("bonjour ! ")
+print("Hello world !")

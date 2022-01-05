@@ -5,13 +5,13 @@
         ‘> ListInst [List with 4 elements]
             []> [12, 4] Printlnx
             ||  '> ListExpr [List with 1 elements]
-            ||      []> [12, 13] String ("Bonjour1")
+            ||      []> [12, 13] String ("Hello world 1 !")
             []> [13, 4] Println
             ||  '> ListExpr [List with 1 elements]
-            ||      []> [13, 12] String ("Bonjour2")
+            ||      []> [13, 12] String ("Hello world 2 !")
             []> [16, 4] Printx
             ||  '> ListExpr [List with 1 elements]
-            ||      []> [16, 11] String ("3")
+            ||      []> [14, 11] String ("Hello")
             []> [17, 4] Print
                  '> ListExpr [List with 1 elements]
-                    []> [17, 10] String ("4")
+                    []> [15, 10] String ("world !")
