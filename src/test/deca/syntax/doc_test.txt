@@ -1,0 +1,11 @@
+invalid :
+    --> test_dir
+        --> added
+            --> lexer : incorrect for lexer (goal : test only lexer error)
+            --> parser : incorrect for parser but correct for lexer (goal : test only parser error)
+
+valid :
+    --> test_dir
+        --> added
+            --> lexer : correct only for lexer (goal : test only the lexer)
+            --> parser : correct for lexer AND parser (goal : test BOTH lexer and parser)

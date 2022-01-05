@@ -1,0 +1,11 @@
+// Description:
+//    test of string
+//
+// Results:
+//    test_lex --> no error, return 2 tokens
+//
+// History:
+//    created on 04/01/2022
+
+"Hello world, I am a string !"
+"Hello world, I am also a string but with special carac \\" \\\\ éèêàâôûç& \\" !"

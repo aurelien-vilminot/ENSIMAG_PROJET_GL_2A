@@ -1,0 +1,16 @@
+// Description:
+//    test with multiple instructions
+//
+// Results:
+//    test_lex --> no error, return 22 tokens
+//    test_synt --> no error, return tree with 4 instructions
+//
+// History:
+//    created on 04/01/2022
+
+{
+    printlnx("Hello world 1 !");
+    println("Hello world 2 !");
+    printx("Hello");
+    print("world !");
+}
