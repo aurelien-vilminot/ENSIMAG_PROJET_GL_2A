@@ -5,11 +5,13 @@ import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import fr.ensimag.deca.tree.Location;
 import org.apache.commons.lang.Validate;
 
+import java.util.Objects;
+
 /**
  * Type defined by a class.
  *
- * @author gl07
- * @date 01/01/2022
+ * @author Aurélien VILMINOT
+ * @date 04/01/2022
  */
 public class ClassType extends Type {
     
@@ -53,15 +55,37 @@ public class ClassType extends Type {
 
     @Override
     public boolean sameType(Type otherType) {
-        throw new UnsupportedOperationException("not yet implemented");
+        Validate.notNull(otherType, "otherType object should not be null");
+        return otherType.isClass();
     }
 
     /**
      * Return true if potentialSuperClass is a superclass of this class.
      */
     public boolean isSubClassOf(ClassType potentialSuperClass) {
-        throw new UnsupportedOperationException("not yet implemented"); 
+        Validate.notNull(potentialSuperClass, "The potential superclass should not be null");
+        ClassType currentClass = this;
+        // This loop follows all superclasses of this class.
+        // It ends when the superclass is equals of the potential superclass
+        while (!currentClass.isNull()) {
+            if (currentClass.definition.getType().equals(potentialSuperClass.definition.getType())) {
+                return true;
+            }
+            currentClass = currentClass.definition.getSuperClass().getType();
+        }
+        return false;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ClassType classType = (ClassType) o;
+        return Objects.equals(definition, classType.definition);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(definition);
+    }
 }
