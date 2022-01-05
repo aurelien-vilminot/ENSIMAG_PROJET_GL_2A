@@ -21,11 +21,10 @@ do
   name_test="${i%.*}"
   name_test="${name_test##*/}"
 
-  # Generate output file : (possibly wrong)
+  # Generate output file :
   test_synt "$i" > "$TEST_PARSER_INVALID_RESULT_PATH"/"$name_test".lis 2>&1
 
   grep_result=$(grep -f "$TEST_PARSER_INVALID_RESULT_PATH"/"$name_test".txt "$TEST_PARSER_INVALID_RESULT_PATH"/"$name_test".lis)
-  # echo "Result of grep : $grep_result"
 
   if ! [ "$grep_result" = "" ]
     then
@@ -52,7 +51,6 @@ do
   nb_file_valid=$((nb_file_valid+1))
   name_test="${i%.*}"
   name_test="${name_test##*/}"
-  #name_test is the name of the file without path and extension
 
   # Generate output file :
   test_synt "$i" > "$TEST_PARSER_VALID_RESULT_PATH"/"$name_test".lis 2>&1
@@ -84,8 +82,7 @@ echo "\e[1;33m  [PARSER INVALID TESTS DONE] Results : $nb_correct_invalid / $nb_
 echo "\e[1;33m  [PARSER VALID TESTS DONE] Results : $nb_correct_valid / $nb_file_valid\e[1;m"
 echo "\e[1;33m[PARSER TOTAL] Results : $((nb_correct_valid+nb_correct_invalid)) / $((nb_file_valid+nb_file_invalid))\e[1;m"
 
-
-
+# Exit status :
 if [ "$nb_correct_valid" = "$nb_file_valid" ] && [ "$nb_correct_invalid" = "$nb_file_invalid" ]
   then
     exit 0
