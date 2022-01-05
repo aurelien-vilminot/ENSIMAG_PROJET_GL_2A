@@ -47,7 +47,7 @@ public class DecacCompiler {
 
     private EnvironmentExp environmentExp;
     private EnvironmentTypes environmentTypes;
-    private SymbolTable symbolTable;
+    private SymbolTable symbolTable = new SymbolTable();
 
     public DecacCompiler(CompilerOptions compilerOptions, File source) {
         super();
@@ -85,6 +85,18 @@ public class DecacCompiler {
         } catch (EnvironmentExp.DoubleDefException doubleDefException) {
             LOG.error("Multiple type declaration");
         }
+    }
+
+    public EnvironmentExp getEnvironmentExp() {
+        return environmentExp;
+    }
+
+    public EnvironmentTypes getEnvironmentTypes() {
+        return environmentTypes;
+    }
+
+    public SymbolTable getSymbolTable() {
+        return symbolTable;
     }
 
     /**
