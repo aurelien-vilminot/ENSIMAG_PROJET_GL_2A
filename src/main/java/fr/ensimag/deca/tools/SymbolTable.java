@@ -1,5 +1,7 @@
 package fr.ensimag.deca.tools;
 
+import org.apache.commons.lang.Validate;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,8 +14,8 @@ import java.util.Map;
  * method of Symbols can be used to define efficient HashMap (no string
  * comparison or hashing required).
  * 
- * @author gl07
- * @date 01/01/2022
+ * @author Aurélien VILMINOT
+ * @date 04/01/2022
  */
 public class SymbolTable {
     private Map<String, Symbol> map = new HashMap<String, Symbol>();
@@ -25,7 +27,17 @@ public class SymbolTable {
      * this Symbol. Otherwise, create a new Symbol and add it to the table.
      */
     public Symbol create(String name) {
-        throw new UnsupportedOperationException("Symbol creation");
+        Validate.notNull(name, "Symbol name should not be null");
+        Symbol symbol;
+        if (this.map.containsKey(name)) {
+            // Get the existing symbol
+            symbol = this.map.get(name);
+        } else {
+            // Create a new symbol and add it to the map
+            symbol = new Symbol(name);
+            this.map.put(name, symbol);
+        }
+        return symbol;
     }
 
     public static class Symbol {

@@ -11,8 +11,8 @@ import org.apache.log4j.Logger;
 /**
  * Deca complete program (class definition plus main block)
  *
- * @author gl07
- * @date 01/01/2022
+ * @author Aurélien VILMINOT
+ * @date 04/01/2022
  */
 public class Program extends AbstractProgram {
     private static final Logger LOG = Logger.getLogger(Program.class);
@@ -35,8 +35,16 @@ public class Program extends AbstractProgram {
     @Override
     public void verifyProgram(DecacCompiler compiler) throws ContextualError {
         LOG.debug("verify program: start");
-        throw new UnsupportedOperationException("not yet implemented");
-        // LOG.debug("verify program: end");
+        Validate.notNull(compiler, "Compiler object should not be null");
+        // TODO: reactivate pass 1 and pass 2 after hello world
+        // Pass 1
+//        classes.verifyListClass(compiler);
+        // Pass 2
+//        classes.verifyListClassMembers(compiler);
+        // Pass 3
+        classes.verifyListClassBody(compiler);
+        main.verifyMain(compiler);
+        LOG.debug("verify program: end");
     }
 
     @Override

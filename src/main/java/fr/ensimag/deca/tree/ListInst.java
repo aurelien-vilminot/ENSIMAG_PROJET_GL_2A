@@ -7,11 +7,12 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.Label;
+import org.apache.commons.lang.Validate;
 
 /**
  * 
- * @author gl07
- * @date 01/01/2022
+ * @author Aurélien VILMINOT
+ * @date 04/01/2022
  */
 public class ListInst extends TreeList<AbstractInst> {
 
@@ -27,7 +28,12 @@ public class ListInst extends TreeList<AbstractInst> {
     public void verifyListInst(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass, Type returnType)
             throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        Validate.notNull(compiler, "Compiler (env_types) object should not be null");
+        Validate.notNull(localEnv, "Env_exp object should not be null");
+
+        for (AbstractInst abstractInst: getList()) {
+            abstractInst.verifyInst(compiler, localEnv, currentClass, returnType);
+        }
     }
 
     public void codeGenListInst(DecacCompiler compiler) {
