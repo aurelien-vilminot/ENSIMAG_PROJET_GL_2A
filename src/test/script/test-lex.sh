@@ -24,7 +24,7 @@ do
   name_test="${name_test##*/}"
 
   # Generate output file : (possibly wrong)
-  # test_lex "$i" > "$TEST_LEXER_INVALID_RESULT_PATH"/"$name_test".lis
+  test_lex "$i" > "$TEST_LEXER_INVALID_RESULT_PATH"/"$name_test".lis
 
   grep_result=$(grep -f "$TEST_LEXER_INVALID_RESULT_PATH"/"$name_test".txt "$TEST_LEXER_INVALID_RESULT_PATH"/"$name_test".lis)
   # echo "Result of grep : $grep_result"
