@@ -130,12 +130,12 @@ inst returns[AbstractInst tree]
         }
     | PRINTX OPARENT list_expr CPARENT SEMI {
             assert($list_expr.tree != null);
-            $tree = new Print(true, $list_expr.tree);
+            $tree = new Printx(true, $list_expr.tree);
             setLocation($tree, $PRINTX);
         }
     | PRINTLNX OPARENT list_expr CPARENT SEMI {
             assert($list_expr.tree != null);
-            $tree = new Print(true, $list_expr.tree);
+            $tree = new Printlnx(true, $list_expr.tree);
             setLocation($tree, $PRINTLNX);
         }
     | if_then_else {
