@@ -36,9 +36,9 @@ TRUE : 'true';
 WHILE : 'while';
 
 // Identifiers
-fragment LETTER : 'a'..'z'|'A'..'Z';
+fragment LETTER : 'a'..'z' | 'A'..'Z';
 fragment DIGIT : '0'..'9';
-IDENT : (LETTER | '$' | '_')(LETTER | DIGIT | '$' + '_')*;
+IDENT : (LETTER | '$' | '_')(LETTER | DIGIT | '$' | '_')*;
 
 // Symbols
 LT : '<';
@@ -80,7 +80,7 @@ FLOATHEX : ('0x' | '0X') NUMHEX '.' NUMHEX ('P' | 'p') SIGN NUM ('F' | 'f')?;
 FLOAT : FLOATDEC | FLOATHEX;
 
 // Strings
-fragment STRING_CAR : (.*?)~('"' | '\\' | '\n');
+fragment STRING_CAR : ~('"' | '\\' | '\n');
 STRING : '"' (STRING_CAR | '\\"' | '\\\\')* '"';
 MULTI_LINE_STRING : '"' (STRING_CAR | EOF | '\\"' | '\\\\')* '"';
 
