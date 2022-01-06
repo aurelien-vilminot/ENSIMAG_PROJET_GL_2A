@@ -1,15 +1,15 @@
-^PRINT: \[@\d+,\d+:\d+='print',<\d+>,10:0\]
-OPARENT: \[@\d+,\d+:\d+='(',<\d+>,10:5\]
-CPARENT: \[@\d+,\d+:\d+=')',<\d+>,10:6\]
-PRINTLN: \[@\d+,\d+:\d+='println',<\d+>,11:0\]
-OPARENT: \[@\d+,\d+:\d+='(',<\d+>,10:7\]
-OPARENT: \[@\d+,\d+:\d+='(',<\d+>,10:8\]
-CPARENT: \[@\d+,\d+:\d+=')',<\d+>,10:9\]
-PRINTX: \[@\d+,\d+:\d+='printx',<\d+>,12:0\]
-PRINTLNX: \[@\d+,\d+:\d+='printlnx',<\d+>,13:0\]
-OPARENT: \[@\d+,\d+:\d+='(',<\d+>,13:8\]
-CPARENT: \[@\d+,\d+:\d+=')',<\d+>,13:9\]
-PRINT: \[@\d+,\d+:\d+='print',<\d+>,14:0\]
-OPARENT: \[@\d+,\d+:\d+='(',<\d+>,14:5\]
-STRING: \[@\d+,\d+:\d+='"Hello world !"',<\d+>,14:6\]
-CPARENT: \[@\d+,\d+:\d+=')',<\d+>,14:18\]$
+PRINT 'print' 10:0
+OPARENT '(' 10:5
+CPARENT ')' 10:6
+PRINTLN 'println' 11:0
+OPARENT '(' 10:7
+OPARENT '(' 10:8
+CPARENT ')' 10:9
+PRINTX 'printx' 12:0
+PRINTLNX 'printlnx' 13:0
+OPARENT '(' 13:8
+CPARENT ')' 13:9
+PRINT 'print' 14:0
+OPARENT '(' 14:5
+STRING '"Hello world !"' 14:6
+CPARENT ')' 14:18
