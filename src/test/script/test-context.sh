@@ -30,6 +30,7 @@ do
     then
       echo "  \e[1;32m[CORRECT] $name_test\e[1;m"
       nb_correct_invalid=$((nb_correct_invalid+1))
+      rm "$TEST_CONTEXT_INVALID_RESULT_PATH"/"$name_test".lis
     else
       echo "  \e[1;31m[INCORRECT] $name_test, no match with the error...\e[1;m"
   fi
@@ -72,6 +73,7 @@ do
       then
         echo "  \e[1;32m[CORRECT] $name_test\e[1;m"
         nb_correct_valid=$((nb_correct_valid+1))
+        rm "$TEST_CONTEXT_VALID_RESULT_PATH"/"$name_test".lis
       else
         echo "  \e[1;31m[INCORRECT] $name_test, here is the start of differences : \e[1;m"
         echo "$differences"
