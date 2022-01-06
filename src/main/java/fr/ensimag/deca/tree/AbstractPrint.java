@@ -72,9 +72,6 @@ public abstract class AbstractPrint extends AbstractInst {
                 + "(");
         getArguments().decompile(s);
         s.print(");");
-        if (getSuffix().equals("ln")) {
-            s.println();
-        }
     }
 
     @Override
