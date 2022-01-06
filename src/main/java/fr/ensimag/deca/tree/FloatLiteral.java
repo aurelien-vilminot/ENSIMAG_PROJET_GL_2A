@@ -7,6 +7,7 @@ import java.io.PrintStream;
 
 import fr.ensimag.deca.tools.SymbolTable;
 import org.apache.commons.lang.Validate;
+import org.apache.log4j.Logger;
 
 /**
  * Single precision, floating-point literal
@@ -21,6 +22,7 @@ public class FloatLiteral extends AbstractExpr {
     }
 
     private float value;
+    private static final Logger LOG = Logger.getLogger(Main.class);
 
     public FloatLiteral(float value) {
         Validate.isTrue(!Float.isInfinite(value),
@@ -33,11 +35,15 @@ public class FloatLiteral extends AbstractExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
+        LOG.debug("verify FloatLiteral: start");
+
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
         Validate.notNull(localEnv, "Env_exp object should not be null");
 
-        Type floatType = new FloatType(new SymbolTable().create("float"));
+        Type floatType = new FloatType(compiler.getSymbolTable().create("float"));
         this.setType(floatType);
+
+        LOG.debug("verify FloatLiteral: end");
         return floatType;
     }
 

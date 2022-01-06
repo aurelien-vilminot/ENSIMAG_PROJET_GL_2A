@@ -79,6 +79,9 @@ public class EnvironmentTypes {
      * @return True if t1 is a subtype of t2
      */
     public boolean subTypes(Type t1, Type t2) {
+        Validate.notNull(t1, "Type t1 should not be null");
+        Validate.notNull(t2, "Type t2 should not be null");
+
         // if t1 and t2 are the same type, t1 is a subtype of t2
         if (t1.sameType(t2)) return true;
         if (t2.isClass()) {
@@ -94,10 +97,14 @@ public class EnvironmentTypes {
     }
 
     public boolean assignCompatible(Type t1, Type t2) {
+        Validate.notNull(t1, "Type t1 should not be null");
+        Validate.notNull(t2, "Type t2 should not be null");
         return (t1.isFloat() && t2.isFloat()) || subTypes(t1, t2);
     }
 
     public boolean castCompatible(Type t1, Type t2) {
+        Validate.notNull(t1, "Type t1 should not be null");
+        Validate.notNull(t2, "Type t2 should not be null");
         return !t1.isVoid() && (assignCompatible(t1, t2) || assignCompatible(t2, t1));
     }
 }
