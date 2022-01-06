@@ -1,6 +1,7 @@
 package fr.ensimag.deca.context;
 
 import fr.ensimag.deca.tree.Location;
+import org.apache.commons.lang.Validate;
 
 /**
  * Definition of an identifier.
@@ -66,6 +67,7 @@ public abstract class Definition {
      */
     public MethodDefinition asMethodDefinition(String errorMessage, Location l)
             throws ContextualError {
+        Validate.notNull(errorMessage, "Error message should not be null");
         try {
             return (MethodDefinition) this;
         } catch (Exception e) {
@@ -79,6 +81,7 @@ public abstract class Definition {
      */
     public FieldDefinition asFieldDefinition(String errorMessage, Location l)
             throws ContextualError {
+        Validate.notNull(errorMessage, "Error message should not be null");
         try {
             return (FieldDefinition) this;
         } catch (Exception e) {

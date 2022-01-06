@@ -35,7 +35,7 @@ public class BooleanLiteral extends AbstractExpr {
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
         Validate.notNull(localEnv, "Env_exp object should not be null");
 
-        Type booleanType = new BooleanType(new SymbolTable().create("boolean"));
+        Type booleanType = new BooleanType(compiler.getSymbolTable().create("boolean"));
         this.setType(booleanType);
 
         LOG.debug("verify BooleanLiteral: end");
