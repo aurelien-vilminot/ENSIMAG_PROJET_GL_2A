@@ -42,7 +42,7 @@ if [ "$nb_correct_invalid" = "$nb_file_invalid" ]
   else
     result_invalid_string="\e[1;31m$result_invalid_string"
 fi
-echo "\e[1;1m[PARSER INVALID TESTS DONE]\e[1;m $result_invalid_string"
+echo "\e[1;1m[DONE PARSER INVALID TESTS]\e[1;m $result_invalid_string"
 echo ""
 
 # -----------------------------------------------------------------------------
@@ -87,13 +87,13 @@ if [ "$nb_correct_valid" = "$nb_file_valid" ]
   else
     result_valid_string="\e[1;31m$result_valid_string"
 fi
-echo "\e[1;1m[PARSER VALID TESTS DONE]\e[1;m $result_valid_string"
+echo "\e[1;1m[DONE PARSER VALID TESTS]\e[1;m $result_valid_string"
 echo ""
 
 # -----------------------------------------------------------------------------
 echo "    \e[1;1m[RECAP]\e[1;m"
-echo "    \e[1;1m  [PARSER INVALID TESTS DONE] $result_invalid_string"
-echo "    \e[1;1m  [PARSER VALID TESTS DONE] $result_valid_string"
+echo "    \e[1;1m  [PARSER INVALID TESTS] $result_invalid_string"
+echo "    \e[1;1m  [PARSER VALID TESTS] $result_valid_string"
 # Exit status :
 if [ "$nb_correct_valid" = "$nb_file_valid" ] && [ "$nb_correct_invalid" = "$nb_file_invalid" ]
   then

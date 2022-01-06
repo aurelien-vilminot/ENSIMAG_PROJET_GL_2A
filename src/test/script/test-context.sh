@@ -42,7 +42,7 @@ if [ "$nb_correct_invalid" = "$nb_file_invalid" ]
   else
     result_invalid_string="\e[1;31m$result_invalid_string"
 fi
-echo "\e[1;1m[CONTEXT INVALID TESTS DONE]\e[1;m $result_invalid_string"
+echo "\e[1;1m[DONE CONTEXT INVALID TESTS]\e[1;m $result_invalid_string"
 echo ""
 
 # -----------------------------------------------------------------------------
@@ -89,7 +89,7 @@ if [ "$nb_correct_valid" = "$nb_file_valid" ]
   else
     result_valid_string="\e[1;31m$result_valid_string"
 fi
-echo "\e[1;1m[CONTEXT VALID TESTS DONE]\e[1;m $result_valid_string"
+echo "\e[1;1m[DONE CONTEXT VALID TESTS]\e[1;m $result_valid_string"
 echo ""
 
 # -----------------------------------------------------------------------------
