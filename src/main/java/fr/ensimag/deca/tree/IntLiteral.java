@@ -2,7 +2,12 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.context.ClassDefinition;
+import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.instructions.WSTR;
+
 import fr.ensimag.deca.tools.SymbolTable;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
@@ -12,8 +17,8 @@ import java.io.PrintStream;
 /**
  * Integer literal
  *
- * @author Aurélien VILMINOT
- * @date 04/01/2022
+ * @author gl07
+ * @date 01/01/2022
  */
 public class IntLiteral extends AbstractExpr {
     public int getValue() {
@@ -30,7 +35,7 @@ public class IntLiteral extends AbstractExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        LOG.debug("verify InteralLiteral: start");
+        LOG.debug("verify IntegerLiteral: start");
 
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
         Validate.notNull(localEnv, "Env_exp object should not be null");
@@ -46,6 +51,11 @@ public class IntLiteral extends AbstractExpr {
     @Override
     String prettyPrintNode() {
         return "Int (" + getValue() + ")";
+    }
+
+    @Override
+    protected void codeGenPrint(DecacCompiler compiler) {
+        compiler.addInstruction(new WSTR(Integer.toString(value)));
     }
 
     @Override

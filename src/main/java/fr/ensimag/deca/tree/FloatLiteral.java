@@ -3,16 +3,17 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.deca.tools.SymbolTable;
 import java.io.PrintStream;
 
-import fr.ensimag.deca.tools.SymbolTable;
+import fr.ensimag.ima.pseudocode.instructions.WSTR;
 import org.apache.commons.lang.Validate;
 
 /**
  * Single precision, floating-point literal
  *
- * @author Aurélien VILMINOT
- * @date 04/01/2022
+ * @author gl07
+ * @date 01/01/2022
  */
 public class FloatLiteral extends AbstractExpr {
 
@@ -41,6 +42,15 @@ public class FloatLiteral extends AbstractExpr {
         return floatType;
     }
 
+    @Override
+    protected void codeGenPrint(DecacCompiler compiler) {
+        compiler.addInstruction(new WSTR(Float.toString(value)));
+    }
+
+    @Override
+    protected void codeGenPrintx(DecacCompiler compiler) {
+        compiler.addInstruction(new WSTR(Float.toHexString(value)));
+    }
 
     @Override
     public void decompile(IndentPrintStream s) {
