@@ -81,7 +81,7 @@ public class EnvironmentExp {
             throw new DoubleDefException();
         } else if (this.parentEnvironment != null && this.parentEnvironment.associationTable.containsKey(name)) {
             // Get the previous symbol declaration in parent environment
-            LinkedList<ExpDefinition> expDefinitionLinkedList = this.parentEnvironment.associationTable.get(name);
+            LinkedList<ExpDefinition> expDefinitionLinkedList = new LinkedList<>(this.parentEnvironment.associationTable.get(name));
             // Add the new declaration at the top of the linked-list in the current directory
             expDefinitionLinkedList.addFirst(def);
             this.associationTable.put(name, expDefinitionLinkedList);
