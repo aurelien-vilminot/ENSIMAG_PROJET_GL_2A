@@ -119,6 +119,15 @@ public abstract class AbstractExpr extends AbstractInst {
         throw new UnsupportedOperationException("not yet implemented");
     }
 
+    /**
+     * Generate code to print the expression using hexadecimal value for floats
+     *
+     * @param compiler
+     */
+    protected void codeGenPrintx(DecacCompiler compiler) {
+        codeGenPrint(compiler);
+    }
+
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
         throw new UnsupportedOperationException("not yet implemented");

@@ -15,5 +15,8 @@
     println(123, " is a big number");
 
     print(37738353, 507311);
-    println(123, 456);
+    println(12, 3);
+
+    print(1.0, ",", 3);
+    printlnx(" and in hexa for floats :", 1.0, ",", 3);
 }

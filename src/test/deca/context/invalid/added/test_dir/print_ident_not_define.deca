@@ -1,0 +1,12 @@
+// Description:
+//    Test if a not defined ident in a print works.
+//
+// Results:
+//    test_context --> error, the ident is not defined in any environment.
+//
+// History:
+//    created on 06/01/2022
+
+{
+    println(a);
+}

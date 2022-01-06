@@ -15,7 +15,7 @@ public class EnvironmentTypes {
     }
 
     public static class DoubleDefException extends Exception {
-        private static final long serialVersionUID = -2733379901827316441L;
+        private static final long serialVersionUID = -7237778877912336909L;
     }
 
     /**
