@@ -36,9 +36,9 @@ TRUE : 'true';
 WHILE : 'while';
 
 // Identifiers
-fragment LETTER : 'a'..'z'|'A'..'Z';
+fragment LETTER : 'a'..'z' | 'A'..'Z';
 fragment DIGIT : '0'..'9';
-IDENT : (LETTER | '$' | '_')(LETTER | DIGIT | '$' + '_')*;
+IDENT : (LETTER | '$' | '_')(LETTER | DIGIT | '$' | '_')*;
 
 // Symbols
 LT : '<';
@@ -71,16 +71,16 @@ INT : '0' | POSITIVE_DIGIT DIGIT*; // A FAIRE (?) : Compilation Error if not rep
 // Floats
 fragment NUM : DIGIT+;
 fragment SIGN : ('+' | '-')? ;
-EXP : ('E' | 'e') SIGN NUM;
-DEC : NUM '.' NUM;
-FLOATDEC : (DEC + DEC EXP) ('F' | 'f')?;
-DIGITHEX : DIGIT | 'A'..'F' | 'a'..'f';
-NUMHEX : DIGITHEX+;
-FLOATHEX : ('0x' | '0X') NUMHEX '.' NUMHEX ('P' | 'p') SIGN NUM ('F' | 'f')?;
+fragment EXP : ('E' | 'e') SIGN NUM;
+fragment DEC : NUM '.' NUM;
+fragment FLOATDEC : (DEC | DEC EXP) ('F' | 'f')?;
+fragment DIGITHEX : DIGIT | 'A'..'F' | 'a'..'f';
+fragment NUMHEX : DIGITHEX+;
+fragment FLOATHEX : ('0x' | '0X') NUMHEX '.' NUMHEX ('P' | 'p') SIGN NUM ('F' | 'f')?;
 FLOAT : FLOATDEC | FLOATHEX;
 
 // Strings
-fragment STRING_CAR : (.*?)~('"' | '\\' | '\n');
+fragment STRING_CAR : ~('"' | '\\' | '\n');
 STRING : '"' (STRING_CAR | '\\"' | '\\\\')* '"';
 MULTI_LINE_STRING : '"' (STRING_CAR | EOF | '\\"' | '\\\\')* '"';
 
@@ -90,5 +90,5 @@ SINGLE_LINE_COMMENT : '//'(.*?)('\n') {skip();}; // ignore comments
 MULTI_LINE_COMMENT : '/*' .*? '*/' {skip();};
 
 // Includes
-fragment FILENAME : (LETTER | DIGIT | '.' | '-' | '_')*;
+fragment FILENAME : (LETTER | DIGIT | '.' | '-' | '_')+;
 INCLUDE : '#include' (' ')* '"' FILENAME '"' {super.doInclude(getText());};
