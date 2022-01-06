@@ -1,10 +1,7 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.context.Type;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ClassDefinition;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable;
 import java.io.PrintStream;
@@ -48,6 +45,11 @@ public class FloatLiteral extends AbstractExpr {
     @Override
     protected void codeGenPrint(DecacCompiler compiler) {
         compiler.addInstruction(new WSTR(Float.toString(value)));
+    }
+
+    @Override
+    protected void codeGenPrintx(DecacCompiler compiler) {
+        compiler.addInstruction(new WSTR(Float.toHexString(value)));
     }
 
     @Override
