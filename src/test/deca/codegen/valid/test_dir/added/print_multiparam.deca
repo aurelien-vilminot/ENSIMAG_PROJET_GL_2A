@@ -1,0 +1,12 @@
+// Description:
+//    test string multi-parameter print call
+//
+// Results:
+//    Bonjour le monde !
+//
+// History:
+//    created on 06/01/2022
+
+{
+    println("Bonjour", "le", "monde !");
+}
