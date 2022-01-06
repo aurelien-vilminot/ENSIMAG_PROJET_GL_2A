@@ -4,11 +4,12 @@ import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.ima.pseudocode.DVal;
 import fr.ensimag.ima.pseudocode.ImmediateInteger;
+import org.apache.commons.lang.Validate;
 
 /**
  *
- * @author Ensimag
- * @date 01/01/2022
+ * @author Aurélien VILMINOT
+ * @date 04/01/2022
  */
 public class BooleanType extends Type {
 
@@ -23,7 +24,8 @@ public class BooleanType extends Type {
 
     @Override
     public boolean sameType(Type otherType) {
-        throw new UnsupportedOperationException("not yet implemented");
+        Validate.notNull(otherType, "otherType object should not be null");
+        return otherType.isBoolean();
     }
 
 

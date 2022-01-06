@@ -43,8 +43,8 @@ echo ""
 # Lexer Valid :
 # (need to improve, just print answer here... but do not match the regex)
 
-TEST_LEXER_VALID_PATH="./src/test/deca/syntax/invalid/test_dir/added/lexer"
-TEST_LEXER_VALID_RESULT_PATH="./src/test/deca/syntax/invalid/result_dir/lexer"
+TEST_LEXER_VALID_PATH="./src/test/deca/syntax/valid/test_dir/added/lexer"
+TEST_LEXER_VALID_RESULT_PATH="./src/test/deca/syntax/valid/result_dir/lexer"
 nb_correct_valid=0
 nb_file_valid=0
 echo "\e[1;36m[BEGIN LEXER VALID TESTS]\e[1;m"
@@ -56,10 +56,10 @@ do
   name_test="${name_test##*/}"
 
   # Generate output file :
-  test_lex "$i" > "$TEST_LEXER_VALID_RESULT_PATH"/"$name_test".lis
+  test_lex "$i" > "$TEST_LEXER_VALID_RESULT_PATH"/"$name_test".lis 2>&1
 
-  echo "  \e[1;1m[ANSWER] $name_test\e[1;m"
-  cat "$TEST_LEXER_VALID_RESULT_PATH"/"$name_test".lis
+  echo "  \e[1;1m[ANSWER] $name_test\e[1;m (only the 10 first lexem)"
+  cat "$TEST_LEXER_VALID_RESULT_PATH"/"$name_test".lis | head
 
 done
 
