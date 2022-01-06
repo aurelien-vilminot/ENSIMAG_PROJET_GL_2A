@@ -1,0 +1,13 @@
+// Description:
+//    test with tricky strings
+//
+// Results:
+//    test_synt --> no error, return tree with 1 instruction
+//
+// History:
+//    created on 06/01/2022
+
+
+{
+    println("I'm \"James\".", " The", " backslash \\.");
+}

@@ -22,7 +22,7 @@ do
   name_test="${name_test##*/}"
 
   # Generate output file :
-  test_lex "$i" > "$TEST_LEXER_INVALID_RESULT_PATH"/"$name_test".lis
+  test_lex "$i" > "$TEST_LEXER_INVALID_RESULT_PATH"/"$name_test".lis 2>&1
 
   grep_result=$(grep -f "$TEST_LEXER_INVALID_RESULT_PATH"/"$name_test".txt "$TEST_LEXER_INVALID_RESULT_PATH"/"$name_test".lis)
 
@@ -36,7 +36,7 @@ do
 
 done
 
-echo "\e[1;36m[LEXER INVALID TESTS DONE] Results : $nb_correct / $nb_file_invalid\e[1;m"
+echo "\e[1;36m[LEXER INVALID TESTS DONE] Results : $nb_correct_invalid / $nb_file_invalid\e[1;m"
 echo ""
 
 # -----------------------------------------------------------------------------
