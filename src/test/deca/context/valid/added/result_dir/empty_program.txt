@@ -1,5 +1,5 @@
-`> [11, 0] Program
+`> [10, 0] Program
    +> ListDeclClass [List with 0 elements]
-   `> [11, 0] Main
+   `> [10, 0] Main
       +> ListDeclVar [List with 0 elements]
       `> ListInst [List with 0 elements]

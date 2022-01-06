@@ -1,41 +1,41 @@
-`> [11, 0] Program
+`> [10, 0] Program
    +> ListDeclClass [List with 0 elements]
-   `> [11, 0] Main
+   `> [10, 0] Main
       +> ListDeclVar [List with 0 elements]
       `> ListInst [List with 6 elements]
-         []> [12, 4] Print
+         []> [11, 4] Print
          ||  `> ListExpr [List with 2 elements]
-         ||     []> [12, 10] StringLiteral (Hello)
+         ||     []> [11, 10] StringLiteral (Hello)
          ||     ||  type: string
-         ||     []> [12, 19] StringLiteral ( world)
+         ||     []> [11, 19] StringLiteral ( world)
          ||         type: string
-         []> [13, 4] Println
+         []> [12, 4] Println
          ||  `> ListExpr [List with 2 elements]
-         ||     []> [13, 12] StringLiteral ( !)
+         ||     []> [12, 12] StringLiteral ( !)
          ||     ||  type: string
-         ||     []> [13, 18] StringLiteral (!)
+         ||     []> [12, 18] StringLiteral (!)
          ||         type: string
-         []> [15, 4] Print
+         []> [14, 4] Print
          ||  `> ListExpr [List with 2 elements]
-         ||     []> [15, 10] StringLiteral (37738353)
+         ||     []> [14, 10] StringLiteral (37738353)
          ||     ||  type: string
-         ||     []> [15, 22] Int (507311)
+         ||     []> [14, 22] Int (507311)
          ||         type: int
-         []> [16, 4] Println
+         []> [15, 4] Println
          ||  `> ListExpr [List with 2 elements]
-         ||     []> [16, 12] Int (123)
+         ||     []> [15, 12] Int (123)
          ||     ||  type: int
-         ||     []> [16, 17] StringLiteral ( is a big number)
+         ||     []> [15, 17] StringLiteral ( is a big number)
          ||         type: string
-         []> [18, 4] Print
+         []> [17, 4] Print
          ||  `> ListExpr [List with 2 elements]
-         ||     []> [18, 10] Int (37738353)
+         ||     []> [17, 10] Int (37738353)
          ||     ||  type: int
-         ||     []> [18, 20] Int (507311)
+         ||     []> [17, 20] Int (507311)
          ||         type: int
-         []> [19, 4] Println
+         []> [18, 4] Println
              `> ListExpr [List with 2 elements]
-                []> [19, 12] Int (123)
+                []> [18, 12] Int (123)
                 ||  type: int
-                []> [19, 17] Int (456)
+                []> [18, 17] Int (456)
                     type: int

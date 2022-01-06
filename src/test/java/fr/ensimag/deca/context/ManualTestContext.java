@@ -20,7 +20,7 @@ import org.apache.log4j.Logger;
  */
 public class ManualTestContext {
     public static void main(String[] args) throws IOException {
-        Logger.getRootLogger().setLevel(Level.DEBUG);
+        Logger.getRootLogger().setLevel(Level.WARN);
         DecaLexer lex = AbstractDecaLexer.createLexerFromArgs(args);
         CommonTokenStream tokens = new CommonTokenStream(lex);
         DecaParser parser = new DecaParser(tokens);

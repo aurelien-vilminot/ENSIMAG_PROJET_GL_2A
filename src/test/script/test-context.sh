@@ -22,7 +22,7 @@ do
   name_test="${name_test##*/}"
 
   # Generate output file :
-  test_synt "$i" > "$TEST_CONTEXT_INVALID_RESULT_PATH"/"$name_test".lis 2>&1
+  test_context "$i" > "$TEST_CONTEXT_INVALID_RESULT_PATH"/"$name_test".lis 2>&1
 
   grep_result=$(grep -f "$TEST_CONTEXT_INVALID_RESULT_PATH"/"$name_test".txt "$TEST_CONTEXT_INVALID_RESULT_PATH"/"$name_test".lis)
 
@@ -62,7 +62,7 @@ do
   name_test="${name_test##*/}"
 
   # Generate output file :
-  test_synt "$i" > "$TEST_CONTEXT_VALID_RESULT_PATH"/"$name_test".lis 2>&1
+  test_context "$i" > "$TEST_CONTEXT_VALID_RESULT_PATH"/"$name_test".lis 2>&1
 
   differences=$(diff "$TEST_CONTEXT_VALID_RESULT_PATH"/"$name_test".txt "$TEST_CONTEXT_VALID_RESULT_PATH"/"$name_test".lis | head)
 
