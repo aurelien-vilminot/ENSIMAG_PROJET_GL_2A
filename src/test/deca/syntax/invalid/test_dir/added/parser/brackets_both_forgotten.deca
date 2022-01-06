@@ -1,0 +1,10 @@
+// Description:
+//    test of one bracket forgotten
+//
+// Results:
+//    test_pars --> error line 10
+//
+// History:
+//    created on 04/01/2022
+
+print();
