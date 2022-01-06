@@ -38,7 +38,7 @@ public class IntLiteral extends AbstractExpr {
         Type intType = new IntType(new SymbolTable().create("int"));
         this.setType(intType);
 
-        LOG.debug("verify InteralLiteral: end");
+        LOG.debug("verify IntegerLiteral: end");
         return intType;
     }
 
