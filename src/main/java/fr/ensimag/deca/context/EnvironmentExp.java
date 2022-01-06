@@ -48,7 +48,8 @@ public class EnvironmentExp {
         if (this.associationTable.containsKey(key)) {
             // First, search in the current dictionary
             return this.associationTable.get(key).getFirst();
-        } else if (this.parentEnvironment.associationTable.containsKey(key)) {
+        } else if (this.parentEnvironment != null &&
+                this.parentEnvironment.associationTable.containsKey(key)) {
             // Search in the parent environment if key is not found in the current dictionary
             return this.parentEnvironment.associationTable.get(key).getFirst();
         }

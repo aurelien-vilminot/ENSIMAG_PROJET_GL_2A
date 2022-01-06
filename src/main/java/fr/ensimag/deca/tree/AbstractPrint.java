@@ -46,11 +46,11 @@ public abstract class AbstractPrint extends AbstractInst {
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
         Validate.notNull(localEnv, "Env_exp object should not be null");
 
-        for (AbstractExpr listExpr: this.arguments.getList()) {
+        for (AbstractExpr expr: this.arguments.getList()) {
             // Check if args types are printable
-            Type argType = listExpr.verifyExpr(compiler, localEnv, currentClass);
+            Type argType = expr.verifyExpr(compiler, localEnv, currentClass);
             if (argType.isInt() || argType.isFloat() || argType.isString()) {
-                listExpr.setType(argType);
+                expr.setType(argType);
             } else {
                 throw new ContextualError("Impossible to print this type of element : " + argType, this.getLocation());
             }

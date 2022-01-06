@@ -40,10 +40,10 @@ public class IntLiteral extends AbstractExpr {
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
         Validate.notNull(localEnv, "Env_exp object should not be null");
 
-        Type intType = new IntType(new SymbolTable().create("int"));
+        Type intType = new IntType(compiler.getSymbolTable().create("int"));
         this.setType(intType);
 
-        LOG.debug("verify InteralLiteral: end");
+        LOG.debug("verify IntegerLiteral: end");
         return intType;
     }
 

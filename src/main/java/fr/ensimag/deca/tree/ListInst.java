@@ -33,6 +33,7 @@ public class ListInst extends TreeList<AbstractInst> {
         LOG.debug("verify ListInt: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
         Validate.notNull(localEnv, "Env_exp object should not be null");
+        Validate.notNull(returnType, "Return type should not be null");
 
         for (AbstractInst abstractInst: getList()) {
             abstractInst.verifyInst(compiler, localEnv, currentClass, returnType);
