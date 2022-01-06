@@ -30,7 +30,7 @@ public class IntLiteral extends AbstractExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        LOG.debug("verify InteralLiteral: start");
+        LOG.debug("verify IntegerLiteral: start");
 
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
         Validate.notNull(localEnv, "Env_exp object should not be null");
