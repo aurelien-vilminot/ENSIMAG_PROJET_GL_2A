@@ -87,6 +87,18 @@ public class DecacCompiler {
         }
     }
 
+    public EnvironmentExp getEnvironmentExp() {
+        return environmentExp;
+    }
+
+    public EnvironmentTypes getEnvironmentTypes() {
+        return environmentTypes;
+    }
+
+    public SymbolTable getSymbolTable() {
+        return symbolTable;
+    }
+
     /**
      * Source file associated with this compiler instance.
      */

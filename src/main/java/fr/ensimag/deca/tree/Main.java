@@ -35,11 +35,8 @@ public class Main extends AbstractMain {
         // Vous avez le droit de changer le profil fourni pour ces méthodes
         // (mais ce n'est à priori pas nécessaire).
         Validate.notNull(compiler, "Compiler object should not be null");
-        EnvironmentExp environmentExp = new EnvironmentExp(null);
-        SymbolTable symbolTable = new SymbolTable();
-
-        this.declVariables.verifyListDeclVariable(compiler, environmentExp, null);
-        this.insts.verifyListInst(compiler, environmentExp, null, new VoidType(symbolTable.create("void")));
+        this.declVariables.verifyListDeclVariable(compiler, compiler.getEnvironmentExp(), null);
+        this.insts.verifyListInst(compiler, compiler.getEnvironmentExp(), null, new VoidType(compiler.getSymbolTable().create("void")));
         LOG.debug("verify Main: end");
     }
 
