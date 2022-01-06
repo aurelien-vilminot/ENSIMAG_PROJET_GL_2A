@@ -13,6 +13,6 @@
 {
     printlnx("ok");
     println("ok");
-    printx("ok\n");
-    print("ok\n");
+    printx("ok");
+    print("ok");
 }
