@@ -6,5 +6,8 @@
             []> [12, 4] Println
                 '> ListExpr [List with 3 elements]
                 |   []> [12, 13] String ("Bonjour")
+                |       type: String
                 |   []> [12, 24] String ("le")
+                |       type: String
                 |   []> [12, 30] String ("monde !")
+                |       type: String
