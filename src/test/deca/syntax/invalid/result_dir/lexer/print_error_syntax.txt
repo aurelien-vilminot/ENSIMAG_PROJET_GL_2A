@@ -1,1 +1,0 @@
-print_error_syntax.deca:10:
