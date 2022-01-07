@@ -1,11 +1,11 @@
-^OBRACE: \[@\d+,\d+:\d+='{',<\d+>,11:0\]
-PRINTLNX: \[@\d+,\d+:\d+='printlnx',<\d+>,12:4\]
-OPARENT: \[@\d+,\d+:\d+='(',<\d+>,12:12\]
-STRING: \[@\d+,\d+:\d+='"Bonjour"',<\d+>,12:13\]
-COMMA: \[@\d+,\d+:\d+=',',<\d+>,12:22\]
-STRING: \[@\d+,\d+:\d+='"le"',<\d+>,12:24\]
-COMMA: \[@\d+,\d+:\d+=',',<\d+>,12:29\]
-STRING: \[@\d+,\d+:\d+='"monde !"',<\d+>,12:31\]
-CPARENT : \[@\d+,\d+:\d+=')',<\d+>,12:37\]
-SEMI: \[@\d+,\d+:\d+=';',<\d+>,12:38\]
-CBRACE: \[@\d+,\d+:\d+='}',<\d+>,13:0\]$
+OBRACE '{' 11:0
+PRINTLNX 'printlnx' 12:4
+OPARENT '(' 12:12
+STRING '"Bonjour"' 12:13
+COMMA ',' 12:22
+STRING '"le"' 12:24
+COMMA ',' 12:29
+STRING '"monde !"' 12:31
+CPARENT ')' 12:37
+SEMI ';' 12:38
+CBRACE '}' 13:0
