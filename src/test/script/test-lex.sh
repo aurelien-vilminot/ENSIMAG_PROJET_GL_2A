@@ -30,6 +30,7 @@ do
     then
       echo "  \e[1;32m[CORRECT] $name_test\e[1;m"
       nb_correct_invalid=$((nb_correct_invalid+1))
+      rm "$TEST_LEXER_INVALID_RESULT_PATH"/"$name_test".lis
     else
       echo "  \e[1;31m[INCORRECT] $name_test, no match with the error...\e[1;m"
   fi
