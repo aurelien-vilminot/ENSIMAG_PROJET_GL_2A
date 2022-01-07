@@ -1,0 +1,29 @@
+// Description:
+//    test operation on integers, but it will be the same for others types
+//
+// Results:
+//    test_synt --> a tree without no error
+//
+// History:
+//    created on 07/01/2022
+
+{
+    int c = a + b;
+    int c = a - b;
+    int c = a / b;
+    int c = a * b;
+    int c = a % b;
+    int c = a && b;
+    int c = a || b;
+    - a;
+    int c = (a == b);
+    int c = a == b;
+    int c = a != b;
+    int c = a <= b;
+    int c = a < b;
+    int c = a > b;
+    int c = a >= b;
+
+    int a = a instanceof b;
+    int a = ! a;
+}
