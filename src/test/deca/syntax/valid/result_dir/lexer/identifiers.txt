@@ -1,4 +1,4 @@
-^IDENT: \[@\d+,\d+:\d+='_iamenidentifier',<\d+>,10:0\]
-IDENT: \[@\d+,\d+:\d+='metooooooo24',<\d+>,12:0\]
-IDENT: \[@\d+,\d+:\d+='andmetoo_$',<\d+>,14:0\]
-IDENT: \[@\d+,\d+:\d+='me8too',<\d+>,16:0\]$
+IDENT '_iamenidentifier' 10:0
+IDENT 'metooooooo24' 12:0
+IDENT 'andmetoo_$' 14:0
+IDENT 'me8too' 16:0
