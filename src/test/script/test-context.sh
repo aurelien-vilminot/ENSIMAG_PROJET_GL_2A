@@ -21,18 +21,23 @@ do
   name_test="${i%.*}"
   name_test="${name_test##*/}"
 
-  # Generate output file :
-  test_context "$i" > "$TEST_CONTEXT_INVALID_RESULT_PATH"/"$name_test".lis 2>&1
+  if ! test -f "$TEST_CONTEXT_INVALID_RESULT_PATH"/"$name_test".txt; then
+      echo "  \e[1;33m[INCORRECT] $name_test, result file not found.\e[1;m"
 
-  grep_result=$(grep -f "$TEST_CONTEXT_INVALID_RESULT_PATH"/"$name_test".txt "$TEST_CONTEXT_INVALID_RESULT_PATH"/"$name_test".lis)
-
-  if ! [ "$grep_result" = "" ]
-    then
-      echo "  \e[1;32m[CORRECT] $name_test\e[1;m"
-      nb_correct_invalid=$((nb_correct_invalid+1))
-      rm "$TEST_CONTEXT_INVALID_RESULT_PATH"/"$name_test".lis
     else
-      echo "  \e[1;31m[INCORRECT] $name_test, no match with the error...\e[1;m"
+      # Generate output file :
+      test_context "$i" > "$TEST_CONTEXT_INVALID_RESULT_PATH"/"$name_test".lis 2>&1
+
+      grep_result=$(grep -f "$TEST_CONTEXT_INVALID_RESULT_PATH"/"$name_test".txt "$TEST_CONTEXT_INVALID_RESULT_PATH"/"$name_test".lis)
+
+      if ! [ "$grep_result" = "" ]
+        then
+          echo "  \e[1;32m[CORRECT] $name_test\e[1;m"
+          nb_correct_invalid=$((nb_correct_invalid+1))
+          rm "$TEST_CONTEXT_INVALID_RESULT_PATH"/"$name_test".lis
+        else
+          echo "  \e[1;31m[INCORRECT] $name_test, no match with the error...\e[1;m"
+      fi
   fi
 done
 
@@ -62,25 +67,30 @@ do
   name_test="${i%.*}"
   name_test="${name_test##*/}"
 
-  # Generate output file :
-  test_context "$i" > "$TEST_CONTEXT_VALID_RESULT_PATH"/"$name_test".lis 2>&1
-
-  differences=$(diff "$TEST_CONTEXT_VALID_RESULT_PATH"/"$name_test".txt "$TEST_CONTEXT_VALID_RESULT_PATH"/"$name_test".lis | head)
-
-  if [ $? -ne 2 ]
-    then
-    if [ "$differences" = "" ]
-      then
-        echo "  \e[1;32m[CORRECT] $name_test\e[1;m"
-        nb_correct_valid=$((nb_correct_valid+1))
-        rm "$TEST_CONTEXT_VALID_RESULT_PATH"/"$name_test".lis
-      else
-        echo "  \e[1;31m[INCORRECT] $name_test, here is the start of differences : \e[1;m"
-        echo "$differences"
-    fi
+  if ! test -f "$TEST_CONTEXT_VALID_RESULT_PATH"/"$name_test".txt; then
+      echo "  \e[1;33m[INCORRECT] $name_test, result file not found.\e[1;m"
 
     else
-      echo "  \e[1;31m[INCORRECT] $name_test not found ... \e[1;m"
+      # Generate output file :
+      test_context "$i" > "$TEST_CONTEXT_VALID_RESULT_PATH"/"$name_test".lis 2>&1
+
+      differences=$(diff "$TEST_CONTEXT_VALID_RESULT_PATH"/"$name_test".txt "$TEST_CONTEXT_VALID_RESULT_PATH"/"$name_test".lis | head)
+
+      if [ $? -ne 2 ]
+        then
+        if [ "$differences" = "" ]
+          then
+            echo "  \e[1;32m[CORRECT] $name_test\e[1;m"
+            nb_correct_valid=$((nb_correct_valid+1))
+            rm "$TEST_CONTEXT_VALID_RESULT_PATH"/"$name_test".lis
+          else
+            echo "  \e[1;31m[INCORRECT] $name_test, here is the start of differences : \e[1;m"
+            echo "$differences"
+        fi
+
+        else
+          echo "  \e[1;31m[INCORRECT] $name_test not found ... \e[1;m"
+      fi
   fi
 done
 

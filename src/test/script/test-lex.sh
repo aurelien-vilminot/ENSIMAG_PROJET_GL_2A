@@ -24,17 +24,21 @@ do
   # Generate output file :
   test_lex "$i" > "$TEST_LEXER_INVALID_RESULT_PATH"/"$name_test".lis 2>&1
 
-  grep_result=$(grep -f "$TEST_LEXER_INVALID_RESULT_PATH"/"$name_test".txt "$TEST_LEXER_INVALID_RESULT_PATH"/"$name_test".lis)
+  if ! test -f "$TEST_LEXER_INVALID_RESULT_PATH"/"$name_test".txt; then
+    echo "  \e[1;33m[INCORRECT] $name_test, result file not found.\e[1;m"
 
-  if ! [ "$grep_result" = "" ]
-    then
-      echo "  \e[1;32m[CORRECT] $name_test\e[1;m"
-      nb_correct_invalid=$((nb_correct_invalid+1))
-      rm "$TEST_LEXER_INVALID_RESULT_PATH"/"$name_test".lis
     else
-      echo "  \e[1;31m[INCORRECT] $name_test, no match with the error...\e[1;m"
-  fi
 
+      grep_result=$(grep -f "$TEST_LEXER_INVALID_RESULT_PATH"/"$name_test".txt "$TEST_LEXER_INVALID_RESULT_PATH"/"$name_test".lis)
+      if ! [ "$grep_result" = "" ]
+        then
+          echo "  \e[1;32m[CORRECT] $name_test\e[1;m"
+          nb_correct_invalid=$((nb_correct_invalid+1))
+          rm "$TEST_LEXER_INVALID_RESULT_PATH"/"$name_test".lis
+        else
+          echo "  \e[1;31m[INCORRECT] $name_test, no match with the error...\e[1;m"
+      fi
+  fi
 done
 
 result_invalid_string="Results : $((nb_correct_invalid))/$((nb_file_invalid))\e[1;m"
@@ -63,46 +67,48 @@ do
   name_test="${i%.*}"
   name_test="${name_test##*/}"
 
-  # Generate output file :
-  test_lex "$i" > "$TEST_LEXER_VALID_RESULT_PATH"/"$name_test".lis 2>&1
-
   if ! test -f "$TEST_LEXER_VALID_RESULT_PATH"/"$name_test".txt; then
-    echo "  $name_test .txt does not exist"
-    fault=1
+      echo "  \e[1;33m[INCORRECT] $name_test, result file not found.\e[1;m"
+
     else
+      # Generate output file :
+      test_lex "$i" > "$TEST_LEXER_VALID_RESULT_PATH"/"$name_test".lis 2>&1
 
-      line_count=0
-      fault=0
-      while read -r line;
-      do
+      if ! test -f "$TEST_LEXER_VALID_RESULT_PATH"/"$name_test".txt; then
+        echo "  $name_test .txt does not exist"
+        fault=1
+        else
 
-        line_count=$((line_count+1))
-        res_line=$(sed -n "$line_count p" "$TEST_LEXER_VALID_RESULT_PATH"/"$name_test".lis)
+          line_count=0
+          fault=0
+          while read -r line;
+          do
 
-        for word in $line
-        do
-          grep_result=$(echo "$res_line" | grep "$word")
-          if [ "$grep_result" = "" ]
-          then
-              fault=1
-              break
-          fi
-        done
-      done < "$TEST_LEXER_VALID_RESULT_PATH"/"$name_test".txt
+            line_count=$((line_count+1))
+            res_line=$(sed -n "$line_count p" "$TEST_LEXER_VALID_RESULT_PATH"/"$name_test".lis)
 
+            for word in $line
+            do
+              grep_result=$(echo "$res_line" | grep "$word")
+              if [ "$grep_result" = "" ]
+              then
+                  fault=1
+                  break
+              fi
+            done
+          done < "$TEST_LEXER_VALID_RESULT_PATH"/"$name_test".txt
+
+      fi
+
+      if [ $fault -eq 0 ]
+        then
+          echo "  \e[1;32m[CORRECT] $name_test\e[1;m"
+          nb_correct_valid=$((nb_correct_valid+1))
+          rm "$TEST_LEXER_VALID_RESULT_PATH"/"$name_test".lis
+        else
+          echo "  \e[1;31m[INCORRECT] $name_test\e[1;m"
+      fi
   fi
-
-  if [ $fault -eq 0 ]
-    then
-      echo "  \e[1;32m[CORRECT] $name_test\e[1;m"
-      nb_correct_valid=$((nb_correct_valid+1))
-      rm "$TEST_LEXER_VALID_RESULT_PATH"/"$name_test".lis
-    else
-      echo "  \e[1;31m[INCORRECT] $name_test\e[1;m"
-  fi
-
-  # echo "  \e[1;1m[ANSWER] $name_test\e[1;m (only the 10 first lexem)"
-  # cat "$TEST_LEXER_VALID_RESULT_PATH"/"$name_test".lis | head
 
 done
 
