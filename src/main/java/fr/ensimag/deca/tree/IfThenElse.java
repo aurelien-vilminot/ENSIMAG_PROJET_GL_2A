@@ -8,6 +8,7 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
+import org.apache.log4j.Logger;
 
 /**
  * Full if/else if/else statement.
@@ -16,7 +17,8 @@ import org.apache.commons.lang.Validate;
  * @date 01/01/2022
  */
 public class IfThenElse extends AbstractInst {
-    
+    private static final Logger LOG = Logger.getLogger(Main.class);
+
     private final AbstractExpr condition; 
     private final ListInst thenBranch;
     private ListInst elseBranch;
@@ -34,6 +36,15 @@ public class IfThenElse extends AbstractInst {
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass, Type returnType)
             throws ContextualError {
+        LOG.debug("verify ifThenElse: start");
+        Validate.notNull(compiler, "Compiler (env_types) object should not be null");
+        Validate.notNull(localEnv, "Env_exp object should not be null");
+        Validate.notNull(returnType, "Return type should not be null");
+
+        this.condition.verifyInst(compiler, localEnv, currentClass, returnType);
+        this.thenBranch.verifyListInst(compiler, localEnv, currentClass, returnType);
+        this.elseBranch.verifyListInst(compiler, localEnv, currentClass, returnType);
+        LOG.debug("verify ifThenElse: else");
     }
 
     @Override

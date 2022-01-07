@@ -34,6 +34,9 @@ public class DeclVar extends AbstractDeclVar {
             EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError {
         LOG.debug("verify DeclVar: start");
+        Validate.notNull(compiler, "Compiler (env_types) object should not be null");
+        Validate.notNull(localEnv, "Env_exp object should not be null");
+
         Type currentType = this.type.verifyType(compiler);
         if (currentType.isVoid()) {
             throw new ContextualError("Void cannot be the type of a variable", this.getLocation());

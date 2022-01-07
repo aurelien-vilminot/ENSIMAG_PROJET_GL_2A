@@ -1,10 +1,7 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.context.Type;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ClassDefinition;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.Label;
@@ -86,14 +83,18 @@ public abstract class AbstractExpr extends AbstractInst {
             Type expectedType)
             throws ContextualError {
         LOG.debug("verify RValue: start");
-        this.verifyExpr(compiler, localEnv, currentClass);
+        Validate.notNull(compiler, "Compiler (env_types) object should not be null");
+        Validate.notNull(localEnv, "Env_exp object should not be null");
+        Validate.notNull(expectedType, "Expected type should not be null");
+
+        Type currentType = this.verifyExpr(compiler, localEnv, currentClass);
 
         // Check type compatibility
-        boolean areCompatible = compiler.getEnvironmentTypes().assignCompatible(expectedType, this.type);
+        boolean areCompatible = compiler.getEnvironmentTypes().assignCompatible(expectedType, currentType);
         if (!areCompatible) {
             throw new ContextualError("Types are not compatible", this.getLocation());
         }
-
+        this.setType(currentType);
         LOG.debug("verify RValue: end");
         return this;
     }
@@ -123,7 +124,18 @@ public abstract class AbstractExpr extends AbstractInst {
      */
     void verifyCondition(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        LOG.debug("verify Condition: start");
+        Validate.notNull(compiler, "Compiler (env_types) object should not be null");
+        Validate.notNull(localEnv, "Env_exp object should not be null");
+
+        Type currentType = this.verifyExpr(compiler, localEnv, currentClass);
+
+        // Check if it is a boolean expression
+        if (currentType.isBoolean()) {
+            throw new ContextualError("Expression type must be boolean", this.getLocation());
+        }
+
+        LOG.debug("verify Condition: end");
     }
 
     /**

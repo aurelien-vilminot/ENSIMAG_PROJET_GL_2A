@@ -38,6 +38,9 @@ public class Initialization extends AbstractInitialization {
             EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError {
         LOG.debug("verify initialization: start");
+        Validate.notNull(compiler, "Compiler (env_types) object should not be null");
+        Validate.notNull(localEnv, "Env_exp object should not be null");
+
         Type type = this.expression.verifyRValue(compiler, localEnv, currentClass, t).getType();
         this.expression.setType(type);
         LOG.debug("verify initialization: end");
