@@ -69,4 +69,108 @@ public class TestEnvironmentTypes {
             this.environmentTypes.declare(this.symbolTest, this.typeDefinition);
         });
     }
+
+    @Test
+    public void testSubTypes() {
+        ClassType type1 = new ClassType(this.symbolTest);
+        ClassType type2 = new ClassType(this.symbolTest, null, type1.getDefinition());
+
+        // Check validate
+        Exception exception;
+        String expectedMessage, actualMessage;
+        exception = assertThrows(IllegalArgumentException.class, () -> {
+            this.environmentTypes.subTypes(null, type1);
+        });
+        expectedMessage = "Type t1 should not be null";
+        actualMessage = exception.getMessage();
+        assertEquals(actualMessage, expectedMessage);
+
+        exception = assertThrows(IllegalArgumentException.class, () -> {
+            this.environmentTypes.subTypes(type1, null);
+        });
+        expectedMessage = "Type t2 should not be null";
+        actualMessage = exception.getMessage();
+        assertEquals(actualMessage, expectedMessage);
+
+        // Check same type for type1 and type2
+        assertTrue(this.environmentTypes.subTypes(type1, type2));
+        assertTrue(this.environmentTypes.subTypes(type1, type1));
+
+        // Check if null is a subtype of any class
+        Type typeNull = new NullType(this.symbolTest);
+        assertTrue(this.environmentTypes.subTypes(typeNull, type2));
+
+        // Check if type2 is effectively a subclass of type2
+        assertTrue(this.environmentTypes.subTypes(type2, type1));
+
+        // Check with different types
+        VoidType voidType = new VoidType(this.symbolTest);
+        assertFalse(this.environmentTypes.subTypes(type1, voidType));
+    }
+
+    @Test
+    public void testAssignCompatible() {
+        FloatType type1 = new FloatType(this.symbolTest);
+        IntType type2 = new IntType(this.symbolTest);
+
+        // Check validate
+        Exception exception;
+        String expectedMessage, actualMessage;
+        exception = assertThrows(IllegalArgumentException.class, () -> {
+            this.environmentTypes.subTypes(null, type1);
+        });
+        expectedMessage = "Type t1 should not be null";
+        actualMessage = exception.getMessage();
+        assertEquals(actualMessage, expectedMessage);
+
+        exception = assertThrows(IllegalArgumentException.class, () -> {
+            this.environmentTypes.subTypes(type1, null);
+        });
+        expectedMessage = "Type t2 should not be null";
+        actualMessage = exception.getMessage();
+        assertEquals(actualMessage, expectedMessage);
+
+        // Check if float and int types are compatibles
+        assertTrue(this.environmentTypes.assignCompatible(type1, type2));
+
+        // Check if int types are compatibles
+        assertTrue(this.environmentTypes.assignCompatible(type1, type1));
+
+        // Check class and int types not compatibles
+        ClassType classType = new ClassType(this.symbolTest);
+        assertFalse(this.environmentTypes.assignCompatible(classType, type1));
+    }
+
+    @Test
+    public void testCastCompatible() {
+        FloatType type1 = new FloatType(this.symbolTest);
+        IntType type2 = new IntType(this.symbolTest);
+
+        // Check validate
+        Exception exception;
+        String expectedMessage, actualMessage;
+        exception = assertThrows(IllegalArgumentException.class, () -> {
+            this.environmentTypes.subTypes(null, type1);
+        });
+        expectedMessage = "Type t1 should not be null";
+        actualMessage = exception.getMessage();
+        assertEquals(actualMessage, expectedMessage);
+
+        exception = assertThrows(IllegalArgumentException.class, () -> {
+            this.environmentTypes.subTypes(type1, null);
+        });
+        expectedMessage = "Type t2 should not be null";
+        actualMessage = exception.getMessage();
+        assertEquals(actualMessage, expectedMessage);
+
+        // Check if float and int types could be cast
+        assertTrue(this.environmentTypes.castCompatible(type1, type2));
+
+        // Check if int and float types could be cast
+        assertTrue(this.environmentTypes.castCompatible(type2, type1));
+
+        // Check if void type is not castable
+        VoidType voidType = new VoidType(this.symbolTest);
+        assertFalse(this.environmentTypes.castCompatible(voidType, type2));
+    }
 }
