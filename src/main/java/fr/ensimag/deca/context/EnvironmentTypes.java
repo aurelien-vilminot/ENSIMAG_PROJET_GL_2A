@@ -96,12 +96,24 @@ public class EnvironmentTypes {
         return false;
     }
 
+    /**
+     * Check if a value could be assign to a specific type
+     * @param t1 The destination variable
+     * @param t2 The value to be assigned
+     * @return True if t2 can be assigned to t1
+     */
     public boolean assignCompatible(Type t1, Type t2) {
         Validate.notNull(t1, "Type t1 should not be null");
         Validate.notNull(t2, "Type t2 should not be null");
         return (t1.isFloat() && t2.isInt()) || subTypes(t1, t2);
     }
 
+    /**
+     * Check cast compatibility of two types
+     * @param t1 The type to be cast
+     * @param t2 The destination type cast
+     * @return True if t1 could be cast into t2 type
+     */
     public boolean castCompatible(Type t1, Type t2) {
         Validate.notNull(t1, "Type t1 should not be null");
         Validate.notNull(t2, "Type t2 should not be null");
