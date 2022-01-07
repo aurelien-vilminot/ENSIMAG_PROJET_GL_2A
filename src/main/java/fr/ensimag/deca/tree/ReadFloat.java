@@ -1,11 +1,10 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.context.Type;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ClassDefinition;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import org.apache.log4j.Logger;
+
 import java.io.PrintStream;
 
 /**
@@ -14,11 +13,18 @@ import java.io.PrintStream;
  * @date 01/01/2022
  */
 public class ReadFloat extends AbstractReadExpr {
+    private static final Logger LOG = Logger.getLogger(Main.class);
 
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        LOG.debug("verify ReadFloat: start");
+
+        Type intType = new FloatType(compiler.getSymbolTable().create("float"));
+        this.setType(intType);
+
+        LOG.debug("verify ReadFloat: end");
+        return intType;
     }
 
 
