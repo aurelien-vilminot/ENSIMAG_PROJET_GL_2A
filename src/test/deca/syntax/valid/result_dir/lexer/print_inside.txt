@@ -4,8 +4,8 @@ OPARENT '(' 12:12
 STRING '"Bonjour"' 12:13
 COMMA ',' 12:22
 STRING '"le"' 12:24
-COMMA ',' 12:29
-STRING '"monde !"' 12:31
-CPARENT ')' 12:37
-SEMI ';' 12:38
+COMMA ',' 12:28
+STRING '"monde !"' 12:30
+CPARENT ')' 12:39
+SEMI ';' 12:40
 CBRACE '}' 13:0
