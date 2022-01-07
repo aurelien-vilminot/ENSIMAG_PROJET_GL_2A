@@ -131,7 +131,7 @@ public abstract class AbstractExpr extends AbstractInst {
         Type currentType = this.verifyExpr(compiler, localEnv, currentClass);
 
         // Check if it is a boolean expression
-        if (currentType.isBoolean()) {
+        if (!currentType.isBoolean()) {
             throw new ContextualError("Expression type must be boolean", this.getLocation());
         }
 
