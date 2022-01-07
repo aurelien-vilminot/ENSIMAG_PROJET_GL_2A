@@ -14,7 +14,7 @@ public class ManualTestLex {
     // but just throw exception to the user if something goes wrong (=> throws
     // IOException)
     public static void main(String[] args) throws IOException {
-        Logger.getRootLogger().setLevel(Level.DEBUG);
+        Logger.getRootLogger().setLevel(Level.WARN);
         DecaLexer lex = AbstractDecaLexer.createLexerFromArgs(args);
         System.exit(lex.debugTokenStream() ? 1 : 0);
     }
