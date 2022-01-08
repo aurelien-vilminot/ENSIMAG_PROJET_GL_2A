@@ -1,0 +1,13 @@
+`> [10, 0] Program
+   +> ListDeclClass [List with 0 elements]
+   `> [10, 0] Main
+      +> ListDeclVar [List with 0 elements]
+      `> ListInst [List with 1 elements]
+         []> [12, 4] Println
+             `> ListExpr [List with 3 elements]
+                []> [12, 12] StringLiteral (Hello)
+                ||  type: string
+                []> [12, 21] StringLiteral ( world !)
+                ||  type: string
+                []> [12, 33] Int (12)
+                    type: int

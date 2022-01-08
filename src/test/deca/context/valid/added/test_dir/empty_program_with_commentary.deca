@@ -1,0 +1,13 @@
+// Description:
+//    Test of empty program
+//
+// Results:
+//    test_context --> No error, return the AST of the file empty_program.txt
+//
+// History:
+//    created on 06/01/2022
+
+{
+    /* This is e
+    commentary */
+}

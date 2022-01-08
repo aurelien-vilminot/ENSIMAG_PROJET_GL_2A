@@ -1,0 +1,59 @@
+`> [10, 0] Program
+   +> ListDeclClass [List with 0 elements]
+   `> [10, 0] Main
+      +> ListDeclVar [List with 0 elements]
+      `> ListInst [List with 8 elements]
+         []> [11, 4] Print
+         ||  `> ListExpr [List with 2 elements]
+         ||     []> [11, 10] StringLiteral (Hello)
+         ||     ||  type: string
+         ||     []> [11, 19] StringLiteral ( world)
+         ||         type: string
+         []> [12, 4] Println
+         ||  `> ListExpr [List with 2 elements]
+         ||     []> [12, 12] StringLiteral ( !)
+         ||     ||  type: string
+         ||     []> [12, 18] StringLiteral (!)
+         ||         type: string
+         []> [14, 4] Print
+         ||  `> ListExpr [List with 2 elements]
+         ||     []> [14, 10] StringLiteral (37738353)
+         ||     ||  type: string
+         ||     []> [14, 22] Int (507311)
+         ||         type: int
+         []> [15, 4] Println
+         ||  `> ListExpr [List with 2 elements]
+         ||     []> [15, 12] Int (123)
+         ||     ||  type: int
+         ||     []> [15, 17] StringLiteral ( is a big number)
+         ||         type: string
+         []> [17, 4] Print
+         ||  `> ListExpr [List with 2 elements]
+         ||     []> [17, 10] Int (37738353)
+         ||     ||  type: int
+         ||     []> [17, 20] Int (507311)
+         ||         type: int
+         []> [18, 4] Println
+         ||  `> ListExpr [List with 2 elements]
+         ||     []> [18, 12] Int (12)
+         ||     ||  type: int
+         ||     []> [18, 16] Int (3)
+         ||         type: int
+         []> [20, 4] Print
+         ||  `> ListExpr [List with 3 elements]
+         ||     []> [20, 10] Float (1.0)
+         ||     ||  type: float
+         ||     []> [20, 15] StringLiteral (,)
+         ||     ||  type: string
+         ||     []> [20, 20] Int (3)
+         ||         type: int
+         []> [21, 4] Println
+             `> ListExpr [List with 4 elements]
+                []> [21, 13] StringLiteral ( and in hexa for floats :)
+                ||  type: string
+                []> [21, 42] Float (1.0)
+                ||  type: float
+                []> [21, 47] StringLiteral (,)
+                ||  type: string
+                []> [21, 52] Int (3)
+                    type: int

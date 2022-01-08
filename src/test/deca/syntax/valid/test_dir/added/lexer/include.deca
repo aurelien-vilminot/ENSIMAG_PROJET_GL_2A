@@ -1,0 +1,11 @@
+// Description:
+//    test of comments
+//
+// Results:
+//    test_lex --> no error, no token
+//
+// History:
+//    created on 05/01/2022
+
+#include "hello.decah"
+#include "world.decah"

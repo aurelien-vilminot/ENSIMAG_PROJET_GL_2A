@@ -1,0 +1,34 @@
+// Description:
+//    test the if expression
+//
+// Results:
+//    test_synt --> a tree without no error
+//
+// History:
+//    created on 07/01/2022
+
+{
+    if(a - 0){
+        int a = b;
+    }
+
+    if(a && 0){
+        int a = b;
+    } else if (a){
+        int b = a;
+    }
+
+    if(a && 0){
+        int a = b;
+    } else if (a){
+        int b = a;
+    } else {
+        int b;
+    }
+
+    if(a && 0){
+        int a = b;
+    } else {
+        int b;
+    }
+}

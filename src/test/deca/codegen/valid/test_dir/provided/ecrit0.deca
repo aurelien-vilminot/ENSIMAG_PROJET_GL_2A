@@ -1,0 +1,17 @@
+// Description:
+//    ecriture de chaines
+//
+// Resultats:
+//    ok
+//    ok
+//
+// Historique:
+//    cree le 01/01/2022
+
+{
+   println("ok") ; 
+   print("ok") ; 
+   println() ; 
+}
+
+

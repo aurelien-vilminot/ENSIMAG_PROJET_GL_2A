@@ -1,0 +1,11 @@
+// Description:
+//    test of comments
+//
+// Results:
+//    test_lex --> no error, no token
+//    test_synt --> no error, basic tree
+//
+// History:
+//    created on 04/01/2022
+
+/* Ceci est un commentaire */
