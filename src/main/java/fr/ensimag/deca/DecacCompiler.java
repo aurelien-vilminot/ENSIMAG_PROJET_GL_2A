@@ -125,9 +125,8 @@ public class DecacCompiler {
      */
     public boolean compile() {
         String sourceFile = source.getAbsolutePath();
-        String destFile = null;
-        // A FAIRE: calculer le nom du fichier .ass à partir du nom du
-        // A FAIRE: fichier .deca.
+        // TODO: verify that sourceFile is .deca
+        String destFile = source.getAbsolutePath().replaceAll("\\.deca$", ".ass");
         PrintStream err = System.err;
         PrintStream out = System.out;
         LOG.debug("Compiling file " + sourceFile + " to assembly file " + destFile);
@@ -178,9 +177,19 @@ public class DecacCompiler {
         }
         assert(prog.checkAllLocations());
 
+        if (this.compilerOptions.getParse()) {
+            // Display tree decompilation
+            prog.decompile(out);
+            return false;
+        }
 
         prog.verifyProgram(this);
         assert(prog.checkAllDecorations());
+
+        if (this.compilerOptions.getVerification()) {
+            // Stop program after syntax verification
+            return false;
+        }
 
         addComment("start main program");
         prog.codeGenProgram(this);
