@@ -25,7 +25,7 @@ options {
 // which packages should be imported?
 @header {
     import fr.ensimag.deca.tree.*;
-    import fr.ensimag.deca.tools.SymbolTable
+    import fr.ensimag.deca.tools.SymbolTable;
     import java.io.PrintStream;
 }
 
@@ -35,7 +35,6 @@ options {
         return prog().tree;
     }
 
-    @Override
     protected SymbolTable getSymbolTable() {
         return getDecacCompiler().getSymbolTable();
     }
@@ -155,7 +154,7 @@ inst returns[AbstractInst tree]
     | WHILE OPARENT condition=expr CPARENT OBRACE body=list_inst CBRACE {
             assert($condition.tree != null);
             assert($body.tree != null);
-            $tree = new While($condition, $body);
+            $tree = new While($condition.tree, $body.tree);
             setLocation($tree, $WHILE);
         }
     | RETURN expr SEMI {
@@ -165,21 +164,22 @@ inst returns[AbstractInst tree]
 
 // sans objet: done
 // TODO: setLocation
+// TODO: else branch
 if_then_else returns[IfThenElse tree]
 @init {
-    ListInst elsifBranch;
-    ListInst emptyBranch;
+    // ListInst elsifBranch;
+    // ListInst emptyBranch;
 }
     : if1=IF OPARENT condition=expr CPARENT OBRACE li_if=list_inst CBRACE {
-            $tree = IfThenElse($condition, $li_if, elsifBranch);
+            // $tree = new IfThenElse($condition.tree, $li_if.tree, elsifBranch);
         }
       (ELSE elsif=IF OPARENT elsif_cond=expr CPARENT OBRACE elsif_li=list_inst CBRACE {
-            IfThenElse elsif = IfThenElse($elsif_cond, $elsif_li, emptyBranch);
-            elsifBranch.add(elsif);
+            // IfThenElse elsif = new IfThenElse($elsif_cond.tree, $elsif_li.tree, emptyBranch);
+            // elsifBranch.add(elsif);
         }
       )*
       (ELSE OBRACE li_else=list_inst CBRACE {
-            elsifBranch.add($li_else);
+            // TODO: elsifBranch.add($li_else.tree);
         }
       )?
     ;
@@ -222,7 +222,7 @@ assign_expr returns[AbstractExpr tree]
         EQUALS e2=assign_expr {
             assert($e.tree != null);
             assert($e2.tree != null);
-            $tree = Assign($e.tree, $e2.tree);
+            $tree = new Assign((AbstractLValue)$e.tree, $e2.tree);
             setLocation($tree, $EQUALS);
         }
       | /* epsilon */ {
@@ -374,12 +374,12 @@ unary_expr returns[AbstractExpr tree]
     : op=MINUS e=unary_expr {
             assert($e.tree != null);
             $tree = new UnaryMinus($e.tree);
-            setLocation($tree, $op.start);
+            setLocation($tree, $op);
         }
     | op=EXCLAM e=unary_expr {
             assert($e.tree != null);
             $tree = new Not($e.tree);
-            setLocation($tree, $op.start);
+            setLocation($tree, $op);
         }
     | select_expr {
             assert($select_expr.tree != null);
