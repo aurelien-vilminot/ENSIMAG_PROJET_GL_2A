@@ -1,10 +1,7 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ClassDefinition;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentExp;
-import fr.ensimag.deca.context.Type;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
@@ -33,14 +30,15 @@ public class InstanceOf extends AbstractExpr {
         // Get expr type
         Type exprType = this.expr.verifyExpr(compiler, localEnv, currentClass);
         Type instanceType = this.type.verifyType(compiler);
+        Type returnType = new BooleanType(compiler.getSymbolTable().create("boolean"));
 
         if (!exprType.isClass() || !instanceType.isClass()) {
             throw new ContextualError("InstanceOf works only with two class types operands", this.getLocation());
         }
 
-        this.setType(instanceType);
+        this.setType(returnType);
         LOG.debug("verify InstanceOf: end");
-        return instanceType;
+        return returnType;
     }
 
     @Override
