@@ -8,8 +8,8 @@ import fr.ensimag.deca.tree.Location;
 /**
  * Deca Type (internal representation of the compiler)
  *
- * @author gl07
- * @date 01/01/2022
+ * @author Aurélien VILMINOT
+ * @date 04/01/2022
  */
 
 public abstract class Type {
@@ -77,7 +77,11 @@ public abstract class Type {
      */
     public ClassType asClassType(String errorMessage, Location l)
             throws ContextualError {
-        throw new ContextualError(errorMessage, l);
+        try {
+            return (ClassType) this;
+        } catch (Exception e) {
+            throw new ContextualError(errorMessage, l);
+        }
     }
 
 }

@@ -1,12 +1,13 @@
 package fr.ensimag.deca.context;
 
 import fr.ensimag.deca.tree.Location;
+import org.apache.commons.lang.Validate;
 
 /**
  * Definition of an identifier.
  * 
- * @author gl07
- * @date 01/01/2022
+ * @author Aurélien VILMINOT
+ * @date 04/01/2022
  */
 public abstract class Definition {
     @Override
@@ -66,7 +67,12 @@ public abstract class Definition {
      */
     public MethodDefinition asMethodDefinition(String errorMessage, Location l)
             throws ContextualError {
-        throw new ContextualError(errorMessage, l);
+        Validate.notNull(errorMessage, "Error message should not be null");
+        try {
+            return (MethodDefinition) this;
+        } catch (Exception e) {
+            throw new ContextualError(errorMessage, l);
+        }
     }
     
     /**
@@ -75,7 +81,12 @@ public abstract class Definition {
      */
     public FieldDefinition asFieldDefinition(String errorMessage, Location l)
             throws ContextualError {
-        throw new ContextualError(errorMessage, l);
+        Validate.notNull(errorMessage, "Error message should not be null");
+        try {
+            return (FieldDefinition) this;
+        } catch (Exception e) {
+            throw new ContextualError(errorMessage, l);
+        }
     }
 
     public abstract boolean isExpression();

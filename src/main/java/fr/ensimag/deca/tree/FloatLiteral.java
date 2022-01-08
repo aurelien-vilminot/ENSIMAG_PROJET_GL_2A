@@ -1,15 +1,15 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.context.Type;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ClassDefinition;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 
+import fr.ensimag.deca.tools.SymbolTable;
+
 import fr.ensimag.ima.pseudocode.instructions.WSTR;
 import org.apache.commons.lang.Validate;
+import org.apache.log4j.Logger;
 
 /**
  * Single precision, floating-point literal
@@ -24,6 +24,7 @@ public class FloatLiteral extends AbstractExpr {
     }
 
     private float value;
+    private static final Logger LOG = Logger.getLogger(Main.class);
 
     public FloatLiteral(float value) {
         Validate.isTrue(!Float.isInfinite(value),
@@ -36,7 +37,16 @@ public class FloatLiteral extends AbstractExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        LOG.debug("verify FloatLiteral: start");
+
+        Validate.notNull(compiler, "Compiler (env_types) object should not be null");
+        Validate.notNull(localEnv, "Env_exp object should not be null");
+
+        Type floatType = new FloatType(compiler.getSymbolTable().create("float"));
+        this.setType(floatType);
+
+        LOG.debug("verify FloatLiteral: end");
+        return floatType;
     }
 
     @Override
