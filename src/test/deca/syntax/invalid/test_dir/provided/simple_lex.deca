@@ -1,0 +1,16 @@
+// Description:
+//    tests de programme lexicalement correct.
+//
+// Resultats:
+//    Ligne 11 : Erreur de syntaxe.
+//    test_lex ne doit pas donner d'erreur.
+//
+// Historique:
+//    cree le 01/01/2022
+
+idf _autre_idf
+{
+}
+(
+)
+// un commentaire.

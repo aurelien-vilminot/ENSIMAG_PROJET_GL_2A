@@ -1,0 +1,19 @@
+// Description:
+//    Test printx and printlnx instructions on different types. Just float are written in decimal.
+//
+// Results:
+//    test_context --> no error, returns the AST of the file printx.txt
+//
+// History:
+//    created on 06/01/2022
+
+{
+    printx("Hello");
+    printlnx(" world !");
+
+    printx(1);
+    printlnx(2);
+
+    printx(1.0);
+    printlnx(2.0);
+}

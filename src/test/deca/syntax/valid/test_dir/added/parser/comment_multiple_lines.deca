@@ -1,0 +1,16 @@
+// Description:
+//    test of comments
+//
+// Results:
+//    test_synt --> no error, basic tree
+//
+// History:
+//    created on 06/01/2022
+
+/*
+
+This is a comment on multiple line
+
+Warning, the result tree must be empty !
+
+*/

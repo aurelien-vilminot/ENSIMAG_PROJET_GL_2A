@@ -1,0 +1,29 @@
+`> [10, 0] Program
+   +> ListDeclClass [List with 0 elements]
+   `> [10, 0] Main
+      +> ListDeclVar [List with 0 elements]
+      `> ListInst [List with 6 elements]
+         []> [11, 4] Print
+         ||  `> ListExpr [List with 1 elements]
+         ||     []> [11, 11] StringLiteral (Hello)
+         ||         type: string
+         []> [12, 4] Println
+         ||  `> ListExpr [List with 1 elements]
+         ||     []> [12, 13] StringLiteral ( world !)
+         ||         type: string
+         []> [14, 4] Print
+         ||  `> ListExpr [List with 1 elements]
+         ||     []> [14, 11] Int (1)
+         ||         type: int
+         []> [15, 4] Println
+         ||  `> ListExpr [List with 1 elements]
+         ||     []> [15, 13] Int (2)
+         ||         type: int
+         []> [17, 4] Print
+         ||  `> ListExpr [List with 1 elements]
+         ||     []> [17, 11] Float (1.0)
+         ||         type: float
+         []> [18, 4] Println
+             `> ListExpr [List with 1 elements]
+                []> [18, 13] Float (2.0)
+                    type: float

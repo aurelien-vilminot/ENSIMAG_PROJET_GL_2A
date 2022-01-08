@@ -1,0 +1,7 @@
+SLASH '/' 10:0
+TIMES '*' 10:1
+IDENT 'This' 10:3
+IDENT 'is' 10:8
+IDENT 'an' 10:11
+IDENT 'unclosed' 10:14
+IDENT 'comment' 10:23

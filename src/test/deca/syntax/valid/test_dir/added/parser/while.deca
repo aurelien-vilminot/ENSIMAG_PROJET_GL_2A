@@ -1,0 +1,14 @@
+// Description:
+//    test while loop
+//
+// Results:
+//    test_synt --> a tree without no error
+//
+// History:
+//    created on 07/01/2022
+
+{
+    while( a== b ){
+
+    }
+}

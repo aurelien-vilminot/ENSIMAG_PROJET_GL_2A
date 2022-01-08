@@ -1,0 +1,17 @@
+// Description:
+//    test the declaration of float and int
+//
+// Results:
+//    test_synt --> a tree without no error
+//
+// History:
+//    created on 07/01/2022
+
+{
+    int x = 1;
+    int y;
+
+    float a;
+    float b = 1.1;
+    float c = 1.1f;
+}

@@ -1,0 +1,18 @@
+// Description:
+//    test all print variations
+//
+// Results:
+//    ok
+//    ok
+//    ok
+//    ok
+//
+// History:
+//    created on 06/01/2022
+
+{
+    printlnx("ok");
+    println("ok");
+    printx("ok");
+    print("ok");
+}
