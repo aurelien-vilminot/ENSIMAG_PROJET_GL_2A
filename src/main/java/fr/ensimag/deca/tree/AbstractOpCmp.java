@@ -33,6 +33,14 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
                 && (!typeLeftOp.isFloat() || !typeLeftOp.isInt()) && (!typeRightOp.isFloat() || !typeRightOp.isInt())) {
             throw new ContextualError("Equals or not equals comparison is only with int or float types", this.getLocation());
         }
+
+        // Implicit float conversion
+        if (typeLeftOp.isInt() && typeRightOp.isFloat()) {
+            this.setLeftOperand(new ConvFloat(this.getLeftOperand()));
+        } else if (typeLeftOp.isFloat() && typeRightOp.isInt()) {
+            this.setRightOperand(new ConvFloat(this.getRightOperand()));
+        }
+
         this.setType(booleanType);
         LOG.debug("verify OPComp: end");
         return booleanType;

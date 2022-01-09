@@ -26,7 +26,7 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
             ClassDefinition currentClass) throws ContextualError {
             LOG.debug("verify OpArith: start");
             Validate.notNull(compiler, "Compiler (env_types) object should not be null");
-            Validate.notNull(localEnv, "Env_exp object should not be null");
+//            Validate.notNull(localEnv, "Env_exp object should not be null");
 
             Type typeLeftOp = this.getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
             Type typeRightOp = this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
@@ -36,10 +36,18 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
                 // Cases : (int, int) and (float, int)
                 this.setType(typeLeftOp);
                 returnType = typeLeftOp;
+                if (typeLeftOp.isFloat()) {
+                    // Implicit float conversion
+                    this.setRightOperand(new ConvFloat(this.getRightOperand()));
+                }
             } else if (typeRightOp.isFloat()) {
                 // Cases : (int, float) and (float, float)
                 this.setType(typeRightOp);
                 returnType = typeRightOp;
+                if (typeLeftOp.isInt()) {
+                    // Implicit float conversion
+                    this.setLeftOperand(new ConvFloat(this.getLeftOperand()));
+                }
             } else {
                 throw new ContextualError("Binary operation is only allowed for int or float types", this.getLocation());
             }
