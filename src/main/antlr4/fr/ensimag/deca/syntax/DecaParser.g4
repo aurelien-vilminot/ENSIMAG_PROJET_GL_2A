@@ -71,7 +71,7 @@ block returns[ListDeclVar decls, ListInst insts]
     ;
 
 // hello world: list_decl is empty
-// TODO: sans objet
+// sans objet: done
 list_decl returns[ListDeclVar tree]
 @init   {
             $tree = new ListDeclVar();
@@ -79,29 +79,37 @@ list_decl returns[ListDeclVar tree]
     : decl_var_set[$tree]*
     ;
 
-// TODO: sans objet
+// sans objet: done
 decl_var_set[ListDeclVar l]
     : type list_decl_var[$l,$type.tree] SEMI
     ;
 
-// TODO: sans objet
+// sans objet: done
 list_decl_var[ListDeclVar l, AbstractIdentifier t]
     : dv1=decl_var[$t] {
         $l.add($dv1.tree);
         } (COMMA dv2=decl_var[$t] {
+            $l.add($dv2.tree);
         }
       )*
     ;
 
-// $tree = DeclVar(type, varName, initialization); (for non hello world)
+// sans objet: done
 decl_var[AbstractIdentifier t] returns[AbstractDeclVar tree]
 @init   {
+            AbstractInitialization init = null;
         }
     : i=ident {
         }
       (EQUALS e=expr {
+            init = new Initialization($e.tree);
         }
       )? {
+            if (init == null) {
+                init = new NoInitialization();
+            }
+            $tree = new DeclVar($t, $i.tree, init);
+            setLocation($tree, $i.start);
         }
     ;
 
