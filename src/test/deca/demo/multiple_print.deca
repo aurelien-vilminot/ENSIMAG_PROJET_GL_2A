@@ -8,9 +8,9 @@
 //    cree le 01/01/2022
 
 {
-        println((("Hello")), " World !");
+        println("Language \"Hello World\"");
+        println("StringLiteral: ", (("Hello")), (" World !"));
+        print("IntLiteral: ", 5, ", FloatLiteral: ", 1.097, ", BooleanLiteral: ", true);
         println();
-        print(5, " ", 1.097, " ", 9.0, " ", 1);
-        println();
-        printx(5, " ", 1.097, " ", 9.0, " ", 1);
+        printlnx("IntLiteral: ", 5, ", FloatLiteral: ", 1.097, ", BooleanLiteral: ", true);
 }
