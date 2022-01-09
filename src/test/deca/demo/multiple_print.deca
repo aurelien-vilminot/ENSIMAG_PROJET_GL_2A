@@ -12,5 +12,5 @@
         println("StringLiteral: ", (("Hello")), (" World !"));
         print("IntLiteral: ", 5, ", FloatLiteral: ", 1.097, ", BooleanLiteral: ", true);
         println();
-        printlnx("IntLiteral: ", 5, ", FloatLiteral: ", 1.097, ", BooleanLiteral: ", true);
+        printlnx("IntLiteral: ", 3, ", FloatLiteral: ", 5.097, ", BooleanLiteral: ", false);
 }
