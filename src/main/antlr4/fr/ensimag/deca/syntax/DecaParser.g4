@@ -103,10 +103,12 @@ decl_var[AbstractIdentifier t] returns[AbstractDeclVar tree]
         }
       (EQUALS e=expr {
             init = new Initialization($e.tree);
+            setLocation(init, $EQUALS);
         }
       )? {
             if (init == null) {
                 init = new NoInitialization();
+                setLocation(init, $i.start);
             }
             $tree = new DeclVar($t, $i.tree, init);
             setLocation($tree, $i.start);
