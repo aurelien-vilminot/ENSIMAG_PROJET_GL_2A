@@ -7,6 +7,8 @@ import fr.ensimag.deca.tools.SymbolTable;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
+import fr.ensimag.ima.pseudocode.instructions.WSTR;
+
 import java.io.PrintStream;
 
 /**
@@ -42,6 +44,10 @@ public class BooleanLiteral extends AbstractExpr {
         return booleanType;
     }
 
+    @Override
+    protected void codeGenPrint(DecacCompiler compiler) {
+        compiler.addInstruction(new WSTR(Boolean.toString(value)));
+    }
 
     @Override
     public void decompile(IndentPrintStream s) {
