@@ -1,13 +1,22 @@
+chmod +wrx ./demo_helloworld.sh;
+chmod +wrx ./demo_sans_objet.sh;
+mvn test;
+
 clear;
 cat ./src/test/deca/demo/hello.deca;
 decac ./src/test/deca/demo/hello.deca -p;
 decac ./src/test/deca/demo/hello.deca;
 ima ./src/test/deca/demo/hello.ass;
 
-chmod +wrx ./demo.sh;
-
 clear;
 cat ./src/test/deca/demo/multiple_print.deca;
+test_synt ./src/test/deca/demo/multiple_print.deca;
 decac ./src/test/deca/demo/multiple_print.deca -p;
 decac ./src/test/deca/demo/multiple_print.deca;
 ima ./src/test/deca/demo/multiple_print.ass;
+
+clear;
+cat ./src/test/deca/demo/sans_objet.deca;
+test_synt ./src/test/deca/demo/sans_objet.deca;
+decac ./src/test/deca/demo/sans_objet.deca -p;
+decac ./src/test/deca/demo/sans_objet.deca -v;

@@ -1,0 +1,30 @@
+// sans_objet.deca
+{
+    // Initialisations
+    boolean x, y = true, z = false;
+    boolean x = true;
+    boolean z = (x && y) || ((y && x) && (x || y));
+    int a, b = 5, c = 7;
+    float d = 5.34, e = 4.94;
+    string str = "Bonjour !";
+
+    ; // Instruction vide
+    a = (b + c) - 5*6 + c*2; // Assign
+    readInt();
+
+    // While
+    while (a != b) {
+        print("while a != b");
+        // IfThenElse
+        if (c != 2) {
+            println("c == 2");
+        } else if (a > 3) {
+            println("a == 3");
+        } else if (!(b <= 1 || c%2 == 0 || a/2 == 15)) {
+            println("b == 1");
+        } else {
+            println("else");
+        }
+
+    }
+}
