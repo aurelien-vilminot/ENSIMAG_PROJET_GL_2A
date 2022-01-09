@@ -1,0 +1,12 @@
+// Description:
+//    test of empty program
+//
+// Results:
+//    test_lex --> no error, return 2 tokens
+//    test_synt --> no error, return basic tree with main
+//
+// History:
+//    created on 04/01/2022
+
+{
+}

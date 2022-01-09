@@ -1,0 +1,5 @@
+IDENT 'printlnxy' 10:0
+OPARENT '(' 10:9
+STRING '"Error !"' 10:10
+CPARENT ')' 10:19
+SEMI ';' 10:20

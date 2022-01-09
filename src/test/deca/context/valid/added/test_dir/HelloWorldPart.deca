@@ -1,0 +1,15 @@
+// Description:
+//    Test all the parts of the HelloWorld implementation
+//
+// Results:
+//    test_context --> no error, return the AST of the file HelloWorldPart.txt
+//
+// History:
+//    created on 06/01/2022
+
+{
+    // This is a useless commentary
+    println("Hello", " world !", 12);
+    /* This is another
+    useless commentary */
+}

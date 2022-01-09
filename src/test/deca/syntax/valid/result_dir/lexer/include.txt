@@ -1,0 +1,9 @@
+OBRACE '{' 1:0
+PRINTLN 'println' 1:2
+OPARENT '(' 1:9
+STRING '"Hello"' 1:10
+COMMA ',' 1:17
+STRING '"world !"' 1:0
+CPARENT ')' 1:9
+SEMI ';' 1:10
+CBRACE '}' 2:0

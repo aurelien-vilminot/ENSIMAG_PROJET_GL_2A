@@ -1,0 +1,12 @@
+// Description:
+//    Test a program with just a string
+//
+// Results:
+//    test_context -->
+//
+// History:
+//    created on 06/01/2022
+
+{
+    "Hello World";
+}

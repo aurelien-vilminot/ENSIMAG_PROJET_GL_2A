@@ -1,0 +1,12 @@
+// Description:
+//    test if some instructions on the same line works
+//
+// Results:
+//    test_synt --> no error, return the AST of the file instr_same_line.txt
+//
+// History:
+//    created on 06/01/2022
+
+{
+    print("Hello"); print(" world !");
+}

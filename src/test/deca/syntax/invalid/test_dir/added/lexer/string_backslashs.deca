@@ -1,0 +1,10 @@
+// Description:
+//    test of corrupted string (with slashs)
+//
+// Results:
+//    test_lex --> error line 10
+//
+// History:
+//    created on 05/01/2022
+
+"lalala\\\lalala"
