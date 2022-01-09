@@ -1,4 +1,4 @@
 // hello.deca
 {
-        println("Hello");
+        println("Hello World !");
 }
