@@ -21,6 +21,14 @@ public class IfThenElse extends AbstractInst {
     private final ListInst thenBranch;
     private ListInst elseBranch;
 
+    public void setElseBranch(ListInst elseBranch) {
+        this.elseBranch = elseBranch;
+    }
+
+    public ListInst getElseBranch() {
+        return elseBranch;
+    }
+
     public IfThenElse(AbstractExpr condition, ListInst thenBranch, ListInst elseBranch) {
         Validate.notNull(condition);
         Validate.notNull(thenBranch);
