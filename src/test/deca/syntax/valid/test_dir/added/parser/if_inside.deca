@@ -10,19 +10,19 @@
 {
     while( a == 4 ){
         if( r - 4 ){
-
+            println("r - 4");
         }else{
-
+        println("else {r - 4}");
         }
 
         while( az = 89 ){
             if(true){
-
+                println("true");
             }
         }
 
         if(4){
-
+            println("4");
         }
     }
 }

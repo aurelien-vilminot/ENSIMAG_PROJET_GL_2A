@@ -9,11 +9,11 @@
 
 {
     int a = (float)(b);
+    float float = (int) ("Hello!");
 
     if((boolean) (q)){
 
     }
 
-    float float = (int) ("Hello!");
 
 }

@@ -9,26 +9,26 @@
 
 {
     if(a - 0){
-        int a = b;
+        println("a - 0");
     }
 
     if(a && 0){
-        int a = b;
+        println("a && 0");
     } else if (a){
-        int b = a;
+        println("a");
     }
 
     if(a && 0){
-        int a = b;
+        println("a && 0");
     } else if (a){
-        int b = a;
+        println("a");
     } else {
-        int b;
+        println("else {a && 0} {a}");
     }
 
     if(a && 0){
-        int a = b;
+        println("a && 0");
     } else {
-        int b;
+        println("else {a && 0}");
     }
 }
