@@ -20,11 +20,11 @@ public class ReadFloat extends AbstractReadExpr {
             ClassDefinition currentClass) throws ContextualError {
         LOG.debug("verify ReadFloat: start");
 
-        Type intType = new FloatType(compiler.getSymbolTable().create("float"));
-        this.setType(intType);
+        Type floatType = new FloatType(compiler.getSymbolTable().create("float"));
+        this.setType(floatType);
 
         LOG.debug("verify ReadFloat: end");
-        return intType;
+        return floatType;
     }
 
 
