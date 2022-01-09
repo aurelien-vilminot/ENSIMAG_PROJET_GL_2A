@@ -40,6 +40,11 @@ public class FloatLiteral extends AbstractExpr {
     }
 
     @Override
+    protected void codeGenPrint(DecacCompiler compiler) {
+        compiler.addInstruction(new WSTR(Float.toString(value)));
+    }
+
+    @Override
     protected void codeGenPrintx(DecacCompiler compiler) {
         compiler.addInstruction(new WSTR(Float.toHexString(value)));
     }
