@@ -12,5 +12,5 @@
     int a = (b + c) * d;
     int a = - 2 * - 3;
     int a = - 5 * ! 3;
-    int a = + b;
+    int a = b;
 }
