@@ -71,7 +71,7 @@ block returns[ListDeclVar decls, ListInst insts]
     ;
 
 // hello world: list_decl is empty
-// TODO: sans objet
+// sans objet: done
 list_decl returns[ListDeclVar tree]
 @init   {
             $tree = new ListDeclVar();
@@ -79,29 +79,39 @@ list_decl returns[ListDeclVar tree]
     : decl_var_set[$tree]*
     ;
 
-// TODO: sans objet
+// sans objet: done
 decl_var_set[ListDeclVar l]
     : type list_decl_var[$l,$type.tree] SEMI
     ;
 
-// TODO: sans objet
+// sans objet: done
 list_decl_var[ListDeclVar l, AbstractIdentifier t]
     : dv1=decl_var[$t] {
         $l.add($dv1.tree);
         } (COMMA dv2=decl_var[$t] {
+            $l.add($dv2.tree);
         }
       )*
     ;
 
-// $tree = DeclVar(type, varName, initialization); (for non hello world)
+// sans objet: done
 decl_var[AbstractIdentifier t] returns[AbstractDeclVar tree]
 @init   {
+            AbstractInitialization init = null;
         }
     : i=ident {
         }
       (EQUALS e=expr {
+            init = new Initialization($e.tree);
+            setLocation(init, $EQUALS);
         }
       )? {
+            if (init == null) {
+                init = new NoInitialization();
+                setLocation(init, $i.start);
+            }
+            $tree = new DeclVar($t, $i.tree, init);
+            setLocation($tree, $i.start);
         }
     ;
 
@@ -126,6 +136,8 @@ inst returns[AbstractInst tree]
             $tree = $e1.tree;
         }
     | SEMI {
+            $tree = new NoOperation();
+            setLocation($tree, $SEMI);
         }
     | PRINT OPARENT list_expr CPARENT SEMI {
             assert($list_expr.tree != null);
@@ -163,23 +175,24 @@ inst returns[AbstractInst tree]
     ;
 
 // sans objet: done
-// TODO: setLocation
-// TODO: else branch
 if_then_else returns[IfThenElse tree]
 @init {
-    // ListInst elsifBranch;
-    // ListInst emptyBranch;
+    IfThenElse lastBranch;
 }
     : if1=IF OPARENT condition=expr CPARENT OBRACE li_if=list_inst CBRACE {
-            // $tree = new IfThenElse($condition.tree, $li_if.tree, elsifBranch);
+            $tree = new IfThenElse($condition.tree, $li_if.tree, new ListInst());
+            setLocation($tree, $if1);
+            lastBranch = $tree;
         }
       (ELSE elsif=IF OPARENT elsif_cond=expr CPARENT OBRACE elsif_li=list_inst CBRACE {
-            // IfThenElse elsif = new IfThenElse($elsif_cond.tree, $elsif_li.tree, emptyBranch);
-            // elsifBranch.add(elsif);
+            IfThenElse elseif = new IfThenElse($elsif_cond.tree, $elsif_li.tree, new ListInst());
+            setLocation(elseif, $ELSE);
+            lastBranch.getElseBranch().add(elseif);
+            lastBranch = elseif;
         }
       )*
       (ELSE OBRACE li_else=list_inst CBRACE {
-            // TODO: elsifBranch.add($li_else.tree);
+            lastBranch.setElseBranch($li_else.tree);
         }
       )?
     ;

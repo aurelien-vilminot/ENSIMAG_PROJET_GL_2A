@@ -23,6 +23,14 @@ public class IfThenElse extends AbstractInst {
     private final ListInst thenBranch;
     private ListInst elseBranch;
 
+    public void setElseBranch(ListInst elseBranch) {
+        this.elseBranch = elseBranch;
+    }
+
+    public ListInst getElseBranch() {
+        return elseBranch;
+    }
+
     public IfThenElse(AbstractExpr condition, ListInst thenBranch, ListInst elseBranch) {
         Validate.notNull(condition);
         Validate.notNull(thenBranch);
@@ -54,7 +62,20 @@ public class IfThenElse extends AbstractInst {
 
     @Override
     public void decompile(IndentPrintStream s) {
-        throw new UnsupportedOperationException("not yet implemented");
+        s.print("if ");
+        condition.decompile(s);
+        s.println(" {");
+        s.indent();
+        thenBranch.decompile(s);
+        s.unindent();
+        s.print("}");
+        if (!elseBranch.isEmpty()) {
+            s.println(" else {");
+            s.indent();
+            elseBranch.decompile(s);
+            s.unindent();
+            s.print("}");
+        }
     }
 
     @Override
