@@ -49,7 +49,7 @@ public abstract class AbstractPrint extends AbstractInst {
         for (AbstractExpr expr: this.arguments.getList()) {
             // Check if args types are printable
             Type argType = expr.verifyExpr(compiler, localEnv, currentClass);
-            if (argType.isInt() || argType.isFloat() || argType.isString()) {
+            if (argType.isInt() || argType.isFloat() || argType.isString() || argType.isBoolean()) {
                 expr.setType(argType);
             } else {
                 throw new ContextualError("Impossible to print this type of element", this.getLocation());
