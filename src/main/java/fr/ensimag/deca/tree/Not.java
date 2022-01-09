@@ -25,16 +25,15 @@ public class Not extends AbstractUnaryExpr {
         Validate.notNull(localEnv, "Env_exp object should not be null");
 
         Type typeOperand = this.getOperand().verifyExpr(compiler, localEnv, currentClass);
-        Type booleanType = new BooleanType(compiler.getSymbolTable().create("boolean"));
 
         if (typeOperand.isBoolean()) {
-            this.setType(booleanType);
+            this.setType(typeOperand);
         } else {
             throw new ContextualError("Not operation is only allowed for boolean type", this.getLocation());
         }
 
         LOG.debug("verify Not: end");
-        return booleanType;
+        return typeOperand;
     }
 
 
