@@ -1,16 +1,14 @@
-// Description:
-//    Programme minimaliste utilisant println.
-//
-// Resultats:
-//    Hello
-//
-// Historique:
-//    cree le 01/01/2022
+// multiple_print.deca
+{  // Les commentaires n'ont pas d'effet sur le code
 
-{
-        println("Language \"Hello World\"");
-        println("StringLiteral: ", (("Hello")), (" World !"));
-        print("IntLiteral: ", 5, ", FloatLiteral: ", 1.097, ", BooleanLiteral: ", true);
-        println();
-        printlnx("IntLiteral: ", 3, ", FloatLiteral: ", 5.097, ", BooleanLiteral: ", false);
+        println("Language \"Hello World\""); // Ils peuvent être placés après une ligne
+    println("StringLiteral: ", (("Hello")), (" World !")); /* Ils peuvent
+    être sur
+    plusieurs lignes.
+    */
+/* Les indentations n'ont pas d'effet n'ont plus sur la sémantique du code */
+            print("IntLiteral: ", 5, ", FloatLiteral: ", 1.097, ", BooleanLiteral: ", true);
+println();
+                            printlnx("IntLiteral: ", 3, ", FloatLiteral: ", 5.097, ", BooleanLiteral: ", false);
 }
+// Les commentaires peuvent aussi être placés après le code principal

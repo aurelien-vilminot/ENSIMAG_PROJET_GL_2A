@@ -1,0 +1,13 @@
+clear;
+cat ./src/test/deca/demo/hello.deca;
+decac ./src/test/deca/demo/hello.deca -p;
+decac ./src/test/deca/demo/hello.deca;
+ima ./src/test/deca/demo/hello.ass;
+
+chmod +wrx ./demo.sh;
+
+clear;
+cat ./src/test/deca/demo/multiple_print.deca;
+decac ./src/test/deca/demo/multiple_print.deca -p;
+decac ./src/test/deca/demo/multiple_print.deca;
+ima ./src/test/deca/demo/multiple_print.ass;

@@ -1,12 +1,4 @@
-// Description:
-//    Programme minimaliste utilisant println.
-//
-// Resultats:
-//    Hello
-//
-// Historique:
-//    cree le 01/01/2022
-
+// hello.deca
 {
         println("Hello");
 }
