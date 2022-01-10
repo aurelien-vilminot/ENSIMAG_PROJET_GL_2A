@@ -122,7 +122,7 @@ public class CompilerOptions {
             } else if (nocheckPattern.matcher(arg).matches()){
                 throw new CLIException("-n is not yet implemented");
             } else {
-                throw new CLIException("Option not recognised");
+                throw new CLIException("decac : invalid option -- '" + arg + "'\nUsage :");
             }
             lastPattern = null;
         }
@@ -165,6 +165,6 @@ public class CompilerOptions {
     }
 
     protected void displayUsage() {
-        throw new UnsupportedOperationException("not yet implemented");
+        DecacMain.printAvailableOptions();
     }
 }
