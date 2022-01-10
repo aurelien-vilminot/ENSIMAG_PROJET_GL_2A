@@ -5,6 +5,10 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.ima.pseudocode.DVal;
+import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.*;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -54,5 +58,50 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
 
             LOG.debug("verify OpArith: end");
             return returnType;
+    }
+
+    /**
+     * Add an instruction corresponding to the arithmetical operator, between dval and gpRegister
+     *
+     * @param compiler
+     * @param dval
+     * @param gpRegister
+     */
+    protected void mnemo(DecacCompiler compiler, DVal dval, GPRegister gpRegister) {
+        switch (this.getOperatorName()) {
+            case "+":
+                compiler.addInstruction(new ADD(dval, gpRegister));
+            case "-":
+                compiler.addInstruction(new SUB(dval, gpRegister));
+            case "*":
+                compiler.addInstruction(new MUL(dval, gpRegister));
+            case "/":
+                compiler.addInstruction(new DIV(dval, gpRegister));
+            case "%":
+                // TODO: modulo instruction
+        }
+    }
+
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, int n) {
+        DVal rightDval = this.getRightOperand().dval(compiler);
+        if (rightDval != null) {
+            this.getLeftOperand().codeGenExpr(compiler, n);
+            this.mnemo(compiler, rightDval, Register.getR(n));
+        } else {
+            int maxRegister = compiler.getCompilerOptions().getRegisterNumber();
+            if (n < maxRegister) {
+                this.getLeftOperand().codeGenExpr(compiler, n);
+                this.getRightOperand().codeGenExpr(compiler, n+1);
+                this.mnemo(compiler, Register.getR(n+1), Register.getR(n));
+            } else {
+                this.getLeftOperand().codeGenExpr(compiler, n);
+                compiler.addInstruction(new PUSH(Register.getR(n)), "; sauvegarde");
+                this.getRightOperand().codeGenExpr(compiler, n);
+                compiler.addInstruction(new LOAD(Register.getR(n), Register.R0));
+                compiler.addInstruction(new POP(Register.getR(n)), "; restauration");
+                this.mnemo(compiler, Register.R0, Register.getR(n));
+            }
+        }
     }
 }

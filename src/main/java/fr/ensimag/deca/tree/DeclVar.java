@@ -6,6 +6,8 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 
 import fr.ensimag.deca.tools.SymbolTable;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -59,8 +61,11 @@ public class DeclVar extends AbstractDeclVar {
 
     @Override
     protected void codeGenDeclVar(DecacCompiler compiler) {
-        // TODO
-        throw new UnsupportedOperationException("not yet implemented");
+        // TODO: cas global
+        // Set operand global address
+        int addr = compiler.incGlobalStackSize(1);
+        compiler.getEnvironmentExp().get(varName.getName()).setOperand(new RegisterOffset(addr, Register.GB));
+        initialization.codeGenInit(compiler);
     }
 
     @Override

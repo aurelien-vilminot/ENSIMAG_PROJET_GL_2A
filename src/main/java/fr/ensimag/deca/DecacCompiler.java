@@ -49,6 +49,18 @@ public class DecacCompiler {
     private EnvironmentTypes environmentTypes;
     private SymbolTable symbolTable = new SymbolTable();
 
+    public int getGlobalStackSize() {
+        return globalStackSize;
+    }
+
+    public int incGlobalStackSize(int inc) {
+        this.globalStackSize = globalStackSize + inc;
+        return globalStackSize;
+    }
+
+    private int globalStackSize = 2;
+
+
     public DecacCompiler(CompilerOptions compilerOptions, File source) {
         super();
         this.compilerOptions = compilerOptions;

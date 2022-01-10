@@ -29,6 +29,11 @@ public class NoInitialization extends AbstractInitialization {
         LOG.debug("verify NonInitialization: end");
     }
 
+    @Override
+    protected void codeGenInit(DecacCompiler compiler) {
+        // nothing
+    }
+
 
     /**
      * Node contains no real information, nothing to check.
