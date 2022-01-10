@@ -1,3 +1,3 @@
 {
-  x / 5; 5 / 2 / 1.0; 49.0 / "Hello World" / (2 / true)
+  x / 5; 5 / 2 / 1.0; 49.0 / "Hello World" / (2 / true);
 }
