@@ -33,11 +33,11 @@ public class InstanceOf extends AbstractExpr {
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-
+        throw new UnsupportedOperationException("not yet implemented");
     }
 
     @Override
     protected void iterChildren(TreeFunction f) {
-
+        throw new UnsupportedOperationException("not yet implemented");
     }
 }
