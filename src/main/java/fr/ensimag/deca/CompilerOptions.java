@@ -47,6 +47,8 @@ public class CompilerOptions {
         return argsNumber;
     }
 
+    public int getRegisterNumber() { return registerNumber;}
+
     private int debug = 0;
     private boolean parallel = false;
     private boolean printBanner = false;
