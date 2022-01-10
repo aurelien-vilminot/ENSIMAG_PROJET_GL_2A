@@ -58,7 +58,7 @@ nb_correct_total=$((nb_correct_total+nb_correct))
 nb_file_total=$((nb_file_total+nb_file))
 
 # -----------------------------------------------------------------------------
-# Parser Valid :
+# Valid :
 TEST_PATH="./src/test/deca/syntax/valid/parser/system"
 nb_correct=0
 nb_file=0
@@ -175,8 +175,6 @@ do
   log_error_output_file="$TEST_PATH"/"$name_test".log
   test_synt "$i" 1> /dev/null 2> "$log_error_output_file"
   res=$(cat "$log_error_output_file")
-
-
 
   if [ "$res" = "" ]; then
       nb_correct=$((nb_correct+1))
