@@ -1,0 +1,6 @@
+{
+    boolean a;
+    boolean b = !a;
+    !b;
+    /* Test that b is a boolean */
+}
