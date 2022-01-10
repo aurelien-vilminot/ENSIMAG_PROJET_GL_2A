@@ -1,4 +1,0 @@
-{
-  int i = 0;
-  -!readFloat() % 5; -!readFloat() % 10 % 2; !!x.p() % !!x.p(); 49.0 % "Hello World" % (2 % true));
-}
