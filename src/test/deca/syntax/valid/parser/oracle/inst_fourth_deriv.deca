@@ -1,0 +1,13 @@
+{
+  println();
+  println("Hello World !");
+  println(1 + 2.0);
+  println(1.0 / "Hello World !");
+  println(true && false);
+  println(null);
+  println(x.y.z(z.p(), 50), "Hello Moon !");
+  println(1.0 + 11, true);
+  println(false, p.o(52));
+  println(this, "this");
+  println("Hello World !", 2.0);
+}

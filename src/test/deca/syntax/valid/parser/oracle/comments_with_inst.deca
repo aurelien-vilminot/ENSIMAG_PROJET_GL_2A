@@ -1,0 +1,13 @@
+{
+  // This is a comment
+  /* multi
+  line
+  comment */
+
+  print(i);
+
+  // This is a comment
+  /* multi
+  line
+  comment */
+}
