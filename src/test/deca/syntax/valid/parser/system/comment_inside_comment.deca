@@ -1,0 +1,11 @@
+// Description:
+//    test comment inside comment
+//
+// Results:
+//    test_synt --> no error, return tree with 0 instruction
+//
+// History:
+//    created on 06/01/2022
+
+
+/* Laalala /* lallala // llalalal */

@@ -1,0 +1,19 @@
+// Description:
+//    more tests on operator
+//
+// Results:
+//    test_synt --> a tree without no error
+//
+// History:
+//    created on 07/01/2022
+
+{
+    String c = a || b;
+    - a;
+    boolean c = (a == b);
+    float c = a != b;
+    String c = a > b;
+    boolean c = a >= b;
+    int a = a instanceof $_strange_ident_he$he;
+    String a = ! a;
+}
