@@ -40,7 +40,7 @@ public class Assign extends AbstractBinaryExpr {
         Type expectedType = this.getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
 
         // Check rvalue type
-        this.verifyRValue(compiler, localEnv, currentClass, expectedType);
+        this.getRightOperand().verifyRValue(compiler, localEnv, currentClass, expectedType);
         this.setType(expectedType);
         LOG.debug("verify Assign: end");
 
