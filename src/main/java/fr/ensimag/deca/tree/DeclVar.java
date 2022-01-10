@@ -37,6 +37,7 @@ public class DeclVar extends AbstractDeclVar {
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
         Validate.notNull(localEnv, "Env_exp object should not be null");
 
+        // Check type definition
         Type currentType = this.type.verifyType(compiler);
         if (currentType.isVoid()) {
             throw new ContextualError("Void cannot be the type of a variable", this.getLocation());
@@ -49,6 +50,10 @@ public class DeclVar extends AbstractDeclVar {
         } catch (EnvironmentExp.DoubleDefException doubleDefException) {
             throw new ContextualError("Undeclared identifier", this.getLocation());
         }
+
+        // Check var definition
+        this.varName.verifyExpr(compiler, localEnv, currentClass);
+
         LOG.debug("verify DeclVar: end");
     }
 
