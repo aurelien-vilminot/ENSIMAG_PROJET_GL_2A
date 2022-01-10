@@ -52,7 +52,7 @@ public class DeclVar extends AbstractDeclVar {
         try {
             localEnv.declare(this.varName.getName(), new VariableDefinition(currentType, this.getLocation()));
         } catch (EnvironmentExp.DoubleDefException doubleDefException) {
-            throw new ContextualError("Undeclared identifier", this.getLocation());
+            throw new ContextualError("Identifier already declared", this.getLocation());
         }
 
         // Check var definition
