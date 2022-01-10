@@ -1,0 +1,4 @@
+{
+  true && true; false && true; false && false; true && false;
+  -"Moon !" && 5.001 && "5" && (--10.0 + 50.0); 5.89 && --50 && false && ("Hello World !" && true);
+}
