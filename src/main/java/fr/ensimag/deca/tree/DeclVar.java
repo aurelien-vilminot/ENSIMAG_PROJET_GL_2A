@@ -6,6 +6,8 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 
 import fr.ensimag.deca.tools.SymbolTable;
+import fr.ensimag.ima.pseudocode.DAddr;
+import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
 import org.apache.commons.lang.Validate;
@@ -64,8 +66,10 @@ public class DeclVar extends AbstractDeclVar {
         // TODO: cas global
         // Set operand global address
         int addr = compiler.incGlobalStackSize(1);
-        compiler.getEnvironmentExp().get(varName.getName()).setOperand(new RegisterOffset(addr, Register.GB));
-        initialization.codeGenInit(compiler);
+        DAddr dAddr = new RegisterOffset(addr, Register.GB);
+        compiler.getEnvironmentExp().get(varName.getName()).setOperand(dAddr);
+        // Generate code for initialization
+        initialization.codeGenInit(compiler, dAddr);
     }
 
     @Override
