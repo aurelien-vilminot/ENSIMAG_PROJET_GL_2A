@@ -17,6 +17,11 @@ echo "##########################################################################
 decac ./src/test/deca/demo/multiple_print.deca -p;
 read -n 1 -s -r -p "";
 echo "#########################################################################################";
+echo "test_context ./src/test/deca/demo/multiple_print.deca";
+echo "#########################################################################################";
+test_context ./src/test/deca/demo/multiple_print.deca;
+read -n 1 -s -r -p "";
+echo "#########################################################################################";
 echo "decac ./src/test/deca/demo/multiple_print.deca";
 echo "cat ./src/test/deca/demo/multiple_print.ass";
 echo "#########################################################################################";
