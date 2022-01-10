@@ -29,8 +29,10 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
         Type booleanType = new BooleanType(compiler.getSymbolTable().create("boolean"));
 
         // For other comparisons than "==" and "!=", the operand types must be int or float
-        if ((!this.getOperatorName().equals("!=") && !this.getOperatorName().equals("=="))
-                && (!typeLeftOp.isFloat() || !typeLeftOp.isInt()) && (!typeRightOp.isFloat() || !typeRightOp.isInt())) {
+        boolean isEqOrNeq = this.getOperatorName().equals("!=") || this.getOperatorName().equals("==");
+        boolean leftIsIntOrFloat = typeLeftOp.isFloat() || typeLeftOp.isInt();
+        boolean rightIsIntOrFloat = typeRightOp.isFloat() || typeRightOp.isInt();
+        if (!isEqOrNeq && !(leftIsIntOrFloat && rightIsIntOrFloat)) {
             throw new ContextualError("Equals or not equals comparison is only with int or float types", this.getLocation());
         }
 
