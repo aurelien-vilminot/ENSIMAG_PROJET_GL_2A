@@ -1,0 +1,4 @@
+{
+    string str;
+    (boolean) (str);
+}
