@@ -4,10 +4,8 @@
   printlnx(1 + 2.0);
   printlnx(1.0 / "Hello World !");
   printlnx(true && false);
-  printlnx(null);
-  printlnx(x.y.z(z.p(), 50), "Hello Moon !");
+  printlnx(50.0, "Hello Moon !");
   printlnx(1.0 + 11, true);
-  printlnx(false, p.o(52));
-  printlnx(this, "this");
+  printlnx(false, 52);
   printlnx("Hello World !", 2.0);
 }

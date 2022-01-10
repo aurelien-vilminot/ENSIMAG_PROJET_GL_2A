@@ -5,8 +5,6 @@
 	"Hello Moon !";
 	true;
 	false;
-	this;
-	null;
 	identifier;
 
 	// Expr

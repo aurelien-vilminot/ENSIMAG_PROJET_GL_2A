@@ -4,10 +4,8 @@
   printx(1 + 2.0);
   printx(1.0 / "Hello World !");
   printx(true && false);
-  printx(null);
   printx("Hello World !", "Hello Moon !");
   printx(1.0, true);
-  printx(false, x.p.(p.o));
-  printx(this, this);
+  printx(false, o);
   printx(1, 2.0 + "hello");
 }

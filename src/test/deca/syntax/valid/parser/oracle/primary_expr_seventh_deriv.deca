@@ -7,5 +7,4 @@
 	(float) (-3);
 	(type) (3 == y);
   (int) ("Hello World ");
-  (type) ((x.y.z("Hello World !")));
 }
