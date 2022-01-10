@@ -71,14 +71,19 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
         switch (this.getOperatorName()) {
             case "+":
                 compiler.addInstruction(new ADD(dval, gpRegister));
+                break;
             case "-":
                 compiler.addInstruction(new SUB(dval, gpRegister));
+                break;
             case "*":
                 compiler.addInstruction(new MUL(dval, gpRegister));
+                break;
             case "/":
                 compiler.addInstruction(new DIV(dval, gpRegister));
+                break;
             case "%":
                 // TODO: modulo instruction
+                break;
         }
     }
 
