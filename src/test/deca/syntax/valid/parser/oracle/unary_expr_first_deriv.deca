@@ -1,4 +1,4 @@
 {
-  -3; -("Hello World !"); -(x % 50); -readInt(); -new A(); -f(true);
-  --x; --("Hello"); --(x * 50); --readFloat(); --new A(); --f(50.0);
+  -3; -("Hello World !"); -(x % 50); -readInt();
+  --x; --("Hello"); --(x * 50); --readFloat();
 }

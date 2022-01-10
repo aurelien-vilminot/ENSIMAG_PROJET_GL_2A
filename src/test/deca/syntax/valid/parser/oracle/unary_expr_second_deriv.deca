@@ -1,4 +1,4 @@
 {
-  !5.0; !("Hello World !"); !(x / 50); !readInt(); !(new A()); !f(true);
-  !!"Hello"; !!(50.0); !!(x * 50); !!readInt(); !!((int) (x)); !!f(1);
+  !5.0; !("Hello World !"); !(x / 50); !readInt();
+  !!"Hello"; !!(50.0); !!(x * 50); !!readInt(); !!((int) (x));
 }

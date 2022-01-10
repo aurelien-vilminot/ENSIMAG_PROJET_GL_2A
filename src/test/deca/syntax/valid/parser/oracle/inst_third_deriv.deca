@@ -4,10 +4,8 @@
   print(1 + 2.0);
   print(1.0 / "Hello World !");
   print(true && false);
-  print(null);
   print("Hello World !", "Hello Moon !");
   print(1.0, true);
   print(false, false);
-  print(this, this);
   print("Hello World !", 2.0);
 }
