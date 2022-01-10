@@ -7,13 +7,10 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import org.apache.commons.lang.Validate;
-import org.apache.log4j.Logger;
 
 import java.io.PrintStream;
 
 public class Cast extends AbstractExpr {
-    private static final Logger LOG = Logger.getLogger(Main.class);
-
     final private AbstractIdentifier type;
     final private AbstractExpr expr;
 
@@ -32,16 +29,16 @@ public class Cast extends AbstractExpr {
 
     @Override
     public void decompile(IndentPrintStream s) {
-
+        throw new UnsupportedOperationException("not yet implemented");
     }
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-
+        throw new UnsupportedOperationException("not yet implemented");
     }
 
     @Override
     protected void iterChildren(TreeFunction f) {
-
+        throw new UnsupportedOperationException("not yet implemented");
     }
 }
