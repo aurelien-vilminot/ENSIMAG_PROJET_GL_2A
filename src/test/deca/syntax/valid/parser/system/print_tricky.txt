@@ -5,6 +5,6 @@
       `> ListInst [List with 1 elements]
          []> [12, 4] Println
              `> ListExpr [List with 3 elements]
-                []> [12, 12] StringLiteral (I'm \"James\".)
+                []> [12, 12] StringLiteral (I'm "James".)
                 []> [12, 30] StringLiteral ( The)
                 []> [12, 38] StringLiteral ( backslash \\.)
