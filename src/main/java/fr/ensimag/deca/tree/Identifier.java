@@ -160,7 +160,7 @@ public class Identifier extends AbstractIdentifier {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        LOG.debug("verify Expr: start");
+        LOG.debug("verify Identifier: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
         Validate.notNull(localEnv, "Env_exp object should not be null");
 
@@ -171,7 +171,7 @@ public class Identifier extends AbstractIdentifier {
         } else {
             this.definition = expDefinition;
         }
-        LOG.debug("verify Expr: end");
+        LOG.debug("verify Identifier: end");
 
         return this.definition.getType();
     }
