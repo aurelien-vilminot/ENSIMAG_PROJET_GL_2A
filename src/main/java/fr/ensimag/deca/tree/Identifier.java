@@ -1,16 +1,7 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.context.Type;
-import fr.ensimag.deca.context.ClassType;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ClassDefinition;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.Definition;
-import fr.ensimag.deca.context.EnvironmentExp;
-import fr.ensimag.deca.context.FieldDefinition;
-import fr.ensimag.deca.context.MethodDefinition;
-import fr.ensimag.deca.context.ExpDefinition;
-import fr.ensimag.deca.context.VariableDefinition;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
@@ -25,7 +16,8 @@ import org.apache.log4j.Logger;
  * @date 01/01/2022
  */
 public class Identifier extends AbstractIdentifier {
-    
+    private static final Logger LOG = Logger.getLogger(Main.class);
+
     @Override
     protected void checkDecoration() {
         if (getDefinition() == null) {
@@ -131,7 +123,8 @@ public class Identifier extends AbstractIdentifier {
      * 
      * This method essentially performs a cast, but throws an explicit exception
      * when the cast fails.
-     * 
+     *     private static final Logger LOG = Logger.getLogger(Main.class);
+
      * @throws DecacInternalError
      *             if the definition is not a field definition.
      */
@@ -167,7 +160,20 @@ public class Identifier extends AbstractIdentifier {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        LOG.debug("verify Identifier: start");
+        Validate.notNull(compiler, "Compiler (env_types) object should not be null");
+        Validate.notNull(localEnv, "Env_exp object should not be null");
+
+        // Check if identifier is already declared
+        ExpDefinition expDefinition = localEnv.get(this.name);
+        if (expDefinition == null) {
+            throw new ContextualError("Undeclared identifier", this.getLocation());
+        } else {
+            this.definition = expDefinition;
+        }
+        LOG.debug("verify Identifier: end");
+
+        return this.definition.getType();
     }
 
     /**
@@ -176,7 +182,18 @@ public class Identifier extends AbstractIdentifier {
      */
     @Override
     public Type verifyType(DecacCompiler compiler) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        LOG.debug("verify Type: start");
+        Validate.notNull(compiler, "Compiler (env_types) object should not be null");
+
+        // Check if type identifier exists
+        TypeDefinition currentType = compiler.getEnvironmentTypes().get(this.name);
+        if (currentType == null) {
+            throw new ContextualError("Undefined type identifier", this.getLocation());
+        }
+        this.definition = currentType;
+        LOG.debug("verify Type: end");
+
+        return currentType.getType();
     }
     
     

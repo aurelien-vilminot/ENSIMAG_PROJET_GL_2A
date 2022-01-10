@@ -6,6 +6,8 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.Definition;
 import fr.ensimag.deca.context.EnvironmentExp;
+import org.apache.commons.lang.Validate;
+import org.apache.log4j.Logger;
 
 /**
  * Assignment, i.e. lvalue = expr.
@@ -14,6 +16,7 @@ import fr.ensimag.deca.context.EnvironmentExp;
  * @date 01/01/2022
  */
 public class Assign extends AbstractBinaryExpr {
+    private static final Logger LOG = Logger.getLogger(Main.class);
 
     @Override
     public AbstractLValue getLeftOperand() {
@@ -29,7 +32,19 @@ public class Assign extends AbstractBinaryExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        LOG.debug("verify Assign: start");
+        Validate.notNull(compiler, "Compiler (env_types) object should not be null");
+        Validate.notNull(localEnv, "Env_exp object should not be null");
+
+        // Get lvalue type
+        Type expectedType = this.getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
+
+        // Check rvalue type
+        this.getRightOperand().verifyRValue(compiler, localEnv, currentClass, expectedType);
+        this.setType(expectedType);
+        LOG.debug("verify Assign: end");
+
+        return expectedType;
     }
 
 

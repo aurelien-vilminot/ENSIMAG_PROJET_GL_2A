@@ -1,9 +1,13 @@
 package fr.ensimag.deca;
 
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.syntax.DecaLexer;
 import fr.ensimag.deca.syntax.DecaParser;
 import fr.ensimag.deca.tools.DecacInternalError;
+import fr.ensimag.deca.tools.SymbolTable;
+import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import fr.ensimag.deca.tree.AbstractProgram;
+import fr.ensimag.deca.tree.Location;
 import fr.ensimag.deca.tree.LocationException;
 import fr.ensimag.ima.pseudocode.AbstractLine;
 import fr.ensimag.ima.pseudocode.IMAProgram;
@@ -41,10 +45,58 @@ public class DecacCompiler {
      */
     private static final String nl = System.getProperty("line.separator", "\n");
 
+    private EnvironmentExp environmentExp;
+    private EnvironmentTypes environmentTypes;
+    private SymbolTable symbolTable = new SymbolTable();
+
     public DecacCompiler(CompilerOptions compilerOptions, File source) {
         super();
         this.compilerOptions = compilerOptions;
         this.source = source;
+
+        // Init environments
+        this.environmentExp = new EnvironmentExp(null);
+        this.environmentTypes = new EnvironmentTypes();
+
+        // Declare init symbols
+        Symbol voidSymbol = this.symbolTable.create("void");
+        Symbol booleanSymbol = this.symbolTable.create("boolean");
+        Symbol floatSymbol = this.symbolTable.create("float");
+        Symbol intSymbol = this.symbolTable.create("int");
+        Symbol objectSymbol = this.symbolTable.create("Object");
+        Symbol equalsSymbol = this.symbolTable.create("equals");
+
+        // Define default types environment
+        try {
+            this.environmentTypes.declare(voidSymbol, new TypeDefinition(new VoidType(voidSymbol), Location.BUILTIN));
+            this.environmentTypes.declare(booleanSymbol, new TypeDefinition(new BooleanType(booleanSymbol), Location.BUILTIN));
+            this.environmentTypes.declare(floatSymbol, new TypeDefinition(new FloatType(floatSymbol), Location.BUILTIN));
+            this.environmentTypes.declare(intSymbol, new TypeDefinition(new IntType(intSymbol), Location.BUILTIN));
+            this.environmentTypes.declare(objectSymbol, new TypeDefinition(new ClassType(objectSymbol, Location.BUILTIN, null), Location.BUILTIN));
+        } catch (EnvironmentTypes.DoubleDefException doubleDefException) {
+            LOG.error("Multiple type declaration");
+        }
+
+        // Init equals method
+        Signature equalsSignature = new Signature();
+        MethodDefinition equalsDefinition = new MethodDefinition(this.environmentTypes.get(booleanSymbol).getType(), Location.BUILTIN, equalsSignature, 0);
+        try {
+            this.environmentExp.declare(equalsSymbol, equalsDefinition);
+        } catch (EnvironmentExp.DoubleDefException doubleDefException) {
+            LOG.error("Multiple type declaration");
+        }
+    }
+
+    public EnvironmentExp getEnvironmentExp() {
+        return environmentExp;
+    }
+
+    public EnvironmentTypes getEnvironmentTypes() {
+        return environmentTypes;
+    }
+
+    public SymbolTable getSymbolTable() {
+        return symbolTable;
     }
 
     /**
@@ -125,9 +177,8 @@ public class DecacCompiler {
      */
     public boolean compile() {
         String sourceFile = source.getAbsolutePath();
-        String destFile = null;
-        // A FAIRE: calculer le nom du fichier .ass à partir du nom du
-        // A FAIRE: fichier .deca.
+        // TODO: verify that sourceFile is .deca
+        String destFile = source.getAbsolutePath().replaceAll("\\.deca$", ".ass");
         PrintStream err = System.err;
         PrintStream out = System.out;
         LOG.debug("Compiling file " + sourceFile + " to assembly file " + destFile);
@@ -178,9 +229,19 @@ public class DecacCompiler {
         }
         assert(prog.checkAllLocations());
 
+        if (this.compilerOptions.getParse()) {
+            // Display tree decompilation
+            prog.decompile(out);
+            return false;
+        }
 
         prog.verifyProgram(this);
         assert(prog.checkAllDecorations());
+
+        if (this.compilerOptions.getVerification()) {
+            // Stop program after syntax verification
+            return false;
+        }
 
         addComment("start main program");
         prog.codeGenProgram(this);

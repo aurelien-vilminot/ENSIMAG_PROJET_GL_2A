@@ -1,11 +1,14 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.context.Type;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ClassDefinition;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.deca.tools.SymbolTable;
+import org.apache.commons.lang.Validate;
+import org.apache.log4j.Logger;
+
+import fr.ensimag.ima.pseudocode.instructions.WSTR;
+
 import java.io.PrintStream;
 
 /**
@@ -16,6 +19,7 @@ import java.io.PrintStream;
 public class BooleanLiteral extends AbstractExpr {
 
     private boolean value;
+    private static final Logger LOG = Logger.getLogger(Main.class);
 
     public BooleanLiteral(boolean value) {
         this.value = value;
@@ -28,9 +32,22 @@ public class BooleanLiteral extends AbstractExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        LOG.debug("verify BooleanLiteral: start");
+
+        Validate.notNull(compiler, "Compiler (env_types) object should not be null");
+        Validate.notNull(localEnv, "Env_exp object should not be null");
+
+        Type booleanType = new BooleanType(compiler.getSymbolTable().create("boolean"));
+        this.setType(booleanType);
+
+        LOG.debug("verify BooleanLiteral: end");
+        return booleanType;
     }
 
+    @Override
+    protected void codeGenPrint(DecacCompiler compiler) {
+        compiler.addInstruction(new WSTR(Boolean.toString(value)));
+    }
 
     @Override
     public void decompile(IndentPrintStream s) {

@@ -8,6 +8,7 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
+import org.apache.log4j.Logger;
 
 /**
  * Full if/else if/else statement.
@@ -16,10 +17,19 @@ import org.apache.commons.lang.Validate;
  * @date 01/01/2022
  */
 public class IfThenElse extends AbstractInst {
-    
+    private static final Logger LOG = Logger.getLogger(Main.class);
+
     private final AbstractExpr condition; 
     private final ListInst thenBranch;
     private ListInst elseBranch;
+
+    public void setElseBranch(ListInst elseBranch) {
+        this.elseBranch = elseBranch;
+    }
+
+    public ListInst getElseBranch() {
+        return elseBranch;
+    }
 
     public IfThenElse(AbstractExpr condition, ListInst thenBranch, ListInst elseBranch) {
         Validate.notNull(condition);
@@ -34,6 +44,15 @@ public class IfThenElse extends AbstractInst {
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass, Type returnType)
             throws ContextualError {
+        LOG.debug("verify ifThenElse: start");
+        Validate.notNull(compiler, "Compiler (env_types) object should not be null");
+        Validate.notNull(localEnv, "Env_exp object should not be null");
+        Validate.notNull(returnType, "Return type should not be null");
+
+        this.condition.verifyInst(compiler, localEnv, currentClass, returnType);
+        this.thenBranch.verifyListInst(compiler, localEnv, currentClass, returnType);
+        this.elseBranch.verifyListInst(compiler, localEnv, currentClass, returnType);
+        LOG.debug("verify ifThenElse: else");
     }
 
     @Override
@@ -43,7 +62,20 @@ public class IfThenElse extends AbstractInst {
 
     @Override
     public void decompile(IndentPrintStream s) {
-        throw new UnsupportedOperationException("not yet implemented");
+        s.print("if ");
+        condition.decompile(s);
+        s.println(" {");
+        s.indent();
+        thenBranch.decompile(s);
+        s.unindent();
+        s.print("}");
+        if (!elseBranch.isEmpty()) {
+            s.println(" else {");
+            s.indent();
+            elseBranch.decompile(s);
+            s.unindent();
+            s.print("}");
+        }
     }
 
     @Override

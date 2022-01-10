@@ -1,15 +1,13 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.context.Type;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ClassDefinition;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.Label;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
+import org.apache.log4j.Logger;
 
 /**
  * Expression, i.e. anything that has a value.
@@ -18,6 +16,8 @@ import org.apache.commons.lang.Validate;
  * @date 01/01/2022
  */
 public abstract class AbstractExpr extends AbstractInst {
+    private static final Logger LOG = Logger.getLogger(Main.class);
+
     /**
      * @return true if the expression does not correspond to any concrete token
      * in the source code (and should be decompiled to the empty string).
@@ -82,7 +82,21 @@ public abstract class AbstractExpr extends AbstractInst {
             EnvironmentExp localEnv, ClassDefinition currentClass, 
             Type expectedType)
             throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        LOG.debug("verify RValue: start");
+        Validate.notNull(compiler, "Compiler (env_types) object should not be null");
+        Validate.notNull(localEnv, "Env_exp object should not be null");
+        Validate.notNull(expectedType, "Expected type should not be null");
+
+        Type currentType = this.verifyExpr(compiler, localEnv, currentClass);
+
+        // Check type compatibility
+        boolean areCompatible = compiler.getEnvironmentTypes().assignCompatible(expectedType, currentType);
+        if (!areCompatible) {
+            throw new ContextualError("Types are not compatible", this.getLocation());
+        }
+        this.setType(currentType);
+        LOG.debug("verify RValue: end");
+        return this;
     }
     
     
@@ -90,7 +104,12 @@ public abstract class AbstractExpr extends AbstractInst {
     protected void verifyInst(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass, Type returnType)
             throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        LOG.debug("verify Inst: start");
+        Validate.notNull(compiler, "Compiler (env_types) object should not be null");
+        Validate.notNull(localEnv, "Env_exp object should not be null");
+
+        this.setType(this.verifyExpr(compiler, localEnv, currentClass));
+        LOG.debug("verify Inst: end");
     }
 
     /**
@@ -105,7 +124,18 @@ public abstract class AbstractExpr extends AbstractInst {
      */
     void verifyCondition(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        LOG.debug("verify Condition: start");
+        Validate.notNull(compiler, "Compiler (env_types) object should not be null");
+        Validate.notNull(localEnv, "Env_exp object should not be null");
+
+        Type currentType = this.verifyExpr(compiler, localEnv, currentClass);
+
+        // Check if it is a boolean expression
+        if (!currentType.isBoolean()) {
+            throw new ContextualError("Expression type must be boolean", this.getLocation());
+        }
+
+        LOG.debug("verify Condition: end");
     }
 
     /**
@@ -115,6 +145,15 @@ public abstract class AbstractExpr extends AbstractInst {
      */
     protected void codeGenPrint(DecacCompiler compiler) {
         throw new UnsupportedOperationException("not yet implemented");
+    }
+
+    /**
+     * Generate code to print the expression using hexadecimal value for floats
+     *
+     * @param compiler
+     */
+    protected void codeGenPrintx(DecacCompiler compiler) {
+        codeGenPrint(compiler);
     }
 
     @Override
