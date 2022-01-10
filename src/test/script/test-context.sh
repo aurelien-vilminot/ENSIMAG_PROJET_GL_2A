@@ -170,7 +170,7 @@ do
 
   # Generate output file :
   log_error_output_file="$TEST_PATH"/"$name_test".log
-  test_synt "$i" 1> /dev/null 2> "$log_error_output_file"
+  test_context "$i" 1> /dev/null 2> "$log_error_output_file"
   res=$(cat "$log_error_output_file")
 
   if [ "$res" = "" ]; then
