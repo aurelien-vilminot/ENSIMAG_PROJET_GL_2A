@@ -1,0 +1,49 @@
+`> [1, 0] Program
+   +> ListDeclClass [List with 0 elements]
+   `> [1, 0] Main
+      +> ListDeclVar [List with 1 elements]
+      |  []> [2, 6] DeclVar
+      |      +> [2, 2] Identifier (int)
+      |      |  definition: type (builtin), type=int
+      |      +> [2, 6] Identifier (i)
+      |      |  definition: variable defined at [2, 6], type=int
+      |      `> [2, 8] Initialization
+      |         `> [2, 10] Int (0)
+      |            type: int
+      `> ListInst [List with 1 elements]
+         []> [3, 2] IfThenElse
+             +> [3, 6] Equals
+             |  type: boolean
+             |  +> [3, 5] Identifier (i)
+             |  |  definition: variable defined at [2, 6], type=int
+             |  `> [3, 8] Int (0)
+             |     type: int
+             +> ListInst [List with 2 elements]
+             |  []> [4, 4] Println
+             |  ||  `> ListExpr [List with 1 elements]
+             |  ||     []> [4, 12] StringLiteral (Hello World !)
+             |  ||         type: string
+             |  []> [5, 6] Assign
+             |      type: int
+             |      +> [5, 4] Identifier (i)
+             |      |  definition: variable defined at [2, 6], type=int
+             |      `> [5, 8] Int (1)
+             |         type: int
+             `> ListInst [List with 1 elements]
+                []> [6, 4] IfThenElse
+                    +> [6, 13] Equals
+                    |  type: boolean
+                    |  +> [6, 12] Identifier (i)
+                    |  |  definition: variable defined at [2, 6], type=int
+                    |  `> [6, 15] Int (1)
+                    |     type: int
+                    +> ListInst [List with 1 elements]
+                    |  []> [7, 4] Println
+                    |      `> ListExpr [List with 1 elements]
+                    |         []> [7, 12] StringLiteral (Hello Moon !)
+                    |             type: string
+                    `> ListInst [List with 1 elements]
+                       []> [9, 4] Println
+                           `> ListExpr [List with 1 elements]
+                              []> [9, 12] StringLiteral (Hello You !)
+                                  type: string
