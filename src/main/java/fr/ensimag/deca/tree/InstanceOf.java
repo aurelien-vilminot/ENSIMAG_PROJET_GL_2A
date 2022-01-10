@@ -28,16 +28,22 @@ public class InstanceOf extends AbstractExpr {
 
     @Override
     public void decompile(IndentPrintStream s) {
-        throw new UnsupportedOperationException("not yet implemented");
+        s.print("(");
+        expr.decompile(s);
+        s.print(" instanceof ");
+        type.decompile(s);
+        s.print(")");
     }
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-        throw new UnsupportedOperationException("not yet implemented");
+        expr.prettyPrint(s, prefix, false);
+        type.prettyPrint(s, prefix, true);
     }
 
     @Override
     protected void iterChildren(TreeFunction f) {
-        throw new UnsupportedOperationException("not yet implemented");
+        expr.iter(f);
+        type.iter(f);
     }
 }
