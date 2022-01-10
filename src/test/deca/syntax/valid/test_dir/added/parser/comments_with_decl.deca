@@ -1,0 +1,14 @@
+{
+  // This is a comment
+  /* multi
+  line
+  comment */
+
+  int i = 0;
+
+  // This is a comment
+  /* multi
+  line
+  comment */
+
+}

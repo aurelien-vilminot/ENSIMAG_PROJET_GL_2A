@@ -1,0 +1,4 @@
+{
+	print("Hello World !");
+	int i = 0;
+}
