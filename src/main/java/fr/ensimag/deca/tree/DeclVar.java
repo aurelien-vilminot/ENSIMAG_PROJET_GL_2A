@@ -57,7 +57,12 @@ public class DeclVar extends AbstractDeclVar {
         LOG.debug("verify DeclVar: end");
     }
 
-    
+    @Override
+    protected void codeGenDeclVar(DecacCompiler compiler) {
+        // TODO
+        throw new UnsupportedOperationException("not yet implemented");
+    }
+
     @Override
     public void decompile(IndentPrintStream s) {
         type.decompile(s);
