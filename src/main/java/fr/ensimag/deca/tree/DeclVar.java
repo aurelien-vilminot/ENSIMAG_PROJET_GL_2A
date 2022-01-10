@@ -35,7 +35,12 @@ public class DeclVar extends AbstractDeclVar {
             throws ContextualError {
     }
 
-    
+    @Override
+    protected void codeGenDeclVar(DecacCompiler compiler) {
+        // TODO
+        throw new UnsupportedOperationException("not yet implemented");
+    }
+
     @Override
     public void decompile(IndentPrintStream s) {
         throw new UnsupportedOperationException("not yet implemented");
