@@ -1,4 +1,4 @@
 {
     int b;
-    (int) b;
+    (int) (b);
 }

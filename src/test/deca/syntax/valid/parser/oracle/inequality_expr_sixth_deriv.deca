@@ -1,0 +1,7 @@
+{
+  -"Moon !" instanceof instance;
+  5 instanceof int;
+  (A+2) instanceof A;
+  readInt() instanceof B;
+  readFloat() instanceof Float;
+}
