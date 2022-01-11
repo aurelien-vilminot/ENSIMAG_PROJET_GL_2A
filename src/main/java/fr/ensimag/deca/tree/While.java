@@ -8,7 +8,7 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.instructions.*;
-import fr.ensimag.deca.codegen.LabelGenerator;
+
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
@@ -41,8 +41,8 @@ public class While extends AbstractInst {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        Label begin = LabelGenerator.newLabel(compiler);
-        Label cond = LabelGenerator.newLabel(compiler);
+        Label begin = new Label("begin");
+        Label cond = new Label("cond");
 
         compiler.addInstruction(new BRA(cond));
 
