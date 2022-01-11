@@ -11,6 +11,8 @@ import fr.ensimag.deca.context.MethodDefinition;
 import fr.ensimag.deca.context.ExpDefinition;
 import fr.ensimag.deca.context.VariableDefinition;
 import fr.ensimag.deca.tools.SymbolTable;
+import fr.ensimag.ima.pseudocode.Instruction;
+import fr.ensimag.ima.pseudocode.instructions.*;
 
 /**
  *
@@ -93,4 +95,19 @@ public abstract class AbstractIdentifier extends AbstractLValue {
      *         (corresponds to the "type" attribute)
      */
     public abstract Type verifyType(DecacCompiler compiler) throws ContextualError;
+
+    @Override
+    public Instruction outputExpr(boolean printHex) {
+        Type type = getType();
+        if (type.isInt()) {
+            return new WINT();
+        } else if (type.isFloat()) {
+            if (printHex) {
+                return new WFLOATX();
+            } else {
+                return new WFLOAT();
+            }
+        }
+        return null;
+    }
 }

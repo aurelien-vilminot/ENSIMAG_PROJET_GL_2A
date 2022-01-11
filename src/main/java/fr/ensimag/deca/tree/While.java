@@ -7,8 +7,7 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.instructions.BNE;
-import fr.ensimag.ima.pseudocode.instructions.BRA;
+import fr.ensimag.ima.pseudocode.instructions.*;
 import fr.ensimag.deca.codegen.LabelGenerator;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
@@ -42,18 +41,17 @@ public class While extends AbstractInst {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        Label loop = LabelGenerator.newLabel(compiler);
-        Label end = LabelGenerator.newLabel(compiler);
+        Label begin = LabelGenerator.newLabel(compiler);
+        Label cond = LabelGenerator.newLabel(compiler);
 
-        compiler.addLabel(loop);
+        compiler.addInstruction(new BRA(cond));
 
-        condition.codeGenInst(compiler);; // (expected to charge boolean value on R0)
-        compiler.addInstruction(new BNE(end));
-
+        compiler.addLabel(begin); // loop body
         body.codeGenListInst(compiler);
-        
-        compiler.addInstruction(new BRA(loop));
-        compiler.addLabel(end);
+
+        compiler.addLabel(cond); // test condition
+        condition.codeGenInst(compiler);
+        compiler.addInstruction(new BEQ(begin)); // TODO : assure that this works (expected to branch if condition is true)
     }
 
     @Override

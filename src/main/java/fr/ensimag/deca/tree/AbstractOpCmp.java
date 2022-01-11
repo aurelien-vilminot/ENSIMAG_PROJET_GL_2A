@@ -26,7 +26,7 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
 
         Type typeLeftOp = this.getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
         Type typeRightOp = this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
-        Type booleanType = new BooleanType(compiler.getSymbolTable().create("boolean"));
+        Type booleanType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("boolean")).getType();
 
         boolean isEqOrNeq = this.getOperatorName().equals("!=") || this.getOperatorName().equals("==");
         boolean isIntOrFloat = (typeLeftOp.isFloat() || typeLeftOp.isInt()) && (typeRightOp.isFloat() || typeRightOp.isInt());

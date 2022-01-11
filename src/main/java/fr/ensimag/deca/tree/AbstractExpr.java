@@ -4,12 +4,10 @@ import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.DVal;
-import fr.ensimag.ima.pseudocode.GPRegister;
-import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.*;
+
 import java.io.PrintStream;
 
-import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
@@ -149,7 +147,11 @@ public abstract class AbstractExpr extends AbstractInst {
      * @param compiler
      */
     protected void codeGenPrint(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("not yet implemented");
+        // Generate code to load expression in R1
+        this.codeGenExpr(compiler, 1);
+        // Output R1
+        Instruction outputInstruction = this.outputExpr(false);
+        compiler.addInstruction(outputInstruction);
     }
 
     /**
@@ -158,7 +160,11 @@ public abstract class AbstractExpr extends AbstractInst {
      * @param compiler
      */
     protected void codeGenPrintx(DecacCompiler compiler) {
-        codeGenPrint(compiler);
+        // Generate code to load expression in R1
+        this.codeGenExpr(compiler, 1);
+        // Output R1
+        Instruction outputInstruction = this.outputExpr(true);
+        compiler.addInstruction(outputInstruction);
     }
 
     @Override
@@ -167,6 +173,10 @@ public abstract class AbstractExpr extends AbstractInst {
     }
 
     public DVal dval(DecacCompiler compiler) {
+        return null;
+    }
+
+    public Instruction outputExpr(boolean printHex) {
         return null;
     }
 

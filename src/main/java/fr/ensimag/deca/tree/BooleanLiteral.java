@@ -37,17 +37,13 @@ public class BooleanLiteral extends AbstractExpr {
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
         Validate.notNull(localEnv, "Env_exp object should not be null");
 
-        Type booleanType = new BooleanType(compiler.getSymbolTable().create("boolean"));
+        Type booleanType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("boolean")).getType();
         this.setType(booleanType);
 
         LOG.debug("verify BooleanLiteral: end");
         return booleanType;
     }
 
-    @Override
-    protected void codeGenPrint(DecacCompiler compiler) {
-        compiler.addInstruction(new WSTR(Boolean.toString(value)));
-    }
 
     @Override
     public void decompile(IndentPrintStream s) {
