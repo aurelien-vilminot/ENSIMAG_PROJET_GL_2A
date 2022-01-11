@@ -5,4 +5,6 @@
     a && b;
     a || b;
     a != b;
+    true == true;
+    false == false;
 }

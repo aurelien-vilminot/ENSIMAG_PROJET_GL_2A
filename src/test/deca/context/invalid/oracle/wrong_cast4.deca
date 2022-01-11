@@ -1,4 +1,0 @@
-{
-    float f;
-    (string) (f);
-}

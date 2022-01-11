@@ -1,4 +1,0 @@
-{
-    string b;
-    (string) (b);
-}

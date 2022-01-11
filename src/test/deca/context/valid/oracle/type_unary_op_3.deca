@@ -2,5 +2,7 @@
     boolean a;
     boolean b = !a;
     !b;
+    !true;
+    !false;
     /* Test that b is a boolean */
 }
