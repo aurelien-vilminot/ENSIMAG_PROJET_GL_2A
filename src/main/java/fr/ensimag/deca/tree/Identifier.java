@@ -170,6 +170,7 @@ public class Identifier extends AbstractIdentifier {
             throw new ContextualError("Undeclared identifier", this.getLocation());
         } else {
             this.definition = expDefinition;
+            this.setType(expDefinition.getType());
         }
         LOG.debug("verify Identifier: end");
 
@@ -191,6 +192,7 @@ public class Identifier extends AbstractIdentifier {
             throw new ContextualError("Undefined type identifier: " + this.name, this.getLocation());
         }
         this.definition = currentType;
+        this.setType(currentType.getType());
         LOG.debug("verify Type: end");
 
         return currentType.getType();
