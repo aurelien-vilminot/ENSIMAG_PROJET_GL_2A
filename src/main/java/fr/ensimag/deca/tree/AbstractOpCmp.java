@@ -2,6 +2,11 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.ima.pseudocode.DVal;
+import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.*;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -57,5 +62,57 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
         this.setType(booleanType);
         LOG.debug("verify OPComp: end");
         return booleanType;
+    }
+
+    /**
+     * Add a branch instruction corresponding to the comparison operator
+     *
+     */
+    protected void mnemo(DecacCompiler compiler, Label branch) {
+        switch (this.getOperatorName()) {
+            case "==":
+                compiler.addInstruction(new BNE(branch));
+                break;
+            case "!=":
+                compiler.addInstruction(new BEQ(branch));
+                break;
+            case "<":
+                compiler.addInstruction(new BGE(branch));
+                break;
+            case "<=":
+                compiler.addInstruction(new BGT(branch));
+                break;
+            case ">":
+                compiler.addInstruction(new BLE(branch));
+                break;
+            case ">=":
+                compiler.addInstruction(new BLT(branch));
+                break;
+        }
+    }
+
+    protected void codeGenExprCom(DecacCompiler compiler, int n, Label branch) {
+        DVal rightDval = this.getRightOperand().dval(compiler);
+        if (rightDval != null) {
+            this.getLeftOperand().codeGenExpr(compiler, n);
+            compiler.addInstruction(new CMP(rightDval, Register.getR(n)));
+        } else {
+            int maxRegister = compiler.getCompilerOptions().getRegisterNumber();
+            if (n < maxRegister) {
+                this.getLeftOperand().codeGenExpr(compiler, n);
+                this.getRightOperand().codeGenExpr(compiler, n+1);
+                compiler.addInstruction(new CMP(rightDval, Register.getR(n)));
+            } else {
+                this.getLeftOperand().codeGenExpr(compiler, n);
+                compiler.addInstruction(new PUSH(Register.getR(n)), "; sauvegarde");
+                this.getRightOperand().codeGenExpr(compiler, n);
+                compiler.addInstruction(new LOAD(Register.getR(n), Register.R0));
+                compiler.addInstruction(new POP(Register.getR(n)), "; restauration");
+                compiler.addInstruction(new CMP(rightDval, Register.getR(n)));
+            }
+        }
+
+        // Add branch instruction
+        this.mnemo(compiler, branch);
     }
 }
