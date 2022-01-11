@@ -8,10 +8,7 @@ import fr.ensimag.ima.pseudocode.*;
 
 import java.io.PrintStream;
 
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
-import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
-import fr.ensimag.ima.pseudocode.instructions.WFLOATX;
-import fr.ensimag.ima.pseudocode.instructions.WINT;
+import fr.ensimag.ima.pseudocode.instructions.*;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -216,7 +213,16 @@ public abstract class AbstractExpr extends AbstractInst {
      * @param branch
      */
     protected void codeGenExprBool(DecacCompiler compiler, boolean bool, Label branch) {
-        throw new UnsupportedOperationException("This function must not be called");
+        DVal dval = this.dval(compiler);
+        if (dval != null) {
+            compiler.addInstruction(new LOAD(this.dval(compiler), Register.getR(0)));
+            compiler.addInstruction(new CMP(new ImmediateInteger(0), Register.getR(0)));
+            if (bool) {
+                compiler.addInstruction(new BNE(branch));
+            } else {
+                compiler.addInstruction(new BEQ(branch));
+            }
+        }
     }
 
     @Override

@@ -70,51 +70,49 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
      * Add a branch instruction corresponding to the comparison operator
      *
      */
-    protected void mnemo(DecacCompiler compiler, Label branch) {
+    protected void mnemo(DecacCompiler compiler, boolean bool, Label branch) {
         switch (this.getOperatorName()) {
             case "==":
-                compiler.addInstruction(new BNE(branch));
+                compiler.addInstruction(bool ? new BEQ(branch) : new BNE(branch));
                 break;
             case "!=":
-                compiler.addInstruction(new BEQ(branch));
+                compiler.addInstruction(bool ? new BNE(branch) : new BEQ(branch));
                 break;
             case "<":
-                compiler.addInstruction(new BGE(branch));
+                compiler.addInstruction(bool ? new BLT(branch) : new BGE(branch));
                 break;
             case "<=":
-                compiler.addInstruction(new BGT(branch));
+                compiler.addInstruction(bool ? new BLE(branch) : new BGT(branch));
                 break;
             case ">":
-                compiler.addInstruction(new BLE(branch));
+                compiler.addInstruction(bool ? new BGT(branch) : new BLE(branch));
                 break;
             case ">=":
-                compiler.addInstruction(new BLT(branch));
+                compiler.addInstruction(bool ? new BGE(branch) : new BLT(branch));
                 break;
         }
     }
 
-    protected void codeGenExprCom(DecacCompiler compiler, int n, Label branch) {
+    /**
+     * If the comparator returns a true value, goto "branch"
+     *
+     * @param compiler
+     * @param bool
+     * @param branch
+     */
+    @Override
+    protected void codeGenExprBool(DecacCompiler compiler, boolean bool, Label branch) {
         DVal rightDval = this.getRightOperand().dval(compiler);
         if (rightDval != null) {
-            this.getLeftOperand().codeGenExpr(compiler, n);
-            compiler.addInstruction(new CMP(rightDval, Register.getR(n)));
+            this.getLeftOperand().codeGenExpr(compiler, 2);
+            compiler.addInstruction(new CMP(rightDval, Register.getR(2)));
         } else {
-            int maxRegister = compiler.getCompilerOptions().getRegisterNumber();
-            if (n < maxRegister) {
-                this.getLeftOperand().codeGenExpr(compiler, n);
-                this.getRightOperand().codeGenExpr(compiler, n+1);
-                compiler.addInstruction(new CMP(rightDval, Register.getR(n)));
-            } else {
-                this.getLeftOperand().codeGenExpr(compiler, n);
-                compiler.addInstruction(new PUSH(Register.getR(n)), "; sauvegarde");
-                this.getRightOperand().codeGenExpr(compiler, n);
-                compiler.addInstruction(new LOAD(Register.getR(n), Register.R0));
-                compiler.addInstruction(new POP(Register.getR(n)), "; restauration");
-                compiler.addInstruction(new CMP(rightDval, Register.getR(n)));
-            }
+            this.getLeftOperand().codeGenExpr(compiler, 2);
+            this.getRightOperand().codeGenExpr(compiler, 3);
+            compiler.addInstruction(new CMP(Register.getR(3), Register.getR(2)));
         }
 
         // Add branch instruction
-        this.mnemo(compiler, branch);
+        this.mnemo(compiler, bool, branch);
     }
 }
