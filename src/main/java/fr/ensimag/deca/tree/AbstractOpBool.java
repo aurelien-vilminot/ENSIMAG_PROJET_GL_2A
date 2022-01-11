@@ -5,6 +5,8 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.instructions.BRA;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -43,4 +45,9 @@ public abstract class AbstractOpBool extends AbstractBinaryExpr {
         return returnType;
     }
 
+    protected void codeGenExprBool(DecacCompiler compiler, boolean bool, Label branch) {
+        // TODO
+//        Label falseLabel = new Label(compiler.getLabelGenerator().generateLabel("E_fin"));
+//        compiler.addInstruction(new BRA(branch));
+    }
 }
