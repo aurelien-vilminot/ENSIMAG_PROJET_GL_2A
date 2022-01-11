@@ -188,7 +188,7 @@ public class Identifier extends AbstractIdentifier {
         // Check if type identifier exists
         TypeDefinition currentType = compiler.getEnvironmentTypes().get(this.name);
         if (currentType == null) {
-            throw new ContextualError("Undefined type identifier", this.getLocation());
+            throw new ContextualError("Undefined type identifier: " + this.name, this.getLocation());
         }
         this.definition = currentType;
         LOG.debug("verify Type: end");
