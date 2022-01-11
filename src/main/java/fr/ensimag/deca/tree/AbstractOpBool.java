@@ -5,8 +5,10 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.ima.pseudocode.DVal;
 import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.instructions.BRA;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.*;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -45,9 +47,27 @@ public abstract class AbstractOpBool extends AbstractBinaryExpr {
         return returnType;
     }
 
+    @Override
     protected void codeGenExprBool(DecacCompiler compiler, boolean bool, Label branch) {
-        // TODO
-//        Label falseLabel = new Label(compiler.getLabelGenerator().generateLabel("E_fin"));
-//        compiler.addInstruction(new BRA(branch));
+        DVal dval = this.dval(compiler);
+        if (dval != null && bool) {
+            compiler.addInstruction(new BRA(branch));
+        } else {
+            switch (this.getOperatorName()) {
+                case "&&":
+                    Label endBranch = new Label(compiler.getLabelGenerator().generateLabel(branch.toString()) + "_fin");
+                    this.getLeftOperand().codeGenExprBool(compiler, false, bool ? endBranch : branch );
+                    this.getLeftOperand().codeGenExprBool(compiler, bool, branch);
+                    compiler.addInstruction(new BNE(branch));
+                    if (bool) {
+                        compiler.addLabel(endBranch);
+                    }
+                    break;
+                case "||":
+                    Not newExpr = new Not(new And(new Not(this.getLeftOperand()), new Not(this.getRightOperand())));
+                    newExpr.codeGenExprBool(compiler, bool, branch);
+                    break;
+            }
+        }
     }
 }

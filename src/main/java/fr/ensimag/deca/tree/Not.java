@@ -2,6 +2,7 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.ima.pseudocode.Label;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -40,5 +41,10 @@ public class Not extends AbstractUnaryExpr {
     @Override
     protected String getOperatorName() {
         return "!";
+    }
+
+    @Override
+    protected void codeGenExprBool(DecacCompiler compiler, boolean bool, Label branch) {
+        getOperand().codeGenExprBool(compiler, !bool, branch);
     }
 }

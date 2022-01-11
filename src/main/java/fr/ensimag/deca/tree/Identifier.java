@@ -8,6 +8,13 @@ import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import java.io.PrintStream;
 
 import fr.ensimag.ima.pseudocode.DVal;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.BEQ;
+import fr.ensimag.ima.pseudocode.instructions.BNE;
+import fr.ensimag.ima.pseudocode.instructions.CMP;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -222,6 +229,17 @@ public class Identifier extends AbstractIdentifier {
     @Override
     public DVal dval(DecacCompiler compiler) {
         return compiler.getEnvironmentExp().get(name).getOperand();
+    }
+
+    @Override
+    protected void codeGenExprBool(DecacCompiler compiler, boolean bool, Label branch) {
+        compiler.addInstruction(new LOAD(this.dval(compiler), Register.getR(0)));
+        compiler.addInstruction(new CMP(new ImmediateInteger(0), Register.getR(0)));
+        if (bool) {
+            compiler.addInstruction(new BNE(branch));
+        } else {
+            compiler.addInstruction(new BEQ(branch));
+        }
     }
 
     @Override

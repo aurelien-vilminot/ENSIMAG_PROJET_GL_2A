@@ -208,6 +208,10 @@ public abstract class AbstractExpr extends AbstractInst {
         }
     }
 
+    protected void codeGenExprBool(DecacCompiler compiler, boolean bool, Label branch) {
+        throw new UnsupportedOperationException("This function must not be called");
+    }
+
     @Override
     protected void decompileInst(IndentPrintStream s) {
         decompile(s);
