@@ -2,6 +2,8 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.FLOAT;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -38,6 +40,11 @@ public class ConvFloat extends AbstractUnaryExpr {
         return typeFloat;
     }
 
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, int n) {
+        getOperand().codeGenExpr(compiler, n);
+        compiler.addInstruction(new FLOAT(Register.getR(n), Register.getR(n)));
+    }
 
     @Override
     protected String getOperatorName() {
