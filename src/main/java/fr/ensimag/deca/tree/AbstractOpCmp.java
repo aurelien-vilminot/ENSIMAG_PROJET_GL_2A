@@ -2,6 +2,11 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.ima.pseudocode.DVal;
+import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.*;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -22,7 +27,7 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
             ClassDefinition currentClass) throws ContextualError {
         LOG.debug("verify OPComp: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
-        Validate.notNull(localEnv, "Env_exp object should not be null");
+//        Validate.notNull(localEnv, "Env_exp object should not be null");
 
         Type typeLeftOp = this.getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
         Type typeRightOp = this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
@@ -50,12 +55,64 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
         // Implicit float conversion
         if (typeLeftOp.isInt() && typeRightOp.isFloat()) {
             this.setLeftOperand(new ConvFloat(this.getLeftOperand()));
+            this.getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
         } else if (typeLeftOp.isFloat() && typeRightOp.isInt()) {
             this.setRightOperand(new ConvFloat(this.getRightOperand()));
+            this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
         }
 
         this.setType(booleanType);
         LOG.debug("verify OPComp: end");
         return booleanType;
+    }
+
+    /**
+     * Add a branch instruction corresponding to the comparison operator
+     *
+     */
+    protected void mnemo(DecacCompiler compiler, boolean bool, Label branch) {
+        switch (this.getOperatorName()) {
+            case "==":
+                compiler.addInstruction(bool ? new BEQ(branch) : new BNE(branch));
+                break;
+            case "!=":
+                compiler.addInstruction(bool ? new BNE(branch) : new BEQ(branch));
+                break;
+            case "<":
+                compiler.addInstruction(bool ? new BLT(branch) : new BGE(branch));
+                break;
+            case "<=":
+                compiler.addInstruction(bool ? new BLE(branch) : new BGT(branch));
+                break;
+            case ">":
+                compiler.addInstruction(bool ? new BGT(branch) : new BLE(branch));
+                break;
+            case ">=":
+                compiler.addInstruction(bool ? new BGE(branch) : new BLT(branch));
+                break;
+        }
+    }
+
+    /**
+     * If the comparator returns a value equal to bool, goto "branch"
+     *
+     * @param compiler
+     * @param bool
+     * @param branch
+     */
+    @Override
+    protected void codeGenExprBool(DecacCompiler compiler, boolean bool, Label branch) {
+        DVal rightDval = this.getRightOperand().dval(compiler);
+        if (rightDval != null) {
+            this.getLeftOperand().codeGenExpr(compiler, 2);
+            compiler.addInstruction(new CMP(rightDval, Register.getR(2)));
+        } else {
+            this.getLeftOperand().codeGenExpr(compiler, 2);
+            this.getRightOperand().codeGenExpr(compiler, 3);
+            compiler.addInstruction(new CMP(Register.getR(3), Register.getR(2)));
+        }
+
+        // Add branch instruction
+        this.mnemo(compiler, bool, branch);
     }
 }

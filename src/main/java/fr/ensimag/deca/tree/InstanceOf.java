@@ -25,7 +25,7 @@ public class InstanceOf extends AbstractExpr {
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
         LOG.debug("verify InstanceOf: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
-        Validate.notNull(localEnv, "Env_exp object should not be null");
+//        Validate.notNull(localEnv, "Env_exp object should not be null");
 
         // Get expr type
         Type exprType = this.expr.verifyExpr(compiler, localEnv, currentClass);

@@ -7,6 +7,9 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
+
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.instructions.BRA;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -46,7 +49,7 @@ public class IfThenElse extends AbstractInst {
             throws ContextualError {
         LOG.debug("verify ifThenElse: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
-        Validate.notNull(localEnv, "Env_exp object should not be null");
+//        Validate.notNull(localEnv, "Env_exp object should not be null");
         Validate.notNull(returnType, "Return type should not be null");
 
         this.condition.verifyInst(compiler, localEnv, currentClass, returnType);
@@ -57,7 +60,22 @@ public class IfThenElse extends AbstractInst {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("not yet implemented");
+        Label elseLabel = new Label(compiler.getLabelGenerator().generateLabel("sinon"));
+        Label endLabel = new Label(compiler.getLabelGenerator().generateLabel("fin"));
+
+        // Gen code for condition
+        this.condition.codeGenExprBool(compiler, false, elseLabel);
+        // Gen code for instruction(s)
+        this.thenBranch.codeGenListInst(compiler);
+        // Go to the end of if statement after the instruction execution
+        compiler.addInstruction(new BRA(endLabel));
+        // Add the else label
+        compiler.addLabel(elseLabel);
+        // Gen code for else branch which could be contained other ifThenElse branches
+        this.elseBranch.codeGenListInst(compiler);
+        // Add the end label
+        // TODO: optimize to have only one final label
+        compiler.addLabel(endLabel);
     }
 
     @Override

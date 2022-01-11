@@ -3,11 +3,10 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.deca.tools.SymbolTable;
+import fr.ensimag.ima.pseudocode.DVal;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
-
-import fr.ensimag.ima.pseudocode.instructions.WSTR;
 
 import java.io.PrintStream;
 
@@ -35,7 +34,7 @@ public class BooleanLiteral extends AbstractExpr {
         LOG.debug("verify BooleanLiteral: start");
 
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
-        Validate.notNull(localEnv, "Env_exp object should not be null");
+//        Validate.notNull(localEnv, "Env_exp object should not be null");
 
         Type booleanType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("boolean")).getType();
         this.setType(booleanType);
@@ -48,6 +47,15 @@ public class BooleanLiteral extends AbstractExpr {
     @Override
     public void decompile(IndentPrintStream s) {
         s.print(Boolean.toString(value));
+    }
+
+    @Override
+    public DVal dval(DecacCompiler compiler) {
+        int intValue = 0;
+        if (value) {
+            intValue = 1;
+        }
+        return new ImmediateInteger(intValue);
     }
 
     @Override

@@ -8,7 +8,7 @@ import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.instructions.*;
-import fr.ensimag.deca.codegen.LabelGenerator;
+
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
@@ -41,8 +41,8 @@ public class While extends AbstractInst {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        Label begin = LabelGenerator.newLabel(compiler);
-        Label cond = LabelGenerator.newLabel(compiler);
+        Label begin = new Label(compiler.getLabelGenerator().generateLabel("begin"));
+        Label cond = new Label(compiler.getLabelGenerator().generateLabel("cond"));
 
         compiler.addInstruction(new BRA(cond));
 
@@ -50,8 +50,7 @@ public class While extends AbstractInst {
         body.codeGenListInst(compiler);
 
         compiler.addLabel(cond); // test condition
-        condition.codeGenInst(compiler);
-        compiler.addInstruction(new BEQ(begin)); // TODO : assure that this works (expected to branch if condition is true)
+        condition.codeGenExprBool(compiler, true, begin);
     }
 
     @Override
@@ -60,7 +59,7 @@ public class While extends AbstractInst {
             throws ContextualError {
         LOG.debug("verify while: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
-        Validate.notNull(localEnv, "Env_exp object should not be null");
+//        Validate.notNull(localEnv, "Env_exp object should not be null");
         Validate.notNull(returnType, "Return type should not be null");
 
         this.condition.verifyCondition(compiler, localEnv, currentClass);

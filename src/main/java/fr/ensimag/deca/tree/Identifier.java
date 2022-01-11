@@ -8,6 +8,13 @@ import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import java.io.PrintStream;
 
 import fr.ensimag.ima.pseudocode.DVal;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.BEQ;
+import fr.ensimag.ima.pseudocode.instructions.BNE;
+import fr.ensimag.ima.pseudocode.instructions.CMP;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -164,7 +171,7 @@ public class Identifier extends AbstractIdentifier {
             ClassDefinition currentClass) throws ContextualError {
         LOG.debug("verify Identifier: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
-        Validate.notNull(localEnv, "Env_exp object should not be null");
+//        Validate.notNull(localEnv, "Env_exp object should not be null");
 
         // Check if identifier is already declared
         ExpDefinition expDefinition = localEnv.get(this.name);
@@ -172,6 +179,7 @@ public class Identifier extends AbstractIdentifier {
             throw new ContextualError("Undeclared identifier", this.getLocation());
         } else {
             this.definition = expDefinition;
+            this.setType(expDefinition.getType());
         }
         LOG.debug("verify Identifier: end");
 
@@ -190,9 +198,10 @@ public class Identifier extends AbstractIdentifier {
         // Check if type identifier exists
         TypeDefinition currentType = compiler.getEnvironmentTypes().get(this.name);
         if (currentType == null) {
-            throw new ContextualError("Undefined type identifier", this.getLocation());
+            throw new ContextualError("Undefined type identifier: " + this.name, this.getLocation());
         }
         this.definition = currentType;
+        this.setType(currentType.getType());
         LOG.debug("verify Type: end");
 
         return currentType.getType();

@@ -2,6 +2,7 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.ima.pseudocode.Label;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -22,7 +23,7 @@ public class Not extends AbstractUnaryExpr {
             ClassDefinition currentClass) throws ContextualError {
         LOG.debug("verify Not: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
-        Validate.notNull(localEnv, "Env_exp object should not be null");
+//        Validate.notNull(localEnv, "Env_exp object should not be null");
 
         Type typeOperand = this.getOperand().verifyExpr(compiler, localEnv, currentClass);
 
@@ -40,5 +41,10 @@ public class Not extends AbstractUnaryExpr {
     @Override
     protected String getOperatorName() {
         return "!";
+    }
+
+    @Override
+    protected void codeGenExprBool(DecacCompiler compiler, boolean bool, Label branch) {
+        getOperand().codeGenExprBool(compiler, !bool, branch);
     }
 }

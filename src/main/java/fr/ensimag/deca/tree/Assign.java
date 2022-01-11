@@ -6,6 +6,9 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.Definition;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.ima.pseudocode.DAddr;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -34,7 +37,7 @@ public class Assign extends AbstractBinaryExpr {
             ClassDefinition currentClass) throws ContextualError {
         LOG.debug("verify Assign: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
-        Validate.notNull(localEnv, "Env_exp object should not be null");
+//        Validate.notNull(localEnv, "Env_exp object should not be null");
 
         // Get lvalue type
         Type expectedType = this.getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
@@ -42,11 +45,35 @@ public class Assign extends AbstractBinaryExpr {
         // Check rvalue type
         this.getRightOperand().verifyRValue(compiler, localEnv, currentClass, expectedType);
         this.setType(expectedType);
+
+        if (this.getLeftOperand().getType().isFloat() && this.getRightOperand().getType().isInt()) {
+            // Implicit float conversion
+            this.setRightOperand(new ConvFloat(this.getRightOperand()));
+            this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
+        }
+
         LOG.debug("verify Assign: end");
 
         return expectedType;
     }
 
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, int n) {
+        codeGenInst(compiler, n);
+    }
+
+    @Override
+    protected void codeGenInst(DecacCompiler compiler) {
+        codeGenInst(compiler, 2);
+    }
+
+    protected void codeGenInst(DecacCompiler compiler, int n) {
+        // Calculate rightOperand and load into R2
+        getRightOperand().codeGenExpr(compiler, n);
+        // Load rightOperand into leftOperand
+        DAddr dAddr = compiler.getEnvironmentExp().get(((AbstractIdentifier)getLeftOperand()).getName()).getOperand();
+        compiler.addInstruction(new STORE(Register.getR(n), dAddr));
+    }
 
     @Override
     protected String getOperatorName() {

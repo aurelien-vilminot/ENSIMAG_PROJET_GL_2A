@@ -6,6 +6,8 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.*;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -29,7 +31,7 @@ public class Cast extends AbstractExpr {
             throws ContextualError {
         LOG.debug("verify Cast: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
-        Validate.notNull(localEnv, "Env_exp object should not be null");
+//        Validate.notNull(localEnv, "Env_exp object should not be null");
 
         // Get cast type
         Type castType = this.type.verifyType(compiler);
@@ -52,6 +54,25 @@ public class Cast extends AbstractExpr {
         s.print(") (");
         expr.decompile(s);
         s.print(")");
+    }
+
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, int n) {
+        Type castType = type.getType();
+        Type exprType = expr.getType();
+        if (exprType.sameType(castType)) {
+            expr.codeGenExpr(compiler, n);
+        } else if (exprType.isInt() && castType.isFloat()) {
+            expr.codeGenExpr(compiler, n);
+            // Rn <- ConversionFlottant(V[Rn])
+            compiler.addInstruction(new FLOAT(Register.getR(n), Register.getR(n)));
+        } else if (exprType.isFloat() && castType.isInt()) {
+            expr.codeGenExpr(compiler, n);
+            // Rn <- ConversionEntier(V[Rn])
+            compiler.addInstruction(new INT(Register.getR(n), Register.getR(n)));
+        } else {
+            throw new UnsupportedOperationException("Class not yet implemented, or cast conversion is not allowed");
+        }
     }
 
     @Override
