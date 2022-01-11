@@ -1,0 +1,14 @@
+{
+    int x = 1;
+    while(x < 15 && x >= 1){
+        x = x + 1;
+        printlnx("x :", x);
+    }
+    if(x > 20){
+        print("Hello World !");
+    } else if(true){
+        println("Hello !");
+    } else{
+        printlnx(10.0000);
+    }
+}
