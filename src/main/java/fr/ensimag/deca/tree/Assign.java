@@ -46,6 +46,7 @@ public class Assign extends AbstractBinaryExpr {
         if (this.getLeftOperand().getType().isFloat() && this.getRightOperand().getType().isInt()) {
             // Implicit float conversion
             this.setRightOperand(new ConvFloat(this.getRightOperand()));
+            this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
         }
 
         LOG.debug("verify Assign: end");
