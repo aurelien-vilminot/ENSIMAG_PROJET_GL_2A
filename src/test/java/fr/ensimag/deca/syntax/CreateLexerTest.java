@@ -41,7 +41,7 @@ public class CreateLexerTest {
     public void testLexerInstantiation() throws IOException{
         Logger.getRootLogger().setLevel(Level.WARN);
         String [] args = new String[1];
-        args[0] = "./src/test/deca/syntax/valid/test_dir/provided/hello.deca";
+        args[0] = "./src/test/deca/syntax/valid/provided/hello.deca";
         DecaLexer lex = AbstractDecaLexer.createLexerFromArgs(args);
         assertEquals(lex.getSourceName(), args[0]);
     }

@@ -44,7 +44,7 @@ do
 done
 
 result_invalid_string="Results : $((nb_correct))/$((nb_file))\e[1;m"
-if [ "nb_correct" = "nb_file" ]
+if [ "$nb_correct" = "$nb_file" ]
   then
     result_invalid_string="\e[1;32m$result_invalid_string"
   else
@@ -217,6 +217,9 @@ nb_correct_total=$((nb_correct_total+nb_correct))
 nb_file_total=$((nb_file_total+nb_file))
 
 # -----------------------------------------------------------------------------
+# ------------------------------CONCLUSION-------------------------------------
+# -----------------------------------------------------------------------------
+
 echo "    \e[1;1m[RECAP]\e[1;m"
 echo "    \e[1;1m  [LEXER INVALID TESTS] $result_invalid_string"
 echo "    \e[1;1m  [LEXER VALID TESTS] $result_valid_string"
