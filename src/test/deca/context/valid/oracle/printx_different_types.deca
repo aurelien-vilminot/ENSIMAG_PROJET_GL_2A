@@ -1,0 +1,9 @@
+{
+    int i = 0;
+    float f = 1.0;
+    printx(1);
+    printx(i);
+    printx(1.0);
+    printx(f);
+    printx("Hello Moon !");
+}

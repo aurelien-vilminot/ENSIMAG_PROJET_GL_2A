@@ -6,6 +6,10 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 
 import fr.ensimag.deca.tools.SymbolTable;
+import fr.ensimag.ima.pseudocode.DAddr;
+import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -48,7 +52,7 @@ public class DeclVar extends AbstractDeclVar {
         try {
             localEnv.declare(this.varName.getName(), new VariableDefinition(currentType, this.getLocation()));
         } catch (EnvironmentExp.DoubleDefException doubleDefException) {
-            throw new ContextualError("Undeclared identifier", this.getLocation());
+            throw new ContextualError("Identifier already declared", this.getLocation());
         }
 
         // Check var definition
@@ -57,7 +61,17 @@ public class DeclVar extends AbstractDeclVar {
         LOG.debug("verify DeclVar: end");
     }
 
-    
+    @Override
+    protected void codeGenDeclVar(DecacCompiler compiler) {
+        // TODO: cas global
+        // Set operand global address
+        int addr = compiler.incGlobalStackSize(1);
+        DAddr dAddr = new RegisterOffset(addr, Register.GB);
+        compiler.getEnvironmentExp().get(varName.getName()).setOperand(dAddr);
+        // Generate code for initialization
+        initialization.codeGenInit(compiler, dAddr);
+    }
+
     @Override
     public void decompile(IndentPrintStream s) {
         type.decompile(s);

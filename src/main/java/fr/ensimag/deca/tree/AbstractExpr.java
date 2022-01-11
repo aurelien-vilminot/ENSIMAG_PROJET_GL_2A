@@ -4,8 +4,13 @@ import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.DVal;
+import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.Label;
 import java.io.PrintStream;
+
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -160,7 +165,23 @@ public abstract class AbstractExpr extends AbstractInst {
     protected void codeGenInst(DecacCompiler compiler) {
         throw new UnsupportedOperationException("not yet implemented");
     }
-    
+
+    public DVal dval(DecacCompiler compiler) {
+        return null;
+    }
+
+    /**
+     * Calculate and load an expression in the n-th register
+     *
+     * @param compiler
+     * @param n
+     */
+    protected void codeGenExpr(DecacCompiler compiler, int n) {
+        DVal dval = this.dval(compiler);
+        if (dval != null) {
+            compiler.addInstruction(new LOAD(dval, Register.getR(n)));
+        }
+    }
 
     @Override
     protected void decompileInst(IndentPrintStream s) {
