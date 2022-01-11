@@ -38,7 +38,7 @@ public class ListDeclVar extends TreeList<AbstractDeclVar> {
             ClassDefinition currentClass) throws ContextualError {
         LOG.debug("verify ListDeclVar: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
-        Validate.notNull(localEnv, "Env_exp object should not be null");
+//        Validate.notNull(localEnv, "Env_exp object should not be null");
 
         for (AbstractDeclVar abstractDeclVar: getList()) {
             abstractDeclVar.verifyDeclVar(compiler, localEnv, currentClass);

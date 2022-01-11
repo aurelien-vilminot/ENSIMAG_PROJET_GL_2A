@@ -38,7 +38,7 @@ public class IfThenElse extends AbstractInst {
             throws ContextualError {
         LOG.debug("verify ifThenElse: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
-        Validate.notNull(localEnv, "Env_exp object should not be null");
+//        Validate.notNull(localEnv, "Env_exp object should not be null");
         Validate.notNull(returnType, "Return type should not be null");
 
         this.condition.verifyInst(compiler, localEnv, currentClass, returnType);
