@@ -94,7 +94,7 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
     }
 
     /**
-     * If the comparator returns a true value, goto "branch"
+     * If the comparator returns a value equal to bool, goto "branch"
      *
      * @param compiler
      * @param bool
