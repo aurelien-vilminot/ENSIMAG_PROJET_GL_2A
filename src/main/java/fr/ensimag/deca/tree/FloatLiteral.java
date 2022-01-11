@@ -7,6 +7,8 @@ import java.io.PrintStream;
 
 import fr.ensimag.deca.tools.SymbolTable;
 
+import fr.ensimag.ima.pseudocode.DVal;
+import fr.ensimag.ima.pseudocode.ImmediateFloat;
 import fr.ensimag.ima.pseudocode.instructions.WSTR;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
@@ -57,6 +59,11 @@ public class FloatLiteral extends AbstractExpr {
     @Override
     protected void codeGenPrintx(DecacCompiler compiler) {
         compiler.addInstruction(new WSTR(Float.toHexString(value)));
+    }
+
+    @Override
+    public DVal dval(DecacCompiler compiler) {
+        return new ImmediateFloat(value);
     }
 
     @Override

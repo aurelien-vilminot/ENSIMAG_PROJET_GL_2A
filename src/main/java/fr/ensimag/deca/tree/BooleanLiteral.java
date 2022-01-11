@@ -44,10 +44,6 @@ public class BooleanLiteral extends AbstractExpr {
         return booleanType;
     }
 
-    @Override
-    protected void codeGenPrint(DecacCompiler compiler) {
-        compiler.addInstruction(new WSTR(Boolean.toString(value)));
-    }
 
     @Override
     public void decompile(IndentPrintStream s) {
