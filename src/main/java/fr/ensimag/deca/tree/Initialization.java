@@ -43,7 +43,7 @@ public class Initialization extends AbstractInitialization {
             throws ContextualError {
         LOG.debug("verify Initialization: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
-        Validate.notNull(localEnv, "Env_exp object should not be null");
+//        Validate.notNull(localEnv, "Env_exp object should not be null");
 
         Type type = this.expression.verifyRValue(compiler, localEnv, currentClass, t).getType();
         this.expression.setType(type);

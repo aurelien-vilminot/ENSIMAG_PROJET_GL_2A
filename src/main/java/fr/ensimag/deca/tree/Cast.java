@@ -31,7 +31,7 @@ public class Cast extends AbstractExpr {
             throws ContextualError {
         LOG.debug("verify Cast: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
-        Validate.notNull(localEnv, "Env_exp object should not be null");
+//        Validate.notNull(localEnv, "Env_exp object should not be null");
 
         // Get cast type
         Type castType = this.type.verifyType(compiler);

@@ -37,7 +37,7 @@ public class Assign extends AbstractBinaryExpr {
             ClassDefinition currentClass) throws ContextualError {
         LOG.debug("verify Assign: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
-        Validate.notNull(localEnv, "Env_exp object should not be null");
+//        Validate.notNull(localEnv, "Env_exp object should not be null");
 
         // Get lvalue type
         Type expectedType = this.getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
