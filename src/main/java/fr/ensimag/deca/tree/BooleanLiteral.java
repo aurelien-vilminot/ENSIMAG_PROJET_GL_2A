@@ -4,6 +4,8 @@ import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable;
+import fr.ensimag.ima.pseudocode.DVal;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -48,6 +50,15 @@ public class BooleanLiteral extends AbstractExpr {
     @Override
     public void decompile(IndentPrintStream s) {
         s.print(Boolean.toString(value));
+    }
+
+    @Override
+    public DVal dval(DecacCompiler compiler) {
+        int intValue = 0;
+        if (value) {
+            intValue = 1;
+        }
+        return new ImmediateInteger(intValue);
     }
 
     @Override

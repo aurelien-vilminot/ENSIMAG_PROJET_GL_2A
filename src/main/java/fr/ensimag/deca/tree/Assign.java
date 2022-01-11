@@ -6,6 +6,9 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.Definition;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.ima.pseudocode.DAddr;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -47,6 +50,23 @@ public class Assign extends AbstractBinaryExpr {
         return expectedType;
     }
 
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, int n) {
+        codeGenInst(compiler, n);
+    }
+
+    @Override
+    protected void codeGenInst(DecacCompiler compiler) {
+        codeGenInst(compiler, 2);
+    }
+
+    protected void codeGenInst(DecacCompiler compiler, int n) {
+        // Calculate rightOperand and load into R2
+        getRightOperand().codeGenExpr(compiler, n);
+        // Load rightOperand into leftOperand
+        DAddr dAddr = compiler.getEnvironmentExp().get(((AbstractIdentifier)getLeftOperand()).getName()).getOperand();
+        compiler.addInstruction(new STORE(Register.getR(n), dAddr));
+    }
 
     @Override
     protected String getOperatorName() {
