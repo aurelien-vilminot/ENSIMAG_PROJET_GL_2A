@@ -61,7 +61,7 @@ public class DecacCompiler {
 
     private int globalStackSize = 2;
 
-    private LabelGenerator labelGenerator;
+    private final LabelGenerator labelGenerator = new LabelGenerator();
 
     public LabelGenerator getLabelGenerator() {
         return this.labelGenerator;

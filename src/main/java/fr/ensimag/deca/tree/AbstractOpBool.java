@@ -6,6 +6,7 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.ima.pseudocode.DVal;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.*;
@@ -69,5 +70,21 @@ public abstract class AbstractOpBool extends AbstractBinaryExpr {
                     break;
             }
         }
+    }
+
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, int n) {
+        Label trueBranch = new Label(compiler.getLabelGenerator().generateLabel("boolIsTrue"));
+        Label continueBranch = new Label(compiler.getLabelGenerator().generateLabel("continue"));
+        // Generate code that sends to trueBranch is bool is true
+        this.codeGenExprBool(compiler, true, trueBranch);
+        // Generate code if bool is false, and jump to continue
+        compiler.addInstruction(new LOAD(new ImmediateInteger(0), Register.getR(n)));
+        compiler.addInstruction(new BRA(continueBranch));
+        // Generate label boolIsTrue
+        compiler.addLabel(trueBranch);
+        compiler.addInstruction(new LOAD(new ImmediateInteger(1), Register.getR(n)));
+        // Generate label continue
+        compiler.addLabel(continueBranch);
     }
 }

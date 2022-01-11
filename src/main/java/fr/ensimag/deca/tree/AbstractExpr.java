@@ -208,6 +208,13 @@ public abstract class AbstractExpr extends AbstractInst {
         }
     }
 
+    /**
+     * If "this" is evaluated to "bool", then goto "branch"
+     *
+     * @param compiler
+     * @param bool
+     * @param branch
+     */
     protected void codeGenExprBool(DecacCompiler compiler, boolean bool, Label branch) {
         throw new UnsupportedOperationException("This function must not be called");
     }
