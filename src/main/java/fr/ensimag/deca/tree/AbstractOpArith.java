@@ -43,7 +43,7 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
                 if (typeLeftOp.isFloat()) {
                     // Implicit float conversion
                     this.setRightOperand(new ConvFloat(this.getRightOperand()));
-                    this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
+                    this.getRightOperand().setType(typeLeftOp);
                 }
             } else if (typeRightOp.isFloat()) {
                 // Cases : (int, float) and (float, float)
@@ -52,7 +52,7 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
                 if (typeLeftOp.isInt()) {
                     // Implicit float conversion
                     this.setLeftOperand(new ConvFloat(this.getLeftOperand()));
-                    this.getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
+                    this.getLeftOperand().setType(typeRightOp);
                 }
             } else {
                 throw new ContextualError("Binary operation is only allowed for int or float types", this.getLocation());
