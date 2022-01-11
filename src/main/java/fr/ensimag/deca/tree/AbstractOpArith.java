@@ -83,7 +83,7 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
                 break;
             case "%":
                 // TODO: modulo instruction
-                break;
+                throw new UnsupportedOperationException("% not yet implemented");
         }
     }
 
