@@ -1,5 +1,6 @@
 package fr.ensimag.deca;
 
+import fr.ensimag.deca.codegen.LabelGenerator;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.syntax.DecaLexer;
 import fr.ensimag.deca.syntax.DecaParser;
@@ -60,6 +61,11 @@ public class DecacCompiler {
 
     private int globalStackSize = 2;
 
+    private LabelGenerator labelGenerator;
+
+    public LabelGenerator getLabelGenerator() {
+        return this.labelGenerator;
+    }
 
     public DecacCompiler(CompilerOptions compilerOptions, File source) {
         super();
