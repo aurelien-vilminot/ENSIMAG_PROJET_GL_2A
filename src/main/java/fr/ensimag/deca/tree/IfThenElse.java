@@ -63,15 +63,18 @@ public class IfThenElse extends AbstractInst {
         Label elseLabel = new Label(compiler.getLabelGenerator().generateLabel("sinon"));
         Label endLabel = new Label(compiler.getLabelGenerator().generateLabel("fin"));
 
-        if (!this.elseBranch.isEmpty()) {
-            this.condition.codeGenExprBool(compiler, false, elseLabel);
-        }
-
+        // Gen code for condition
+        this.condition.codeGenExprBool(compiler, false, elseLabel);
+        // Gen code for instruction(s)
         this.thenBranch.codeGenListInst(compiler);
+        // Go to the end of if statement after the instruction execution
         compiler.addInstruction(new BRA(endLabel));
-
+        // Add the else label
+        compiler.addLabel(elseLabel);
+        // Gen code for else branch which could be contained other ifThenElse branches
         this.elseBranch.codeGenListInst(compiler);
-
+        // Add the end label
+        // TODO: optimize to have only one final label
         compiler.addLabel(endLabel);
     }
 
