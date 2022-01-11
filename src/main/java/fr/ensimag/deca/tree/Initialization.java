@@ -51,6 +51,7 @@ public class Initialization extends AbstractInitialization {
         if (t.isFloat() && this.expression.getType().isInt()) {
             // Implicit float conversion
             this.expression = new ConvFloat(this.expression);
+            this.expression.verifyExpr(compiler, localEnv, currentClass);
         }
 
         LOG.debug("verify Initialization: end");
