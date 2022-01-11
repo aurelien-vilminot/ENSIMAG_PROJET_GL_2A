@@ -20,7 +20,7 @@ public class ReadInt extends AbstractReadExpr {
             ClassDefinition currentClass) throws ContextualError {
         LOG.debug("verify ReadInt: start");
 
-        Type intType = new IntType(compiler.getSymbolTable().create("int"));
+        Type intType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("int")).getType();
         this.setType(intType);
 
         LOG.debug("verify ReadInt: end");

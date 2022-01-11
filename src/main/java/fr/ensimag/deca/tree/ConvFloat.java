@@ -26,15 +26,16 @@ public class ConvFloat extends AbstractUnaryExpr {
         Validate.notNull(localEnv, "Env_exp object should not be null");
 
         Type typeOperand = this.getOperand().verifyExpr(compiler, localEnv, currentClass);
+        Type typeFloat = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("float")).getType();
 
-        if (typeOperand.isFloat()) {
-            this.setType(typeOperand);
+        if (typeOperand.isInt()) {
+            this.setType(typeFloat);
         } else {
             throw new ContextualError("An int can be cast in float only", this.getLocation());
         }
 
         LOG.debug("verify ConvFloat: end");
-        return typeOperand;
+        return typeFloat;
     }
 
 
