@@ -55,10 +55,10 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
         // Implicit float conversion
         if (typeLeftOp.isInt() && typeRightOp.isFloat()) {
             this.setLeftOperand(new ConvFloat(this.getLeftOperand()));
-            this.getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
+            this.getLeftOperand().setType(typeRightOp);
         } else if (typeLeftOp.isFloat() && typeRightOp.isInt()) {
             this.setRightOperand(new ConvFloat(this.getRightOperand()));
-            this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
+            this.getRightOperand().setType(typeLeftOp);
         }
 
         this.setType(booleanType);
