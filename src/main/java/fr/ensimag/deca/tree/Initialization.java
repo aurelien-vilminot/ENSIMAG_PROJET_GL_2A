@@ -37,13 +37,19 @@ public class Initialization extends AbstractInitialization {
     protected void verifyInitialization(DecacCompiler compiler, Type t,
             EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError {
-        LOG.debug("verify initialization: start");
+        LOG.debug("verify Initialization: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
         Validate.notNull(localEnv, "Env_exp object should not be null");
 
         Type type = this.expression.verifyRValue(compiler, localEnv, currentClass, t).getType();
         this.expression.setType(type);
-        LOG.debug("verify initialization: end");
+
+        if (t.isFloat() && this.expression.getType().isInt()) {
+            // Implicit float conversion
+            this.expression = new ConvFloat(this.expression);
+        }
+
+        LOG.debug("verify Initialization: end");
     }
 
 

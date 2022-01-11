@@ -42,6 +42,12 @@ public class Assign extends AbstractBinaryExpr {
         // Check rvalue type
         this.getRightOperand().verifyRValue(compiler, localEnv, currentClass, expectedType);
         this.setType(expectedType);
+
+        if (this.getLeftOperand().getType().isFloat() && this.getRightOperand().getType().isInt()) {
+            // Implicit float conversion
+            this.setRightOperand(new ConvFloat(this.getRightOperand()));
+        }
+
         LOG.debug("verify Assign: end");
 
         return expectedType;
