@@ -96,18 +96,4 @@ public abstract class AbstractIdentifier extends AbstractLValue {
      */
     public abstract Type verifyType(DecacCompiler compiler) throws ContextualError;
 
-    @Override
-    public Instruction outputExpr(boolean printHex) {
-        Type type = getType();
-        if (type.isInt()) {
-            return new WINT();
-        } else if (type.isFloat()) {
-            if (printHex) {
-                return new WFLOATX();
-            } else {
-                return new WFLOAT();
-            }
-        }
-        return null;
-    }
 }

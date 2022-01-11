@@ -9,6 +9,9 @@ import fr.ensimag.ima.pseudocode.*;
 import java.io.PrintStream;
 
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.WFLOAT;
+import fr.ensimag.ima.pseudocode.instructions.WFLOATX;
+import fr.ensimag.ima.pseudocode.instructions.WINT;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -141,17 +144,23 @@ public abstract class AbstractExpr extends AbstractInst {
         LOG.debug("verify Condition: end");
     }
 
+    protected void codeGenPrint(DecacCompiler compiler, boolean printHex) {
+        Instruction outputInstruction = this.outputExpr(printHex);
+        if (outputInstruction != null) {
+            // Generate code to load expression in R1
+            this.codeGenExpr(compiler, 1);
+            // Output R1
+            compiler.addInstruction(outputInstruction);
+        }
+    }
+
     /**
      * Generate code to print the expression
      *
      * @param compiler
      */
     protected void codeGenPrint(DecacCompiler compiler) {
-        // Generate code to load expression in R1
-        this.codeGenExpr(compiler, 1);
-        // Output R1
-        Instruction outputInstruction = this.outputExpr(false);
-        compiler.addInstruction(outputInstruction);
+        codeGenPrint(compiler, false);
     }
 
     /**
@@ -160,11 +169,7 @@ public abstract class AbstractExpr extends AbstractInst {
      * @param compiler
      */
     protected void codeGenPrintx(DecacCompiler compiler) {
-        // Generate code to load expression in R1
-        this.codeGenExpr(compiler, 1);
-        // Output R1
-        Instruction outputInstruction = this.outputExpr(true);
-        compiler.addInstruction(outputInstruction);
+        codeGenPrint(compiler, true);
     }
 
     @Override
@@ -177,6 +182,16 @@ public abstract class AbstractExpr extends AbstractInst {
     }
 
     public Instruction outputExpr(boolean printHex) {
+        Type type = getType();
+        if (type.isInt()) {
+            return new WINT();
+        } else if (type.isFloat()) {
+            if (printHex) {
+                return new WFLOATX();
+            } else {
+                return new WFLOAT();
+            }
+        }
         return null;
     }
 
