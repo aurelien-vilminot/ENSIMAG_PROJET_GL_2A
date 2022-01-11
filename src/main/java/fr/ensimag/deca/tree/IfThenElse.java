@@ -7,6 +7,9 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
+
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.instructions.BRA;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -57,7 +60,19 @@ public class IfThenElse extends AbstractInst {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("not yet implemented");
+        Label elseLabel = new Label(compiler.getLabelGenerator().generateLabel("sinon"));
+        Label endLabel = new Label(compiler.getLabelGenerator().generateLabel("fin"));
+
+        if (!this.elseBranch.isEmpty()) {
+            this.condition.codeGenExprBool(compiler, false, elseLabel);
+        }
+
+        this.thenBranch.codeGenListInst(compiler);
+        compiler.addInstruction(new BRA(endLabel));
+
+        this.elseBranch.codeGenListInst(compiler);
+
+        compiler.addLabel(endLabel);
     }
 
     @Override
