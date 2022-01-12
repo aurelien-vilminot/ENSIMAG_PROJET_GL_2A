@@ -205,6 +205,8 @@ public abstract class AbstractExpr extends AbstractInst {
      * @param n Register number
      */
     protected void codeGenExpr(DecacCompiler compiler, int n) {
+        Validate.isTrue((n <= compiler.getCompilerOptions().getRegisterNumber() - 1));
+
         DVal dval = this.dval(compiler);
         if (dval != null) {
             compiler.addInstruction(new LOAD(dval, Register.getR(n)));

@@ -58,6 +58,8 @@ public class Cast extends AbstractExpr {
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
+        Validate.isTrue((n <= compiler.getCompilerOptions().getRegisterNumber() - 1));
+
         Type castType = type.getType();
         Type exprType = expr.getType();
         if (exprType.sameType(castType)) {

@@ -41,7 +41,7 @@ public abstract class AbstractOpBool extends AbstractBinaryExpr {
             this.setType(typeLeftOp);
             returnType = typeLeftOp;
         } else {
-            throw new ContextualError("Binary operation is only allowed for int or float types", this.getLocation());
+            throw new ContextualError("Boolean operation is only allowed for boolean type", this.getLocation());
         }
 
         LOG.debug("verify OPBool: end");
@@ -74,6 +74,8 @@ public abstract class AbstractOpBool extends AbstractBinaryExpr {
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
+        Validate.isTrue((n <= compiler.getCompilerOptions().getRegisterNumber() - 1));
+
         Label trueBranch = new Label(compiler.getLabelGenerator().generateLabel("boolIsTrue"));
         Label continueBranch = new Label(compiler.getLabelGenerator().generateLabel("continue"));
         // Generate code that sends to trueBranch is bool is true

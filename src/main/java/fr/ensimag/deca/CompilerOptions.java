@@ -47,7 +47,7 @@ public class CompilerOptions {
         return argsNumber;
     }
 
-    public int getRegisterNumber() { return registerNumber;}
+    public int getRegisterNumber() { return registerNumber ;}
 
     private int debug = 0;
     private boolean parallel = false;
@@ -137,7 +137,7 @@ public class CompilerOptions {
             throw new CLIException("Impossible to use the option -r without a specified number of registers");
         } else if (this.registerNumber == 0) {
             // Default value if -r is not specified
-            this.registerNumber = 15;
+            this.registerNumber = 16;
         }
 
         // Check if options are incompatible
