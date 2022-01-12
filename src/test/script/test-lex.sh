@@ -15,7 +15,12 @@ nb_file_total=0
 TEST_PATH="./src/test/deca/syntax/invalid/lexer/black-box"
 nb_correct=0
 nb_file=0
-echo "\e[1;1m[BEGIN LEXER INVALID TESTS]\e[1;m"
+base=`tput bold` # \e[1;1m
+reset=`tput sgr0` # \e[1;m
+red=`tput bold setaf 1` # \e[1;31m
+green=`tput bold setaf 2` # \e[1;32m
+yellow=`tput bold setaf 3` # \e[1;33m
+echo "${red}[BEGIN LEXER INVALID TESTS]${reset}"
 
 for i in "$TEST_PATH"/*.deca
 do
@@ -27,30 +32,30 @@ do
   test_lex "$i" > "$TEST_PATH"/"$name_test".lis 2>&1
 
   if ! test -f "$TEST_PATH"/"$name_test".txt; then
-    echo "  \e[1;33m[INCORRECT] $name_test, result file not found.\e[1;m"
+    echo "  ${red}[INCORRECT] $name_test, result file not found.${reset}"
 
     else
 
       grep_result=$(grep -f "$TEST_PATH"/"$name_test".txt "$TEST_PATH"/"$name_test".lis)
       if ! [ "$grep_result" = "" ]
         then
-          echo "  \e[1;32m[CORRECT] $name_test\e[1;m"
+          echo "  ${green}[CORRECT] $name_test${reset}"
           nb_correct=$((nb_correct+1))
           rm "$TEST_PATH"/"$name_test".lis
         else
-          echo "  \e[1;31m[INCORRECT] $name_test, no match with the error...\e[1;m"
+          echo "  ${red}[INCORRECT] $name_test, no match with the error...${reset}"
       fi
   fi
 done
 
-result_invalid_string="Results : $((nb_correct))/$((nb_file))\e[1;m"
+result_invalid_string="Results : $((nb_correct))/$((nb_file))${reset}"
 if [ "$nb_correct" = "$nb_file" ]
   then
-    result_invalid_string="\e[1;32m$result_invalid_string"
+    result_invalid_string="${green}$result_invalid_string"
   else
-    result_invalid_string="\e[1;31m$result_invalid_string"
+    result_invalid_string="${red}$result_invalid_string"
 fi
-echo "\e[1;1m[DONE LEXER INVALID TESTS]\e[1;m $result_invalid_string"
+echo "${base}[DONE LEXER INVALID TESTS]${reset} $result_invalid_string"
 echo ""
 
 # Increment total :
@@ -62,7 +67,7 @@ nb_file_total=$((nb_file_total+nb_file))
 TEST_PATH="./src/test/deca/syntax/valid/lexer/black-box"
 nb_correct=0
 nb_file=0
-echo "\e[1;1m[BEGIN LEXER VALID TESTS]\e[1;m"
+echo "${base}[BEGIN LEXER VALID TESTS]${reset}"
 
 for i in "$TEST_PATH"/*.deca
 do
@@ -71,7 +76,7 @@ do
   name_test="${name_test##*/}"
 
   if ! test -f "$TEST_PATH"/"$name_test".txt; then
-      echo "  \e[1;33m[INCORRECT] $name_test, result file not found.\e[1;m"
+      echo "  ${red}[INCORRECT] $name_test, result file not found.${reset}"
 
     else
       # Generate output file :
@@ -105,24 +110,24 @@ do
 
       if [ $fault -eq 0 ]
         then
-          echo "  \e[1;32m[CORRECT] $name_test\e[1;m"
+          echo "  ${green}[CORRECT] $name_test${reset}"
           nb_correct=$((nb_correct+1))
           rm "$TEST_PATH"/"$name_test".lis
         else
-          echo "  \e[1;31m[INCORRECT] $name_test\e[1;m"
+          echo "  ${red}[INCORRECT] $name_test${reset}"
       fi
   fi
 
 done
 
-result_valid_string="Results : $((nb_correct))/$((nb_file))\e[1;m"
+result_valid_string="Results : $((nb_correct))/$((nb_file))${reset}"
 if [ "$nb_correct" = "$nb_correct" ]
   then
-    result_valid_string="\e[1;32m$result_valid_string"
+    result_valid_string="${green}$result_valid_string"
   else
-    result_valid_string="\e[1;31m$result_valid_string"
+    result_valid_string="${red}$result_valid_string"
 fi
-echo "\e[1;1m[DONE LEXER VALID TESTS]\e[1;m $result_valid_string"
+echo "${base}[DONE LEXER VALID TESTS]${reset} $result_valid_string"
 echo ""
 
 # Increment total :
@@ -137,7 +142,7 @@ nb_file_total=$((nb_file_total+nb_file))
 TEST_PATH="./src/test/deca/syntax/invalid/lexer/oracle"
 nb_correct=0
 nb_file=0
-echo "\e[1;1m[BEGIN LEXER INVALID ORACLE TESTS]\e[1;m (print only incorrect tests)"
+echo "${base}[BEGIN LEXER INVALID ORACLE TESTS]${reset} (print only incorrect tests)"
 
 for i in "$TEST_PATH"/*.deca
 do
@@ -155,19 +160,19 @@ do
       nb_correct=$((nb_correct+1))
       rm "$TEST_PATH"/"$name_test".log
     else
-      echo "  \e[1;31m[INCORRECT] $name_test \e[1;m"
+      echo "  ${red}[INCORRECT] $name_test ${reset}"
 
   fi
 done
 
-result_oracle_invalid_string="Results : $((nb_correct))/$((nb_file))\e[1;m"
+result_oracle_invalid_string="Results : $((nb_correct))/$((nb_file))${reset}"
 if [ "$nb_correct" = "$nb_file" ]
   then
-    result_oracle_invalid_string="\e[1;32m$result_oracle_invalid_string"
+    result_oracle_invalid_string="${green}$result_oracle_invalid_string"
   else
-    result_oracle_invalid_string="\e[1;31m$result_oracle_invalid_string"
+    result_oracle_invalid_string="${red}$result_oracle_invalid_string"
 fi
-echo "\e[1;1m[DONE LEXER INVALID ORACLE TESTS]\e[1;m $result_oracle_invalid_string"
+echo "${base}[DONE LEXER INVALID ORACLE TESTS]${reset} $result_oracle_invalid_string"
 echo ""
 
 # Increment total :
@@ -180,7 +185,7 @@ nb_file_total=$((nb_file_total+nb_file))
 TEST_PATH="./src/test/deca/syntax/valid/lexer/oracle"
 nb_correct=0
 nb_file=0
-echo "\e[1;1m[BEGIN LEXER VALID ORACLE TESTS]\e[1;m (print only incorrect tests)"
+echo "${base}[BEGIN LEXER VALID ORACLE TESTS]${reset} (print only incorrect tests)"
 
 for i in "$TEST_PATH"/*.deca
 do
@@ -198,19 +203,19 @@ do
       nb_correct=$((nb_correct+1))
       rm "$TEST_PATH"/"$name_test".log
     else
-      echo "  \e[1;31m[INCORRECT] $name_test \e[1;m"
+      echo "  ${red}[INCORRECT] $name_test ${reset}"
 
   fi
 done
 
-result_oracle_valid_string="Results : $((nb_correct))/$((nb_file))\e[1;m"
+result_oracle_valid_string="Results : $((nb_correct))/$((nb_file))${reset}"
 if [ "$nb_correct" = "$nb_file" ]
   then
-    result_oracle_valid_string="\e[1;32m$result_oracle_valid_string"
+    result_oracle_valid_string="${green}$result_oracle_valid_string"
   else
-    result_oracle_valid_string="\e[1;31m$result_oracle_valid_string"
+    result_oracle_valid_string="${red}$result_oracle_valid_string"
 fi
-echo "\e[1;1m[DONE LEXER VALID ORACLE TESTS]\e[1;m $result_oracle_valid_string"
+echo "${base}[DONE LEXER VALID ORACLE TESTS]${reset} $result_oracle_valid_string"
 echo ""
 
 # Increment total :
@@ -221,18 +226,18 @@ nb_file_total=$((nb_file_total+nb_file))
 # ------------------------------CONCLUSION-------------------------------------
 # -----------------------------------------------------------------------------
 
-echo "    \e[1;1m[RECAP]\e[1;m"
-echo "    \e[1;1m  [LEXER INVALID TESTS] $result_invalid_string"
-echo "    \e[1;1m  [LEXER VALID TESTS] $result_valid_string"
-echo "    \e[1;1m  [LEXER ORACLE INVALID TESTS] $result_oracle_invalid_string"
-echo "    \e[1;1m  [LEXER ORACLE VALID TESTS] $result_oracle_valid_string"
+echo "    ${base}[RECAP]${reset}"
+echo "    ${base}  [LEXER INVALID TESTS] $result_invalid_string"
+echo "    ${base}  [LEXER VALID TESTS] $result_valid_string"
+echo "    ${base}  [LEXER ORACLE INVALID TESTS] $result_oracle_invalid_string"
+echo "    ${base}  [LEXER ORACLE VALID TESTS] $result_oracle_valid_string"
 
 # Exit status :
 if [ "$nb_correct_total" = "$nb_file_total" ]
   then
-    echo "    \e[1;1m[LEXER TOTAL] \e[1;32mResults : $nb_correct_total / $nb_file_total\e[1;m"
+    echo "    ${base}[LEXER TOTAL] ${green}Results : $nb_correct_total / $nb_file_total${reset}"
     exit 0
   else
-    echo "    \e[1;1m[LEXER TOTAL] \e[1;31mResults : $nb_correct_total / $nb_file_total\e[1;m"
+    echo "    ${base}[LEXER TOTAL] ${red}Results : $nb_correct_total / $nb_file_total${reset}"
     exit 1
 fi
