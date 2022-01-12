@@ -69,6 +69,7 @@ public class DecacMain {
             // java.util.concurrent de la bibliothèque standard Java.
 
             // Nb threads = size of source files list
+            // TODO: parallel execution
             ExecutorService executorService = Executors.newFixedThreadPool(options.getSourceFiles().size());
             for (File source : options.getSourceFiles()) {
                 DecacCompiler compiler = new DecacCompiler(options, source);
