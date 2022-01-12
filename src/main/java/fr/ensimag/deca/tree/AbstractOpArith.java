@@ -7,6 +7,7 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.ima.pseudocode.DVal;
 import fr.ensimag.ima.pseudocode.GPRegister;
+import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.*;
 import org.apache.commons.lang.Validate;
@@ -84,8 +85,12 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
                 compiler.addInstruction(new DIV(dval, gpRegister));
                 break;
             case "%":
-                // TODO: modulo instruction
-                throw new UnsupportedOperationException("% not yet implemented");
+                // Modulo operation
+                Label modLabel = new Label(compiler.getLabelGenerator().generateLabel("mod"));
+                compiler.addLabel(modLabel);
+                compiler.addInstruction(new SUB(dval, gpRegister));
+                compiler.addInstruction(new CMP(dval, gpRegister));
+                compiler.addInstruction(new BGT(modLabel));
         }
     }
 
