@@ -68,7 +68,7 @@ public class CompilerOptions {
 
         // TODO: compile identical files once
 
-        // TODO: add "-w" option
+        // TODO: add "-w" option. Ask to the professor
 
         // Add sources files to the files list
         Pattern filePattern = Pattern.compile("^.?/?.*?\\.deca$");
