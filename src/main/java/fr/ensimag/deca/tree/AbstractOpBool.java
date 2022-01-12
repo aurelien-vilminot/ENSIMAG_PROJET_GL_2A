@@ -59,7 +59,7 @@ public abstract class AbstractOpBool extends AbstractBinaryExpr {
                     Label endBranch = new Label(compiler.getLabelGenerator().generateLabel(branch.toString()) + "_fin");
                     this.getLeftOperand().codeGenExprBool(compiler, false, bool ? endBranch : branch );
                     this.getRightOperand().codeGenExprBool(compiler, bool, branch);
-                    compiler.addInstruction(new BNE(branch));
+                    // compiler.addInstruction(new BNE(branch));
                     if (bool) {
                         compiler.addLabel(endBranch);
                     }
