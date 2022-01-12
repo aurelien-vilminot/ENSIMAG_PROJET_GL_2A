@@ -20,7 +20,7 @@ public class TestAnd {
         BooleanLiteral booleanLiteralLeft = new BooleanLiteral(true);
         BooleanLiteral booleanLiteralRight = new BooleanLiteral(false);
         And and = new And(booleanLiteralLeft, booleanLiteralRight);
-        // Check type result of the addition
+        // Check type result of the boolean operation
         assertTrue(and.verifyExpr(this.compiler, null, null).isInt());
     }
 

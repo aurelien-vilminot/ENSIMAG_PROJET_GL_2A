@@ -20,7 +20,7 @@ public class TestOr {
         BooleanLiteral booleanLiteralLeft = new BooleanLiteral(true);
         BooleanLiteral booleanLiteralRight = new BooleanLiteral(false);
         Or or = new Or(booleanLiteralLeft, booleanLiteralRight);
-        // Check type result of the addition
+        // Check type result of the boolean operation
         assertTrue(or.verifyExpr(this.compiler, null, null).isInt());
     }
 
