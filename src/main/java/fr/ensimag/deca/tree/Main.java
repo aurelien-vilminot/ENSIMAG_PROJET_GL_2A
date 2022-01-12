@@ -46,21 +46,8 @@ public class Main extends AbstractMain {
         declVariables.codeGenListDeclVar(compiler);
         compiler.addComment("Main instructions:");
         insts.codeGenListInst(compiler);
-        compiler.addComment("Main errors:");
-        this.codeGenError(compiler);
     }
 
-    protected void codeGenError(DecacCompiler compiler) {
-        LabelGenerator gen = compiler.getLabelGenerator();
-        if (gen.getOverflowError()) {
-            compiler.getLabelGenerator().generateErrorLabel(compiler, gen.getOverFlowLabel(), "Error: Overflow during arithmetic operation");
-        } else if (gen.getStackOverflowError()) {
-            compiler.getLabelGenerator().generateErrorLabel(compiler, gen.getStackOverFlowLabel(), "Error: Stack Overflow");
-        } else if (gen.getIoError()) {
-            compiler.getLabelGenerator().generateErrorLabel(compiler, gen.getIoLabel(), "Error: Input/Output error");
-        }
-    }
-    
     @Override
     public void decompile(IndentPrintStream s) {
         s.println("{");

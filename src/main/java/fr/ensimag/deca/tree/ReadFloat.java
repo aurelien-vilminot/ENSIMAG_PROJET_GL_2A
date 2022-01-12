@@ -3,9 +3,6 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
-import fr.ensimag.ima.pseudocode.instructions.RFLOAT;
 import org.apache.log4j.Logger;
 
 import java.io.PrintStream;
@@ -34,14 +31,6 @@ public class ReadFloat extends AbstractReadExpr {
     @Override
     public void decompile(IndentPrintStream s) {
         s.print("readFloat()");
-    }
-
-    @Override
-    protected void codeGenExpr(DecacCompiler compiler, int n) {
-        // R1 <- readInt()
-        compiler.addInstruction(new RFLOAT());
-        // Rn <- V[R1]
-        compiler.addInstruction(new LOAD(Register.getR(1), Register.getR(n)));
     }
 
     @Override
