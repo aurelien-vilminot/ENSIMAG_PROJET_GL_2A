@@ -41,7 +41,7 @@ public abstract class AbstractOpBool extends AbstractBinaryExpr {
             this.setType(typeLeftOp);
             returnType = typeLeftOp;
         } else {
-            throw new ContextualError("Binary operation is only allowed for int or float types", this.getLocation());
+            throw new ContextualError("Boolean operation is only allowed for boolean type", this.getLocation());
         }
 
         LOG.debug("verify OPBool: end");
