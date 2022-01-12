@@ -7,7 +7,6 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.ima.pseudocode.DVal;
 import fr.ensimag.ima.pseudocode.GPRegister;
-import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.*;
 import org.apache.commons.lang.Validate;
@@ -15,7 +14,7 @@ import org.apache.log4j.Logger;
 
 /**
  * Arithmetic binary operations (+, -, /, ...)
- * 
+ *
  * @author gl07
  * @date 01/01/2022
  */
@@ -108,12 +107,14 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
+        int maxRegister = compiler.getCompilerOptions().getRegisterNumber() - 1;
+        Validate.isTrue((n <= maxRegister));
+
         DVal rightDval = this.getRightOperand().dval(compiler);
         if (rightDval != null) {
             this.getLeftOperand().codeGenExpr(compiler, n);
             this.mnemo(compiler, rightDval, Register.getR(n));
         } else {
-            int maxRegister = compiler.getCompilerOptions().getRegisterNumber();
             if (n < maxRegister) {
                 this.getLeftOperand().codeGenExpr(compiler, n);
                 this.getRightOperand().codeGenExpr(compiler, n+1);
