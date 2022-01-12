@@ -59,6 +59,8 @@ public class Assign extends AbstractBinaryExpr {
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
+        Validate.isTrue((n <= compiler.getCompilerOptions().getRegisterNumber() - 1));
+
         codeGenInst(compiler, n);
     }
 
@@ -68,9 +70,11 @@ public class Assign extends AbstractBinaryExpr {
     }
 
     protected void codeGenInst(DecacCompiler compiler, int n) {
-        // Calculate rightOperand and load into R2
+        Validate.isTrue((n <= compiler.getCompilerOptions().getRegisterNumber() - 1));
+
+        // Calculate rightOperand and load into Rn
         getRightOperand().codeGenExpr(compiler, n);
-        // Load rightOperand into leftOperand
+        // Store rightOperand into leftOperand
         DAddr dAddr = compiler.getEnvironmentExp().get(((AbstractIdentifier)getLeftOperand()).getName()).getOperand();
         compiler.addInstruction(new STORE(Register.getR(n), dAddr));
     }

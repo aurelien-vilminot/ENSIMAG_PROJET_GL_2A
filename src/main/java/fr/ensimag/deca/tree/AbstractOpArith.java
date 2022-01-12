@@ -7,7 +7,6 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.ima.pseudocode.DVal;
 import fr.ensimag.ima.pseudocode.GPRegister;
-import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.*;
 import org.apache.commons.lang.Validate;
@@ -15,7 +14,7 @@ import org.apache.log4j.Logger;
 
 /**
  * Arithmetic binary operations (+, -, /, ...)
- * 
+ *
  * @author gl07
  * @date 01/01/2022
  */
@@ -75,19 +74,19 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
             case "+":
                 compiler.addInstruction(new ADD(dval, gpRegister));
                 if (this.getType().isFloat()) {
-                    compiler.addInstruction(new BOV(compiler.getLabelGenerator().getOverFlowLabel()));
+                    compiler.addOverflowError();
                 }
                 break;
             case "-":
                 compiler.addInstruction(new SUB(dval, gpRegister));
                 if (this.getType().isFloat()) {
-                    compiler.addInstruction(new BOV(compiler.getLabelGenerator().getOverFlowLabel()));
+                    compiler.addOverflowError();
                 }
                 break;
             case "*":
                 compiler.addInstruction(new MUL(dval, gpRegister));
                 if (this.getType().isFloat()) {
-                    compiler.addInstruction(new BOV(compiler.getLabelGenerator().getOverFlowLabel()));
+                    compiler.addOverflowError();
                 }
                 break;
             case "/":
@@ -97,33 +96,37 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
                 } else if (this.getType().isFloat()) {
                     compiler.addInstruction(new DIV(dval, gpRegister));
                 }
-                compiler.addInstruction(new BOV(compiler.getLabelGenerator().getOverFlowLabel()));
+                compiler.addOverflowError();
                 break;
             case "%":
-                // Modulo operation with a loop
                 compiler.addInstruction(new REM(dval, gpRegister));
-                compiler.addInstruction(new BOV(compiler.getLabelGenerator().getOverFlowLabel()));
+                compiler.addOverflowError();
         }
     }
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
+        int maxRegister = compiler.getCompilerOptions().getRegisterNumber() - 1;
+        Validate.isTrue((n <= maxRegister));
+
         DVal rightDval = this.getRightOperand().dval(compiler);
         if (rightDval != null) {
             this.getLeftOperand().codeGenExpr(compiler, n);
             this.mnemo(compiler, rightDval, Register.getR(n));
         } else {
-            int maxRegister = compiler.getCompilerOptions().getRegisterNumber();
             if (n < maxRegister) {
                 this.getLeftOperand().codeGenExpr(compiler, n);
                 this.getRightOperand().codeGenExpr(compiler, n+1);
                 this.mnemo(compiler, Register.getR(n+1), Register.getR(n));
             } else {
                 this.getLeftOperand().codeGenExpr(compiler, n);
+                compiler.incTempStackCurrent(1);
+                compiler.setTempStackMax();
                 compiler.addInstruction(new PUSH(Register.getR(n)), "sauvegarde");
                 this.getRightOperand().codeGenExpr(compiler, n);
                 compiler.addInstruction(new LOAD(Register.getR(n), Register.R0));
                 compiler.addInstruction(new POP(Register.getR(n)), "restauration");
+                compiler.incTempStackCurrent(-1);
                 this.mnemo(compiler, Register.R0, Register.getR(n));
             }
         }

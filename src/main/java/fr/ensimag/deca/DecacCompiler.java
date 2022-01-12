@@ -10,15 +10,15 @@ import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import fr.ensimag.deca.tree.AbstractProgram;
 import fr.ensimag.deca.tree.Location;
 import fr.ensimag.deca.tree.LocationException;
-import fr.ensimag.ima.pseudocode.AbstractLine;
-import fr.ensimag.ima.pseudocode.IMAProgram;
-import fr.ensimag.ima.pseudocode.Instruction;
-import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.*;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+
+import fr.ensimag.ima.pseudocode.instructions.BOV;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.apache.log4j.Logger;
@@ -50,21 +50,51 @@ public class DecacCompiler {
     private EnvironmentTypes environmentTypes;
     private SymbolTable symbolTable = new SymbolTable();
 
+    private int globalStackSize = 0; // number of global variables
+    private int tempStackCurrent = 0; // current temporary stack usage
+    private int tempStackMax = 0; // maximal temporary stack usage
+
     public int getGlobalStackSize() {
         return globalStackSize;
     }
 
     public int incGlobalStackSize(int inc) {
-        this.globalStackSize = globalStackSize + inc;
+        globalStackSize += inc;
         return globalStackSize;
     }
 
-    private int globalStackSize = 0;
+    public int incTempStackCurrent(int inc) {
+        tempStackCurrent += inc;
+        return tempStackCurrent;
+    }
+
+    public void setTempStackMax() {
+        tempStackMax = Integer.max(tempStackMax, tempStackCurrent);
+    }
+
+    public int getTempStackMax() {
+        return tempStackMax;
+    }
+
 
     private final LabelGenerator labelGenerator = new LabelGenerator();
 
     public LabelGenerator getLabelGenerator() {
         return this.labelGenerator;
+    }
+
+    public void addOverflowError() {
+        addOverflowError(false);
+    }
+
+    public void addOverflowError(boolean first) {
+        if (!this.compilerOptions.getNoCheck()) {
+            if (first) {
+                addFirst(new Line(new BOV(getLabelGenerator().getOverFlowLabel())));
+            } else {
+                addInstruction(new BOV(getLabelGenerator().getOverFlowLabel()));
+            }
+        }
     }
 
     public DecacCompiler(CompilerOptions compilerOptions, File source) {
@@ -171,7 +201,15 @@ public class DecacCompiler {
     public void addInstruction(Instruction instruction, String comment) {
         program.addInstruction(instruction, comment);
     }
-    
+
+    /**
+     * @see
+     * fr.ensimag.ima.pseudocode.IMAProgram#addFirst(fr.ensimag.ima.pseudocode.Line)
+     */
+    public void addFirst(Line l) {
+        program.addFirst(l);
+    }
+
     /**
      * @see 
      * fr.ensimag.ima.pseudocode.IMAProgram#display()
@@ -260,9 +298,9 @@ public class DecacCompiler {
             return false;
         }
 
-        addComment("start main program");
+        // addComment("start main program");
         prog.codeGenProgram(this);
-        addComment("end main program");
+        // addComment("end main program");
         LOG.debug("Generated assembly code:" + nl + program.display());
         LOG.info("Output file assembly file is: " + destName);
 

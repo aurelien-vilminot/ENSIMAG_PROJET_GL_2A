@@ -43,11 +43,15 @@ public class CompilerOptions {
         return this.verification;
     }
 
+    public boolean getNoCheck() {
+        return this.noCheck;
+    }
+
     public int getArgsNumber() {
         return argsNumber;
     }
 
-    public int getRegisterNumber() { return registerNumber;}
+    public int getRegisterNumber() { return registerNumber ;}
 
     private int debug = 0;
     private boolean parallel = false;
@@ -56,6 +60,7 @@ public class CompilerOptions {
     private boolean parse = false;
     private boolean verification = false;
     private boolean registerLimit = false;
+    private boolean noCheck = false;
     private int registerNumber = 0;
     private int argsNumber = 0;
 
@@ -85,44 +90,29 @@ public class CompilerOptions {
             if (filePattern.matcher(arg).matches()) {
                 this.sourceFiles.add(new File(arg));
             } else if (registerPattern.matcher(arg).matches()) {
-                if (this.registerLimit) {
-                    throw new CLIException("Impossible to repeat -r");
-                }
                 this.registerLimit = true;
                 lastPattern = registerPattern;
                 continue;
             } else if (numberPattern.matcher(arg).matches()) {
-                if (!this.registerLimit || lastPattern != registerPattern || this.registerNumber != 0) {
-                    throw new CLIException("Impossible to use a number as an argument without the option -r, or to use the option -r multiple times");
+                if (!this.registerLimit || lastPattern != registerPattern) {
+                    throw new CLIException("decac : impossible to use a number as an argument without the option -r");
                 }
                 this.registerNumber = Integer.parseInt(arg);
                 if (this.registerNumber < 4 || this.registerNumber > 16) {
-                    throw new CLIException("Number of registers have to be between 4 and 16");
+                    throw new CLIException("decac : number of registers have to be between 4 and 16");
                 }
             } else if (bannerPattern.matcher(arg).matches()) {
-                if (this.printBanner) {
-                    throw new CLIException("Impossible to repeat -b");
-                }
                 this.printBanner = true;
             } else if (parserPattern.matcher(arg).matches()) {
-                if (this.parse) {
-                    throw new CLIException("Impossible to repeat -p");
-                }
                 this.parse = true;
             } else if (verificationPattern.matcher(arg).matches()) {
-                if (this.verification) {
-                    throw new CLIException("Impossible to repeat -v");
-                }
                 this.verification = true;
             } else if (parallelismPattern.matcher(arg).matches()) {
-                if (this.parallel) {
-                    throw new CLIException("Impossible to repeat -P");
-                }
                 this.parallel = true;
             } else if (debugPattern.matcher(arg).matches()) {
                 this.debug++;
             } else if (nocheckPattern.matcher(arg).matches()){
-                throw new CLIException("-n is not yet implemented");
+                this.noCheck = true;
             } else {
                 throw new CLIException("decac : invalid option -- '" + arg + "'\nUsage :");
             }
@@ -137,7 +127,7 @@ public class CompilerOptions {
             throw new CLIException("Impossible to use the option -r without a specified number of registers");
         } else if (this.registerNumber == 0) {
             // Default value if -r is not specified
-            this.registerNumber = 15;
+            this.registerNumber = 16;
         }
 
         // Check if options are incompatible

@@ -60,8 +60,8 @@ public class IfThenElse extends AbstractInst {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        Label elseLabel = new Label(compiler.getLabelGenerator().generateLabel("sinon"));
-        Label endLabel = new Label(compiler.getLabelGenerator().generateLabel("fin"));
+        Label elseLabel = new Label(compiler.getLabelGenerator().generateLabel("else"));
+        Label endLabel = new Label(compiler.getLabelGenerator().generateLabel("end"));
 
         // Gen code for condition
         this.condition.codeGenExprBool(compiler, false, elseLabel);
