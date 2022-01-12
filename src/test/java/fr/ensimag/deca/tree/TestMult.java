@@ -60,7 +60,7 @@ public class TestMult {
 
         // Check error assertion
         Exception exception = assertThrows(ContextualError.class, () -> {
-            multiply.verifyExpr(this.compiler, null, null).isInt();
+            multiply.verifyExpr(this.compiler, null, null);
         });
         String expectedMessage = "Binary operation is only allowed for int or float types";
         String actualMessage = exception.getMessage();

@@ -32,7 +32,7 @@ public class TestAnd {
 
         // Check error assertion
         Exception exception = assertThrows(ContextualError.class, () -> {
-            and.verifyExpr(this.compiler, null, null).isInt();
+            and.verifyExpr(this.compiler, null, null);
         });
         String expectedMessage = "Boolean operation is only allowed for boolean type";
         String actualMessage = exception.getMessage();

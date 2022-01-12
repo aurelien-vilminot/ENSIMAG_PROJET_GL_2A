@@ -32,7 +32,7 @@ public class TestOr {
 
         // Check error assertion
         Exception exception = assertThrows(ContextualError.class, () -> {
-            or.verifyExpr(this.compiler, null, null).isInt();
+            or.verifyExpr(this.compiler, null, null);
         });
         String expectedMessage = "Boolean operation is only allowed for boolean type";
         String actualMessage = exception.getMessage();
