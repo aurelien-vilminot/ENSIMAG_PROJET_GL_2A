@@ -50,7 +50,7 @@ public class TestIdentifier {
         assertEquals(expectedMessage, actualMessage);
     }
 
-    @Test
+    // @Test
     public void testVerifyType() throws ContextualError {
         Identifier ident = new Identifier(compiler.getSymbolTable().create("int"));
         Type intType = compiler.getEnvironmentTypes().get(
@@ -59,7 +59,7 @@ public class TestIdentifier {
         assertEquals(intType,ident.verifyType(compiler));
     }
 
-    @Test
+    // @Test
     public void testVerifyTypeUndefined() {
         Identifier ident = new Identifier(compiler.getSymbolTable().create("typo"));
         Exception exception = assertThrows(ContextualError.class, () -> {
