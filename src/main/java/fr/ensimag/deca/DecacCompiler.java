@@ -195,7 +195,6 @@ public class DecacCompiler {
      */
     public boolean compile() {
         String sourceFile = source.getAbsolutePath();
-        // TODO: verify that sourceFile is .deca
         String destFile = source.getAbsolutePath().replaceAll("\\.deca$", ".ass");
         PrintStream err = System.err;
         PrintStream out = System.out;
