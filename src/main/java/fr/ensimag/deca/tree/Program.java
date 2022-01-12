@@ -61,9 +61,11 @@ public class Program extends AbstractProgram {
         LabelGenerator gen = compiler.getLabelGenerator();
         if (gen.getOverflowError()) {
             compiler.getLabelGenerator().generateErrorLabel(compiler, gen.getOverFlowLabel(), "Error: Overflow during arithmetic operation");
-        } else if (gen.getStackOverflowError()) {
+        }
+        if (gen.getStackOverflowError()) {
             compiler.getLabelGenerator().generateErrorLabel(compiler, gen.getStackOverFlowLabel(), "Error: Stack Overflow");
-        } else if (gen.getIoError()) {
+        }
+        if (gen.getIoError()) {
             compiler.getLabelGenerator().generateErrorLabel(compiler, gen.getIoLabel(), "Error: Input/Output error");
         }
     }
