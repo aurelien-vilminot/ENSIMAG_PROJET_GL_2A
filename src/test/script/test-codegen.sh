@@ -41,7 +41,7 @@ do
             then
               echo "  \e[1;32m[CORRECT] $name_test\e[1;m"
               nb_correct=$((nb_correct+1))
-              # rm "$TEST_PATH"/"$name_test".res
+              rm "$TEST_PATH"/"$name_test".res
             else
               echo "  \e[1;31m[INCORRECT] $name_test, no match with the error...\e[1;m"
           fi
@@ -85,7 +85,7 @@ do
      echo "  \e[1;31m[INCORRECT] $name_test does not produce an .ass file\e[1;m"
     else
       ima "$TEST_PATH"/"$name_test".ass > "$TEST_PATH"/"$name_test".res 2>&1
-      # rm "$TEST_PATH"/"$name_test".ass
+      rm "$TEST_PATH"/"$name_test".ass
 
       differences=$(diff "$TEST_PATH"/"$name_test".txt "$TEST_PATH"/"$name_test".res | head)
 
@@ -145,7 +145,7 @@ do
     else
       log_error_output_file="$TEST_PATH"/"$name_test".log
       ima "$TEST_PATH"/"$name_test".ass 1> /dev/null 2> "$log_error_output_file"
-      # rm "$TEST_PATH"/"$name_test".ass
+      rm "$TEST_PATH"/"$name_test".ass
       res=$(cat "$log_error_output_file")
 
       if ! [ "$res" = "" ]; then
@@ -194,7 +194,7 @@ do
     else
       log_error_output_file="$TEST_PATH"/"$name_test".log
       ima "$TEST_PATH"/"$name_test".ass 1> /dev/null 2> "$log_error_output_file"
-      # rm "$TEST_PATH"/"$name_test".ass
+      rm "$TEST_PATH"/"$name_test".ass
       res=$(cat "$log_error_output_file")
 
       if [ "$res" = "" ]; then

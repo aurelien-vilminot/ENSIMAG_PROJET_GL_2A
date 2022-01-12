@@ -2,6 +2,6 @@
     int a = 1;
     int b = 2;
     if(a + b == 3){
-        print("Add int");
+        println("Add int");
     }
 }
