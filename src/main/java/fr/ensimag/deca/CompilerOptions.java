@@ -135,6 +135,9 @@ public class CompilerOptions {
 
         if (this.registerLimit && this.registerNumber == 0) {
             throw new CLIException("Impossible to use the option -r without a specified number of registers");
+        } else if (this.registerNumber == 0) {
+            // Default value if -r is not specified
+            this.registerNumber = 15;
         }
 
         // Check if options are incompatible
