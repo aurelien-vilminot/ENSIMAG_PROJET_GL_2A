@@ -20,7 +20,7 @@ reset=`tput sgr0` # \e[1;m
 red=`tput setaf 1` # \e[1;31m
 green=`tput setaf 2` # \e[1;32m
 yellow=`tput setaf 3` # \e[1;33m
-echo "${red}[BEGIN LEXER INVALID TESTS]${reset}"
+echo "${base}[BEGIN LEXER INVALID TESTS]${reset}"
 
 for i in "$TEST_PATH"/*.deca
 do

@@ -1,1 +1,1 @@
-string_quotes.deca:10:
+java.lang.StackOverflowError
