@@ -18,34 +18,55 @@ public class TestIdentifier {
 
     // @BeforeEach
     void setup() {
-        DecacCompiler compiler = new DecacCompiler(null, null);
-        EnvironmentExp localEnv = new EnvironmentExp(null);
+        compiler = new DecacCompiler(null, null);
+        localEnv = new EnvironmentExp(null);
     }
 
     // @Test
     public void testVerifyExpr() throws DoubleDefException, ContextualError {
-        Identifier s1 = new Identifier(compiler.getSymbolTable().create("s1"));
+        Identifier ident = new Identifier(compiler.getSymbolTable().create("ident"));
 
-        // s1 to be a declared variable
+        // ident to be a declared variable
         localEnv.declare(
-            compiler.getSymbolTable().create("s1"),
+            compiler.getSymbolTable().create("ident"),
             new VariableDefinition(INT, Location.BUILTIN)
         );
 
-        assertEquals(INT, s1.verifyExpr(compiler, localEnv, null));
+        assertEquals(INT, ident.verifyExpr(compiler, localEnv, null));
     }
 
     // @Test
     public void testVerifyExprUndeclaredError() throws DoubleDefException {
-        Identifier s2 = new Identifier(compiler.getSymbolTable().create("s2"));
+        Identifier ident = new Identifier(compiler.getSymbolTable().create("ident"));
 
-        // s2 to be an undeclared variable
+        // ident to be an undeclared variable
 
         Exception exception = assertThrows(ContextualError.class, () -> {
-            s2.verifyExpr(compiler, localEnv, null);
+            ident.verifyExpr(compiler, localEnv, null);
         });
 
         String expectedMessage = "Undeclared identifier";
+        String actualMessage = exception.getMessage();
+        assertEquals(expectedMessage, actualMessage);
+    }
+
+    @Test
+    public void testVerifyType() throws ContextualError {
+        Identifier ident = new Identifier(compiler.getSymbolTable().create("int"));
+        Type intType = compiler.getEnvironmentTypes().get(
+                compiler.getSymbolTable().create("int")
+            ).getType();
+        assertEquals(intType,ident.verifyType(compiler));
+    }
+
+    @Test
+    public void testVerifyTypeUndefined() {
+        Identifier ident = new Identifier(compiler.getSymbolTable().create("typo"));
+        Exception exception = assertThrows(ContextualError.class, () -> {
+            ident.verifyType(compiler);
+        });
+
+        String expectedMessage = "Undefined type identifier: typo";
         String actualMessage = exception.getMessage();
         assertEquals(expectedMessage, actualMessage);
     }
