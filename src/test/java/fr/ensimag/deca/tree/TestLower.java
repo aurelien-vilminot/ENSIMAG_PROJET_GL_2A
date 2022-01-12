@@ -71,7 +71,7 @@ public class TestLower {
         // Check error assertion
         Lower finalGreater = lower;
         exception = assertThrows(ContextualError.class, () -> {
-            finalGreater.verifyExpr(compiler, null, null).isInt();
+            finalGreater.verifyExpr(compiler, null, null);
         });
         expectedMessage = "This comparison works only with int or float types";
         actualMessage = exception.getMessage();
@@ -81,7 +81,7 @@ public class TestLower {
         // Check error assertion
         Lower finalGreater1 = lower;
         exception = assertThrows(ContextualError.class, () -> {
-            finalGreater1.verifyExpr(compiler, null, null).isInt();
+            finalGreater1.verifyExpr(compiler, null, null);
         });
         expectedMessage = "This comparison works only with int or float types";
         actualMessage = exception.getMessage();
@@ -91,7 +91,7 @@ public class TestLower {
         // Check error assertion
         Lower finalGreater2 = lower;
         exception = assertThrows(ContextualError.class, () -> {
-            finalGreater2.verifyExpr(compiler, null, null).isInt();
+            finalGreater2.verifyExpr(compiler, null, null);
         });
         expectedMessage = "This comparison works only with int or float types";
         actualMessage = exception.getMessage();
@@ -101,7 +101,7 @@ public class TestLower {
         // Check error assertion
         Lower finalGreater3 = lower;
         exception = assertThrows(ContextualError.class, () -> {
-            finalGreater3.verifyExpr(compiler, null, null).isInt();
+            finalGreater3.verifyExpr(compiler, null, null);
         });
         expectedMessage = "This comparison works only with int or float types";
         actualMessage = exception.getMessage();

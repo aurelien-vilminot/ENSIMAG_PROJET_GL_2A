@@ -24,7 +24,6 @@ public class TestAssign {
         compiler = new DecacCompiler(null, null);
         leftOperand = new Identifier(compiler.getSymbolTable().create("x"));
         localEnv = new EnvironmentExp(null);
-        Type FLOAT = new FloatType(null);
         localEnv.declare(
             compiler.getSymbolTable().create("x"),
             new VariableDefinition(FLOAT, Location.BUILTIN)

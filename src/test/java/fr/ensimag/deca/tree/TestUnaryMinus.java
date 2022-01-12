@@ -48,7 +48,7 @@ public class TestUnaryMinus {
         // Check error assertion
         UnaryMinus finalGreater = unaryMinus;
         exception = assertThrows(ContextualError.class, () -> {
-            finalGreater.verifyExpr(compiler, null, null).isInt();
+            finalGreater.verifyExpr(compiler, null, null).isString();
         });
         expectedMessage = "Minus operation is only allowed for int or float types";
         actualMessage = exception.getMessage();
@@ -58,7 +58,7 @@ public class TestUnaryMinus {
         // Check error assertion
         UnaryMinus finalGreater1 = unaryMinus;
         exception = assertThrows(ContextualError.class, () -> {
-            finalGreater1.verifyExpr(compiler, null, null).isInt();
+            finalGreater1.verifyExpr(compiler, null, null).isString();
         });
         expectedMessage = "Minus operation is only allowed for int or float types";
         actualMessage = exception.getMessage();

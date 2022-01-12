@@ -77,7 +77,7 @@ public class TestEquals {
         // Check error assertion
         Equals finalEquals = equals;
         exception = assertThrows(ContextualError.class, () -> {
-            finalEquals.verifyExpr(compiler, null, null).isInt();
+            finalEquals.verifyExpr(compiler, null, null);
         });
         expectedMessage = "Equals or not equals comparison is only with int, float, class, null or boolean types";
         actualMessage = exception.getMessage();
@@ -87,7 +87,7 @@ public class TestEquals {
         // Check error assertion
         Equals finalEquals1 = equals;
         exception = assertThrows(ContextualError.class, () -> {
-            finalEquals1.verifyExpr(compiler, null, null).isInt();
+            finalEquals1.verifyExpr(compiler, null, null);
         });
         expectedMessage = "Equals or not equals comparison is only with int, float, class, null or boolean types";
         actualMessage = exception.getMessage();
@@ -97,7 +97,7 @@ public class TestEquals {
         // Check error assertion
         Equals finalEquals2 = equals;
         exception = assertThrows(ContextualError.class, () -> {
-            finalEquals2.verifyExpr(compiler, null, null).isInt();
+            finalEquals2.verifyExpr(compiler, null, null);
         });
         expectedMessage = "Equals or not equals comparison is only with int, float, class, null or boolean types";
         actualMessage = exception.getMessage();
@@ -107,7 +107,7 @@ public class TestEquals {
         // Check error assertion
         Equals finalEquals3 = equals;
         exception = assertThrows(ContextualError.class, () -> {
-            finalEquals3.verifyExpr(compiler, null, null).isInt();
+            finalEquals3.verifyExpr(compiler, null, null);
         });
         expectedMessage = "Equals or not equals comparison is only with int, float, class, null or boolean types";
         actualMessage = exception.getMessage();

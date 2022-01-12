@@ -60,7 +60,7 @@ public class TestMinus {
 
         // Check error assertion
         Exception exception = assertThrows(ContextualError.class, () -> {
-            minus.verifyExpr(this.compiler, null, null).isInt();
+            minus.verifyExpr(this.compiler, null, null);
         });
         String expectedMessage = "Binary operation is only allowed for int or float types";
         String actualMessage = exception.getMessage();

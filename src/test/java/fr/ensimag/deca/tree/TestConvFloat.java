@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TestNot {
+public class TestConvFloat {
     private static DecacCompiler compiler;
     private static BooleanLiteral booleanLiteral;
     private static FloatLiteral floatLiteral;
@@ -24,46 +24,46 @@ public class TestNot {
     }
 
     @Test
-    public void testBoolean() throws ContextualError {
-        Not not = new Not(booleanLiteral);
+    public void testInt() throws ContextualError {
+        ConvFloat convFloat = new ConvFloat(intLiteral);
         // Check type result of the comparison
-        assertTrue(not.verifyExpr(compiler, null, null).isBoolean());
+        assertTrue(convFloat.verifyExpr(compiler, null, null).isFloat());
     }
 
     @Test
     public void testIncompatibleTypes() {
-        Not not;
+        ConvFloat convFloat;
         Exception exception;
         String expectedMessage;
         String actualMessage;
 
-        not = new Not(stringLiteral);
+        convFloat = new ConvFloat(stringLiteral);
         // Check error assertion
-        Not finalGreater = not;
+        ConvFloat finalGreater = convFloat;
         exception = assertThrows(ContextualError.class, () -> {
             finalGreater.verifyExpr(compiler, null, null);
         });
-        expectedMessage = "Not operation is only allowed for boolean type";
+        expectedMessage = "An int can be cast in float only";
         actualMessage = exception.getMessage();
         assertEquals(actualMessage, expectedMessage);
 
-        not = new Not(intLiteral);
+        convFloat = new ConvFloat(booleanLiteral);
         // Check error assertion
-        Not finalGreater1 = not;
+        ConvFloat finalGreater1 = convFloat;
         exception = assertThrows(ContextualError.class, () -> {
             finalGreater1.verifyExpr(compiler, null, null);
         });
-        expectedMessage = "Not operation is only allowed for boolean type";
+        expectedMessage = "An int can be cast in float only";
         actualMessage = exception.getMessage();
         assertEquals(actualMessage, expectedMessage);
 
-        not = new Not(floatLiteral);
+        convFloat = new ConvFloat(floatLiteral);
         // Check error assertion
-        Not finalGreater2 = not;
+        ConvFloat finalGreater2 = convFloat;
         exception = assertThrows(ContextualError.class, () -> {
             finalGreater2.verifyExpr(compiler, null, null);
         });
-        expectedMessage = "Not operation is only allowed for boolean type";
+        expectedMessage = "An int can be cast in float only";
         actualMessage = exception.getMessage();
         assertEquals(actualMessage, expectedMessage);
     }
