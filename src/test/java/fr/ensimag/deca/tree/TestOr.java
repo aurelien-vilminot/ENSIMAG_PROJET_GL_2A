@@ -21,7 +21,7 @@ public class TestOr {
         BooleanLiteral booleanLiteralRight = new BooleanLiteral(false);
         Or or = new Or(booleanLiteralLeft, booleanLiteralRight);
         // Check type result of the boolean operation
-        assertTrue(or.verifyExpr(this.compiler, null, null).isInt());
+        assertTrue(or.verifyExpr(this.compiler, null, null).isBoolean());
     }
 
     @Test

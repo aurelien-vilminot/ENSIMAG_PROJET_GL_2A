@@ -21,7 +21,7 @@ public class TestAnd {
         BooleanLiteral booleanLiteralRight = new BooleanLiteral(false);
         And and = new And(booleanLiteralLeft, booleanLiteralRight);
         // Check type result of the boolean operation
-        assertTrue(and.verifyExpr(this.compiler, null, null).isInt());
+        assertTrue(and.verifyExpr(this.compiler, null, null).isBoolean());
     }
 
     @Test
