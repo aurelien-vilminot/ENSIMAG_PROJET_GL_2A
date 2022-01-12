@@ -63,7 +63,6 @@ public class DeclVar extends AbstractDeclVar {
 
     @Override
     protected void codeGenDeclVar(DecacCompiler compiler) {
-        // TODO: cas global
         // Set operand global address
         int addr = compiler.incGlobalStackSize(1);
         DAddr dAddr = new RegisterOffset(addr, Register.GB);

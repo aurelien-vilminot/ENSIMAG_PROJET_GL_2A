@@ -1,0 +1,14 @@
+{
+    if(1 == 1){
+        if(true == true){
+            if(false == false){
+                if(true != false){
+                    print("Stop here");
+                    if(1 != 1 || 1 != 1.0f){
+                        print("Nope");
+                    }
+                }
+            }
+        }
+    }
+}

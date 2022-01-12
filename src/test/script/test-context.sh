@@ -17,9 +17,9 @@ nb_correct=0
 nb_file=0
 base=`tput bold` # \e[1;1m
 reset=`tput sgr0` # \e[1;m
-red=`tput bold setaf 1` # \e[1;31m
-green=`tput bold setaf 2` # \e[1;32m
-yellow=`tput bold setaf 3` # \e[1;33m
+red=`tput setaf 1` # \e[1;31m
+green=`tput setaf 2` # \e[1;32m
+yellow=`tput setaf 3` # \e[1;33m
 echo "${base}[BEGIN CONTEXT INVALID TESTS]${reset}"
 
 for i in "$TEST_PATH"/*.deca

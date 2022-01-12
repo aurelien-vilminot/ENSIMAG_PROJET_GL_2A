@@ -1,0 +1,9 @@
+{
+    if(true && true){
+        print("ok");
+    }
+
+    if(true){
+        print("ok");
+    }
+}

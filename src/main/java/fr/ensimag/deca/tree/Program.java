@@ -4,6 +4,7 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.codegen.LabelGenerator;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.Line;
 import fr.ensimag.ima.pseudocode.instructions.*;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
@@ -50,14 +51,21 @@ public class Program extends AbstractProgram {
 
     @Override
     public void codeGenProgram(DecacCompiler compiler) {
-        compiler.addComment("Main program");
         main.codeGenMain(compiler);
         compiler.addInstruction(new HALT());
-        compiler.addComment("Main errors:");
+        this.codeGenInit(compiler);
         this.codeGenError(compiler);
     }
 
+    protected void codeGenInit(DecacCompiler compiler) {
+        compiler.addFirst(new Line(new ADDSP(compiler.getGlobalStackSize())));
+        compiler.addFirst(new Line(new BOV(compiler.getLabelGenerator().getOverFlowLabel())));
+        compiler.addFirst(new Line(new TSTO(compiler.getGlobalStackSize() + compiler.getTempStackMax())));
+        compiler.addFirst(new Line("Main program"));
+    }
+
     protected void codeGenError(DecacCompiler compiler) {
+        compiler.addComment("Main errors");
         LabelGenerator gen = compiler.getLabelGenerator();
         if (gen.getOverflowError()) {
             compiler.getLabelGenerator().generateErrorLabel(compiler, gen.getOverFlowLabel(), "Error: Overflow during arithmetic operation");
