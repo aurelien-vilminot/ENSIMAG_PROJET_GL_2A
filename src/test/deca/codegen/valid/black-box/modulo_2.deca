@@ -1,0 +1,9 @@
+{
+    int a = 1000000000 % 2;
+    int b = 156456 % 468;
+    int c = 65 % 5644;
+    println(a);
+    println(b);
+    println(c);
+    /* 0*/ /* mod float*/
+}

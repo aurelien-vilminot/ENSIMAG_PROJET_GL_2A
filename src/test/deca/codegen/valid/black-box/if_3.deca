@@ -1,0 +1,30 @@
+{
+    if(true){
+        if(true){
+            if(true){
+                print("Hello");
+            }else{
+                print("XXX");
+            }
+        }else if(false){
+            print("XXX");
+        }
+    }else{
+
+    }
+
+    if(false){
+        print("XXX");
+    }else if(true){
+        print(" world !");
+    }
+
+    if(false){
+        print("XXX");
+    }else if(false){
+        print("XXX");
+    }else{
+        print(";)");
+    }
+
+}

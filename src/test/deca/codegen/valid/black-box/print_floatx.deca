@@ -1,4 +1,7 @@
 {
+    printlnx(0x2.0p+2);
+    printlnx(0xaa486B4.56AEP+2);
+    printlnx(0xaa.0P+0);
     printlnx(0xa.0P+0);
     println(0xa.0P+0);
 }

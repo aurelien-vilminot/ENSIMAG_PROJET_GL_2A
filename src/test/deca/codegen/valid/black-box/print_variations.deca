@@ -11,8 +11,8 @@
 //    created on 06/01/2022
 
 {
-    printlnx("ok");
-    println("ok");
-    printx("ok");
-    print("ok");
+    printlnx("a");
+    println("b");
+    printx("c");
+    print("d");
 }
