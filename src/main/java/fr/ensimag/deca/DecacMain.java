@@ -47,8 +47,7 @@ public class DecacMain {
         try {
             options.parseArgs(args);
         } catch (CLIException e) {
-            System.err.println("Error during option parsing:\n"
-                    + e.getMessage());
+            System.err.println(e.getMessage());
             options.displayUsage();
             System.exit(1);
         }
