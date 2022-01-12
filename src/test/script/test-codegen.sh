@@ -12,7 +12,7 @@ nb_file_total=0
 # ----------------------------WITH-RESULTS-------------------------------------
 # -----------------------------------------------------------------------------
 # Invalid :
-TEST_PATH="./src/test/deca/codegen/invalid/system"
+TEST_PATH="./src/test/deca/codegen/invalid/black-box"
 nb_correct=0
 nb_file=0
 echo "\e[1;1m[BEGIN CODEGEN INVALID TESTS]\e[1;m"
@@ -68,7 +68,7 @@ nb_file_total=$((nb_file_total+nb_file))
 
 # -----------------------------------------------------------------------------
 # Valid :
-TEST_PATH="./src/test/deca/codegen/valid/system"
+TEST_PATH="./src/test/deca/codegen/valid/black-box"
 nb_correct=0
 nb_file=0
 echo "\e[1;1m[BEGIN CODEGEN VALID TESTS]\e[1;m"

@@ -12,7 +12,7 @@ nb_file_total=0
 # ----------------------------WITH-RESULTS-------------------------------------
 # -----------------------------------------------------------------------------
 # Invalid :
-TEST_PATH="./src/test/deca/context/invalid/system"
+TEST_PATH="./src/test/deca/context/invalid/black-box"
 nb_correct=0
 nb_file=0
 echo "\e[1;1m[BEGIN CONTEXT INVALID TESTS]\e[1;m"
@@ -59,7 +59,7 @@ nb_file_total=$((nb_file_total+nb_file))
 
 # -----------------------------------------------------------------------------
 # Valid :
-TEST_PATH="./src/test/deca/context/valid/system"
+TEST_PATH="./src/test/deca/context/valid/black-box"
 
 nb_correct=0
 nb_file=0

@@ -12,7 +12,7 @@ nb_file_total=0
 # ----------------------------WITH-RESULTS-------------------------------------
 # -----------------------------------------------------------------------------
 # Invalid :
-TEST_PATH="./src/test/deca/syntax/invalid/parser/system"
+TEST_PATH="./src/test/deca/syntax/invalid/parser/black-box"
 nb_correct=0
 nb_file=0
 echo "\e[1;1m[BEGIN PARSER INVALID TESTS]\e[1;m"
@@ -59,7 +59,7 @@ nb_file_total=$((nb_file_total+nb_file))
 
 # -----------------------------------------------------------------------------
 # Valid :
-TEST_PATH="./src/test/deca/syntax/valid/parser/system"
+TEST_PATH="./src/test/deca/syntax/valid/parser/black-box"
 nb_correct=0
 nb_file=0
 echo "\e[1;1m[BEGIN PARSER VALID TESTS]\e[1;m"

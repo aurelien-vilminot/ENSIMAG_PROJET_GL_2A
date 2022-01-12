@@ -37,9 +37,9 @@ decac -d "$HELLO_WORLD_PATH"/hello-world.deca
 echo ""
 
 echo "[-P]"
-decac -d "$HELLO_WORLD_PATH"/hello-world.deca
+decac -P "$HELLO_WORLD_PATH"/hello-world.deca
 echo ""
 
 echo "[-p et -v] Incompatible"
-decac -d "$HELLO_WORLD_PATH"/hello-world.deca
+decac -p -v "$HELLO_WORLD_PATH"/hello-world.deca
 echo ""

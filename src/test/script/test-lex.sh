@@ -12,7 +12,7 @@ nb_file_total=0
 # ----------------------------WITH-RESULTS-------------------------------------
 # -----------------------------------------------------------------------------
 # Invalid :
-TEST_PATH="./src/test/deca/syntax/invalid/lexer/system"
+TEST_PATH="./src/test/deca/syntax/invalid/lexer/black-box"
 nb_correct=0
 nb_file=0
 echo "\e[1;1m[BEGIN LEXER INVALID TESTS]\e[1;m"
@@ -59,7 +59,7 @@ nb_file_total=$((nb_file_total+nb_file))
 
 # -----------------------------------------------------------------------------
 # Valid :
-TEST_PATH="./src/test/deca/syntax/valid/lexer/system"
+TEST_PATH="./src/test/deca/syntax/valid/lexer/black-box"
 nb_correct=0
 nb_file=0
 echo "\e[1;1m[BEGIN LEXER VALID TESTS]\e[1;m"
@@ -184,6 +184,7 @@ echo "\e[1;1m[BEGIN LEXER VALID ORACLE TESTS]\e[1;m (print only incorrect tests)
 
 for i in "$TEST_PATH"/*.deca
 do
+  #
   nb_file=$((nb_file+1))
   name_test="${i%.*}"
   name_test="${name_test##*/}"
