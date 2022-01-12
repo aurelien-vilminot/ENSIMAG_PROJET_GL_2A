@@ -1,0 +1,14 @@
+{
+    int f, f0;
+    int n, n0;
+    f0 = readInt();
+    f = f0;
+    n0 = readInt();
+    n = n0;
+
+    while(n > 1){
+        f = f * f0;
+        n = n - 1;
+    }
+    println(f0, " ^ ", n0, " = ", f);
+}

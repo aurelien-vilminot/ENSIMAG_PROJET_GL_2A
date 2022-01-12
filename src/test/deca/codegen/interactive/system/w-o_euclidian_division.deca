@@ -1,0 +1,14 @@
+{
+    int x = readInt(), y = readInt(), q = 0;
+    int x_saved = x;
+    if(y <= 0){
+        println("Please enter a strict positive quotient");
+    } else {
+        while(x >= y){
+            x = x - y;
+            q = q + 1;
+        }
+        println("We have ", x_saved, " = ", y, " * ", q, " + ", x);
+    }
+
+}
