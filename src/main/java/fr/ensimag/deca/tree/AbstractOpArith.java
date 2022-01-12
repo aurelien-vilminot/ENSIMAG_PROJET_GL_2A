@@ -66,9 +66,9 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
     /**
      * Add an instruction corresponding to the arithmetical operator, between dval and gpRegister
      *
-     * @param compiler
-     * @param dval
-     * @param gpRegister
+     * @param compiler Deca Compiler used to add IMA instruction
+     * @param dval The left operand of the operation
+     * @param gpRegister The right operand of the operation
      */
     protected void mnemo(DecacCompiler compiler, DVal dval, GPRegister gpRegister) {
         switch (this.getOperatorName()) {
@@ -99,8 +99,12 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
                 }
                 break;
             case "%":
-                // TODO: modulo instruction
-                throw new UnsupportedOperationException("% not yet implemented");
+                // Modulo operation with a loop
+                Label modLabel = new Label(compiler.getLabelGenerator().generateLabel("mod"));
+                compiler.addLabel(modLabel);
+                compiler.addInstruction(new SUB(dval, gpRegister));
+                compiler.addInstruction(new CMP(dval, gpRegister));
+                compiler.addInstruction(new BGT(modLabel));
         }
     }
 
