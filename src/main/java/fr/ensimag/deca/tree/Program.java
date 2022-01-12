@@ -59,7 +59,7 @@ public class Program extends AbstractProgram {
 
     protected void codeGenInit(DecacCompiler compiler) {
         compiler.addFirst(new Line(new ADDSP(compiler.getGlobalStackSize())));
-        compiler.addFirst(new Line(new BOV(compiler.getLabelGenerator().getOverFlowLabel())));
+        compiler.addOverflowError(true);
         compiler.addFirst(new Line(new TSTO(compiler.getGlobalStackSize() + compiler.getTempStackMax())));
         compiler.addFirst(new Line("Main program"));
     }

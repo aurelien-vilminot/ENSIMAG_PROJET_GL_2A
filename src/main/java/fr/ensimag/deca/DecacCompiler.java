@@ -17,6 +17,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+
+import fr.ensimag.ima.pseudocode.instructions.BOV;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.apache.log4j.Logger;
@@ -79,6 +81,20 @@ public class DecacCompiler {
 
     public LabelGenerator getLabelGenerator() {
         return this.labelGenerator;
+    }
+
+    public void addOverflowError() {
+        addOverflowError(false);
+    }
+
+    public void addOverflowError(boolean first) {
+        if (!this.compilerOptions.getNoCheck()) {
+            if (first) {
+                addFirst(new Line(new BOV(getLabelGenerator().getOverFlowLabel())));
+            } else {
+                addInstruction(new BOV(getLabelGenerator().getOverFlowLabel()));
+            }
+        }
     }
 
     public DecacCompiler(CompilerOptions compilerOptions, File source) {

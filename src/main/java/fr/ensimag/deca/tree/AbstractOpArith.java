@@ -74,19 +74,19 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
             case "+":
                 compiler.addInstruction(new ADD(dval, gpRegister));
                 if (this.getType().isFloat()) {
-                    compiler.addInstruction(new BOV(compiler.getLabelGenerator().getOverFlowLabel()));
+                    compiler.addOverflowError();
                 }
                 break;
             case "-":
                 compiler.addInstruction(new SUB(dval, gpRegister));
                 if (this.getType().isFloat()) {
-                    compiler.addInstruction(new BOV(compiler.getLabelGenerator().getOverFlowLabel()));
+                    compiler.addOverflowError();
                 }
                 break;
             case "*":
                 compiler.addInstruction(new MUL(dval, gpRegister));
                 if (this.getType().isFloat()) {
-                    compiler.addInstruction(new BOV(compiler.getLabelGenerator().getOverFlowLabel()));
+                    compiler.addOverflowError();
                 }
                 break;
             case "/":
@@ -96,12 +96,11 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
                 } else if (this.getType().isFloat()) {
                     compiler.addInstruction(new DIV(dval, gpRegister));
                 }
-                compiler.addInstruction(new BOV(compiler.getLabelGenerator().getOverFlowLabel()));
+                compiler.addOverflowError();
                 break;
             case "%":
-                // Modulo operation with a loop
                 compiler.addInstruction(new REM(dval, gpRegister));
-                compiler.addInstruction(new BOV(compiler.getLabelGenerator().getOverFlowLabel()));
+                compiler.addOverflowError();
         }
     }
 

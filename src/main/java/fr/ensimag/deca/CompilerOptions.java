@@ -43,6 +43,10 @@ public class CompilerOptions {
         return this.verification;
     }
 
+    public boolean getNoCheck() {
+        return this.noCheck;
+    }
+
     public int getArgsNumber() {
         return argsNumber;
     }
@@ -56,6 +60,7 @@ public class CompilerOptions {
     private boolean parse = false;
     private boolean verification = false;
     private boolean registerLimit = false;
+    private boolean noCheck = false;
     private int registerNumber = 0;
     private int argsNumber = 0;
 
@@ -122,7 +127,10 @@ public class CompilerOptions {
             } else if (debugPattern.matcher(arg).matches()) {
                 this.debug++;
             } else if (nocheckPattern.matcher(arg).matches()){
-                throw new CLIException("-n is not yet implemented");
+                if (this.noCheck) {
+                    throw new CLIException("Impossible to repeat -n");
+                }
+                this.noCheck = true;
             } else {
                 throw new CLIException("decac : invalid option -- '" + arg + "'\nUsage :");
             }
