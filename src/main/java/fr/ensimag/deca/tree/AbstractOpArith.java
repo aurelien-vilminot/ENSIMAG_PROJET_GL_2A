@@ -100,11 +100,8 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
                 break;
             case "%":
                 // Modulo operation with a loop
-                Label modLabel = new Label(compiler.getLabelGenerator().generateLabel("mod"));
-                compiler.addLabel(modLabel);
-                compiler.addInstruction(new SUB(dval, gpRegister));
-                compiler.addInstruction(new CMP(dval, gpRegister));
-                compiler.addInstruction(new BGT(modLabel));
+                compiler.addInstruction(new REM(dval, gpRegister));
+                compiler.addInstruction(new BOV(compiler.getLabelGenerator().getOverFlowLabel()));
         }
     }
 
