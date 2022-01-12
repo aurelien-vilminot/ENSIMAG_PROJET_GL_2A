@@ -20,8 +20,8 @@ public class TestOr {
         BooleanLiteral booleanLiteralLeft = new BooleanLiteral(true);
         BooleanLiteral booleanLiteralRight = new BooleanLiteral(false);
         Or or = new Or(booleanLiteralLeft, booleanLiteralRight);
-        // Check type result of the addition
-        assertTrue(or.verifyExpr(this.compiler, null, null).isInt());
+        // Check type result of the boolean operation
+        assertTrue(or.verifyExpr(this.compiler, null, null).isBoolean());
     }
 
     @Test
@@ -32,7 +32,7 @@ public class TestOr {
 
         // Check error assertion
         Exception exception = assertThrows(ContextualError.class, () -> {
-            or.verifyExpr(this.compiler, null, null).isInt();
+            or.verifyExpr(this.compiler, null, null);
         });
         String expectedMessage = "Boolean operation is only allowed for boolean type";
         String actualMessage = exception.getMessage();

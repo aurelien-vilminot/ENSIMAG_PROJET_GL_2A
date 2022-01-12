@@ -63,7 +63,7 @@ public class TestDivide {
 
         // Check error assertion
         Exception exception = assertThrows(ContextualError.class, () -> {
-            divide.verifyExpr(this.compiler, null, null).isInt();
+            divide.verifyExpr(this.compiler, null, null);
         });
         String expectedMessage = "Binary operation is only allowed for int or float types";
         String actualMessage = exception.getMessage();

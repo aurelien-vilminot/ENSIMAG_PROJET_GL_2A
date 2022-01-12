@@ -1,0 +1,6 @@
+{
+    int a = 2, b = 3, c = 1, d = 9;
+    float z = 3.0f, x = 3.065f;
+    println(a, b, c, d);
+    println(z, x);
+}

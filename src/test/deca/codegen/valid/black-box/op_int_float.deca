@@ -1,0 +1,11 @@
+{
+    int a = 3;
+    float f = 3.0f;
+    if(a/f == 1.0f){
+        if(6 / 2.0 == 3.0){
+            if(6 / 2.0 == 3){
+                println("Op int float OK");
+            }
+        }
+    }
+}

@@ -33,7 +33,7 @@ public class TestModulo {
 
         // Check error assertion
         Exception exception = assertThrows(ContextualError.class, () -> {
-            modulo.verifyExpr(this.compiler, null, null).isInt();
+            modulo.verifyExpr(this.compiler, null, null);
         });
         String expectedMessage = "Modulo operation is only allowed for int type";
         String actualMessage = exception.getMessage();
