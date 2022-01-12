@@ -1,0 +1,11 @@
+{
+    int $ = 3;
+    float floats = 6.3f;
+    boolean _azer = true;
+    if(_azer){
+        println($);
+        println(floats);
+    }
+    println(6.3f);
+    println(floats);
+}

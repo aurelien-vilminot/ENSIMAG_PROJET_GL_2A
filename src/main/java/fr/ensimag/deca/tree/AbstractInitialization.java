@@ -5,6 +5,7 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.ima.pseudocode.DAddr;
 
 /**
  * Initialization (of variable, field, ...)
@@ -26,4 +27,11 @@ public abstract class AbstractInitialization extends Tree {
             Type t, EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError;
 
+    /**
+     * Calculate and store an expression in the specified memory location
+     *
+     * @param compiler Deca Compiler used to add IMA instruction
+     * @param dAddr The address where the expression must be load
+     */
+    protected abstract void codeGenInit(DecacCompiler compiler, DAddr dAddr);
 }

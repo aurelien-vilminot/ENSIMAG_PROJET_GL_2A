@@ -1,0 +1,10 @@
+{
+	(int) (x + -3);
+	(float) (10);
+	(type) (true && false);
+	(int) ((x + 3) <= 5);
+	(float) (x % 5 / 2.0);
+	(float) (-3);
+	(type) (3 == y);
+  (int) ("Hello World ");
+}

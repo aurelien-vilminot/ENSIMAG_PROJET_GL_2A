@@ -1,0 +1,8 @@
+{
+    int a = 2;
+    while(a > 3){
+        a = 10;
+        print("ok");
+    }
+    print("ok");
+}

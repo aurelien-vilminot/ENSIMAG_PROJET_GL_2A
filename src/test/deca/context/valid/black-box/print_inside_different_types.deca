@@ -1,0 +1,22 @@
+// Description:
+//    Test the print function. Try to print different literals and combinations
+//
+// Results:
+//    test_context --> no error, return the AST of the file print_inside_different_types
+//
+// History:
+//    created on 04/01/2022
+
+{
+    print("Hello", " world");
+    println(" !", "!");
+
+    print("37738353", 507311);
+    println(123, " is a big number");
+
+    print(37738353, 507311);
+    println(12, 3);
+
+    print(1.0, ",", 3);
+    printlnx(" and in hexa for floats :", 1.0, ",", 3);
+}

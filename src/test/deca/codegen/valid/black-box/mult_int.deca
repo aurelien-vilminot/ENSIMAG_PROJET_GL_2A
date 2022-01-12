@@ -1,0 +1,7 @@
+{
+    int a = 9;
+    int c = 36;
+    if(a * 4 == c + 1 - 1){
+        print("Multiplication int");
+    }
+}

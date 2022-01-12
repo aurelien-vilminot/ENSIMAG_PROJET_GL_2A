@@ -1,0 +1,11 @@
+{
+  println();
+  println("Hello World !");
+  println(1 + 2.0);
+  println(1.0 / "Hello World !");
+  println(true && false);
+  println(125.125 + 125, "Hello Moon !");
+  println(1.0 + 11, true);
+  println(false, false);
+  println("Hello World !", 2.0);
+}

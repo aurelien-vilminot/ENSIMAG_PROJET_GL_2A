@@ -1,5 +1,7 @@
 package fr.ensimag.deca.tree;
 
+import java.util.Iterator;
+import java.util.List;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
@@ -18,6 +20,13 @@ public class ListExpr extends TreeList<AbstractExpr> {
 
     @Override
     public void decompile(IndentPrintStream s) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        Iterator<AbstractExpr> ite = getList().iterator();
+        if (ite.hasNext()) {
+            ite.next().decompile(s);
+        }
+        while (ite.hasNext()) {
+            s.print(", ");
+            ite.next().decompile(s);
+        }
     }
 }

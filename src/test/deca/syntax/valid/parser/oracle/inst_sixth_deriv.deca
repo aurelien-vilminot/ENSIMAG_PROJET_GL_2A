@@ -1,0 +1,11 @@
+{
+  printlnx();
+  printlnx("Hello World !");
+  printlnx(1 + 2.0);
+  printlnx(1.0 / "Hello World !");
+  printlnx(true && false);
+  printlnx(50.0, "Hello Moon !");
+  printlnx(1.0 + 11, true);
+  printlnx(false, 52);
+  printlnx("Hello World !", 2.0);
+}

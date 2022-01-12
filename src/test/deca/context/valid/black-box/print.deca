@@ -1,0 +1,19 @@
+// Description:
+//    Test print and println instructions on different types.
+//
+// Results:
+//    test_context --> returns the AST of the file print.txt
+//
+// History:
+//    created on 06/01/2022
+
+{
+    print("Hello");
+    println(" world !");
+
+    print(1);
+    println(2);
+
+    print(1.0);
+    println(2.0);
+}

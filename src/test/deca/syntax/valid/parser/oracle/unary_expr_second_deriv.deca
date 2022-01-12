@@ -1,0 +1,4 @@
+{
+  !5.0; !("Hello World !"); !(x / 50); !readInt();
+  !!"Hello"; !!(50.0); !!(x * 50); !!readInt(); !!((int) (x));
+}

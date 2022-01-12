@@ -1,0 +1,16 @@
+{
+  ident ident;
+  ident ident, ident;
+  ident ident = ident;
+  ident ident = 50.0;
+  ident ident = x + 3;
+	ident ident = ident, ident;
+	ident ident = "Hello World !", ident;
+	ident ident = !!!!true, ident;
+	ident ident, ident = ident;
+  ident ident, ident = 50.0;
+  ident ident, ident = "ident";
+	ident ident = ident, ident = ident;
+  ident ident = "ident", ident = 50.0;
+  int ident = 20, ident = 10;
+}

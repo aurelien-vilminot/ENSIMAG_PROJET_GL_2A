@@ -1,0 +1,7 @@
+{
+    int a = 36;
+    int b = 5;
+    println(a / b);
+    println(58/10);
+    println(36/6);
+}

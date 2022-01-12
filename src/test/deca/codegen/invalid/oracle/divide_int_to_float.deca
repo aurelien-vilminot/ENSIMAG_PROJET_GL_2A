@@ -1,0 +1,6 @@
+{
+    int a = 2;
+    if(a / 4 == 0.5f){
+        print("Division btw 2 int to float");
+    }
+}

@@ -1,0 +1,23 @@
+{
+    boolean b = true;
+    boolean c = false;
+    if(b){
+        print("1");
+    }
+
+    if(c){
+        print("1");
+    }
+
+    if(!!b){
+        print("2");
+    }
+
+    if(!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!b && true){
+        print("3");
+    }
+
+    if(!b){
+        print("3");
+    }
+}

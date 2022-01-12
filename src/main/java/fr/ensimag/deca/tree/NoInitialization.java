@@ -6,6 +6,9 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.DAddr;
+import org.apache.log4j.Logger;
+
 import java.io.PrintStream;
 
 /**
@@ -16,12 +19,20 @@ import java.io.PrintStream;
  * @date 01/01/2022
  */
 public class NoInitialization extends AbstractInitialization {
+    private static final Logger LOG = Logger.getLogger(Main.class);
 
     @Override
     protected void verifyInitialization(DecacCompiler compiler, Type t,
             EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        LOG.debug("verify NonInitialization: start");
+        // Nothing to do
+        LOG.debug("verify NonInitialization: end");
+    }
+
+    @Override
+    protected void codeGenInit(DecacCompiler compiler, DAddr dAddr) {
+        // nothing
     }
 
 

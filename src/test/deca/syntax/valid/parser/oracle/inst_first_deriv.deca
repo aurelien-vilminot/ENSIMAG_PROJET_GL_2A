@@ -1,0 +1,15 @@
+{
+	// literal
+	10;
+	10.0;
+	"Hello Moon !";
+	true;
+	false;
+	identifier;
+
+	// Expr
+	x + 10;
+	x / x / 1;
+	"Hello World" + 50.0;
+	x == (50.0 + "Hello Moon !");
+}

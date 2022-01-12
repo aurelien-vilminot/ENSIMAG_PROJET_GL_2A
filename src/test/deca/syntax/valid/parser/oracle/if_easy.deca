@@ -1,0 +1,34 @@
+// Description:
+//    test the if expression
+//
+// Results:
+//    test_synt --> a tree without no error
+//
+// History:
+//    created on 07/01/2022
+
+{
+    if(a - 0){
+        println("a - 0");
+    }
+
+    if(a && 0){
+        println("a && 0");
+    } else if (a){
+        println("a");
+    }
+
+    if(a && 0){
+        println("a && 0");
+    } else if (a){
+        println("a");
+    } else {
+        println("else {a && 0} {a}");
+    }
+
+    if(a && 0){
+        println("a && 0");
+    } else {
+        println("else {a && 0}");
+    }
+}

@@ -3,7 +3,7 @@
 # Auteur : gl07
 # Version initiale : 01/01/2022
 
-# Encore un test simpliste. On compile un fichier (cond0.deca), on
+# Encore un test simpliste. On compile un fichier (if_2.deca), on
 # lance ima dessus, et on compare le résultat avec la valeur attendue.
 
 # Ce genre d'approche est bien sûr généralisable, en conservant le

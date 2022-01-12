@@ -1,0 +1,10 @@
+{
+    int a;
+    int b;
+    float c;
+    float d;
+    a >= b;
+    a >= c;
+    c >= a;
+    c >= d;
+}

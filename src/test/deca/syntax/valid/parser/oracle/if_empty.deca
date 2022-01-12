@@ -1,0 +1,14 @@
+// Description:
+//    test the if expression with empty body
+//
+// Results:
+//    test_synt --> a tree without no error
+//
+// History:
+//    created on 07/01/2022
+
+{
+    if( a == b ){ /* Possible that it does not work ... */
+
+    }
+}

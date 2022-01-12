@@ -1,10 +1,9 @@
 package fr.ensimag.deca;
 
 import java.io.File;
-import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -36,14 +35,106 @@ public class CompilerOptions {
         return Collections.unmodifiableList(sourceFiles);
     }
 
+    public boolean getParse() {
+        return this.parse;
+    }
+
+    public boolean getVerification() {
+        return this.verification;
+    }
+
+    public boolean getNoCheck() {
+        return this.noCheck;
+    }
+
+    public int getArgsNumber() {
+        return argsNumber;
+    }
+
+    public int getRegisterNumber() { return registerNumber ;}
+
     private int debug = 0;
     private boolean parallel = false;
     private boolean printBanner = false;
     private List<File> sourceFiles = new ArrayList<File>();
+    private boolean parse = false;
+    private boolean verification = false;
+    private boolean registerLimit = false;
+    private boolean noCheck = false;
+    private int registerNumber = 0;
+    private int argsNumber = 0;
 
     
     public void parseArgs(String[] args) throws CLIException {
-        // A FAIRE : parcourir args pour positionner les options correctement.
+        // Convert args into list
+        ArrayList<String> argsList = new ArrayList<>();
+        Collections.addAll(argsList, args);
+        this.argsNumber = args.length;
+
+        // TODO: compile identical files once
+
+        // TODO: add "-w" option. Ask to the professor
+
+        // Add sources files to the files list
+        Pattern filePattern = Pattern.compile("^.?/?.*?\\.deca$");
+        Pattern registerPattern = Pattern.compile("^-r$");
+        Pattern numberPattern = Pattern.compile("^\\d+$");
+        Pattern bannerPattern = Pattern.compile("^-b$");
+        Pattern parserPattern = Pattern.compile("^-p$");
+        Pattern verificationPattern = Pattern.compile("^-v$");
+        Pattern parallelismPattern = Pattern.compile("^-P$");
+        Pattern debugPattern = Pattern.compile("^-d$");
+        Pattern nocheckPattern = Pattern.compile("^-n$");
+        Pattern lastPattern = null;
+        for (String arg: argsList) {
+            if (filePattern.matcher(arg).matches()) {
+                this.sourceFiles.add(new File(arg));
+            } else if (registerPattern.matcher(arg).matches()) {
+                this.registerLimit = true;
+                lastPattern = registerPattern;
+                continue;
+            } else if (numberPattern.matcher(arg).matches()) {
+                if (!this.registerLimit || lastPattern != registerPattern) {
+                    throw new CLIException("decac : impossible to use a number as an argument without the option -r");
+                }
+                this.registerNumber = Integer.parseInt(arg);
+                if (this.registerNumber < 4 || this.registerNumber > 16) {
+                    throw new CLIException("decac : number of registers have to be between 4 and 16");
+                }
+            } else if (bannerPattern.matcher(arg).matches()) {
+                this.printBanner = true;
+            } else if (parserPattern.matcher(arg).matches()) {
+                this.parse = true;
+            } else if (verificationPattern.matcher(arg).matches()) {
+                this.verification = true;
+            } else if (parallelismPattern.matcher(arg).matches()) {
+                this.parallel = true;
+            } else if (debugPattern.matcher(arg).matches()) {
+                this.debug++;
+            } else if (nocheckPattern.matcher(arg).matches()){
+                this.noCheck = true;
+            } else {
+                throw new CLIException("decac : invalid option -- '" + arg + "'\nUsage :");
+            }
+            lastPattern = null;
+        }
+
+        if (this.printBanner && this.argsNumber != 1) {
+            throw new CLIException("Impossible to use the option -b with other option(s)");
+        }
+
+        if (this.registerLimit && this.registerNumber == 0) {
+            throw new CLIException("Impossible to use the option -r without a specified number of registers");
+        } else if (this.registerNumber == 0) {
+            // Default value if -r is not specified
+            this.registerNumber = 16;
+        }
+
+        // Check if options are incompatible
+        if (this.parse && this.verification) {
+            throw new CLIException("decac -p and -v options are incompatible");
+        }
+
         Logger logger = Logger.getRootLogger();
         // map command-line debug option to log4j's level.
         switch (getDebug()) {
@@ -66,11 +157,9 @@ public class CompilerOptions {
         } else {
             logger.info("Java assertions disabled");
         }
-
-        throw new UnsupportedOperationException("not yet implemented");
     }
 
     protected void displayUsage() {
-        throw new UnsupportedOperationException("not yet implemented");
+        DecacMain.printAvailableOptions();
     }
 }

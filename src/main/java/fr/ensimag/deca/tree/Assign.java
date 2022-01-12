@@ -6,6 +6,11 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.Definition;
 import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.ima.pseudocode.DAddr;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
+import org.apache.commons.lang.Validate;
+import org.apache.log4j.Logger;
 
 /**
  * Assignment, i.e. lvalue = expr.
@@ -14,6 +19,7 @@ import fr.ensimag.deca.context.EnvironmentExp;
  * @date 01/01/2022
  */
 public class Assign extends AbstractBinaryExpr {
+    private static final Logger LOG = Logger.getLogger(Main.class);
 
     @Override
     public AbstractLValue getLeftOperand() {
@@ -29,9 +35,49 @@ public class Assign extends AbstractBinaryExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        LOG.debug("verify Assign: start");
+        Validate.notNull(compiler, "Compiler (env_types) object should not be null");
+//        Validate.notNull(localEnv, "Env_exp object should not be null");
+
+        // Get lvalue type
+        Type expectedType = this.getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
+
+        // Check rvalue type
+        this.getRightOperand().verifyRValue(compiler, localEnv, currentClass, expectedType);
+        this.setType(expectedType);
+
+        if (this.getLeftOperand().getType().isFloat() && this.getRightOperand().getType().isInt()) {
+            // Implicit float conversion
+            this.setRightOperand(new ConvFloat(this.getRightOperand()));
+            this.getRightOperand().setType(this.getLeftOperand().getType());
+        }
+
+        LOG.debug("verify Assign: end");
+
+        return expectedType;
     }
 
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, int n) {
+        Validate.isTrue((n <= compiler.getCompilerOptions().getRegisterNumber() - 1));
+
+        codeGenInst(compiler, n);
+    }
+
+    @Override
+    protected void codeGenInst(DecacCompiler compiler) {
+        codeGenInst(compiler, 2);
+    }
+
+    protected void codeGenInst(DecacCompiler compiler, int n) {
+        Validate.isTrue((n <= compiler.getCompilerOptions().getRegisterNumber() - 1));
+
+        // Calculate rightOperand and load into Rn
+        getRightOperand().codeGenExpr(compiler, n);
+        // Store rightOperand into leftOperand
+        DAddr dAddr = compiler.getEnvironmentExp().get(((AbstractIdentifier)getLeftOperand()).getName()).getOperand();
+        compiler.addInstruction(new STORE(Register.getR(n), dAddr));
+    }
 
     @Override
     protected String getOperatorName() {

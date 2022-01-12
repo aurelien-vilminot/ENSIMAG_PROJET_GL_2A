@@ -1,13 +1,18 @@
 package fr.ensimag.deca.tree;
 
-import fr.ensimag.deca.context.Type;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ClassDefinition;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
+
+import fr.ensimag.deca.tools.SymbolTable;
+
+import fr.ensimag.ima.pseudocode.DVal;
+import fr.ensimag.ima.pseudocode.ImmediateFloat;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.*;
 import org.apache.commons.lang.Validate;
+import org.apache.log4j.Logger;
 
 /**
  * Single precision, floating-point literal
@@ -22,6 +27,7 @@ public class FloatLiteral extends AbstractExpr {
     }
 
     private float value;
+    private static final Logger LOG = Logger.getLogger(Main.class);
 
     public FloatLiteral(float value) {
         Validate.isTrue(!Float.isInfinite(value),
@@ -34,9 +40,34 @@ public class FloatLiteral extends AbstractExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv,
             ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");        
+        LOG.debug("verify FloatLiteral: start");
+
+        Validate.notNull(compiler, "Compiler (env_types) object should not be null");
+//        Validate.notNull(localEnv, "Env_exp object should not be null");
+
+        Type floatType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("float")).getType();
+        this.setType(floatType);
+
+        LOG.debug("verify FloatLiteral: end");
+        return floatType;
     }
 
+    @Override
+    protected void codeGenPrint(DecacCompiler compiler) {
+        compiler.addInstruction(new LOAD(dval(compiler), Register.R1));
+        compiler.addInstruction(new WFLOAT());
+    }
+
+    @Override
+    protected void codeGenPrintx(DecacCompiler compiler) {
+        compiler.addInstruction(new LOAD(dval(compiler), Register.R1));
+        compiler.addInstruction(new WFLOATX());
+    }
+
+    @Override
+    public DVal dval(DecacCompiler compiler) {
+        return new ImmediateFloat(value);
+    }
 
     @Override
     public void decompile(IndentPrintStream s) {

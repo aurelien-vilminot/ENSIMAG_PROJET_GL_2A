@@ -1,0 +1,15 @@
+PRINT 'print' 10:0
+OPARENT '(' 10:5
+CPARENT ')' 10:6
+PRINTLN 'println' 11:0
+OPARENT '(' 11:7
+OPARENT '(' 11:8
+CPARENT ')' 11:9
+PRINTX 'printx' 12:0
+PRINTLNX 'printlnx' 13:0
+OPARENT '(' 13:8
+CPARENT ')' 13:9
+PRINT 'print' 14:0
+OPARENT '(' 14:5
+STRING '"Hello world !"' 14:6
+CPARENT ')' 14:18

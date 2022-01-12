@@ -1,8 +1,10 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.LabelGenerator;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.Line;
 import fr.ensimag.ima.pseudocode.instructions.*;
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
@@ -11,8 +13,8 @@ import org.apache.log4j.Logger;
 /**
  * Deca complete program (class definition plus main block)
  *
- * @author gl07
- * @date 01/01/2022
+ * @author Aurélien VILMINOT
+ * @date 04/01/2022
  */
 public class Program extends AbstractProgram {
     private static final Logger LOG = Logger.getLogger(Program.class);
@@ -35,16 +37,45 @@ public class Program extends AbstractProgram {
     @Override
     public void verifyProgram(DecacCompiler compiler) throws ContextualError {
         LOG.debug("verify program: start");
-        throw new UnsupportedOperationException("not yet implemented");
-        // LOG.debug("verify program: end");
+        Validate.notNull(compiler, "Compiler object should not be null");
+        // TODO: reactivate pass 1 and pass 2 after hello world
+        // Pass 1
+//        classes.verifyListClass(compiler);
+        // Pass 2
+//        classes.verifyListClassMembers(compiler);
+        // Pass 3
+//        classes.verifyListClassBody(compiler);
+        main.verifyMain(compiler);
+        LOG.debug("verify program: end");
     }
 
     @Override
     public void codeGenProgram(DecacCompiler compiler) {
-        // A FAIRE: compléter ce squelette très rudimentaire de code
-        compiler.addComment("Main program");
         main.codeGenMain(compiler);
         compiler.addInstruction(new HALT());
+        this.codeGenInit(compiler);
+        this.codeGenError(compiler);
+    }
+
+    protected void codeGenInit(DecacCompiler compiler) {
+        compiler.addFirst(new Line(new ADDSP(compiler.getGlobalStackSize())));
+        compiler.addOverflowError(true);
+        compiler.addFirst(new Line(new TSTO(compiler.getGlobalStackSize() + compiler.getTempStackMax())));
+        compiler.addFirst(new Line("Main program"));
+    }
+
+    protected void codeGenError(DecacCompiler compiler) {
+        compiler.addComment("Main errors");
+        LabelGenerator gen = compiler.getLabelGenerator();
+        if (gen.getOverflowError()) {
+            compiler.getLabelGenerator().generateErrorLabel(compiler, gen.getOverFlowLabel(), "Error: Overflow during arithmetic operation");
+        }
+        if (gen.getStackOverflowError()) {
+            compiler.getLabelGenerator().generateErrorLabel(compiler, gen.getStackOverFlowLabel(), "Error: Stack Overflow");
+        }
+        if (gen.getIoError()) {
+            compiler.getLabelGenerator().generateErrorLabel(compiler, gen.getIoLabel(), "Error: Input/Output error");
+        }
     }
 
     @Override

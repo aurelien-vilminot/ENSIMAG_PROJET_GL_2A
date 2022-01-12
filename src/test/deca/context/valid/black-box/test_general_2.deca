@@ -1,0 +1,11 @@
+{
+  int i = 0;
+  if(i==0){
+    println("Hello World !");
+    i = 1;
+  } else if(i==1){
+    println("Hello Moon !");
+  } else {
+    println("Hello You !");
+  }
+}
