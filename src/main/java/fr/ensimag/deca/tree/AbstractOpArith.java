@@ -93,18 +93,16 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
             case "/":
                 if (this.getType().isInt()) {
                     compiler.addInstruction(new QUO(dval, gpRegister));
+
                 } else if (this.getType().isFloat()) {
                     compiler.addInstruction(new DIV(dval, gpRegister));
-                    compiler.addInstruction(new BOV(compiler.getLabelGenerator().getOverFlowLabel()));
                 }
+                compiler.addInstruction(new BOV(compiler.getLabelGenerator().getOverFlowLabel()));
                 break;
             case "%":
                 // Modulo operation with a loop
-                Label modLabel = new Label(compiler.getLabelGenerator().generateLabel("mod"));
-                compiler.addLabel(modLabel);
-                compiler.addInstruction(new SUB(dval, gpRegister));
-                compiler.addInstruction(new CMP(dval, gpRegister));
-                compiler.addInstruction(new BGT(modLabel));
+                compiler.addInstruction(new REM(dval, gpRegister));
+                compiler.addInstruction(new BOV(compiler.getLabelGenerator().getOverFlowLabel()));
         }
     }
 
@@ -122,10 +120,10 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
                 this.mnemo(compiler, Register.getR(n+1), Register.getR(n));
             } else {
                 this.getLeftOperand().codeGenExpr(compiler, n);
-                compiler.addInstruction(new PUSH(Register.getR(n)), "; sauvegarde");
+                compiler.addInstruction(new PUSH(Register.getR(n)), "sauvegarde");
                 this.getRightOperand().codeGenExpr(compiler, n);
                 compiler.addInstruction(new LOAD(Register.getR(n), Register.R0));
-                compiler.addInstruction(new POP(Register.getR(n)), "; restauration");
+                compiler.addInstruction(new POP(Register.getR(n)), "restauration");
                 this.mnemo(compiler, Register.R0, Register.getR(n));
             }
         }
