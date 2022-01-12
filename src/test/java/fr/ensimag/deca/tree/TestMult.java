@@ -1,13 +1,14 @@
-package fr.ensimag.deca.context;
+package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tree.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TestPlus {
+public class TestMult {
     private DecacCompiler compiler;
     private IntLiteral intLiteralRight;
     private IntLiteral intLiteralLeft;
@@ -25,41 +26,41 @@ public class TestPlus {
 
     @Test
     public void testFloatFloat() throws ContextualError {
-        Plus plus = new Plus(this.floatLiteralLeft, this.floatLiteralRight);
-        // Check type result of the addition
-        assertTrue(plus.verifyExpr(this.compiler, null, null).isFloat());
+        Multiply multiply = new Multiply(this.floatLiteralLeft, this.floatLiteralRight);
+        // Check type result of the multiplication
+        assertTrue(multiply.verifyExpr(this.compiler, null, null).isFloat());
     }
 
     @Test
     public void testFloatInt() throws ContextualError {
-        Plus plus = new Plus(this.floatLiteralLeft, this.intLiteralRight);
-        // Check type result of the addition
-        assertTrue(plus.verifyExpr(this.compiler, null, null).isFloat());
+        Multiply multiply = new Multiply(this.floatLiteralLeft, this.intLiteralRight);
+        // Check type result of the multiplication
+        assertTrue(multiply.verifyExpr(this.compiler, null, null).isFloat());
     }
 
     @Test
     public void testIntFloat() throws ContextualError {
-        Plus plus = new Plus(this.intLiteralLeft, this.floatLiteralRight);
-        // Check type result of the addition
-        assertTrue(plus.verifyExpr(this.compiler, null, null).isFloat());
+        Multiply multiply = new Multiply(this.intLiteralLeft, this.floatLiteralRight);
+        // Check type result of the multiplication
+        assertTrue(multiply.verifyExpr(this.compiler, null, null).isFloat());
     }
 
     @Test
     public void testIntInt() throws ContextualError {
-        Plus plus = new Plus(this.intLiteralLeft, this.intLiteralRight);
-        // Check type result of the addition
-        assertTrue(plus.verifyExpr(this.compiler, null, null).isInt());
+        Multiply multiply = new Multiply(this.intLiteralLeft, this.intLiteralRight);
+        // Check type result of the multiplication
+        assertTrue(multiply.verifyExpr(this.compiler, null, null).isInt());
     }
 
     @Test
     public void testIncompatibleTypes() {
         StringLiteral stringLiteralLeft = new StringLiteral("foo");
         StringLiteral stringLiteralRight = new StringLiteral("bar");
-        Plus plus = new Plus(stringLiteralLeft, stringLiteralRight);
+        Multiply multiply = new Multiply(stringLiteralLeft, stringLiteralRight);
 
         // Check error assertion
         Exception exception = assertThrows(ContextualError.class, () -> {
-            plus.verifyExpr(this.compiler, null, null).isInt();
+            multiply.verifyExpr(this.compiler, null, null).isInt();
         });
         String expectedMessage = "Binary operation is only allowed for int or float types";
         String actualMessage = exception.getMessage();

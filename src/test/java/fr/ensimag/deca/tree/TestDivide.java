@@ -1,13 +1,17 @@
-package fr.ensimag.deca.context;
+package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.tree.*;
+import fr.ensimag.deca.context.ContextualError;
+import fr.ensimag.deca.tree.Divide;
+import fr.ensimag.deca.tree.FloatLiteral;
+import fr.ensimag.deca.tree.IntLiteral;
+import fr.ensimag.deca.tree.StringLiteral;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TestMult {
+public class TestDivide {
     private DecacCompiler compiler;
     private IntLiteral intLiteralRight;
     private IntLiteral intLiteralLeft;
@@ -25,41 +29,41 @@ public class TestMult {
 
     @Test
     public void testFloatFloat() throws ContextualError {
-        Multiply multiply = new Multiply(this.floatLiteralLeft, this.floatLiteralRight);
-        // Check type result of the multiplication
-        assertTrue(multiply.verifyExpr(this.compiler, null, null).isFloat());
+        Divide divide = new Divide(this.floatLiteralLeft, this.floatLiteralRight);
+        // Check type result of the division
+        assertTrue(divide.verifyExpr(this.compiler, null, null).isFloat());
     }
 
     @Test
     public void testFloatInt() throws ContextualError {
-        Multiply multiply = new Multiply(this.floatLiteralLeft, this.intLiteralRight);
-        // Check type result of the multiplication
-        assertTrue(multiply.verifyExpr(this.compiler, null, null).isFloat());
+        Divide divide = new Divide(this.floatLiteralLeft, this.intLiteralRight);
+        // Check type result of the division
+        assertTrue(divide.verifyExpr(this.compiler, null, null).isFloat());
     }
 
     @Test
     public void testIntFloat() throws ContextualError {
-        Multiply multiply = new Multiply(this.intLiteralLeft, this.floatLiteralRight);
-        // Check type result of the multiplication
-        assertTrue(multiply.verifyExpr(this.compiler, null, null).isFloat());
+        Divide divide = new Divide(this.intLiteralLeft, this.floatLiteralRight);
+        // Check type result of the division
+        assertTrue(divide.verifyExpr(this.compiler, null, null).isFloat());
     }
 
     @Test
     public void testIntInt() throws ContextualError {
-        Multiply multiply = new Multiply(this.intLiteralLeft, this.intLiteralRight);
-        // Check type result of the multiplication
-        assertTrue(multiply.verifyExpr(this.compiler, null, null).isInt());
+        Divide divide = new Divide(this.intLiteralLeft, this.intLiteralRight);
+        // Check type result of the division
+        assertTrue(divide.verifyExpr(this.compiler, null, null).isInt());
     }
 
     @Test
     public void testIncompatibleTypes() {
         StringLiteral stringLiteralLeft = new StringLiteral("foo");
         StringLiteral stringLiteralRight = new StringLiteral("bar");
-        Multiply multiply = new Multiply(stringLiteralLeft, stringLiteralRight);
+        Divide divide = new Divide(stringLiteralLeft, stringLiteralRight);
 
         // Check error assertion
         Exception exception = assertThrows(ContextualError.class, () -> {
-            multiply.verifyExpr(this.compiler, null, null).isInt();
+            divide.verifyExpr(this.compiler, null, null).isInt();
         });
         String expectedMessage = "Binary operation is only allowed for int or float types";
         String actualMessage = exception.getMessage();

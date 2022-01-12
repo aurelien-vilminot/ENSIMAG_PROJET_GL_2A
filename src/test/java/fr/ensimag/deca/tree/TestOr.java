@@ -1,13 +1,13 @@
-package fr.ensimag.deca.context;
+package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.tree.*;
+import fr.ensimag.deca.context.ContextualError;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TestModulo {
+public class TestOr {
     private DecacCompiler compiler;
 
     @BeforeEach
@@ -16,25 +16,25 @@ public class TestModulo {
     }
 
     @Test
-    public void testIntInt() throws ContextualError {
-        IntLiteral intLiteralLeft = new IntLiteral(10);
-        IntLiteral intLiteralRight = new IntLiteral(10);
-        Modulo modulo = new Modulo(intLiteralLeft, intLiteralRight);
+    public void testBoolBool() throws ContextualError {
+        BooleanLiteral booleanLiteralLeft = new BooleanLiteral(true);
+        BooleanLiteral booleanLiteralRight = new BooleanLiteral(false);
+        Or or = new Or(booleanLiteralLeft, booleanLiteralRight);
         // Check type result of the addition
-        assertTrue(modulo.verifyExpr(this.compiler, null, null).isInt());
+        assertTrue(or.verifyExpr(this.compiler, null, null).isInt());
     }
 
     @Test
     public void testIncompatibleTypes() {
         FloatLiteral floatLiteralLeft = new FloatLiteral(2.0F);
         FloatLiteral floatLiteralRight = new FloatLiteral(2.0F);
-        Modulo modulo = new Modulo(floatLiteralLeft, floatLiteralRight);
+        Or or = new Or(floatLiteralLeft, floatLiteralRight);
 
         // Check error assertion
         Exception exception = assertThrows(ContextualError.class, () -> {
-            modulo.verifyExpr(this.compiler, null, null).isInt();
+            or.verifyExpr(this.compiler, null, null).isInt();
         });
-        String expectedMessage = "Modulo operation is only allowed for int type";
+        String expectedMessage = "Boolean operation is only allowed for boolean type";
         String actualMessage = exception.getMessage();
         assertEquals(actualMessage, expectedMessage);
     }
