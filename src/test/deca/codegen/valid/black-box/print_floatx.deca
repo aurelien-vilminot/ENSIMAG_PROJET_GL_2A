@@ -1,0 +1,4 @@
+{
+    printx(0xa.0P+0);
+    println(0xa.0P+0);
+}

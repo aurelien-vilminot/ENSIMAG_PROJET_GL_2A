@@ -1,0 +1,8 @@
+{
+    int $ = 3;
+    float floats = 6.3f;
+    boolean _azer = true;
+    if(boolean_azer){
+        print($,floats);
+    }
+}

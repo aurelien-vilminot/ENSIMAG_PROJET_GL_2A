@@ -1,0 +1,6 @@
+{
+    int a = 8;
+    if(a / 4 == 2){
+        print("Division int");
+    }
+}

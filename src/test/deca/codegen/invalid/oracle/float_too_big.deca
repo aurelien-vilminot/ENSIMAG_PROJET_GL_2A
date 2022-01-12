@@ -1,0 +1,3 @@
+{
+    float f = 10E+10000; /* Essayer de faire plus précis */
+}

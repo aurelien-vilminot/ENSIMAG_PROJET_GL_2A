@@ -1,0 +1,9 @@
+{
+    if(false){
+        print("Nope");
+    }else{
+        if(true){
+            print("If OK");
+        }
+    }
+}
