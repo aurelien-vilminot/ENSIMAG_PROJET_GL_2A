@@ -1,13 +1,12 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.LabelGenerator;
 import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.VoidType;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 
-import fr.ensimag.deca.tools.SymbolTable;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -43,11 +42,23 @@ public class Main extends AbstractMain {
     @Override
     protected void codeGenMain(DecacCompiler compiler) {
         // TODO: TSTO
-        // TODO: mise en place des erreurs
-        compiler.addComment("Beginning of main declarations:");
+        compiler.addComment("Main declarations:");
         declVariables.codeGenListDeclVar(compiler);
-        compiler.addComment("Beginning of main instructions:");
+        compiler.addComment("Main instructions:");
         insts.codeGenListInst(compiler);
+        compiler.addComment("Main errors:");
+        this.codeGenError(compiler);
+    }
+
+    protected void codeGenError(DecacCompiler compiler) {
+        LabelGenerator gen = compiler.getLabelGenerator();
+        if (gen.getOverflowError()) {
+            compiler.getLabelGenerator().generateErrorLabel(compiler, gen.getOverFlowLabel(), "Error: Overflow during arithmetic operation");
+        } else if (gen.getStackOverflowError()) {
+            compiler.getLabelGenerator().generateErrorLabel(compiler, gen.getStackOverFlowLabel(), "Error: Stack Overflow");
+        } else if (gen.getIoError()) {
+            compiler.getLabelGenerator().generateErrorLabel(compiler, gen.getIoLabel(), "Error: Input/Output error");
+        }
     }
     
     @Override
