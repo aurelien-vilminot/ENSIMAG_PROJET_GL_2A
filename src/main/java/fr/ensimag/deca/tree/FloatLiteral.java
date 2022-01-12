@@ -9,7 +9,8 @@ import fr.ensimag.deca.tools.SymbolTable;
 
 import fr.ensimag.ima.pseudocode.DVal;
 import fr.ensimag.ima.pseudocode.ImmediateFloat;
-import fr.ensimag.ima.pseudocode.instructions.WSTR;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.*;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -53,12 +54,14 @@ public class FloatLiteral extends AbstractExpr {
 
     @Override
     protected void codeGenPrint(DecacCompiler compiler) {
-        compiler.addInstruction(new WSTR(Float.toString(value)));
+        compiler.addInstruction(new LOAD(dval(compiler), Register.R1));
+        compiler.addInstruction(new WFLOAT());
     }
 
     @Override
     protected void codeGenPrintx(DecacCompiler compiler) {
-        compiler.addInstruction(new WSTR(Float.toHexString(value)));
+        compiler.addInstruction(new LOAD(dval(compiler), Register.R1));
+        compiler.addInstruction(new WFLOATX());
     }
 
     @Override
