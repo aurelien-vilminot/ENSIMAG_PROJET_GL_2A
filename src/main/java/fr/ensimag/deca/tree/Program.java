@@ -1,6 +1,7 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.LabelGenerator;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.instructions.*;
@@ -54,6 +55,19 @@ public class Program extends AbstractProgram {
         compiler.addComment("Main program");
         main.codeGenMain(compiler);
         compiler.addInstruction(new HALT());
+        compiler.addComment("Main errors:");
+        this.codeGenError(compiler);
+    }
+
+    protected void codeGenError(DecacCompiler compiler) {
+        LabelGenerator gen = compiler.getLabelGenerator();
+        if (gen.getOverflowError()) {
+            compiler.getLabelGenerator().generateErrorLabel(compiler, gen.getOverFlowLabel(), "Error: Overflow during arithmetic operation");
+        } else if (gen.getStackOverflowError()) {
+            compiler.getLabelGenerator().generateErrorLabel(compiler, gen.getStackOverFlowLabel(), "Error: Stack Overflow");
+        } else if (gen.getIoError()) {
+            compiler.getLabelGenerator().generateErrorLabel(compiler, gen.getIoLabel(), "Error: Input/Output error");
+        }
     }
 
     @Override

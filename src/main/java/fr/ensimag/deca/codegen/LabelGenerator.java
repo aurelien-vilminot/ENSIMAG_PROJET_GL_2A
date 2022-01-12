@@ -40,11 +40,11 @@ public class LabelGenerator {
     }
 
     public Label getIoLabel() {
+        setIoError();
         return new Label("io_error");
     }
 
     public boolean getIoError() {
-        setIoError();
         return ioError;
     }
     public void setIoError() {
