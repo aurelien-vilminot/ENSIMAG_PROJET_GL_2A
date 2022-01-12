@@ -7,9 +7,8 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.instructions.BNE;
-import fr.ensimag.ima.pseudocode.instructions.BRA;
-import fr.ensimag.deca.codegen.LabelGenerator;
+import fr.ensimag.ima.pseudocode.instructions.*;
+
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
@@ -42,18 +41,16 @@ public class While extends AbstractInst {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        Label loop = LabelGenerator.newLabel(compiler);
-        Label end = LabelGenerator.newLabel(compiler);
+        Label begin = new Label(compiler.getLabelGenerator().generateLabel("begin"));
+        Label cond = new Label(compiler.getLabelGenerator().generateLabel("cond"));
 
-        compiler.addLabel(loop);
+        compiler.addInstruction(new BRA(cond));
 
-        condition.codeGenInst(compiler);; // (expected to charge boolean value on R0)
-        compiler.addInstruction(new BNE(end));
-
+        compiler.addLabel(begin); // loop body
         body.codeGenListInst(compiler);
-        
-        compiler.addInstruction(new BRA(loop));
-        compiler.addLabel(end);
+
+        compiler.addLabel(cond); // test condition
+        condition.codeGenExprBool(compiler, true, begin);
     }
 
     @Override
@@ -62,7 +59,7 @@ public class While extends AbstractInst {
             throws ContextualError {
         LOG.debug("verify while: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
-        Validate.notNull(localEnv, "Env_exp object should not be null");
+//        Validate.notNull(localEnv, "Env_exp object should not be null");
         Validate.notNull(returnType, "Return type should not be null");
 
         this.condition.verifyCondition(compiler, localEnv, currentClass);

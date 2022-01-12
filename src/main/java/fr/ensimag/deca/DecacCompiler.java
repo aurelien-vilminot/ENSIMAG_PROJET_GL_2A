@@ -1,5 +1,6 @@
 package fr.ensimag.deca;
 
+import fr.ensimag.deca.codegen.LabelGenerator;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.syntax.DecaLexer;
 import fr.ensimag.deca.syntax.DecaParser;
@@ -60,6 +61,11 @@ public class DecacCompiler {
 
     private int globalStackSize = 2;
 
+    private final LabelGenerator labelGenerator = new LabelGenerator();
+
+    public LabelGenerator getLabelGenerator() {
+        return this.labelGenerator;
+    }
 
     public DecacCompiler(CompilerOptions compilerOptions, File source) {
         super();
@@ -75,7 +81,6 @@ public class DecacCompiler {
         Symbol booleanSymbol = this.symbolTable.create("boolean");
         Symbol floatSymbol = this.symbolTable.create("float");
         Symbol intSymbol = this.symbolTable.create("int");
-        Symbol stringSymbol = this.symbolTable.create("string");
         Symbol objectSymbol = this.symbolTable.create("Object");
         Symbol equalsSymbol = this.symbolTable.create("equals");
 
@@ -85,7 +90,6 @@ public class DecacCompiler {
             this.environmentTypes.declare(booleanSymbol, new TypeDefinition(new BooleanType(booleanSymbol), Location.BUILTIN));
             this.environmentTypes.declare(floatSymbol, new TypeDefinition(new FloatType(floatSymbol), Location.BUILTIN));
             this.environmentTypes.declare(intSymbol, new TypeDefinition(new IntType(intSymbol), Location.BUILTIN));
-            this.environmentTypes.declare(stringSymbol, new TypeDefinition(new StringType(stringSymbol), Location.BUILTIN));
             this.environmentTypes.declare(objectSymbol, new TypeDefinition(new ClassType(objectSymbol, Location.BUILTIN, null), Location.BUILTIN));
         } catch (EnvironmentTypes.DoubleDefException doubleDefException) {
             LOG.error("Multiple type declaration");

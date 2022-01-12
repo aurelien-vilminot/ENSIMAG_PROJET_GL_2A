@@ -4,13 +4,11 @@ import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.DVal;
-import fr.ensimag.ima.pseudocode.GPRegister;
-import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.*;
+
 import java.io.PrintStream;
 
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.*;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -89,7 +87,7 @@ public abstract class AbstractExpr extends AbstractInst {
             throws ContextualError {
         LOG.debug("verify RValue: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
-        Validate.notNull(localEnv, "Env_exp object should not be null");
+//        Validate.notNull(localEnv, "Env_exp object should not be null");
         Validate.notNull(expectedType, "Expected type should not be null");
 
         Type currentType = this.verifyExpr(compiler, localEnv, currentClass);
@@ -111,7 +109,7 @@ public abstract class AbstractExpr extends AbstractInst {
             throws ContextualError {
         LOG.debug("verify Inst: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
-        Validate.notNull(localEnv, "Env_exp object should not be null");
+//        Validate.notNull(localEnv, "Env_exp object should not be null");
 
         this.setType(this.verifyExpr(compiler, localEnv, currentClass));
         LOG.debug("verify Inst: end");
@@ -131,7 +129,7 @@ public abstract class AbstractExpr extends AbstractInst {
             ClassDefinition currentClass) throws ContextualError {
         LOG.debug("verify Condition: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
-        Validate.notNull(localEnv, "Env_exp object should not be null");
+//        Validate.notNull(localEnv, "Env_exp object should not be null");
 
         Type currentType = this.verifyExpr(compiler, localEnv, currentClass);
 
@@ -143,13 +141,23 @@ public abstract class AbstractExpr extends AbstractInst {
         LOG.debug("verify Condition: end");
     }
 
+    protected void codeGenPrint(DecacCompiler compiler, boolean printHex) {
+        Instruction outputInstruction = this.outputExpr(printHex);
+        if (outputInstruction != null) {
+            // Generate code to load expression in R1
+            this.codeGenExpr(compiler, 1);
+            // Output R1
+            compiler.addInstruction(outputInstruction);
+        }
+    }
+
     /**
      * Generate code to print the expression
      *
      * @param compiler
      */
     protected void codeGenPrint(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("not yet implemented");
+        codeGenPrint(compiler, false);
     }
 
     /**
@@ -158,7 +166,7 @@ public abstract class AbstractExpr extends AbstractInst {
      * @param compiler
      */
     protected void codeGenPrintx(DecacCompiler compiler) {
-        codeGenPrint(compiler);
+        codeGenPrint(compiler, true);
     }
 
     @Override
@@ -167,6 +175,20 @@ public abstract class AbstractExpr extends AbstractInst {
     }
 
     public DVal dval(DecacCompiler compiler) {
+        return null;
+    }
+
+    public Instruction outputExpr(boolean printHex) {
+        Type type = getType();
+        if (type.isInt()) {
+            return new WINT();
+        } else if (type.isFloat()) {
+            if (printHex) {
+                return new WFLOATX();
+            } else {
+                return new WFLOAT();
+            }
+        }
         return null;
     }
 
@@ -180,6 +202,26 @@ public abstract class AbstractExpr extends AbstractInst {
         DVal dval = this.dval(compiler);
         if (dval != null) {
             compiler.addInstruction(new LOAD(dval, Register.getR(n)));
+        }
+    }
+
+    /**
+     * If "this" is evaluated to "bool", then goto "branch"
+     *
+     * @param compiler
+     * @param bool
+     * @param branch
+     */
+    protected void codeGenExprBool(DecacCompiler compiler, boolean bool, Label branch) {
+        DVal dval = this.dval(compiler);
+        if (dval != null) {
+            compiler.addInstruction(new LOAD(this.dval(compiler), Register.getR(0)));
+            compiler.addInstruction(new CMP(new ImmediateInteger(0), Register.getR(0)));
+            if (bool) {
+                compiler.addInstruction(new BNE(branch));
+            } else {
+                compiler.addInstruction(new BEQ(branch));
+            }
         }
     }
 

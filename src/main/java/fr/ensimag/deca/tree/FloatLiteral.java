@@ -7,6 +7,8 @@ import java.io.PrintStream;
 
 import fr.ensimag.deca.tools.SymbolTable;
 
+import fr.ensimag.ima.pseudocode.DVal;
+import fr.ensimag.ima.pseudocode.ImmediateFloat;
 import fr.ensimag.ima.pseudocode.instructions.WSTR;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
@@ -40,9 +42,9 @@ public class FloatLiteral extends AbstractExpr {
         LOG.debug("verify FloatLiteral: start");
 
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
-        Validate.notNull(localEnv, "Env_exp object should not be null");
+//        Validate.notNull(localEnv, "Env_exp object should not be null");
 
-        Type floatType = new FloatType(compiler.getSymbolTable().create("float"));
+        Type floatType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("float")).getType();
         this.setType(floatType);
 
         LOG.debug("verify FloatLiteral: end");
@@ -57,6 +59,11 @@ public class FloatLiteral extends AbstractExpr {
     @Override
     protected void codeGenPrintx(DecacCompiler compiler) {
         compiler.addInstruction(new WSTR(Float.toHexString(value)));
+    }
+
+    @Override
+    public DVal dval(DecacCompiler compiler) {
+        return new ImmediateFloat(value);
     }
 
     @Override

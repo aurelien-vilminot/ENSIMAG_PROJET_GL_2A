@@ -25,12 +25,12 @@ public class InstanceOf extends AbstractExpr {
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
         LOG.debug("verify InstanceOf: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
-        Validate.notNull(localEnv, "Env_exp object should not be null");
+//        Validate.notNull(localEnv, "Env_exp object should not be null");
 
         // Get expr type
         Type exprType = this.expr.verifyExpr(compiler, localEnv, currentClass);
         Type instanceType = this.type.verifyType(compiler);
-        Type returnType = new BooleanType(compiler.getSymbolTable().create("boolean"));
+        Type returnType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("boolean")).getType();
 
         if (!((exprType.isClass() || exprType.isNull()) && !instanceType.isClass())) {
             throw new ContextualError("InstanceOf works only with two class types operands", this.getLocation());

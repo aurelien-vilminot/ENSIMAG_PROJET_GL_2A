@@ -2,6 +2,8 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.OPP;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -21,7 +23,7 @@ public class UnaryMinus extends AbstractUnaryExpr {
             ClassDefinition currentClass) throws ContextualError {
         LOG.debug("verify UnaryMinus: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
-        Validate.notNull(localEnv, "Env_exp object should not be null");
+//        Validate.notNull(localEnv, "Env_exp object should not be null");
 
         Type typeOperand = this.getOperand().verifyExpr(compiler, localEnv, currentClass);
 
@@ -35,6 +37,11 @@ public class UnaryMinus extends AbstractUnaryExpr {
         return typeOperand;
     }
 
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, int n) {
+        getOperand().codeGenExpr(compiler, n);
+        compiler.addInstruction(new OPP(Register.getR(n), Register.getR(n)));
+    }
 
     @Override
     protected String getOperatorName() {
