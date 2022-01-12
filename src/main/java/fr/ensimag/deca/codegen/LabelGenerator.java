@@ -1,9 +1,55 @@
 package fr.ensimag.deca.codegen;
 
+import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.instructions.ERROR;
+import fr.ensimag.ima.pseudocode.instructions.WNL;
+import fr.ensimag.ima.pseudocode.instructions.WSTR;
+
 import java.util.HashMap;
 
 public class LabelGenerator {
     private HashMap<String, Integer> labels = new HashMap<>();
+
+    private boolean overflowError = false;
+    private boolean stackOverflowError = false;
+    private boolean ioError = false;
+
+    public Label getOverFlowLabel() {
+        setOverflowError();
+        return new Label("overflow_error");
+    }
+
+    public boolean getOverflowError() {
+        return overflowError;
+    }
+    public void setOverflowError() {
+        this.overflowError = true;
+    }
+
+    public Label getStackOverFlowLabel() {
+        setStackOverflowError();
+        return new Label("stack_overflow_error");
+    }
+
+    public boolean getStackOverflowError() {
+        return stackOverflowError;
+    }
+    public void setStackOverflowError() {
+        this.stackOverflowError = true;
+    }
+
+    public Label getIoLabel() {
+        return new Label("io_error");
+    }
+
+    public boolean getIoError() {
+        setIoError();
+        return ioError;
+    }
+    public void setIoError() {
+        this.ioError = true;
+    }
 
     /**
      * Generate unique label based on the typeOfLabel given.
@@ -26,5 +72,12 @@ public class LabelGenerator {
             newLabel = typeOfLabel + '.' + 1;
         }
         return newLabel;
+    }
+
+    public void generateErrorLabel(DecacCompiler compiler, Label label, String message) {
+        compiler.addLabel(label);
+        compiler.addInstruction(new WSTR(message));
+        compiler.addInstruction(new WNL());
+        compiler.addInstruction(new ERROR());
     }
 }

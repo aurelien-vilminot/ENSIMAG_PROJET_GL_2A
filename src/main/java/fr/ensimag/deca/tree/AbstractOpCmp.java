@@ -69,6 +69,9 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
     /**
      * Add a branch instruction corresponding to the comparison operator
      *
+     * @param compiler Deca Compiler used to add IMA instruction
+     * @param bool Condition for goto branch
+     * @param branch The branch where the program needs to go
      */
     protected void mnemo(DecacCompiler compiler, boolean bool, Label branch) {
         switch (this.getOperatorName()) {
@@ -93,21 +96,16 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
         }
     }
 
-    /**
-     * If the comparator returns a value equal to bool, goto "branch"
-     *
-     * @param compiler
-     * @param bool
-     * @param branch
-     */
     @Override
     protected void codeGenExprBool(DecacCompiler compiler, boolean bool, Label branch) {
         DVal rightDval = this.getRightOperand().dval(compiler);
+
+        // Evaluate left operand
+        this.getLeftOperand().codeGenExpr(compiler, 2);
+
         if (rightDval != null) {
-            this.getLeftOperand().codeGenExpr(compiler, 2);
             compiler.addInstruction(new CMP(rightDval, Register.getR(2)));
         } else {
-            this.getLeftOperand().codeGenExpr(compiler, 2);
             this.getRightOperand().codeGenExpr(compiler, 3);
             compiler.addInstruction(new CMP(Register.getR(3), Register.getR(2)));
         }

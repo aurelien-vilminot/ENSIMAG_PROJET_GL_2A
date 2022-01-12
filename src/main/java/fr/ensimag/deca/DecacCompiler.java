@@ -59,7 +59,7 @@ public class DecacCompiler {
         return globalStackSize;
     }
 
-    private int globalStackSize = 2;
+    private int globalStackSize = 0;
 
     private final LabelGenerator labelGenerator = new LabelGenerator();
 
