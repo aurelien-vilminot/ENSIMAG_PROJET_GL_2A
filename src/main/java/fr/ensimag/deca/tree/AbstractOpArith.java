@@ -93,10 +93,11 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
             case "/":
                 if (this.getType().isInt()) {
                     compiler.addInstruction(new QUO(dval, gpRegister));
+
                 } else if (this.getType().isFloat()) {
                     compiler.addInstruction(new DIV(dval, gpRegister));
-                    compiler.addInstruction(new BOV(compiler.getLabelGenerator().getOverFlowLabel()));
                 }
+                compiler.addInstruction(new BOV(compiler.getLabelGenerator().getOverFlowLabel()));
                 break;
             case "%":
                 // Modulo operation with a loop
