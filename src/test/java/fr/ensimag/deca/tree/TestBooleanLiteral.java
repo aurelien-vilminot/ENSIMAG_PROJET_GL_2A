@@ -15,4 +15,13 @@ public class TestBooleanLiteral {
         literal.verifyExpr(compiler, null, null);
         assertTrue(literal.getType().isBoolean());
     }
+
+    @Test
+    public void testDVal() {
+        DecacCompiler compiler = new DecacCompiler(null, null);
+        BooleanLiteral T = new BooleanLiteral(true);
+        BooleanLiteral F = new BooleanLiteral(false);
+        assertEquals("#1",T.dval(compiler).toString());
+        assertEquals("#0",F.dval(compiler).toString());
+    }
 }
