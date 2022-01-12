@@ -1,6 +1,6 @@
 {
     int a = 9;
-    if(a - 4 == 9){
+    if(a - 4 == 5){
         print("Sub int");
     }
 }
