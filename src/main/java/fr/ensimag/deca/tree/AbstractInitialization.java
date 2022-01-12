@@ -28,10 +28,10 @@ public abstract class AbstractInitialization extends Tree {
             throws ContextualError;
 
     /**
-     * Calculate and load an expression in the n-th register (if necessary)
+     * Calculate and store an expression in the specified memory location
      *
-     * @param compiler
-     * @param dAddr
+     * @param compiler Deca Compiler used to add IMA instruction
+     * @param dAddr The address where the expression must be load
      */
     protected abstract void codeGenInit(DecacCompiler compiler, DAddr dAddr);
 }

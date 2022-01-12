@@ -154,7 +154,7 @@ public abstract class AbstractExpr extends AbstractInst {
     /**
      * Generate code to print the expression
      *
-     * @param compiler
+     * @param compiler Deca Compiler used to add IMA instruction
      */
     protected void codeGenPrint(DecacCompiler compiler) {
         codeGenPrint(compiler, false);
@@ -163,7 +163,7 @@ public abstract class AbstractExpr extends AbstractInst {
     /**
      * Generate code to print the expression using hexadecimal value for floats
      *
-     * @param compiler
+     * @param compiler Deca Compiler used to add IMA instruction
      */
     protected void codeGenPrintx(DecacCompiler compiler) {
         codeGenPrint(compiler, true);
@@ -178,6 +178,12 @@ public abstract class AbstractExpr extends AbstractInst {
         return null;
     }
 
+    /**
+     * Get the corresponding instruction depending on the type element to be printed
+     *
+     * @param printHex True if, the expression must be print in hex
+     * @return The corresponding instruction
+     */
     public Instruction outputExpr(boolean printHex) {
         Type type = getType();
         if (type.isInt()) {
@@ -195,8 +201,8 @@ public abstract class AbstractExpr extends AbstractInst {
     /**
      * Calculate and load an expression in the n-th register
      *
-     * @param compiler
-     * @param n
+     * @param compiler Deca Compiler used to add IMA instruction
+     * @param n Register number
      */
     protected void codeGenExpr(DecacCompiler compiler, int n) {
         DVal dval = this.dval(compiler);
@@ -208,9 +214,9 @@ public abstract class AbstractExpr extends AbstractInst {
     /**
      * If "this" is evaluated to "bool", then goto "branch"
      *
-     * @param compiler
-     * @param bool
-     * @param branch
+     * @param compiler Deca Compiler used to add IMA instruction
+     * @param bool Condition for goto "branch"
+     * @param branch The branch where to program need to go
      */
     protected void codeGenExprBool(DecacCompiler compiler, boolean bool, Label branch) {
         DVal dval = this.dval(compiler);
