@@ -74,15 +74,29 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
         switch (this.getOperatorName()) {
             case "+":
                 compiler.addInstruction(new ADD(dval, gpRegister));
+                if (this.getType().isFloat()) {
+                    compiler.addInstruction(new BOV(compiler.getLabelGenerator().getOverFlowLabel()));
+                }
                 break;
             case "-":
                 compiler.addInstruction(new SUB(dval, gpRegister));
+                if (this.getType().isFloat()) {
+                    compiler.addInstruction(new BOV(compiler.getLabelGenerator().getOverFlowLabel()));
+                }
                 break;
             case "*":
                 compiler.addInstruction(new MUL(dval, gpRegister));
+                if (this.getType().isFloat()) {
+                    compiler.addInstruction(new BOV(compiler.getLabelGenerator().getOverFlowLabel()));
+                }
                 break;
             case "/":
-                compiler.addInstruction(new DIV(dval, gpRegister));
+                if (this.getType().isInt()) {
+                    compiler.addInstruction(new QUO(dval, gpRegister));
+                } else if (this.getType().isFloat()) {
+                    compiler.addInstruction(new DIV(dval, gpRegister));
+                    compiler.addInstruction(new BOV(compiler.getLabelGenerator().getOverFlowLabel()));
+                }
                 break;
             case "%":
                 // Modulo operation with a loop
