@@ -5,6 +5,7 @@ import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.instructions.ERROR;
 import fr.ensimag.ima.pseudocode.instructions.WNL;
 import fr.ensimag.ima.pseudocode.instructions.WSTR;
+import org.apache.commons.lang.Validate;
 
 import java.util.HashMap;
 
@@ -58,6 +59,7 @@ public class LabelGenerator {
      * @return A string which contains the name of label with a unique number
      */
     public String generateLabel(String typeOfLabel) {
+        Validate.notNull(typeOfLabel, "The label should not be null element");
         String newLabel;
 
         if (labels.containsKey(typeOfLabel)) {
