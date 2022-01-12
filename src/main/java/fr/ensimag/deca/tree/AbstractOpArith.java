@@ -121,10 +121,13 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
                 this.mnemo(compiler, Register.getR(n+1), Register.getR(n));
             } else {
                 this.getLeftOperand().codeGenExpr(compiler, n);
+                compiler.incTempStackCurrent(1);
+                compiler.setTempStackMax();
                 compiler.addInstruction(new PUSH(Register.getR(n)), "sauvegarde");
                 this.getRightOperand().codeGenExpr(compiler, n);
                 compiler.addInstruction(new LOAD(Register.getR(n), Register.R0));
                 compiler.addInstruction(new POP(Register.getR(n)), "restauration");
+                compiler.incTempStackCurrent(-1);
                 this.mnemo(compiler, Register.R0, Register.getR(n));
             }
         }

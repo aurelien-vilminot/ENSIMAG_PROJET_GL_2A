@@ -41,10 +41,9 @@ public class Main extends AbstractMain {
 
     @Override
     protected void codeGenMain(DecacCompiler compiler) {
-        // TODO: TSTO
-        compiler.addComment("Main declarations:");
+        compiler.addComment("Main declarations");
         declVariables.codeGenListDeclVar(compiler);
-        compiler.addComment("Main instructions:");
+        compiler.addComment("Main instructions");
         insts.codeGenListInst(compiler);
     }
 
