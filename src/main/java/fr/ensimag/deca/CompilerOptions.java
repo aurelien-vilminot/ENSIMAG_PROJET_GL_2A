@@ -90,46 +90,28 @@ public class CompilerOptions {
             if (filePattern.matcher(arg).matches()) {
                 this.sourceFiles.add(new File(arg));
             } else if (registerPattern.matcher(arg).matches()) {
-                if (this.registerLimit) {
-                    throw new CLIException("Impossible to repeat -r");
-                }
                 this.registerLimit = true;
                 lastPattern = registerPattern;
                 continue;
             } else if (numberPattern.matcher(arg).matches()) {
-                if (!this.registerLimit || lastPattern != registerPattern || this.registerNumber != 0) {
-                    throw new CLIException("Impossible to use a number as an argument without the option -r, or to use the option -r multiple times");
+                if (!this.registerLimit || lastPattern != registerPattern) {
+                    throw new CLIException("decac : impossible to use a number as an argument without the option -r");
                 }
                 this.registerNumber = Integer.parseInt(arg);
                 if (this.registerNumber < 4 || this.registerNumber > 16) {
-                    throw new CLIException("Number of registers have to be between 4 and 16");
+                    throw new CLIException("decac : number of registers have to be between 4 and 16");
                 }
             } else if (bannerPattern.matcher(arg).matches()) {
-                if (this.printBanner) {
-                    throw new CLIException("Impossible to repeat -b");
-                }
                 this.printBanner = true;
             } else if (parserPattern.matcher(arg).matches()) {
-                if (this.parse) {
-                    throw new CLIException("Impossible to repeat -p");
-                }
                 this.parse = true;
             } else if (verificationPattern.matcher(arg).matches()) {
-                if (this.verification) {
-                    throw new CLIException("Impossible to repeat -v");
-                }
                 this.verification = true;
             } else if (parallelismPattern.matcher(arg).matches()) {
-                if (this.parallel) {
-                    throw new CLIException("Impossible to repeat -P");
-                }
                 this.parallel = true;
             } else if (debugPattern.matcher(arg).matches()) {
                 this.debug++;
             } else if (nocheckPattern.matcher(arg).matches()){
-                if (this.noCheck) {
-                    throw new CLIException("Impossible to repeat -n");
-                }
                 this.noCheck = true;
             } else {
                 throw new CLIException("decac : invalid option -- '" + arg + "'\nUsage :");
