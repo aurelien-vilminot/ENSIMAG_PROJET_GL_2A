@@ -16,13 +16,13 @@ public class TestIdentifier {
     private DecacCompiler compiler;
     private EnvironmentExp localEnv;
 
-    // @BeforeEach
+    @BeforeEach
     void setup() {
         compiler = new DecacCompiler(null, null);
         localEnv = new EnvironmentExp(null);
     }
 
-    // @Test
+    @Test
     public void testVerifyExpr() throws DoubleDefException, ContextualError {
         Identifier ident = new Identifier(compiler.getSymbolTable().create("ident"));
 
@@ -35,7 +35,7 @@ public class TestIdentifier {
         assertEquals(INT, ident.verifyExpr(compiler, localEnv, null));
     }
 
-    // @Test
+    @Test
     public void testVerifyExprUndeclaredError() throws DoubleDefException {
         Identifier ident = new Identifier(compiler.getSymbolTable().create("ident"));
 
@@ -50,7 +50,7 @@ public class TestIdentifier {
         assertEquals(expectedMessage, actualMessage);
     }
 
-    // @Test
+    @Test
     public void testVerifyType() throws ContextualError {
         Identifier ident = new Identifier(compiler.getSymbolTable().create("int"));
         Type intType = compiler.getEnvironmentTypes().get(
@@ -59,7 +59,7 @@ public class TestIdentifier {
         assertEquals(intType,ident.verifyType(compiler));
     }
 
-    // @Test
+    @Test
     public void testVerifyTypeUndefined() {
         Identifier ident = new Identifier(compiler.getSymbolTable().create("typo"));
         Exception exception = assertThrows(ContextualError.class, () -> {
