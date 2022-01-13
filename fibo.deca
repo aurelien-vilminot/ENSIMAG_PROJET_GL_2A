@@ -1,0 +1,27 @@
+{
+    // Parameters of the calculation
+    int n;
+    int u_swap, u_n_minus_1 = 0, u_n = 1;
+    int i = 2;
+
+    println("[Fibonacci] Enter a positive integer:");
+    print("> ");
+    n = readInt();
+
+    if(n > 0){
+        /*
+        Calculation of the fibonacci element
+        */
+        while(i <= n){
+            u_swap = u_n;
+            u_n = u_n + u_n_minus_1;
+            u_n_minus_1 = u_swap;
+            i = i + 1;
+        }
+        println("We have u_", n, " = ", u_n);
+    } else if(n==0){
+        println("We have u_0 = 0");
+    } else {
+        println("Please enter a positive integer");
+    }
+}
