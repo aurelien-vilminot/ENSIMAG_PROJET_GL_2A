@@ -83,7 +83,7 @@ public class EnvironmentTypes {
         Validate.notNull(t2, "Type t2 should not be null");
 
         // if t1 and t2 are the same type, t1 is a subtype of t2
-        if (t1.sameType(t2)) return true;
+        if (t1.sameType(t2) && !t1.isClass() && !t2.isClass()) return true;
         if (t2.isClass()) {
             // For a class t2, null is always a subclass of t2
             if (t1.isNull()) return true;
