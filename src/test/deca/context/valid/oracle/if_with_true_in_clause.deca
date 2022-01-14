@@ -1,0 +1,11 @@
+{
+    if(true){
+        print("Y");
+    }
+    if(5==5){
+        print("o");
+    }
+    if(5<=6){
+        print("u");
+    }
+}

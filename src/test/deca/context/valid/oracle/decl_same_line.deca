@@ -1,0 +1,6 @@
+{
+    float f, g;
+    int x = 0, y;
+    int h, j = 1;
+    int i = 0, j = i, a, b = a;
+}
