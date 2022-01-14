@@ -1,0 +1,16 @@
+{
+    int i = 0;
+    if ((i ==1 ) || (i == 2)) {
+        println("Hello World !");
+    } else {
+        if ((i == 2) && (i == 4)) {
+            println("Hello Moon !");
+        } else {
+            if (i == 3) {
+                println("Hello March !");
+            } else {
+                println("Hello You !");
+            }
+        }
+    }
+}

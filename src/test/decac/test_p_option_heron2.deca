@@ -1,0 +1,31 @@
+{
+    int n = 2500;float a
+
+
+
+    = readFloat(), x_n_plus_1 = 2, x_n = 1, x_swap;
+    if(a > 0){while(n != 0){
+            x_swap = x_n_plus_1;
+            x_n_plus_1 = (x_n + a / x_n) / 2;
+   x_n = x_swap;
+                                 n = n - 1;}
+        println("The square root of ", a, " is ", x_n_plus_1);
+    } else if (a == 0){
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        println("The square root of 0 is 0");} else {
+        println("Please enter a positive number");
+    }
+}

@@ -1,0 +1,3 @@
+{
+    protected int x, y=x;
+}
