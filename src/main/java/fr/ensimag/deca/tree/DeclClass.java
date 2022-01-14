@@ -48,7 +48,7 @@ public class DeclClass extends AbstractDeclClass {
 
         // Check type of super-class identifier
         TypeDefinition superClassType = compiler.getEnvironmentTypes().get(this.superClass.getName());
-        if (!superClassType.isClass()) {
+        if (superClassType == null || !superClassType.isClass()) {
             throw new ContextualError("Expected class identifier", this.getLocation());
         }
 
@@ -56,13 +56,14 @@ public class DeclClass extends AbstractDeclClass {
         try {
             compiler.getEnvironmentTypes().declare(
                     this.name.getName(),
-                    new TypeDefinition(
+                    new ClassDefinition(
                             new ClassType(
                                     this.name.getName(),
                                     this.getLocation(),
                                     this.superClass.getClassDefinition()
                             ),
-                            this.getLocation()
+                            this.getLocation(),
+                            this.superClass.getClassDefinition()
                     )
             );
         } catch (EnvironmentTypes.DoubleDefException e) {
