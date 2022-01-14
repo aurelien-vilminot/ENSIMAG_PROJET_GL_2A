@@ -66,7 +66,6 @@ public class DecacCompiler {
     }
 
     public int incTempStackCurrent(int inc) {
-        Validate.isTrue(inc >= 0, "The incrementation should be positive");
         tempStackCurrent += inc;
         return tempStackCurrent;
     }
