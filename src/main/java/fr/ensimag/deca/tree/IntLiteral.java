@@ -62,11 +62,6 @@ public class IntLiteral extends AbstractExpr {
     }
 
     @Override
-    protected void codeGenPrintx(DecacCompiler compiler) {
-        this.codeGenPrint(compiler);
-    }
-
-    @Override
     public DVal dval(DecacCompiler compiler) {
         return new ImmediateInteger(value);
     }

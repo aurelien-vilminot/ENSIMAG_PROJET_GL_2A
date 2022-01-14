@@ -1,0 +1,15 @@
+{
+    int i = 1;
+    boolean b;
+    if(b = i == 1){
+        print(i);
+    }
+
+    if(b = i + 3 >= 4){
+        print(i);
+    }
+
+    if(b = i * 2 == 2){
+        print(i);
+    }
+}
