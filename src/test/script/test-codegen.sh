@@ -85,30 +85,37 @@ do
   name_test="${name_test##*/}"
 
   # Generate output file :
-  decac "$i"
-  if [ $? -eq 1 ]; then
-     echo "  ${red}[INCORRECT] $name_test does not produce an .ass file${reset}"
-    else
-      ima "$TEST_PATH"/"$name_test".ass > "$TEST_PATH"/"$name_test".res 2>&1
-      rm "$TEST_PATH"/"$name_test".ass
+  if ! test -f "$TEST_PATH"/"$name_test".txt; then
+    echo "  ${yellow}[INCORRECT] $name_test, result file not found.${reset}"
 
-      differences=$(diff "$TEST_PATH"/"$name_test".txt "$TEST_PATH"/"$name_test".res | head)
+  else
 
-      if [ $? -ne 2 ]
-        then
-        if [ "$differences" = "" ]
+    decac "$i"
+    if [ $? -eq 1 ]; then
+       echo "  ${red}[INCORRECT] $name_test does not produce an .ass file${reset}"
+      else
+        ima "$TEST_PATH"/"$name_test".ass > "$TEST_PATH"/"$name_test".res 2>&1
+        rm "$TEST_PATH"/"$name_test".ass
+
+        differences=$(diff "$TEST_PATH"/"$name_test".txt "$TEST_PATH"/"$name_test".res | head)
+
+        if [ $? -ne 2 ]
           then
-            echo "  ${green}[CORRECT] $name_test${reset}"
-            nb_correct=$((nb_correct+1))
-            rm "$TEST_PATH"/"$name_test".res
-          else
-            echo "  ${red}[INCORRECT] $name_test, here is the start of differences : ${reset}"
-            echo "$differences"
-        fi
+          if [ "$differences" = "" ]
+            then
+              echo "  ${green}[CORRECT] $name_test${reset}"
+              nb_correct=$((nb_correct+1))
+              rm "$TEST_PATH"/"$name_test".res
+            else
+              echo "  ${red}[INCORRECT] $name_test, here is the start of differences : ${reset}"
+              echo "$differences"
+          fi
 
-        else
-          echo "  ${red}[INCORRECT] $name_test expected result not found ... ${reset}"
-      fi
+          else
+            echo "  ${red}[INCORRECT] $name_test expected result not found ... ${reset}"
+        fi
+    fi
+
   fi
 
 done
