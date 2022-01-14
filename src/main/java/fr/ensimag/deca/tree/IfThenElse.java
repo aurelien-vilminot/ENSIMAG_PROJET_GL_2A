@@ -53,6 +53,11 @@ public class IfThenElse extends AbstractInst {
         Validate.notNull(returnType, "Return type should not be null");
 
         this.condition.verifyInst(compiler, localEnv, currentClass, returnType);
+
+        if (this.condition.getType().isBoolean()) {
+            throw new ContextualError("The condition must be only boolean type", this.getLocation());
+        }
+
         this.thenBranch.verifyListInst(compiler, localEnv, currentClass, returnType);
         this.elseBranch.verifyListInst(compiler, localEnv, currentClass, returnType);
         LOG.debug("verify ifThenElse: else");
@@ -79,9 +84,9 @@ public class IfThenElse extends AbstractInst {
 
     @Override
     public void decompile(IndentPrintStream s) {
-        s.print("if ");
+        s.print("if (");
         condition.decompile(s);
-        s.println(" {");
+        s.println(") {");
         s.indent();
         thenBranch.decompile(s);
         s.unindent();
