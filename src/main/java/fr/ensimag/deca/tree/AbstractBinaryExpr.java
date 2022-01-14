@@ -1,7 +1,13 @@
 package fr.ensimag.deca.tree;
 
+import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
+
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.*;
 import org.apache.commons.lang.Validate;
 
 /**
@@ -50,6 +56,71 @@ public abstract class AbstractBinaryExpr extends AbstractExpr {
         s.print(" " + getOperatorName() + " ");
         getRightOperand().decompile(s);
         s.print(")");
+    }
+
+    /**
+     * Generate code that sends to "branch" if "this" is evaluated to "bool", then load evaluation of "this" to Rn
+     *
+     * @param compiler
+     * @param bool
+     * @param branch
+     * @param n
+     */
+    protected void codeGenExpr(DecacCompiler compiler, boolean bool, Label branch, int n) {
+        Validate.isTrue((n <= compiler.getCompilerOptions().getRegisterNumber() - 1));
+
+        Label continueBranch = new Label(compiler.getLabelGenerator().generateLabel("continue"));
+        // Generate code that sends to "branch" if "this" is evaluated to "bool"
+        this.codeGenExprBool(compiler, bool, branch, n);
+        // If "this" is not evaluated to "bool", load !bool and jump to continue
+        int intValue = 0;
+        if (bool) {
+            intValue = 1;
+        }
+        compiler.addInstruction(new LOAD(new ImmediateInteger(1 - intValue), Register.getR(n)));
+        compiler.addInstruction(new BRA(continueBranch));
+        // If "this" is evaluated to "bool", load bool
+        compiler.addLabel(branch);
+        compiler.addInstruction(new LOAD(new ImmediateInteger(intValue), Register.getR(n)));
+        // Generate label continue
+        compiler.addLabel(continueBranch);
+    }
+
+    /**
+     * Generate code so that the boolean evaluation of the binary expression is stored into Rn
+     *
+     * @param compiler
+     * @param n
+     */
+    protected void codeGenExprBool(DecacCompiler compiler, int n) {
+        Label trueBranch = new Label(compiler.getLabelGenerator().generateLabel("boolIsTrue"));
+        codeGenExpr(compiler, true, trueBranch, n);
+    }
+
+    /**
+     * Calculate right operand expression, and load it into R(n+1) or R(0)
+     *
+     * @param compiler
+     * @param n
+     * @return register number where right operand is loaded
+     */
+    protected int codeGenExprRightOperand(DecacCompiler compiler, int n) {
+        int maxRegister = compiler.getCompilerOptions().getRegisterNumber() - 1;
+        Validate.isTrue((n <= maxRegister));
+
+        if (n < maxRegister) {
+            this.getRightOperand().codeGenExpr(compiler, n+1);
+            return n+1;
+        } else {
+            compiler.incTempStackCurrent(1);
+            compiler.setTempStackMax();
+            compiler.addInstruction(new PUSH(Register.getR(n)), "save");
+            this.getRightOperand().codeGenExpr(compiler, n);
+            compiler.addInstruction(new LOAD(Register.getR(n), Register.R0));
+            compiler.addInstruction(new POP(Register.getR(n)), "restore");
+            compiler.incTempStackCurrent(-1);
+            return 0;
+        }
     }
 
     abstract protected String getOperatorName();
