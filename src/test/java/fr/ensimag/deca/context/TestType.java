@@ -145,5 +145,7 @@ public class TestType {
         assertNotEquals(class1, class2);
 
         assertSame(class1, class1.asClassType(null, null));
+
+        assertInstanceOf(Integer.class, class1.hashCode());
     }
 }
