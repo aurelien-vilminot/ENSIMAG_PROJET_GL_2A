@@ -87,7 +87,7 @@ public abstract class AbstractBinaryExpr extends AbstractExpr {
     }
 
     /**
-     * Generate code so that the boolean evaluation of the binary expression is stored into Rn
+     * Generate code so that the boolean evaluation of the binary expression is loaded into Rn
      *
      * @param compiler
      * @param n
