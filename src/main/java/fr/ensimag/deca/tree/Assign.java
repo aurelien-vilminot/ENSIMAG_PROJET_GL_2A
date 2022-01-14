@@ -69,6 +69,12 @@ public class Assign extends AbstractBinaryExpr {
         codeGenInst(compiler, 2);
     }
 
+    /**
+     * Generate assembly code for the instruction, and store the result in Rn
+     *
+     * @param compiler
+     * @param n
+     */
     protected void codeGenInst(DecacCompiler compiler, int n) {
         Validate.isTrue((n <= compiler.getCompilerOptions().getRegisterNumber() - 1));
 

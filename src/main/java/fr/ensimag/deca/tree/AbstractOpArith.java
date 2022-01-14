@@ -109,26 +109,17 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
         int maxRegister = compiler.getCompilerOptions().getRegisterNumber() - 1;
         Validate.isTrue((n <= maxRegister));
 
+        // Evaluate left operand
+        this.getLeftOperand().codeGenExpr(compiler, n);
+
         DVal rightDval = this.getRightOperand().dval(compiler);
         if (rightDval != null) {
-            this.getLeftOperand().codeGenExpr(compiler, n);
+            // If right operand is a known literal
             this.mnemo(compiler, rightDval, Register.getR(n));
         } else {
-            if (n < maxRegister) {
-                this.getLeftOperand().codeGenExpr(compiler, n);
-                this.getRightOperand().codeGenExpr(compiler, n+1);
-                this.mnemo(compiler, Register.getR(n+1), Register.getR(n));
-            } else {
-                this.getLeftOperand().codeGenExpr(compiler, n);
-                compiler.incTempStackCurrent(1);
-                compiler.setTempStackMax();
-                compiler.addInstruction(new PUSH(Register.getR(n)), "sauvegarde");
-                this.getRightOperand().codeGenExpr(compiler, n);
-                compiler.addInstruction(new LOAD(Register.getR(n), Register.R0));
-                compiler.addInstruction(new POP(Register.getR(n)), "restauration");
-                compiler.incTempStackCurrent(-1);
-                this.mnemo(compiler, Register.R0, Register.getR(n));
-            }
+            // Else calculate right operand
+            int registerLoaded = this.codeGenExprRightOperand(compiler, n);
+            this.mnemo(compiler, Register.getR(registerLoaded), Register.getR(n));
         }
     }
 }

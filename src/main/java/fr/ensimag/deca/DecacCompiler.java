@@ -87,6 +87,16 @@ public class DecacCompiler {
         addOverflowError(false);
     }
 
+    public void addStackOverflowError(boolean first) {
+        if (!this.compilerOptions.getNoCheck()) {
+            if (first) {
+                addFirst(new Line(new BOV(getLabelGenerator().getStackOverFlowLabel())));
+            } else {
+                addInstruction(new BOV(getLabelGenerator().getStackOverFlowLabel()));
+            }
+        }
+    }
+
     public void addOverflowError(boolean first) {
         if (!this.compilerOptions.getNoCheck()) {
             if (first) {
@@ -94,6 +104,12 @@ public class DecacCompiler {
             } else {
                 addInstruction(new BOV(getLabelGenerator().getOverFlowLabel()));
             }
+        }
+    }
+
+    public void addIoError() {
+        if (!this.compilerOptions.getNoCheck()) {
+            addInstruction(new BOV(getLabelGenerator().getIoLabel()));
         }
     }
 

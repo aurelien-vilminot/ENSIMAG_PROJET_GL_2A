@@ -2,10 +2,7 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.ima.pseudocode.DVal;
-import fr.ensimag.ima.pseudocode.GPRegister;
-import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.*;
 import fr.ensimag.ima.pseudocode.instructions.*;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
@@ -97,20 +94,28 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
     }
 
     @Override
-    protected void codeGenExprBool(DecacCompiler compiler, boolean bool, Label branch) {
-        DVal rightDval = this.getRightOperand().dval(compiler);
+    protected void codeGenExprBool(DecacCompiler compiler, boolean bool, Label branch, int n) {
+        int maxRegister = compiler.getCompilerOptions().getRegisterNumber() - 1;
+        Validate.isTrue((n <= maxRegister));
 
         // Evaluate left operand
-        this.getLeftOperand().codeGenExpr(compiler, 2);
+        this.getLeftOperand().codeGenExpr(compiler, n);
 
+        DVal rightDval = this.getRightOperand().dval(compiler);
         if (rightDval != null) {
-            compiler.addInstruction(new CMP(rightDval, Register.getR(2)));
+            compiler.addInstruction(new CMP(rightDval, Register.getR(n)));
         } else {
-            this.getRightOperand().codeGenExpr(compiler, 3);
-            compiler.addInstruction(new CMP(Register.getR(3), Register.getR(2)));
+            // Else calculate right operand
+            int registerLoaded = super.codeGenExprRightOperand(compiler, n);
+            compiler.addInstruction(new CMP(Register.getR(registerLoaded), Register.getR(n)));
         }
 
         // Add branch instruction
         this.mnemo(compiler, bool, branch);
+    }
+
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, int n) {
+        super.codeGenExprBool(compiler, n);
     }
 }

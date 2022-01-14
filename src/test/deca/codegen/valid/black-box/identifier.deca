@@ -6,6 +6,4 @@
         println($);
         println(floats);
     }
-    println(6.3f);
-    println(floats);
 }

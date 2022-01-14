@@ -63,9 +63,9 @@ public class IfThenElse extends AbstractInst {
         Label elseLabel = new Label(compiler.getLabelGenerator().generateLabel("else"));
         Label endLabel = new Label(compiler.getLabelGenerator().generateLabel("end"));
 
-        // Gen code for condition
-        this.condition.codeGenExprBool(compiler, false, elseLabel);
-        // Gen code for instruction(s)
+        // Generate code for condition
+        this.condition.codeGenExprBool(compiler, false, elseLabel, 2);
+        // Generate code for instruction(s)
         this.thenBranch.codeGenListInst(compiler);
         // Go to the end of if statement after the instruction execution
         compiler.addInstruction(new BRA(endLabel));
@@ -74,7 +74,6 @@ public class IfThenElse extends AbstractInst {
         // Gen code for else branch which could be contained other ifThenElse branches
         this.elseBranch.codeGenListInst(compiler);
         // Add the end label
-        // TODO: optimize to have only one final label
         compiler.addLabel(endLabel);
     }
 
