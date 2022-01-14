@@ -66,7 +66,6 @@ public class DecacCompiler {
     }
 
     public int incTempStackCurrent(int inc) {
-        Validate.isTrue(inc >= 0, "The incrementation should be positive");
         tempStackCurrent += inc;
         return tempStackCurrent;
     }
@@ -118,7 +117,11 @@ public class DecacCompiler {
 
     public DecacCompiler(CompilerOptions compilerOptions, File source) {
         super();
-        this.compilerOptions = compilerOptions;
+        if (compilerOptions == null) {
+            this.compilerOptions = new CompilerOptions();
+        } else {
+            this.compilerOptions = compilerOptions;
+        }
         this.source = source;
 
         // Init environments

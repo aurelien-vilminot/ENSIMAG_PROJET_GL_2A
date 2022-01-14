@@ -61,7 +61,8 @@ public class CompilerOptions {
     private boolean verification = false;
     private boolean registerLimit = false;
     private boolean noCheck = false;
-    private int registerNumber = 0;
+    private int registerNumber = 16;
+    private boolean registerNumberSet = false;
     private int argsNumber = 0;
 
     
@@ -99,6 +100,7 @@ public class CompilerOptions {
                     throw new CLIException("decac : impossible to use a number as an argument without the option -r");
                 }
                 this.registerNumber = Integer.parseInt(arg);
+                this.registerNumberSet = true;
                 if (this.registerNumber < 4 || this.registerNumber > 16) {
                     throw new CLIException("decac : number of registers have to be between 4 and 16");
                 }
@@ -124,11 +126,8 @@ public class CompilerOptions {
             throw new CLIException("Impossible to use the option -b with other option(s)");
         }
 
-        if (this.registerLimit && this.registerNumber == 0) {
+        if (this.registerLimit && !this.registerNumberSet) {
             throw new CLIException("Impossible to use the option -r without a specified number of registers");
-        } else if (this.registerNumber == 0) {
-            // Default value if -r is not specified
-            this.registerNumber = 16;
         }
 
         // Check if options are incompatible
