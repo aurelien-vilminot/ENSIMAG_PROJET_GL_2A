@@ -214,13 +214,13 @@ public abstract class AbstractExpr extends AbstractInst {
     }
 
     /**
-     * If "this" is evaluated to "bool", then goto "branch"
+     * Generate code so that if "this" is evaluated to "bool", then goto "branch"
      *
      * @param compiler Deca Compiler used to add IMA instruction
      * @param bool Condition for goto "branch"
      * @param branch The branch where to program need to go
      */
-    protected void codeGenExprBool(DecacCompiler compiler, boolean bool, Label branch) {
+    protected void codeGenExprBool(DecacCompiler compiler, boolean bool, Label branch, int n) {
         DVal dval = this.dval(compiler);
         if (dval != null) {
             compiler.addInstruction(new LOAD(this.dval(compiler), Register.getR(0)));
