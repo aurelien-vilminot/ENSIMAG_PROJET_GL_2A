@@ -166,7 +166,7 @@ public abstract class AbstractExpr extends AbstractInst {
      * @param compiler Deca Compiler used to add IMA instruction
      */
     protected void codeGenPrintx(DecacCompiler compiler) {
-        codeGenPrint(compiler, true);
+        this.codeGenPrint(compiler, true);
     }
 
     @Override
