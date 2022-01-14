@@ -53,7 +53,7 @@ public class While extends AbstractInst {
 
         this.condition.verifyCondition(compiler, localEnv, currentClass);
 
-        if (this.condition.getType().isBoolean()) {
+        if (!this.condition.getType().isBoolean()) {
             throw new ContextualError("The condition must be only boolean type", this.getLocation());
         }
 
