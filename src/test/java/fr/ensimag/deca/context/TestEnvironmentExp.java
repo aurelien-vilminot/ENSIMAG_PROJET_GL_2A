@@ -87,4 +87,23 @@ public class TestEnvironmentExp {
         assertNotSame(this.environmentExpParent.get(this.symbolTest), environmentExpChild.get(this.symbolTest));
         assertSame(environmentExpChild.get(this.symbolTest), fieldDefinitionChild);
     }
+
+    @Test
+    public void testToString() throws EnvironmentExp.DoubleDefException {
+        // Check empty environment
+        String expectedString = "Environnement d'identificateur : \n";
+        assertEquals(expectedString, this.environmentExpParent.toString());
+
+        this.environmentExpParent.declare(this.symbolTest, this.fieldDefinition);
+
+        // Test toString type return
+        assertInstanceOf(String.class, this.environmentExpParent.toString());
+
+        // Check environment with declared definition
+        expectedString =
+                "Environnement d'identificateur : \n" +
+                "\ttest : \n" +
+                "\t\tfield defined at null, type=null";
+        assertEquals(expectedString, this.environmentExpParent.toString());
+    }
 }

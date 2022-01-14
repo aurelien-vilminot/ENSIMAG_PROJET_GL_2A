@@ -50,7 +50,7 @@ public class While extends AbstractInst {
         body.codeGenListInst(compiler);
 
         compiler.addLabel(cond); // test condition
-        condition.codeGenExprBool(compiler, true, begin);
+        condition.codeGenExprBool(compiler, true, begin, 2);
     }
 
     @Override
