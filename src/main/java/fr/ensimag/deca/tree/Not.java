@@ -44,7 +44,7 @@ public class Not extends AbstractUnaryExpr {
     }
 
     @Override
-    protected void codeGenExprBool(DecacCompiler compiler, boolean bool, Label branch) {
-        getOperand().codeGenExprBool(compiler, !bool, branch);
+    protected void codeGenExprBool(DecacCompiler compiler, boolean bool, Label branch, int n) {
+        getOperand().codeGenExprBool(compiler, !bool, branch, n);
     }
 }
