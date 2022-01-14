@@ -64,14 +64,14 @@ public class ClassType extends Type {
      */
     public boolean isSubClassOf(ClassType potentialSuperClass) {
         Validate.notNull(potentialSuperClass, "The potential superclass should not be null");
-        ClassType currentClass = this;
+        ClassDefinition currentClassDefinition = definition;
         // This loop follows all superclasses of this class.
         // It ends when the superclass is equals of the potential superclass
-        while (!currentClass.isNull()) {
-            if (currentClass.definition.getType().equals(potentialSuperClass.definition.getType())) {
+        while (!(currentClassDefinition == null)) {
+            if (currentClassDefinition.getType().equals(potentialSuperClass.definition.getType())) {
                 return true;
             }
-            currentClass = currentClass.definition.getSuperClass().getType();
+            currentClassDefinition = currentClassDefinition.getSuperClass();
         }
         return false;
     }
