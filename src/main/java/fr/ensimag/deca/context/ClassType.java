@@ -68,7 +68,7 @@ public class ClassType extends Type {
         // This loop follows all superclasses of this class.
         // It ends when the superclass is equals of the potential superclass
         while (!(currentClassDefinition == null)) {
-            if (currentClassDefinition.getType().equals(potentialSuperClass.definition.getType())) {
+            if (currentClassDefinition.equals(potentialSuperClass.definition)) {
                 return true;
             }
             currentClassDefinition = currentClassDefinition.getSuperClass();
