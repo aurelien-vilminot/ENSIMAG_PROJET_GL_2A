@@ -2,6 +2,7 @@ package fr.ensimag.deca.context;
 
 import static org.junit.jupiter.api.Assertions.*;
 import fr.ensimag.deca.tools.SymbolTable;
+import fr.ensimag.deca.tree.Location;
 import org.junit.jupiter.api.Test;
 
 public class TestType {
@@ -109,5 +110,40 @@ public class TestType {
         BooleanType bool = new BooleanType(symbol1);
         assertFalse(null1.sameType(bool));
 
+    }
+
+    @Test
+    public void testClassType() {
+        SymbolTable table = new SymbolTable();
+        SymbolTable.Symbol symbol1 = table.create("foo");
+        SymbolTable.Symbol symbol2 = table.create("foo2");
+        SymbolTable.Symbol symbol3 = table.create("foo3");
+
+        ClassType class1 = new ClassType(symbol1, Location.BUILTIN, null);
+        assertTrue(class1.isClass());
+        assertTrue(class1.isClassOrNull());
+
+        ClassType class2 = new ClassType(symbol2, Location.BUILTIN, null);
+        assertTrue(class1.sameType(class2));
+        assertNotSame(class1, class2);
+
+        BooleanType bool = new BooleanType(symbol1);
+        assertFalse(class1.sameType(bool));
+
+        ClassType class3 = new ClassType(symbol3, Location.BUILTIN, class1.getDefinition());
+        assertTrue(class3.isSubClassOf(class1));
+        assertFalse(class3.isSubClassOf(class2));
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            class3.isSubClassOf(null);
+        });
+        String expectedMessage = "The potential superclass should not be null";
+        String actualMessage = exception.getMessage();
+        assertEquals(actualMessage, expectedMessage);
+
+        assertEquals(class1, class1);
+        assertNotEquals(class1, class2);
+
+        assertSame(class1, class1.asClassType(null, null));
     }
 }
