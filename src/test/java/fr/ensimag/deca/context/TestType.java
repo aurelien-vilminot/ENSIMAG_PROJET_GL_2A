@@ -143,6 +143,7 @@ public class TestType {
 
         assertEquals(class1, class1);
         assertNotEquals(class1, class2);
+        assertNotEquals(class1, null);
 
         assertSame(class1, class1.asClassType(null, null));
 
