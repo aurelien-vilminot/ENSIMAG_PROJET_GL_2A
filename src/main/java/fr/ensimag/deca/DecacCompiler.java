@@ -39,7 +39,7 @@ import org.apache.log4j.Logger;
  * @author gl07
  * @date 01/01/2022
  */
-public class DecacCompiler {
+public class DecacCompiler implements Runnable {
     private static final Logger LOG = Logger.getLogger(DecacCompiler.class);
     
     /**
@@ -66,7 +66,6 @@ public class DecacCompiler {
     }
 
     public int incTempStackCurrent(int inc) {
-        Validate.isTrue(inc >= 0, "The incrementation should be positive");
         tempStackCurrent += inc;
         return tempStackCurrent;
     }
@@ -118,7 +117,11 @@ public class DecacCompiler {
 
     public DecacCompiler(CompilerOptions compilerOptions, File source) {
         super();
-        this.compilerOptions = compilerOptions;
+        if (compilerOptions == null) {
+            this.compilerOptions = new CompilerOptions();
+        } else {
+            this.compilerOptions = compilerOptions;
+        }
         this.source = source;
 
         // Init environments
@@ -365,4 +368,8 @@ public class DecacCompiler {
         return parser.parseProgramAndManageErrors(err);
     }
 
+    @Override
+    public void run() {
+        this.compile();
+    }
 }
