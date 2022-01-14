@@ -39,7 +39,7 @@ import org.apache.log4j.Logger;
  * @author gl07
  * @date 01/01/2022
  */
-public class DecacCompiler {
+public class DecacCompiler implements Runnable {
     private static final Logger LOG = Logger.getLogger(DecacCompiler.class);
     
     /**
@@ -368,4 +368,8 @@ public class DecacCompiler {
         return parser.parseProgramAndManageErrors(err);
     }
 
+    @Override
+    public void run() {
+        this.compile();
+    }
 }
