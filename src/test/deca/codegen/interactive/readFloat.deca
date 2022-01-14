@@ -1,0 +1,4 @@
+{
+    float f = readFloat();
+    f * 5 + 3;
+}
