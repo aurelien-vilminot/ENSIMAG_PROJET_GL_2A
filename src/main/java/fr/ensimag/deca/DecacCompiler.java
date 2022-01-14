@@ -117,7 +117,11 @@ public class DecacCompiler {
 
     public DecacCompiler(CompilerOptions compilerOptions, File source) {
         super();
-        this.compilerOptions = compilerOptions;
+        if (compilerOptions == null) {
+            this.compilerOptions = new CompilerOptions();
+        } else {
+            this.compilerOptions = compilerOptions;
+        }
         this.source = source;
 
         // Init environments
