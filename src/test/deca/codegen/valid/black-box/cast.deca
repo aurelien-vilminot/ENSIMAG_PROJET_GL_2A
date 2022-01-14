@@ -1,5 +1,0 @@
-{
-    float f = 1.2f;
-    int a = (int) (f);
-    print(a);
-}

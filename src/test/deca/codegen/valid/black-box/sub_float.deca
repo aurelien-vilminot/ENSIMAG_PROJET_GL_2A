@@ -1,0 +1,7 @@
+{
+    float f = 9.3894f;
+    if(f - 4.15349 == 5.23591f){
+        println("Sub float");
+    }
+    println(f - 4.15349, " VS ", 5.23591f);
+}

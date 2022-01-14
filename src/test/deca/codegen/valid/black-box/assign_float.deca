@@ -1,0 +1,8 @@
+{
+    float f;
+
+    if((f = 1.0f) == 1){
+        print("Assign");
+    }
+    print(f);
+}

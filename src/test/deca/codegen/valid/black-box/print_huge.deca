@@ -1,0 +1,12 @@
+{
+    println("s");
+        println("s");
+            println("s");    println("s");
+                println("s");
+                    println("s");
+                        println("s");
+                            println("s");    println("s");    println("s");    println("s");
+                                println("s");
+    print("a");print("a");print("a");print("a");print("a");print("a");print("a");print("a");print("a");print("a");print("a");print("a");print("a");print("a");
+    printx("a");printx("a");printx("a");printlnx("a");printlnx("a");printlnx("a");
+}
