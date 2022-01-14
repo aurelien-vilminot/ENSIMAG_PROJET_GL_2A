@@ -71,8 +71,6 @@ public class CompilerOptions {
         Collections.addAll(argsList, args);
         this.argsNumber = args.length;
 
-        // TODO: compile identical files once
-
         // TODO: add "-w" option. Ask to the professor
 
         // Add sources files to the files list
@@ -88,7 +86,10 @@ public class CompilerOptions {
         Pattern lastPattern = null;
         for (String arg: argsList) {
             if (filePattern.matcher(arg).matches()) {
-                this.sourceFiles.add(new File(arg));
+                File fileToAdd = new File(arg);
+                if (!this.sourceFiles.contains(fileToAdd)) {
+                    this.sourceFiles.add(fileToAdd);
+                }
             } else if (registerPattern.matcher(arg).matches()) {
                 this.registerLimit = true;
                 lastPattern = registerPattern;
