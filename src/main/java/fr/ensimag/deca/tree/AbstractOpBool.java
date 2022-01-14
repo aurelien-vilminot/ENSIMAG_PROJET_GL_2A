@@ -49,24 +49,30 @@ public abstract class AbstractOpBool extends AbstractBinaryExpr {
     }
 
     @Override
-    protected void codeGenExprBool(DecacCompiler compiler, boolean bool, Label branch) {
+    protected void codeGenExprBool(DecacCompiler compiler, boolean bool, Label branch, int n) {
+        int maxRegister = compiler.getCompilerOptions().getRegisterNumber() - 1;
+        Validate.isTrue((n <= maxRegister));
+
         DVal dval = this.dval(compiler);
         if (dval != null && bool) {
+        // If "this" is a known literal
             compiler.addInstruction(new BRA(branch));
         } else {
             switch (this.getOperatorName()) {
                 case "&&":
+                    // Else calculate left and right operand with lazy branch evaluation
                     Label endBranch = new Label(compiler.getLabelGenerator().generateLabel(branch.toString()) + "_fin");
-                    this.getLeftOperand().codeGenExprBool(compiler, false, bool ? endBranch : branch );
-                    this.getRightOperand().codeGenExprBool(compiler, bool, branch);
-                    // compiler.addInstruction(new BNE(branch));
+                    this.getLeftOperand().codeGenExprBool(compiler, false, bool ? endBranch : branch, n);
+                    // No need to store inside n+1, as it is evaluated through branches
+                    this.getRightOperand().codeGenExprBool(compiler, bool, branch, n);
                     if (bool) {
                         compiler.addLabel(endBranch);
                     }
                     break;
                 case "||":
+                    // Transform "||" into "&&" with boolean operations
                     Not newExpr = new Not(new And(new Not(this.getLeftOperand()), new Not(this.getRightOperand())));
-                    newExpr.codeGenExprBool(compiler, bool, branch);
+                    newExpr.codeGenExprBool(compiler, bool, branch, n);
                     break;
             }
         }
@@ -74,19 +80,6 @@ public abstract class AbstractOpBool extends AbstractBinaryExpr {
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
-        Validate.isTrue((n <= compiler.getCompilerOptions().getRegisterNumber() - 1));
-
-        Label trueBranch = new Label(compiler.getLabelGenerator().generateLabel("boolIsTrue"));
-        Label continueBranch = new Label(compiler.getLabelGenerator().generateLabel("continue"));
-        // Generate code that sends to trueBranch is bool is true
-        this.codeGenExprBool(compiler, true, trueBranch);
-        // Generate code if bool is false, and jump to continue
-        compiler.addInstruction(new LOAD(new ImmediateInteger(0), Register.getR(n)));
-        compiler.addInstruction(new BRA(continueBranch));
-        // Generate label boolIsTrue
-        compiler.addLabel(trueBranch);
-        compiler.addInstruction(new LOAD(new ImmediateInteger(1), Register.getR(n)));
-        // Generate label continue
-        compiler.addLabel(continueBranch);
+        super.codeGenExprBool(compiler, n);
     }
 }
