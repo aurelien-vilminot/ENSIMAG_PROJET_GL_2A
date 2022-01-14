@@ -54,7 +54,7 @@ public class IfThenElse extends AbstractInst {
 
         this.condition.verifyInst(compiler, localEnv, currentClass, returnType);
 
-        if (this.condition.getType().isBoolean()) {
+        if (!this.condition.getType().isBoolean()) {
             throw new ContextualError("The condition must be only boolean type", this.getLocation());
         }
 
