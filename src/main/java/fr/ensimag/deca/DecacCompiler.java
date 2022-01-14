@@ -21,6 +21,7 @@ import java.io.PrintStream;
 import fr.ensimag.ima.pseudocode.instructions.BOV;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
 /**
@@ -59,11 +60,13 @@ public class DecacCompiler {
     }
 
     public int incGlobalStackSize(int inc) {
+        Validate.isTrue(inc >= 0, "The incrementation should be positive");
         globalStackSize += inc;
         return globalStackSize;
     }
 
     public int incTempStackCurrent(int inc) {
+        Validate.isTrue(inc >= 0, "The incrementation should be positive");
         tempStackCurrent += inc;
         return tempStackCurrent;
     }
