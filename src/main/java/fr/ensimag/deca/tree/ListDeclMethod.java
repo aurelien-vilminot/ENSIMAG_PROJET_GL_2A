@@ -1,4 +1,11 @@
 package fr.ensimag.deca.tree;
 
-public class ListDeclMethod {
+import fr.ensimag.deca.tools.IndentPrintStream;
+
+public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
+
+    @Override
+    public void decompile(IndentPrintStream s) {
+        // TODO
+    }
 }

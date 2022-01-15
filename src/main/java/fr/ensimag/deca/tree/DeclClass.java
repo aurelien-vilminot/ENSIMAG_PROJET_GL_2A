@@ -37,11 +37,6 @@ public class DeclClass extends AbstractDeclClass {
     }
 
     @Override
-    public void decompile(IndentPrintStream s) {
-        s.print("class { ... A FAIRE ... }");
-    }
-
-    @Override
     protected void verifyClass(DecacCompiler compiler) throws ContextualError {
         LOG.debug("verify DeclClass: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
@@ -83,15 +78,40 @@ public class DeclClass extends AbstractDeclClass {
         throw new UnsupportedOperationException("not yet implemented");
     }
 
+    @Override
+    public void decompile(IndentPrintStream s) {
+        s.print("class ");
+        name.decompile(s);
+        s.print(" extends ");
+        superClass.decompile(s);
+        s.print(" {");
+        s.indent();
+        listDeclField.decompile(s);
+        listDeclMethod.decompile(s);
+        s.unindent();
+        s.print("}");
+    }
+
+    @Override
+    protected void codeGenDeclClass(DecacCompiler compiler) {
+        throw new UnsupportedOperationException("Not yet supported");
+    }
+
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-        throw new UnsupportedOperationException("Not yet supported");
+        name.prettyPrint(s, prefix, false);
+        superClass.prettyPrint(s, prefix, false);
+        listDeclField.prettyPrint(s, prefix, false);
+        listDeclMethod.prettyPrint(s, prefix, true);
     }
 
     @Override
     protected void iterChildren(TreeFunction f) {
-        throw new UnsupportedOperationException("Not yet supported");
+        name.iter(f);
+        superClass.iter(f);
+        listDeclField.iter(f);
+        listDeclMethod.iter(f);
     }
 
 }
