@@ -27,6 +27,7 @@ public class New extends AbstractExpr {
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError {
         LOG.debug("verify New: start");
+        Validate.notNull(compiler, "Compiler (env_types) object should not be null");
 
         Type type = this.ident.verifyType(compiler);
         if (!type.isClass()) {
