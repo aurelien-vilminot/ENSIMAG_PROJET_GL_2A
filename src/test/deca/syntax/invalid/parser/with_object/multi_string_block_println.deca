@@ -1,4 +1,0 @@
-{
-	println("Comment multi line
-	not possible in block");
-}
