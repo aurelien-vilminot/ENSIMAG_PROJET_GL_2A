@@ -1,0 +1,44 @@
+class Hello extends World{
+
+	float f2(int x, World b){
+		return this.x==b.f;
+	}
+
+	protected World x = 5;
+
+	float f = 5;
+
+	void f() asm("Hello");
+}
+
+class World{
+	int g(float f){
+		new Hello();
+		println("Hello World !");
+		return 1;
+	}
+
+	protected protec fooo;
+
+	void foo2() asm("World !\n");
+}
+
+{
+	int a; float b = 1.0, c;
+	while(a > 1){
+		ident 2 = new World();
+		ident.f();
+		(Hello) (a + 2);
+		a = a && true;
+	}
+
+	if(b){
+		println(Hello.x % 50);
+	} else if(!b) {
+		print(b);
+	} else {
+		a = World.fooo + 1;
+	}
+
+	5 == 4 + Hello.f;
+}

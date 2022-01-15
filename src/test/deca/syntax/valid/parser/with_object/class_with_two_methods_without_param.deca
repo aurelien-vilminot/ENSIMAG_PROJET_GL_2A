@@ -1,0 +1,11 @@
+class U{
+  float f(){
+    int i = 0;
+    println(i);
+  }
+
+  int xf(){
+    println(x);
+  }
+}
+{}

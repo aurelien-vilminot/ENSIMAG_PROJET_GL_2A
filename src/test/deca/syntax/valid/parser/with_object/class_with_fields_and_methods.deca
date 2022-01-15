@@ -1,0 +1,16 @@
+class A{
+  float f(int x, float f){
+    int i = 0;
+    println(i);
+  }
+
+  protected int x;
+
+  int g(float f){
+	return f;
+  }
+
+  protected float y;
+  boolean b;
+}
+{}

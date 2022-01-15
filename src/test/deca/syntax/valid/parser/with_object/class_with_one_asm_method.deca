@@ -1,0 +1,8 @@
+class A{
+	void f(int x) asm("\"Hello \n
+	\\ World
+	!\"");
+
+	int f(){
+	}
+}

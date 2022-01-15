@@ -1,0 +1,8 @@
+class G{
+	int x = 5;
+	int f(){
+	}
+	protected int y = 50;-
+
+	void f() asm("Hello You\n !");
+}
