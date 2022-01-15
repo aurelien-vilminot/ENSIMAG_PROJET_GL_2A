@@ -1,0 +1,3 @@
+class A { a a () asm ("LOAD
+			READ
+			WRITE); }
