@@ -29,22 +29,6 @@ public class TestDecacCompiler {
         assertEquals(0, this.decacCompiler.getTempStackMax());
         this.decacCompiler.setTempStackMax();
         assertEquals(10, this.decacCompiler.getTempStackMax());
-
-        // Test with negative values for global stack size
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            this.decacCompiler.incGlobalStackSize(-10);
-        });
-        String expectedMessage = "The incrementation should be positive";
-        String actualMessage = exception.getMessage();
-        assertEquals(actualMessage, expectedMessage);
-
-        // Test with negative values for temporary stack usage
-        exception = assertThrows(IllegalArgumentException.class, () -> {
-            this.decacCompiler.incTempStackCurrent(-10);
-        });
-        expectedMessage = "The incrementation should be positive";
-        actualMessage = exception.getMessage();
-        assertEquals(actualMessage, expectedMessage);
     }
 
 }
