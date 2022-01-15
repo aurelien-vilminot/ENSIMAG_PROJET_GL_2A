@@ -1,0 +1,27 @@
+{
+    if(true){
+        x.y = readInt().x(o.p);
+        3.(5.0) + "Hello World !".length();
+        5.0.parseInt(x + 50) % x.y();
+        x.y.z() * x.x(50.0);
+        x.y.z("Hello World !") && x.y(x, y, 25);
+    } else if(x <= 5){
+        x.y.z(x.y, x.z) || x.y.z(x.y(5.30), x.z(x.y()));
+        x.y readInt().x(o.p) != 3.(5.0);
+        "Hello World !".length() <= 5.0.parseInt(x + 50);
+        x.y() > x.y.z();
+        x.x(50.0) instanceof ABC;
+        x.y.z("Hello World !") - y(x, y, 25);
+    } else {
+        x.y.z(x.y, x.z) || x.y.z(x.y(5.30), x.z(x.y()));
+        x.y readInt().x(o.p) != 3.(5.0);
+        "Hello World !".length() <= 5.0.parseInt(x + 50);
+        x.y() > x.y.z();
+        x.x(50.0) instanceof ABC;
+        x.y.z("Hello World !") - y(x, y, 25);
+        !x.y.z(x.y, x.z);
+        -x.y.z(x.y(5.30));
+        -!-!-!x.z(x.y());
+        !-!-!x.z(x.y());
+    }
+}
