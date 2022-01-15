@@ -83,8 +83,10 @@ decl_var_set[ListDeclVar l]
 
 list_decl_var[ListDeclVar l, AbstractIdentifier t]
     : dv1=decl_var[$t] {
+        assert($dv1.tree != null);
         $l.add($dv1.tree);
         } (COMMA dv2=decl_var[$t] {
+            assert($dv2.tree != null);
             $l.add($dv2.tree);
         }
       )*
@@ -95,8 +97,10 @@ decl_var[AbstractIdentifier t] returns[AbstractDeclVar tree]
             AbstractInitialization init = null;
         }
     : i=ident {
+            assert($i.tree != null);
         }
       (EQUALS e=expr {
+            assert($e.tree != null);
             init = new Initialization($e.tree);
             setLocation(init, $EQUALS);
         }
@@ -173,11 +177,15 @@ if_then_else returns[IfThenElse tree]
     IfThenElse lastBranch;
 }
     : if1=IF OPARENT condition=expr CPARENT OBRACE li_if=list_inst CBRACE {
+            assert($condition.tree != null);
+            assert($li_if.tree != null);
             $tree = new IfThenElse($condition.tree, $li_if.tree, new ListInst());
             setLocation($tree, $if1);
             lastBranch = $tree;
         }
       (ELSE elsif=IF OPARENT elsif_cond=expr CPARENT OBRACE elsif_li=list_inst CBRACE {
+            assert($elsif_cond.tree != null);
+            assert($elsif_li.tree != null);
             IfThenElse elseif = new IfThenElse($elsif_cond.tree, $elsif_li.tree, new ListInst());
             setLocation(elseif, $ELSE);
             lastBranch.getElseBranch().add(elseif);
@@ -185,6 +193,7 @@ if_then_else returns[IfThenElse tree]
         }
       )*
       (ELSE OBRACE li_else=list_inst CBRACE {
+            assert($li_else.tree != null);
             lastBranch.setElseBranch($li_else.tree);
         }
       )?
@@ -503,34 +512,57 @@ list_classes returns[ListDeclClass tree]
 }
     :
       (c1=class_decl {
+            assert($c1.tree != null);
+            $tree.add($c1.tree);
         }
       )*
     ;
 
-class_decl
+class_decl returns[AbstractDeclClass tree]
     : CLASS name=ident superclass=class_extension OBRACE class_body CBRACE {
+            assert($name.tree != null);
+            assert($superclass.tree != null);
+            assert($class_body.listdeclmeth != null);
+            assert($class_body.listdeclfield != null);
+            $tree = new DeclClass($name.tree, $superclass.tree, $class_body.listdeclmeth, $class_body.listdeclfield);
+            setLocation($tree, $CLASS);
         }
     ;
 
 class_extension returns[AbstractIdentifier tree]
     : EXTENDS ident {
+            assert($ident.tree != null);
+            $tree = $ident.tree;
+            setLocation($tree, $EXTENDS);
         }
     | /* epsilon */ {
+            $tree = new Identifier(getsymbolTable().create("Object"));
         }
     ;
 
-class_body
+class_body returns[ListDeclMethod listdeclmeth, ListDeclField listdeclfield]
+@init {
+    $listdeclmeth = new ListDeclMethod();
+    $listdeclfield = new ListDeclField();
+}
     : (m=decl_method {
+            assert($m.tree != null);
+            listdeclmeth.add($m.tree);
         }
-      | decl_field_set
+      | f=decl_field_set {
+            assert($f.tree != null);
+            listdeclfield.add($f.tree);
+        }
       )*
     ;
 
+// TODO
 decl_field_set
     : v=visibility t=type list_decl_field
       SEMI
     ;
 
+// TODO
 visibility
     : /* epsilon */ {
         }
@@ -538,13 +570,15 @@ visibility
         }
     ;
 
+//TODO
 list_decl_field
     : dv1=decl_field
         (COMMA dv2=decl_field
       )*
     ;
 
-decl_field
+//TODO
+decl_field returns[AbstractDeclField tree]
     : i=ident {
         }
       (EQUALS e=expr {
@@ -553,7 +587,8 @@ decl_field
         }
     ;
 
-decl_method
+// TODO
+decl_method returns[AbstractDeclMethod tree]
 @init {
 }
     : type ident OPARENT params=list_params CPARENT (block {
@@ -564,13 +599,15 @@ decl_method
         }
     ;
 
+// TODO
 list_params
     : (p1=param {
         } (COMMA p2=param {
         }
       )*)?
     ;
-    
+
+// TODO
 multi_line_string returns[String text, Location location]
     : s=STRING {
             $text = $s.text;
@@ -582,6 +619,7 @@ multi_line_string returns[String text, Location location]
         }
     ;
 
+// TODO
 param
     : type ident {
         }
