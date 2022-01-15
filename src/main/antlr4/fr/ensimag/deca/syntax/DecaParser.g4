@@ -70,8 +70,6 @@ block returns[ListDeclVar decls, ListInst insts]
         }
     ;
 
-// hello world: list_decl is empty
-// sans objet: done
 list_decl returns[ListDeclVar tree]
 @init   {
             $tree = new ListDeclVar();
@@ -79,12 +77,10 @@ list_decl returns[ListDeclVar tree]
     : decl_var_set[$tree]*
     ;
 
-// sans objet: done
 decl_var_set[ListDeclVar l]
     : type list_decl_var[$l,$type.tree] SEMI
     ;
 
-// sans objet: done
 list_decl_var[ListDeclVar l, AbstractIdentifier t]
     : dv1=decl_var[$t] {
         $l.add($dv1.tree);
@@ -94,7 +90,6 @@ list_decl_var[ListDeclVar l, AbstractIdentifier t]
       )*
     ;
 
-// sans objet: done
 decl_var[AbstractIdentifier t] returns[AbstractDeclVar tree]
 @init   {
             AbstractInitialization init = null;
@@ -115,8 +110,6 @@ decl_var[AbstractIdentifier t] returns[AbstractDeclVar tree]
         }
     ;
 
-// hello world: done
-// sans objet: done
 list_inst returns[ListInst tree]
 @init {
     $tree = new ListInst();
@@ -128,8 +121,6 @@ list_inst returns[ListInst tree]
       )*
     ;
 
-// hello world: done
-// sans objet: done
 inst returns[AbstractInst tree]
     : e1=expr SEMI {
             assert($e1.tree != null);
@@ -171,6 +162,8 @@ inst returns[AbstractInst tree]
         }
     | RETURN expr SEMI {
             assert($expr.tree != null);
+            $tree = new Return($expr.tree);
+            setLocation($tree, $RETURN);
         }
     ;
 
@@ -214,8 +207,6 @@ list_expr returns[ListExpr tree]
        )* )?
     ;
 
-// hello world: done
-// sans objet: done
 expr returns[AbstractExpr tree]
     : assign_expr {
             assert($assign_expr.tree != null);
@@ -223,8 +214,6 @@ expr returns[AbstractExpr tree]
         }
     ;
 
-// hello world: done
-// sans objet: done
 assign_expr returns[AbstractExpr tree]
     : e=or_expr (
         /* condition: expression e must be a "LVALUE" */ {
@@ -245,8 +234,6 @@ assign_expr returns[AbstractExpr tree]
       )
     ;
 
-// hello world: done
-// sans objet: done
 or_expr returns[AbstractExpr tree]
     : e=and_expr {
             assert($e.tree != null);
@@ -260,8 +247,6 @@ or_expr returns[AbstractExpr tree]
        }
     ;
 
-// hello world: done
-// sans objet: done
 and_expr returns[AbstractExpr tree]
     : e=eq_neq_expr {
             assert($e.tree != null);
@@ -275,8 +260,6 @@ and_expr returns[AbstractExpr tree]
         }
     ;
 
-// hello world: done
-// sans objet: done
 eq_neq_expr returns[AbstractExpr tree]
     : e=inequality_expr {
             assert($e.tree != null);
@@ -296,8 +279,6 @@ eq_neq_expr returns[AbstractExpr tree]
         }
     ;
 
-// hello world: done
-// sans objet: done
 inequality_expr returns[AbstractExpr tree]
     : e=sum_expr {
             assert($e.tree != null);
@@ -335,8 +316,6 @@ inequality_expr returns[AbstractExpr tree]
         }
     ;
 
-// hello world: done
-// sans objet: done
 sum_expr returns[AbstractExpr tree]
     : e=mult_expr {
             assert($e.tree != null);
@@ -356,8 +335,6 @@ sum_expr returns[AbstractExpr tree]
         }
     ;
 
-// hello world: done
-// sans objet: done
 mult_expr returns[AbstractExpr tree]
     : e=unary_expr {
             assert($e.tree != null);
@@ -383,8 +360,6 @@ mult_expr returns[AbstractExpr tree]
         }
     ;
 
-// hello world: done
-// sans objet: done
 unary_expr returns[AbstractExpr tree]
     : op=MINUS e=unary_expr {
             assert($e.tree != null);
@@ -402,8 +377,7 @@ unary_expr returns[AbstractExpr tree]
         }
     ;
 
-// hello world: done
-// sans objet: done
+// TODO
 select_expr returns[AbstractExpr tree]
     : e=primary_expr {
             assert($e.tree != null);
@@ -416,6 +390,8 @@ select_expr returns[AbstractExpr tree]
         (o=OPARENT args=list_expr CPARENT {
             // we matched "e1.i(args)"
             assert($args.tree != null);
+            $tree = new MethodCall($e1.tree, $i.tree, $args.tree);
+            setLocation($tree, $OPARENT);
         }
         | /* epsilon */ {
             // we matched "e.i"
@@ -423,8 +399,6 @@ select_expr returns[AbstractExpr tree]
         )
     ;
 
-// hello world: done
-// sans objet: done
 primary_expr returns[AbstractExpr tree]
     : ident {
             assert($ident.tree != null);
@@ -433,6 +407,8 @@ primary_expr returns[AbstractExpr tree]
     | m=ident OPARENT args=list_expr CPARENT {
             assert($args.tree != null);
             assert($m.tree != null);
+            $tree = new MethodCall(null, $m.tree, $args.tree);
+            setLocation($tree, $OPARENT);
         }
     | OPARENT expr CPARENT {
             assert($expr.tree != null);
@@ -449,6 +425,8 @@ primary_expr returns[AbstractExpr tree]
         }
     | NEW ident OPARENT CPARENT {
             assert($ident.tree != null);
+            $tree = new New($ident.tree);
+            setLocation($tree, $NEW);
         }
     | cast=OPARENT type CPARENT OPARENT expr CPARENT {
             assert($type.tree != null);
@@ -462,18 +440,13 @@ primary_expr returns[AbstractExpr tree]
         }
     ;
 
-// hello world: done
-// sans objet: done
 type returns[AbstractIdentifier tree]
     : ident {
             assert($ident.tree != null);
             $tree = $ident.tree;
-            setLocation($tree, $ident.start);
         }
     ;
 
-// hello world: done
-// sans objet: done
 literal returns[AbstractExpr tree]
     : INT {
         try {
@@ -506,12 +479,15 @@ literal returns[AbstractExpr tree]
         setLocation($tree, $FALSE);
         }
     | THIS {
+        $tree = new This();
+        setLocation($tree, $THIS);
         }
     | NULL {
+        $tree = new Null();
+        setLocation($tree, $NULL);
         }
     ;
 
-// sans objet: done
 ident returns[AbstractIdentifier tree]
     : IDENT {
         $tree = new Identifier(getSymbolTable().create($IDENT.text));
