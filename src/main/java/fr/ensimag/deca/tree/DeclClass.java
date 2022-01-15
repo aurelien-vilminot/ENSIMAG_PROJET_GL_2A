@@ -37,11 +37,6 @@ public class DeclClass extends AbstractDeclClass {
     }
 
     @Override
-    public void decompile(IndentPrintStream s) {
-        s.print("class { ... A FAIRE ... }");
-    }
-
-    @Override
     protected void verifyClass(DecacCompiler compiler) throws ContextualError {
         LOG.debug("verify DeclClass: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
@@ -81,6 +76,16 @@ public class DeclClass extends AbstractDeclClass {
     @Override
     protected void verifyClassBody(DecacCompiler compiler) throws ContextualError {
         throw new UnsupportedOperationException("not yet implemented");
+    }
+
+    @Override
+    public void decompile(IndentPrintStream s) {
+        throw new UnsupportedOperationException("Not yet supported");
+    }
+
+    @Override
+    protected void codeGenDeclClass(DecacCompiler compiler) {
+        throw new UnsupportedOperationException("Not yet supported");
     }
 
 
