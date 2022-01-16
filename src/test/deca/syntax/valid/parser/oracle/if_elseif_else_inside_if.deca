@@ -1,0 +1,29 @@
+{
+    if(true){
+        if(50 == 50.0){
+            println("Hello Moon !");
+        } else if(40 + 10.0 = 50.0){
+                    printx("H");
+                } else if(40 + 10.0 = 50.0){
+                              printx("H");
+                          } else {
+            50;
+        }
+    } else if(50.0 == 80- -6){
+        if(50 == 50.0){
+                    println("Hello Moon !");
+                } else if(40 + 10.0 = 50.0){
+                    printx("H");
+                } else {
+                    50;
+                }
+    } else {
+        if(50 == 50.0){
+                    println("Hello Moon !");
+                } else if(40 + 10.0 = 50.0){
+                    printx("H");
+                } else {
+                    50;
+                }
+    }
+}

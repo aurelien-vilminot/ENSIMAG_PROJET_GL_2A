@@ -10,7 +10,7 @@
 			x = 1;
 		}
 	}
-	while(x == 2){
+	while(x + 50 == 2){
 		printlnx("Hello World !");
 	}
 }

@@ -18,7 +18,7 @@
         println("a");
     }
 
-    if(a && 0){
+    if(a || 0){
         println("a && 0");
     } else if (a){
         println("a");
@@ -26,7 +26,7 @@
         println("else {a && 0} {a}");
     }
 
-    if(a && 0){
+    if(a > 0){
         println("a && 0");
     } else {
         println("else {a && 0}");
