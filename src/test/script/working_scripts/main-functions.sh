@@ -1,9 +1,9 @@
 #! /bin/sh
 
-# This file contains a main function : exec_test_from_dir, this function execute all
-# the tests located in a directory according to some parameters.
+### This file contains a main function : exec_test_from_dir, this function execute all
+### the tests located in a directory according to some parameters.
 
-# Arguments of functions are described at the top of each function.
+### Arguments of functions are described at the top of each function.
 
 # Colors to make pretty prints :
 base=`tput bold` # \e[1;1m
@@ -12,20 +12,24 @@ red=`tput setaf 1` # \e[1;31m
 green=`tput setaf 2` # \e[1;32m
 yellow=`tput setaf 3` # \e[1;33m
 
-# GLOBAL variables :
+# Global variables :
 return_val=0
 result_message=""
 result_string=""
 nb_correct=0
 nb_file=0
 
-# Execute all tests from a given directory :
+        ###################
+        ## MAIN FUNCTION ##
+        ###################
+# Execute all tests from a given directory.
+#
 # $1 = path
 # $2 = part (LEXER; PARSER; CONTEXT; CODEGEN)
 # $3 = validity (VALID; INVALID)
 # $4 = type (ORACLE; BLACK_BOX)
 exec_test_from_dir (){
-  # Arguments :
+  # Getting clean args :
   TEST_PATH="$1"
   PART_NAME="$2"
   VALIDITY="$3"
@@ -35,7 +39,7 @@ exec_test_from_dir (){
   return_val=0
   result_message="Everything OK."
 
-  # These 3 variables must be global :
+  # Reset of these 3 variables which must be global :
   nb_correct=0
   nb_file=0
   result_string=""
@@ -69,17 +73,21 @@ exec_test_from_dir (){
   echo "${base}[BEGIN $PART_NAME $TYPE_TEST $VALIDITY]${reset}"
   # -------------------------------
 
-
+  # ---------------------------------
   # Iterate through all .deca files :
+  # ---------------------------------
   for i in "$TEST_PATH"/*.deca
   do
+      # Check that the file is not *.deca :
+      [ -e "$i" ] || continue
+      # Increment number of file :
       nb_file=$((nb_file+1))
-
+      # Extract the name of the test :
       name_test="${i%.*}"
       name_test="${name_test##*/}"
 
-      # Check if expected result exists :
       if [ "$TYPE_TEST" = "BLACK_BOX" ]; then
+          # Check if expected result exists :
           if ! [ -f "$TEST_PATH"/"$name_test".txt ]; then
               echo "  ${yellow}[NOT FOUND] $name_test : $err_not_found${reset}"
               continue
@@ -105,7 +113,7 @@ exec_test_from_dir (){
               elif [ "$VALIDITY" = "INVALID" ]; then
                   non_empty_file "$log_error_output" "$name_test"
               else
-                  specify_error "Development error 1"
+                  specify_error "Development error about 'VALIDITY'"
                   return
               fi
 
@@ -120,13 +128,13 @@ exec_test_from_dir (){
               elif [ "$VALIDITY" = "INVALID" ]; then
                   grep_pattern "$expected_out" "$log_output" "$name_test"
               else
-                  specify_error "Development error 1"
+                  specify_error "Development error about 'VALIDITY'"
                   return
               fi
 
           # ----------- ERROR ------------
           else
-              specify_error "Development error 1"
+              specify_error "Development error about 'TYPE_TEST'"
               return
           fi
       # ---------------------------------------------------------
@@ -149,7 +157,7 @@ exec_test_from_dir (){
               elif [ "$VALIDITY" = "INVALID" ]; then
                   non_empty_file "$log_error_output" "$name_test"
               else
-                  specify_error "Development error 1"
+                  specify_error "Development error about 'VALIDITY'"
                   return
               fi
 
@@ -164,13 +172,13 @@ exec_test_from_dir (){
               elif [ "$VALIDITY" = "INVALID" ]; then
                   grep_pattern "$expected_out" "$log_output" "$name_test"
               else
-                  specify_error "Development error 1"
+                  specify_error "Development error about 'VALIDITY'"
                   return
               fi
 
           # ----------- ERROR ------------
           else
-              specify_error "Development error 1"
+              specify_error "Development error about 'TYPE_TEST'"
               return
           fi
       # ---------------------------------------------------------
@@ -193,7 +201,7 @@ exec_test_from_dir (){
               elif [ "$VALIDITY" = "INVALID" ]; then
                   non_empty_file "$log_error_output" "$name_test"
               else
-                  specify_error "Development error 1"
+                  specify_error "Development error about 'VALIDITY'"
                   return
               fi
 
@@ -208,13 +216,13 @@ exec_test_from_dir (){
               elif [ "$VALIDITY" = "INVALID" ]; then
                   grep_pattern "$expected_out" "$log_output" "$name_test"
               else
-                  specify_error "Development error 1"
+                  specify_error "Development error about 'VALIDITY'"
                   return
               fi
 
           # ----------- ERROR ------------
           else
-              specify_error "Development error 1"
+              specify_error "Development error about 'TYPE_TEST'"
               return
           fi
       # ---------------------------------------------------------
@@ -237,7 +245,7 @@ exec_test_from_dir (){
                   log_error_output="$TEST_PATH"/"$name_test".log
                   exec_ima_log_error "$?" "$TEST_PATH"/"$name_test".ass "$log_error_output" "$name_test"
               else
-                  specify_error "Development error 1"
+                  specify_error "Development error about 'VALIDITY'"
                   return
               fi
 
@@ -250,13 +258,13 @@ exec_test_from_dir (){
                   log_output="$TEST_PATH"/"$name_test".res
                   exec_ima "$?" "$TEST_PATH"/"$name_test".ass "$log_output" "$expected_out" "$name_test"
               else
-                  specify_error "Development error 1"
+                  specify_error "Development error about 'VALIDITY'"
                   return
               fi
 
           # ----------- ERROR ------------
           else
-              specify_error "Development error 1.1"
+              specify_error "Development error about 'TYPE_TEST'"
               return
           fi
       # ---------------------------------------------------------
@@ -264,7 +272,7 @@ exec_test_from_dir (){
       # ---------------------------------
 
       else
-          specify_error "Development error 2"
+          specify_error "Development error about 'PART_NAME'"
           return
       fi
 
@@ -284,10 +292,9 @@ exec_test_from_dir (){
   # -------------------------------
 }
 
-
-
-# --------------------------- OTHER FUNCTIONS -------------------------------
-
+        #####################
+        ## OTHER FUNCTIONS ##
+        #####################
 # Set both error variables on.
 #
 # $1 : message of error
