@@ -1,11 +1,3 @@
-#! /bin/sh
-
-fct1 (){
-  retval="$1.sefsdf.$2"
-  echo "$retval"
-}
-
-####
 
 # Invalid :
 TEST_PATH="./src/test/deca/codegen/invalid/black-box"
