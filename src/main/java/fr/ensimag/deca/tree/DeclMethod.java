@@ -17,6 +17,12 @@ public class DeclMethod extends AbstractDeclMethod {
 
     @Override
     protected void codeGenDeclMethod(DecacCompiler compiler) {
+        // label code.nameClass.nameMethod
+        // TSTO / BOV stack_overflow
+        // sauvegarde des registres
+        // code methode (valeur de retour dans R0)
+        // label fin.nameClass.nameMethod
+        // restauration des registres
         throw new UnsupportedOperationException("not yet implemented");
     }
 
