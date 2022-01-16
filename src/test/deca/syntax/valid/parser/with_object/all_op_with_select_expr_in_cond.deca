@@ -19,8 +19,8 @@
         x.y() > x.y.z();
         x.x(50.0) instanceof ABC;
         x.y.z("Hello World !") - y(x, y, 25);
-        !x.y.z(x.y, x.z);
-        -x.y.z(x.y(5.30));
+        !x.y.z(x.y, x.z) > 50.0 + 2;
+        -x.y.z(x.y(5.30)) < 888888;
         -!-!-!x.z(x.y());
         !-!-!x.z(x.y());
     }

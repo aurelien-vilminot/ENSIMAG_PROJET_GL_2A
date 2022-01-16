@@ -1,3 +1,4 @@
 {
 	new A(); new int_float();
+	new B();
 }
