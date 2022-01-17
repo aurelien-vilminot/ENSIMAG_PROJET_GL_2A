@@ -1,0 +1,11 @@
+class Animal{
+    int x, y;
+}
+
+class Cow extends Animal{
+    int weight;
+}
+
+{
+    Cow cow =  new Animal();
+}

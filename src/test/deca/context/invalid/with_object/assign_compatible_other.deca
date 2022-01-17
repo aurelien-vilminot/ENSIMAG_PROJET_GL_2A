@@ -1,0 +1,11 @@
+class Animal{
+    int x, y;
+}
+
+class Car{
+    int speed;
+}
+
+{
+    Animal animal =  new Car();
+}

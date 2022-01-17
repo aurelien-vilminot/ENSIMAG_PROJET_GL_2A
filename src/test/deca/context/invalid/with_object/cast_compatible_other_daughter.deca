@@ -1,0 +1,14 @@
+class Animal{
+    int x, y;
+}
+
+class Car{
+    int speed;
+}
+
+class Bus extends Car{}
+
+{
+    Bus bus = new Bus();
+    (Animal) (bus);
+}
