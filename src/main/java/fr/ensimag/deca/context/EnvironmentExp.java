@@ -23,9 +23,6 @@ import java.util.*;
  * @date 04/01/2022
  */
 public class EnvironmentExp {
-    // A FAIRE : implémenter la structure de donnée représentant un
-    // environnement (association nom -> définition, avec possibilité
-    // d'empilement).
 
     EnvironmentExp parentEnvironment;
     private HashMap<Symbol, LinkedList<ExpDefinition>> associationTable;

@@ -1,6 +1,6 @@
 {
     if(true || false){
-    } elseif(true || false){
+    } else if(true || false){
     } else {
     }
 }

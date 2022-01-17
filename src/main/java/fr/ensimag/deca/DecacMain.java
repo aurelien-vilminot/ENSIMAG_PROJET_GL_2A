@@ -63,13 +63,6 @@ public class DecacMain {
         }
 
         if (options.getParallel()) {
-            // A FAIRE : instancier DecacCompiler pour chaque fichier à
-            // compiler, et lancer l'exécution des méthodes compile() de chaque
-            // instance en parallèle. Il est conseillé d'utiliser
-            // java.util.concurrent de la bibliothèque standard Java.
-
-            // Nb threads = size of source files list
-            // TODO: parallel execution
             int nThreads = Integer.min(options.getSourceFiles().size(), Runtime.getRuntime().availableProcessors());
             ExecutorService executorService = Executors.newFixedThreadPool(nThreads);
             for (File source : options.getSourceFiles()) {
