@@ -64,6 +64,10 @@ public class DeclClass extends AbstractDeclClass {
         } catch (EnvironmentTypes.DoubleDefException e) {
             throw new ContextualError("Already class identifier declared", this.getLocation());
         }
+
+        // Tree decoration for class identifier
+        this.name.verifyType(compiler);
+
         LOG.debug("verify DeclClass: end");
     }
 
