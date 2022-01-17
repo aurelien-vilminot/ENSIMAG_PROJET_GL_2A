@@ -91,5 +91,3 @@ exec_context(){
 exec_codegen(){
   exec_part "CODEGEN" "/codegen" ""
 }
-
-exec_codegen
