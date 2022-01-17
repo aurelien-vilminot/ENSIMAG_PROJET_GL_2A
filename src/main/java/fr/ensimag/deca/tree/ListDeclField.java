@@ -1,6 +1,7 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable;
@@ -15,6 +16,7 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
         for (AbstractDeclField abstractDeclField : this.getList()) {
             abstractDeclField.verifyDeclField(compiler, superSymbol, symbolCurrentClass);
         }
+        ((ClassDefinition) compiler.getEnvironmentTypes().get(symbolCurrentClass)).setNumberOfFields(this.getList().size());
         LOG.debug("verify listDeclField: end");
     }
 
