@@ -676,14 +676,12 @@ dim_expr returns[ListExpr tree]
       )*
     ;
 
-
-// TODO : Verify the setLocation
 array_creation_expr returns[NewArray tree]
     // t for type
     : NEW t=ident d=dim_expr{
-        assert($i.tree != null);
+        assert($t.tree != null);
         assert($d.tree != null);
         $tree = new NewArray($t.tree, $d.tree);
-        setLocation($tree, $i.start);
+        setLocation($tree, $NEW);
     }
     ;
