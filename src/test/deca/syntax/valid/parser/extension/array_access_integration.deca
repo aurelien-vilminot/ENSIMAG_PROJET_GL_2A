@@ -1,0 +1,18 @@
+{
+    /*
+        int[] a = new int[10];
+    */
+
+    // one for each derivation on rule "select_expr"
+
+    int x = a[0];
+    int x = sqr(a)[0];
+    int x = (a)[0];
+    int x = readInt()[0];
+    int x = readFloat()[0];
+    int x = new Object()[0];
+    int x = 42[0];
+    int x = myclass.elements[0];
+    int x = myclass.getElements(param1,param2)[0];
+    int x = (int)(myList)[0]
+}
