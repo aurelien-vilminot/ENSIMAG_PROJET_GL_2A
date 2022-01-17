@@ -29,16 +29,20 @@ public class Selection extends AbstractLValue {
 
     @Override
     public void decompile(IndentPrintStream s) {
-
+        expr.decompile(s);
+        s.print(".");
+        ident.decompile(s);
     }
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-
+        expr.prettyPrint(s, prefix, false);
+        ident.prettyPrint(s, prefix, true);
     }
 
     @Override
     protected void iterChildren(TreeFunction f) {
-
+        expr.iter(f);
+        ident.iter(f);
     }
 }
