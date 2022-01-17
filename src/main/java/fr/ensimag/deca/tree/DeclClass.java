@@ -89,7 +89,6 @@ public class DeclClass extends AbstractDeclClass {
         try {
             environmentExpClass.addSuperExpDefinition(environmentExpSuperClass);
         } catch (EnvironmentExp.DoubleDefException e) {
-            System.out.println("AAAA");
             // TODO
         }
 
@@ -133,7 +132,7 @@ public class DeclClass extends AbstractDeclClass {
         int addr = compiler.incGlobalStackSize(1);
         // TODO: @Object.equals
         DAddr dAddr = new RegisterOffset(addr, Register.GB);
-        ((ClassDefinition) (compiler.getEnvironmentTypes().get(name.getName()))).setOperand(dAddr);
+        name.getClassDefinition().setOperand(dAddr);
         compiler.incGlobalStackSize(name.getClassDefinition().getNumberOfMethods() + 1);
         // TODO: @superclass
 
@@ -145,7 +144,7 @@ public class DeclClass extends AbstractDeclClass {
         // TODO: ADDSP
         // TODO: save registers used over R2
         // initialisation des attributs (à 0 si non précisé)
-        // listDeclField.codeGenListDeclField(compiler);
+        listDeclField.codeGenListDeclField(compiler);
         // TODO: restore registers used over R2
         // return
         compiler.addInstruction(new RTS());
