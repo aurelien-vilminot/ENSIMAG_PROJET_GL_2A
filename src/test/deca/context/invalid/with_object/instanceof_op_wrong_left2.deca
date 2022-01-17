@@ -2,5 +2,5 @@ class A{}
 
 {
     A a = new A();
-    a instanceof float;
+    true instanceof A;
 }
