@@ -42,7 +42,7 @@ exec_part(){
   recap_string="$recap_string \n    ${base}  ["$1" ORACLE VALID TESTS] $result_string"
 
   # Echo recap :
-  echo -e "$recap_string"
+  echo "$recap_string"
 
   # !!! Exit status !!!
   if [ "$nb_correct_total" = "$nb_file_total" ]
@@ -91,3 +91,5 @@ exec_context(){
 exec_codegen(){
   exec_part "CODEGEN" "/codegen" ""
 }
+
+exec_codegen

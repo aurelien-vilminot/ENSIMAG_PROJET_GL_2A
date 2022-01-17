@@ -47,6 +47,7 @@ exec_test_from_dir (){
   # Storing error messages :
   err_not_found="Expected result file not found."
   err_no_match="Do not match with the expected result."
+  err_decac="Cannot produce an assembler file."
 
   # --------- Check the arguments ---------
   if [ "$PART_NAME" != "PARSER" ] && [ "$PART_NAME" != "LEXER" ] && [ "$PART_NAME" != "CONTEXT" ] && [ "$PART_NAME" != "CODEGEN" ]; then
@@ -236,36 +237,41 @@ exec_test_from_dir (){
       elif [ "$PART_NAME" = "CODEGEN" ]; then
           # ---- Generate Assembler file  -----
           decac "$i"
+          rep=$?
+          if [ $rep -eq 0 ]; then
+              # ------------ ORACLE -------------
+              if [ "$TYPE_TEST" = "ORACLE" ]; then
+                  # ---- Validity Difference -----
+                  if [ "$VALIDITY" = "VALID" ]; then
+                      # ---- Execute Assembler File -----
+                      log_error_output="$TEST_PATH"/"$name_test".log
+                      exec_ima_log_error "$?" "$TEST_PATH"/"$name_test".ass "$log_error_output" "$name_test"
+                  else
+                      specify_error "Development error about 'VALIDITY'"
+                      return
+                  fi
 
-          # ------------ ORACLE -------------
-          if [ "$TYPE_TEST" = "ORACLE" ]; then
-              # ---- Validity Difference -----
-              if [ "$VALIDITY" = "VALID" ]; then
-                  # ---- Execute Assembler File -----
-                  log_error_output="$TEST_PATH"/"$name_test".log
-                  exec_ima_log_error "$?" "$TEST_PATH"/"$name_test".ass "$log_error_output" "$name_test"
+              # ----------- BLACK_BOX ------------
+              elif [ "$TYPE_TEST" = "BLACK_BOX" ]; then
+                  # ---- Validity Difference -----
+                  if [ "$VALIDITY" = "VALID" ]; then
+                      # ---- Execute Assembler File -----
+                      # ----- and spot differences ------
+                      log_output="$TEST_PATH"/"$name_test".res
+                      exec_ima "$?" "$TEST_PATH"/"$name_test".ass "$log_output" "$expected_out" "$name_test"
+                  else
+                      specify_error "Development error about 'VALIDITY'"
+                      return
+                  fi
+
+              # ----------- ERROR ------------
               else
-                  specify_error "Development error about 'VALIDITY'"
+                  specify_error "Development error about 'TYPE_TEST'"
                   return
               fi
 
-          # ----------- BLACK_BOX ------------
-          elif [ "$TYPE_TEST" = "BLACK_BOX" ]; then
-              # ---- Validity Difference -----
-              if [ "$VALIDITY" = "VALID" ]; then
-                  # ---- Execute Assembler File -----
-                  # ----- and spot differences ------
-                  log_output="$TEST_PATH"/"$name_test".res
-                  exec_ima "$?" "$TEST_PATH"/"$name_test".ass "$log_output" "$expected_out" "$name_test"
-              else
-                  specify_error "Development error about 'VALIDITY'"
-                  return
-              fi
-
-          # ----------- ERROR ------------
-          else
-              specify_error "Development error about 'TYPE_TEST'"
-              return
+            else
+              echo "  ${yellow}[INCORRECT] $name_test : $err_decac${reset}"
           fi
       # ---------------------------------------------------------
       # --------- END CODEGEN -------------------
