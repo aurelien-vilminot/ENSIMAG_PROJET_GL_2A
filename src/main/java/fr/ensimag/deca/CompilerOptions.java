@@ -72,8 +72,6 @@ public class CompilerOptions {
         Collections.addAll(argsList, args);
         this.argsNumber = args.length;
 
-        // TODO: add "-w" option. Ask to the professor
-
         // Add sources files to the files list
         Pattern filePattern = Pattern.compile("^.?/?.*?\\.deca$");
         Pattern registerPattern = Pattern.compile("^-r$");
