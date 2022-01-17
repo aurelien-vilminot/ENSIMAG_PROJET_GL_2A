@@ -38,10 +38,12 @@ do
 
     decac "$i"
     if [ $? -eq 1 ]; then
-       echo "  ${red}[INCORRECT] $name_test does not produce an .ass file${reset}"
+        nb_correct=$((nb_correct+1))
+        echo "  ${green}[CORRECT] $name_test${reset}"
       else
         log_err="$TEST_PATH"/"$name_test".log
-        ima "$TEST_PATH"/"$name_test".ass 1> /dev/null 2> "$log_err"
+        # ima "$TEST_PATH"/"$name_test".ass 1> /dev/null 2> "$log_err"
+        ima "$TEST_PATH"/"$name_test".ass > "$log_err" 2>&1
         rm "$TEST_PATH"/"$name_test".ass
 
         differences=$(diff "$TEST_PATH"/"$name_test".txt "$log_err"| head)
