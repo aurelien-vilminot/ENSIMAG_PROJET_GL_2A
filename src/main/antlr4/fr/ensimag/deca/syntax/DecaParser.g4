@@ -538,6 +538,7 @@ class_extension returns[AbstractIdentifier tree]
         }
     | /* epsilon */ {
             $tree = new Identifier(getSymbolTable().create("Object"));
+            $tree.setLocation(Location.BUILTIN);
         }
     ;
 
@@ -547,17 +548,14 @@ class_body returns[ListDeclField listdeclfield, ListDeclMethod listdeclmeth]
     $listdeclmeth = new ListDeclMethod();
 }
     : (m=decl_method {
-
         }
-      | f=decl_field_set {
-
-        }
+      | f=decl_field_set[$listdeclfield]
       )*
     ;
 
-// TODO
-decl_field_set
-    : v=visibility t=type list_decl_field
+// TODO: visibility
+decl_field_set[ListDeclField l]
+    : v=visibility t=type list_decl_field[$l, $t.tree]
       SEMI
     ;
 
@@ -569,20 +567,37 @@ visibility
         }
     ;
 
-//TODO
-list_decl_field
-    : dv1=decl_field
-        (COMMA dv2=decl_field
+list_decl_field[ListDeclField l, AbstractIdentifier t]
+    : dv1=decl_field[$t] {
+        assert($dv1.tree != null);
+        $l.add($dv1.tree);
+    }
+        (COMMA dv2=decl_field[$t] {
+            assert($dv2.tree != null);
+            $l.add($dv2.tree);
+        }
       )*
     ;
 
-//TODO
-decl_field returns[AbstractDeclField tree]
+decl_field[AbstractIdentifier t] returns[AbstractDeclField tree]
+@init {
+    AbstractInitialization init = null;
+}
     : i=ident {
+            assert($i.tree != null);
         }
       (EQUALS e=expr {
+            assert($e.tree != null);
+            init = new Initialization($e.tree);
+            setLocation(init, $EQUALS);
         }
       )? {
+            if (init == null) {
+                init = new NoInitialization();
+                setLocation(init, $i.start);
+            }
+            $tree = new DeclField($t, $i.tree, init);
+            setLocation($tree, $i.start);
         }
     ;
 

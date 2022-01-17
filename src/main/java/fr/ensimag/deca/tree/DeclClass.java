@@ -128,12 +128,12 @@ public class DeclClass extends AbstractDeclClass {
         // TODO: ADDSP
         // TODO: save registers used over R2
         // initialisation des attributs (à 0 si non précisé)
-        listDeclField.codeGenListDeclField(compiler);
+        // listDeclField.codeGenListDeclField(compiler);
         // TODO: restore registers used over R2
         // return
         compiler.addInstruction(new RTS());
         // table des méthodes (code.name.methodname)
-        listDeclMethod.codeGenListDeclMethod(compiler);
+        // listDeclMethod.codeGenListDeclMethod(compiler);
     }
 
 
