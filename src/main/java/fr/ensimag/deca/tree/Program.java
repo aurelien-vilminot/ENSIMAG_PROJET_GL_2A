@@ -52,9 +52,8 @@ public class Program extends AbstractProgram {
     @Override
     public void codeGenProgram(DecacCompiler compiler) {
         // classes.codeGenMethodTable(compiler);
-        classes.codeGenListDeclClass(compiler);
         main.codeGenMain(compiler);
-        compiler.addInstruction(new HALT());
+        classes.codeGenListDeclClass(compiler);
         this.codeGenInit(compiler);
         this.codeGenError(compiler);
     }

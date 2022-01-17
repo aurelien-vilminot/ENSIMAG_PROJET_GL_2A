@@ -3,6 +3,9 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.LEA;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -58,6 +61,14 @@ public class Selection extends AbstractLValue {
         expr.decompile(s);
         s.print(".");
         ident.decompile(s);
+    }
+
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, int n) {
+        int index = ident.getFieldDefinition().getIndex();
+        expr.codeGenExpr(compiler, n);
+        // Rn contient l'adresse dans le tas
+        compiler.addInstruction(new LEA(new RegisterOffset(index, Register.getR(n)), Register.getR(n)));
     }
 
     @Override
