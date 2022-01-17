@@ -89,6 +89,7 @@ public class DeclClass extends AbstractDeclClass {
         try {
             environmentExpClass.addSuperExpDefinition(environmentExpSuperClass);
         } catch (EnvironmentExp.DoubleDefException e) {
+            System.out.println("AAAA");
             // TODO
         }
 
@@ -127,11 +128,14 @@ public class DeclClass extends AbstractDeclClass {
 
     @Override
     protected void codeGenDeclClass(DecacCompiler compiler) {
-        // Allocate in stack
+        // TODO: move to pass 1
+        // Allocate pointer to superclass + @Objet.equals
         int addr = compiler.incGlobalStackSize(1);
+        // TODO: @Object.equals
         DAddr dAddr = new RegisterOffset(addr, Register.GB);
-        compiler.getEnvironmentExp().get(name.getName()).setOperand(dAddr);
-        compiler.incGlobalStackSize(name.getClassDefinition().getNumberOfFields());
+        ((ClassDefinition) (compiler.getEnvironmentTypes().get(name.getName()))).setOperand(dAddr);
+        compiler.incGlobalStackSize(name.getClassDefinition().getNumberOfMethods() + 1);
+        // TODO: @superclass
 
         // CodeGen
         // init.name
