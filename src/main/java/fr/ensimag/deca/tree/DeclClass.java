@@ -80,6 +80,9 @@ public class DeclClass extends AbstractDeclClass {
     @Override
     protected void verifyClassMembers(DecacCompiler compiler)
             throws ContextualError {
+        LOG.debug("verify ClassMembers: start");
+        Validate.notNull(compiler, "Compiler (env_types) object should not be null");
+
         EnvironmentExp environmentExpSuperClass = ((ClassDefinition) compiler.getEnvironmentTypes().get(this.superClass.getName())).getMembers();
         EnvironmentExp environmentExpClass = ((ClassDefinition) compiler.getEnvironmentTypes().get(this.name.getName())).getMembers();
 
@@ -89,13 +92,23 @@ public class DeclClass extends AbstractDeclClass {
             // TODO
         }
 
-        // TODO: verify listdeclMethod, listdeclField
+        this.listDeclField.verifyListDeclField(compiler, this.superClass.getName(), this.name.getName());
+        this.listDeclMethod.verifyListDeclMethod(compiler, this.superClass.getName());
 
+        LOG.debug("verify ClassMembers: end");
     }
     
     @Override
     protected void verifyClassBody(DecacCompiler compiler) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        LOG.debug("verify ClassBody: start");
+
+        // Fields initialization
+        this.listDeclField.verifyListInitField(compiler, this.name.getName());
+
+        // Methods body
+        // TODO
+
+        LOG.debug("verify ClassBody: end");
     }
 
     @Override
