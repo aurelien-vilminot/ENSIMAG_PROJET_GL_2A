@@ -60,6 +60,8 @@ public class DeclField extends AbstractDeclField {
             throw new ContextualError("Identifier already declared in super class must be an attribute", this.getLocation());
         }
 
+        currentClassDefinition.incNumberOfFields();
+
         try {
             environmentExpCurrentClass.declare(
                     this.fieldName.getName(),
@@ -68,9 +70,9 @@ public class DeclField extends AbstractDeclField {
                             this.getLocation(),
                             this.visibility,
                             currentClassDefinition,
-                            currentClassDefinition.incNumberOfMethods()
+                            currentClassDefinition.getNumberOfFields()
                     )
-                    );
+            );
         } catch (EnvironmentExp.DoubleDefException e) {
             throw new ContextualError("Attribute name already declared", this.getLocation());
         }

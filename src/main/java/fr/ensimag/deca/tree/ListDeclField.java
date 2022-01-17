@@ -21,7 +21,6 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
         for (AbstractDeclField abstractDeclField : this.getList()) {
             abstractDeclField.verifyDeclField(compiler, superSymbol, symbolCurrentClass);
         }
-        ((ClassDefinition) compiler.getEnvironmentTypes().get(symbolCurrentClass)).setNumberOfFields(this.getList().size());
         LOG.debug("verify listDeclField: end");
     }
 
