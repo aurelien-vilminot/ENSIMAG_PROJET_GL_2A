@@ -5,6 +5,11 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.DAddr;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -34,7 +39,12 @@ public class DeclField extends AbstractDeclField {
 
     @Override
     protected void codeGenDeclField(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("not yet implemented");
+        // TODO: LOAD value into R0
+        // -2(LB) is the address of the object to initialize
+        compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), Register.R1));
+        DAddr dAddr = compiler.getEnvironmentExp().get(fieldName.getName()).getOperand();
+        compiler.addInstruction(new STORE(Register.R0, dAddr));
+
     }
 
     @Override

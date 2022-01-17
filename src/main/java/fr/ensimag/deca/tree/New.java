@@ -60,7 +60,7 @@ public class New extends AbstractExpr {
         // store method table adress in Rn
         compiler.addInstruction(new LEA(methodAddr, Register.R0));
         compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(0, Register.getR(n))));
-        // save Rn
+        // save Rn at the top of the stack
         compiler.addInstruction(new PUSH(Register.getR(n)));
         // initialize object
         compiler.addInstruction(new BSR(new Label("init." + ident.getName())));
