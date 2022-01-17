@@ -3,6 +3,11 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.ima.pseudocode.DAddr;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.RTS;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -94,10 +99,26 @@ public class DeclClass extends AbstractDeclClass {
 
     @Override
     protected void codeGenDeclClass(DecacCompiler compiler) {
+        // Allocate in stack
+        int addr = compiler.incGlobalStackSize(1);
+        DAddr dAddr = new RegisterOffset(addr, Register.GB);
+        compiler.getEnvironmentExp().get(name.getName()).setOperand(dAddr);
+        compiler.incGlobalStackSize(name.getClassDefinition().getNumberOfFields());
+
+        // CodeGen
         // init.name
+        compiler.addLabel(new Label("init." + name.getName().toString()));
+        // TODO: TSTO
+        // TODO: BOV stack_overflow
+        // TODO: ADDSP
+        // TODO: save registers used over R2
         // initialisation des attributs (à 0 si non précisé)
+        listDeclField.codeGenListDeclField(compiler);
+        // TODO: restore registers used over R2
+        // return
+        compiler.addInstruction(new RTS());
         // table des méthodes (code.name.methodname)
-        throw new UnsupportedOperationException("Not yet supported");
+        listDeclMethod.codeGenListDeclMethod(compiler);
     }
 
 
