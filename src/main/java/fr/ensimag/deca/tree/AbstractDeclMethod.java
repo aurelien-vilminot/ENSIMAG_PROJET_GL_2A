@@ -10,7 +10,8 @@ public abstract class AbstractDeclMethod extends Tree {
 
     // TODO: comment
     protected abstract void verifyDeclMethod(DecacCompiler compiler,
-                                             SymbolTable.Symbol superSymbol)
+                                             SymbolTable.Symbol superSymbol,
+                                             SymbolTable.Symbol classSymbol)
             throws ContextualError;
 
     /**

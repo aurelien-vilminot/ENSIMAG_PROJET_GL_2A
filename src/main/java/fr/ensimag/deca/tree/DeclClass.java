@@ -93,7 +93,7 @@ public class DeclClass extends AbstractDeclClass {
         }
 
         this.listDeclField.verifyListDeclField(compiler, this.superClass.getName(), this.name.getName());
-        this.listDeclMethod.verifyListDeclMethod(compiler, this.superClass.getName());
+        this.listDeclMethod.verifyListDeclMethod(compiler, this.superClass.getName(), this.name.getName());
 
         LOG.debug("verify ClassMembers: end");
     }

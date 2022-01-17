@@ -12,14 +12,14 @@ import org.apache.log4j.Logger;
 public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
     private static final Logger LOG = Logger.getLogger(ListDeclClass.class);
 
-    protected void verifyListDeclMethod(DecacCompiler compiler, SymbolTable.Symbol superSymbol)
+    protected void verifyListDeclMethod(DecacCompiler compiler, SymbolTable.Symbol superSymbol, SymbolTable.Symbol classSymbol)
             throws ContextualError {
         LOG.debug("verify listDeclMethod: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
         Validate.notNull(superSymbol, "Symbol of super class should not be null");
 
         for (AbstractDeclMethod abstractDeclMethod : this.getList()) {
-            abstractDeclMethod.verifyDeclMethod(compiler, superSymbol);
+            abstractDeclMethod.verifyDeclMethod(compiler, superSymbol, classSymbol);
         }
         LOG.debug("verify listDeclMethod: end");
     }
