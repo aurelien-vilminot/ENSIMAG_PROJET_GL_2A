@@ -1,0 +1,7 @@
+{
+    float f = 1.2f;
+    int a = (int) (f);
+    println(a);
+    println((int)(22.3f));
+    println((int)(-22.5f));
+}

@@ -1,0 +1,6 @@
+{
+    boolean b = false;
+    if(!true || (false || (b || (!!b || (!!!!b || (false || (!true || ( false || (b || ( !!b || ( false || ( false || ( false || ( !true || ( !!b || ( !!b || ( b || ( !!b || ( false || true))))))))))))))))))){
+        print("OK");
+    }
+}

@@ -21,6 +21,7 @@ import java.io.PrintStream;
 import fr.ensimag.ima.pseudocode.instructions.BOV;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
 /**
@@ -38,7 +39,7 @@ import org.apache.log4j.Logger;
  * @author gl07
  * @date 01/01/2022
  */
-public class DecacCompiler {
+public class DecacCompiler implements Runnable {
     private static final Logger LOG = Logger.getLogger(DecacCompiler.class);
     
     /**
@@ -59,6 +60,7 @@ public class DecacCompiler {
     }
 
     public int incGlobalStackSize(int inc) {
+        Validate.isTrue(inc >= 0, "The incrementation should be positive");
         globalStackSize += inc;
         return globalStackSize;
     }
@@ -87,6 +89,16 @@ public class DecacCompiler {
         addOverflowError(false);
     }
 
+    public void addStackOverflowError(boolean first) {
+        if (!this.compilerOptions.getNoCheck()) {
+            if (first) {
+                addFirst(new Line(new BOV(getLabelGenerator().getStackOverFlowLabel())));
+            } else {
+                addInstruction(new BOV(getLabelGenerator().getStackOverFlowLabel()));
+            }
+        }
+    }
+
     public void addOverflowError(boolean first) {
         if (!this.compilerOptions.getNoCheck()) {
             if (first) {
@@ -97,9 +109,19 @@ public class DecacCompiler {
         }
     }
 
+    public void addIoError() {
+        if (!this.compilerOptions.getNoCheck()) {
+            addInstruction(new BOV(getLabelGenerator().getIoLabel()));
+        }
+    }
+
     public DecacCompiler(CompilerOptions compilerOptions, File source) {
         super();
-        this.compilerOptions = compilerOptions;
+        if (compilerOptions == null) {
+            this.compilerOptions = new CompilerOptions();
+        } else {
+            this.compilerOptions = compilerOptions;
+        }
         this.source = source;
 
         // Init environments
@@ -120,14 +142,23 @@ public class DecacCompiler {
             this.environmentTypes.declare(booleanSymbol, new TypeDefinition(new BooleanType(booleanSymbol), Location.BUILTIN));
             this.environmentTypes.declare(floatSymbol, new TypeDefinition(new FloatType(floatSymbol), Location.BUILTIN));
             this.environmentTypes.declare(intSymbol, new TypeDefinition(new IntType(intSymbol), Location.BUILTIN));
-            this.environmentTypes.declare(objectSymbol, new TypeDefinition(new ClassType(objectSymbol, Location.BUILTIN, null), Location.BUILTIN));
+            this.environmentTypes.declare(objectSymbol, new ClassDefinition(
+                    new ClassType(objectSymbol, Location.BUILTIN, null),
+                    Location.BUILTIN,
+                    null
+            ));
         } catch (EnvironmentTypes.DoubleDefException doubleDefException) {
             LOG.error("Multiple type declaration");
         }
 
         // Init equals method
         Signature equalsSignature = new Signature();
-        MethodDefinition equalsDefinition = new MethodDefinition(this.environmentTypes.get(booleanSymbol).getType(), Location.BUILTIN, equalsSignature, 0);
+        MethodDefinition equalsDefinition = new MethodDefinition(
+                this.environmentTypes.get(booleanSymbol).getType(),
+                Location.BUILTIN,
+                equalsSignature,
+                0
+        );
         try {
             this.environmentExp.declare(equalsSymbol, equalsDefinition);
         } catch (EnvironmentExp.DoubleDefException doubleDefException) {
@@ -346,4 +377,8 @@ public class DecacCompiler {
         return parser.parseProgramAndManageErrors(err);
     }
 
+    @Override
+    public void run() {
+        this.compile();
+    }
 }

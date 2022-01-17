@@ -1,3 +1,4 @@
 {
-  -!readFloat() <= 5.0 <= 5 <= (--10.0); 5.89 <= --50 <= 2 <= "Hello World !";
+  -!readFloat() <= 5.0 <= 5 <= (--10.0); 5.89 <= --50 <= 2 <= "Hello World !";  5 <= readInt();
+  readFloat() >= 50.0;
 }

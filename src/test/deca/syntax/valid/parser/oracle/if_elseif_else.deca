@@ -1,0 +1,11 @@
+{
+    if(true){
+        println("Hello World !");
+    } else if(false){
+        50.0 * 89 / 4;
+    } else if(50 == 50){
+        40;
+    } else {
+        printx("Hello", 50.6);
+    }
+}

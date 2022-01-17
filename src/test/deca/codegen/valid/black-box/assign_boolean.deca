@@ -1,0 +1,21 @@
+{
+    int i = 1;
+    boolean b;
+
+    if(b = (i == 1)){
+        print(i);
+    }
+
+    if(b = true){
+        print(i);
+    }
+
+    if(b = i == 1){
+        print(i);
+    }
+
+    if(b){
+        print("it goes in");
+    }
+
+}

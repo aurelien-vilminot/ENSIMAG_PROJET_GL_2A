@@ -1,0 +1,7 @@
+{
+    float f;
+    f = 1.0f;
+    println(f);
+    f = f + 1;
+    println(f);
+}

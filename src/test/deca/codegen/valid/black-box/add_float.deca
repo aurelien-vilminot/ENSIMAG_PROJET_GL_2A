@@ -1,0 +1,7 @@
+{
+    float a = 1.0e+2;
+    float b = 2.0;
+    if(a + b + 13 == 115.0){
+        println("Add float");
+    }
+}

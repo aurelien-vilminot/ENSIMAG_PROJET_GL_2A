@@ -72,7 +72,7 @@ public class TestEnvironmentTypes {
 
     @Test
     public void testSubTypes() {
-        ClassType type1 = new ClassType(this.symbolTest);
+        ClassType type1 = new ClassType(this.symbolTest, null, null);
         ClassType type2 = new ClassType(this.symbolTest, null, type1.getDefinition());
 
         // Check validate
@@ -93,7 +93,7 @@ public class TestEnvironmentTypes {
         assertEquals(actualMessage, expectedMessage);
 
         // Check same type for type1 and type2
-        assertTrue(this.environmentTypes.subTypes(type1, type2));
+        assertTrue(this.environmentTypes.subTypes(type2, type1));
         assertTrue(this.environmentTypes.subTypes(type1, type1));
 
         // Check if null is a subtype of any class
@@ -173,4 +173,24 @@ public class TestEnvironmentTypes {
         VoidType voidType = new VoidType(this.symbolTest);
         assertFalse(this.environmentTypes.castCompatible(voidType, type2));
     }
+
+    @Test
+    public void testToString() throws EnvironmentTypes.DoubleDefException {
+        // Check empty environment
+        String expectedString = "Environnement de types :";
+        assertEquals(expectedString, this.environmentTypes.toString());
+
+        this.environmentTypes.declare(this.symbolTest, this.typeDefinition);
+
+        // Test toString type return
+        assertInstanceOf(String.class, this.environmentTypes.toString());
+
+        // Check environment with declared definition
+        System.out.println(this.environmentTypes);
+        expectedString =
+                "Environnement de types :\n" +
+                        "\ttest : type defined at null, type=null";
+        assertEquals(expectedString, this.environmentTypes.toString());
+    }
+
 }

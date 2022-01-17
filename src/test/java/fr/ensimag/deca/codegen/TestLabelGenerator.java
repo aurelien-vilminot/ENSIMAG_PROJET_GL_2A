@@ -1,10 +1,10 @@
 package fr.ensimag.deca.codegen;
 
+import fr.ensimag.ima.pseudocode.Label;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestLabelGenerator {
     private LabelGenerator labelGenerator;
@@ -15,7 +15,7 @@ public class TestLabelGenerator {
     }
 
     @Test
-    public void TestLabelGeneration() {
+    public void testLabelGeneration() {
         // Check validate
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             this.labelGenerator.generateLabel(null);
@@ -41,5 +41,19 @@ public class TestLabelGenerator {
         assertEquals(labelTemplate2WithPoint + ++labelTemplate2Number, this.labelGenerator.generateLabel(labelTemplate2));
         assertEquals(labelTemplateWithPoint + ++labelTemplateNumber, this.labelGenerator.generateLabel(labelTemplate));
 
+    }
+
+    @Test
+    public void testIOError() {
+        Label expectedLabel = new Label("io_error");
+
+        // Check if IOError is false by default
+        assertFalse(this.labelGenerator.getIoError());
+
+        // Check label getter
+        assertEquals(expectedLabel.toString(), this.labelGenerator.getIoLabel().toString());
+
+        // Check implicit set IOError to true
+        assertTrue(this.labelGenerator.getIoError());
     }
 }

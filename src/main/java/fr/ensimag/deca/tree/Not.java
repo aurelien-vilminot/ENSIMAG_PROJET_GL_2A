@@ -2,7 +2,10 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.*;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -44,7 +47,16 @@ public class Not extends AbstractUnaryExpr {
     }
 
     @Override
-    protected void codeGenExprBool(DecacCompiler compiler, boolean bool, Label branch) {
-        getOperand().codeGenExprBool(compiler, !bool, branch);
+    protected void codeGenExprBool(DecacCompiler compiler, boolean bool, Label branch, int n) {
+        getOperand().codeGenExprBool(compiler, !bool, branch, n);
+    }
+
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, int n) {
+        Validate.isTrue((n <= compiler.getCompilerOptions().getRegisterNumber() - 1));
+        getOperand().codeGenExpr(compiler, n);
+        // Rn <- 1 - Rn
+        compiler.addInstruction(new OPP(Register.getR(n), Register.getR(n)));
+        compiler.addInstruction(new ADD(new ImmediateInteger(1), Register.getR(n)));
     }
 }

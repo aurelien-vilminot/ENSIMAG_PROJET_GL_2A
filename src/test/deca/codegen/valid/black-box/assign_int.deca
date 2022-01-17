@@ -1,0 +1,11 @@
+{
+    int i;
+
+    if((i = 1) == 1){
+        print("Assign");
+    }
+
+    if(i == 1){
+        print(i);
+    }
+}

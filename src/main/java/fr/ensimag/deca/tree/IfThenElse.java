@@ -53,6 +53,11 @@ public class IfThenElse extends AbstractInst {
         Validate.notNull(returnType, "Return type should not be null");
 
         this.condition.verifyInst(compiler, localEnv, currentClass, returnType);
+
+        if (!this.condition.getType().isBoolean()) {
+            throw new ContextualError("The condition must be only boolean type", this.getLocation());
+        }
+
         this.thenBranch.verifyListInst(compiler, localEnv, currentClass, returnType);
         this.elseBranch.verifyListInst(compiler, localEnv, currentClass, returnType);
         LOG.debug("verify ifThenElse: else");
@@ -63,9 +68,9 @@ public class IfThenElse extends AbstractInst {
         Label elseLabel = new Label(compiler.getLabelGenerator().generateLabel("else"));
         Label endLabel = new Label(compiler.getLabelGenerator().generateLabel("end"));
 
-        // Gen code for condition
-        this.condition.codeGenExprBool(compiler, false, elseLabel);
-        // Gen code for instruction(s)
+        // Generate code for condition
+        this.condition.codeGenExprBool(compiler, false, elseLabel, 2);
+        // Generate code for instruction(s)
         this.thenBranch.codeGenListInst(compiler);
         // Go to the end of if statement after the instruction execution
         compiler.addInstruction(new BRA(endLabel));
@@ -74,26 +79,23 @@ public class IfThenElse extends AbstractInst {
         // Gen code for else branch which could be contained other ifThenElse branches
         this.elseBranch.codeGenListInst(compiler);
         // Add the end label
-        // TODO: optimize to have only one final label
         compiler.addLabel(endLabel);
     }
 
     @Override
     public void decompile(IndentPrintStream s) {
-        s.print("if ");
+        s.print("if (");
         condition.decompile(s);
-        s.println(" {");
+        s.println(") {");
         s.indent();
         thenBranch.decompile(s);
         s.unindent();
         s.print("}");
-        if (!elseBranch.isEmpty()) {
-            s.println(" else {");
-            s.indent();
-            elseBranch.decompile(s);
-            s.unindent();
-            s.print("}");
-        }
+        s.println(" else {");
+        s.indent();
+        elseBranch.decompile(s);
+        s.unindent();
+        s.print("}");
     }
 
     @Override

@@ -1,0 +1,12 @@
+// Description:
+//    test of different print typos
+//
+// Results:
+//    test_pars --> error line 11
+//
+// History:
+//    created on 04/01/2022
+
+{
+    ;;;50.0 + "Hello World !"
+}

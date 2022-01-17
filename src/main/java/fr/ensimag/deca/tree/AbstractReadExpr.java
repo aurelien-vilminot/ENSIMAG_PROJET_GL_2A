@@ -32,7 +32,7 @@ public abstract class AbstractReadExpr extends AbstractExpr {
             // R1 <- readFloat()
             compiler.addInstruction(new RFLOAT());
         }
-        compiler.addInstruction(new BOV(compiler.getLabelGenerator().getIoLabel()));
+        compiler.addIoError();
         // Rn <- V[R1]
         compiler.addInstruction(new LOAD(Register.getR(1), Register.getR(n)));
     }

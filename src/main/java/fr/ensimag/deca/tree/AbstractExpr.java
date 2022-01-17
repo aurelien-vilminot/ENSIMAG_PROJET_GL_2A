@@ -157,7 +157,7 @@ public abstract class AbstractExpr extends AbstractInst {
      * @param compiler Deca Compiler used to add IMA instruction
      */
     protected void codeGenPrint(DecacCompiler compiler) {
-        codeGenPrint(compiler, false);
+        this.codeGenPrint(compiler, false);
     }
 
     /**
@@ -166,12 +166,12 @@ public abstract class AbstractExpr extends AbstractInst {
      * @param compiler Deca Compiler used to add IMA instruction
      */
     protected void codeGenPrintx(DecacCompiler compiler) {
-        codeGenPrint(compiler, true);
+        this.codeGenPrint(compiler, true);
     }
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        // nothing to do
+        codeGenExpr(compiler, 2);
     }
 
     public DVal dval(DecacCompiler compiler) {
@@ -214,13 +214,13 @@ public abstract class AbstractExpr extends AbstractInst {
     }
 
     /**
-     * If "this" is evaluated to "bool", then goto "branch"
+     * Generate code so that if "this" is evaluated to "bool", then goto "branch"
      *
      * @param compiler Deca Compiler used to add IMA instruction
      * @param bool Condition for goto "branch"
      * @param branch The branch where to program need to go
      */
-    protected void codeGenExprBool(DecacCompiler compiler, boolean bool, Label branch) {
+    protected void codeGenExprBool(DecacCompiler compiler, boolean bool, Label branch, int n) {
         DVal dval = this.dval(compiler);
         if (dval != null) {
             compiler.addInstruction(new LOAD(this.dval(compiler), Register.getR(0)));

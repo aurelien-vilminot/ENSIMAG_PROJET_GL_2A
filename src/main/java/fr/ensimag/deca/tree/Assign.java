@@ -7,6 +7,7 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.Definition;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.ima.pseudocode.DAddr;
+import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.STORE;
 import org.apache.commons.lang.Validate;
@@ -58,6 +59,15 @@ public class Assign extends AbstractBinaryExpr {
     }
 
     @Override
+    protected void codeGenExprBool(DecacCompiler compiler, boolean bool, Label branch, int n) {
+        Validate.isTrue(this.getType().isBoolean());
+        Validate.isTrue((n <= compiler.getCompilerOptions().getRegisterNumber() - 1));
+
+        codeGenInst(compiler, n);
+        this.getLeftOperand().codeGenExprBool(compiler, bool, branch, n);
+    }
+
+    @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
         Validate.isTrue((n <= compiler.getCompilerOptions().getRegisterNumber() - 1));
 
@@ -69,6 +79,12 @@ public class Assign extends AbstractBinaryExpr {
         codeGenInst(compiler, 2);
     }
 
+    /**
+     * Generate assembly code for the instruction, and store the result in Rn
+     *
+     * @param compiler
+     * @param n
+     */
     protected void codeGenInst(DecacCompiler compiler, int n) {
         Validate.isTrue((n <= compiler.getCompilerOptions().getRegisterNumber() - 1));
 
