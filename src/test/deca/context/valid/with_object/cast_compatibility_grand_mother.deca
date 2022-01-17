@@ -9,37 +9,29 @@ class T{}
     Horse b = new Horse();
     DarkHorse c = new DarkHorse();
 
-    (Object) o;
-    (Object) a;
-    (Object) b;
-    (Object) c;
+    (Object) (o);
+    (Object) (a);
+    (Object) (b);
+    (Object) (c);
 
-    (Animal) o;
-    (Animal) a;
-    (Animal) b;
-    (Animal) c;
+    (Animal) (o);
+    (Animal) (a);
+    (Animal) (b);
+    (Animal) (c);
 
-    (Horse) o;
-    (Horse) a;
-    (Horse) b;
-    (Horse) c;
+    (Horse) (o);
+    (Horse) (a);
+    (Horse) (b);
+    (Horse) (c);
 
-    (DarkHorse) o;
-    (DarkHorse) a;
-    (DarkHorse) b;
-    (DarkHorse) c;
+    (DarkHorse) (o);
+    (DarkHorse) (a);
+    (DarkHorse) (b);
+    (DarkHorse) (c);
 
     Animal aa = (Animal) (a);
     Animal bb = (Horse) (a);
     Animal cc = (DarkHorse) (o);
-
-    /* A finir ... */
-
-    T1 aa = (T1) (b);
-    T2 bb = (T2) (a); // Celle là n'est pas habituelle ...
-
-    (T1) (new T1());
-    (T2) (new T2());
-    (T2) (new T1());
-    (T1) (new T2());
+    Horse dd = (DarkHorse) (o);
+    Horse dd = (Horse) (a);
 }
