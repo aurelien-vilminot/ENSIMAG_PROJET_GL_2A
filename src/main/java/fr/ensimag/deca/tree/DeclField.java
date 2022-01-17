@@ -50,8 +50,8 @@ public class DeclField extends AbstractDeclField {
         EnvironmentExp environmentExpCurrentClass = currentClassDefinition.getMembers();
         EnvironmentExp envExpName =((ClassDefinition) compiler.getEnvironmentTypes().get(superSymbol)).getMembers();
 
-        if (envExpName.get(this.fieldName.getName()) == null || !envExpName.get(this.fieldName.getName()).isField()) {
-            throw new ContextualError("Super class symbol must be a class definition", this.getLocation());
+        if (envExpName.get(this.fieldName.getName()) != null && !envExpName.get(this.fieldName.getName()).isField()) {
+            throw new ContextualError("Super class symbol must be a field definition", this.getLocation());
         }
 
         try {
