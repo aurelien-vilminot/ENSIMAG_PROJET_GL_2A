@@ -80,7 +80,17 @@ public class DeclClass extends AbstractDeclClass {
     @Override
     protected void verifyClassMembers(DecacCompiler compiler)
             throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        EnvironmentExp environmentExpSuperClass = ((ClassDefinition) compiler.getEnvironmentTypes().get(this.superClass.getName())).getMembers();
+        EnvironmentExp environmentExpClass = ((ClassDefinition) compiler.getEnvironmentTypes().get(this.name.getName())).getMembers();
+
+        try {
+            environmentExpClass.addSuperExpDefinition(environmentExpSuperClass);
+        } catch (EnvironmentExp.DoubleDefException e) {
+            // TODO
+        }
+
+        // TODO: verify listdeclMethod, listdeclField
+
     }
     
     @Override
