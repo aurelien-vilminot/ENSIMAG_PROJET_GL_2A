@@ -11,6 +11,77 @@ nb_file_total=0
 # -----------------------------------------------------------------------------
 # ----------------------------WITH-RESULTS-------------------------------------
 # -----------------------------------------------------------------------------
+# Invalid :
+TEST_PATH="./src/test/deca/codegen/invalid/black-box"
+nb_correct=0
+nb_file=0
+
+base=`tput bold` # \e[1;1m
+reset=`tput sgr0` # \e[1;m
+red=`tput setaf 1` # \e[1;31m
+green=`tput setaf 2` # \e[1;32m
+yellow=`tput setaf 3` # \e[1;33m
+
+echo "${base}[BEGIN CODEGEN INVALID TESTS]${reset}"
+
+for i in "$TEST_PATH"/*.deca
+do
+  nb_file=$((nb_file+1))
+  name_test="${i%.*}"
+  name_test="${name_test##*/}"
+
+  # Generate output file :
+  if ! test -f "$TEST_PATH"/"$name_test".txt; then
+    echo "  ${yellow}[INCORRECT] $name_test, result file not found.${reset}"
+
+  else
+
+    decac "$i"
+    if [ $? -eq 1 ]; then
+        nb_correct=$((nb_correct+1))
+        echo "  ${green}[CORRECT] $name_test${reset}"
+      else
+        log_err="$TEST_PATH"/"$name_test".log
+        # ima "$TEST_PATH"/"$name_test".ass 1> /dev/null 2> "$log_err"
+        ima "$TEST_PATH"/"$name_test".ass > "$log_err" 2>&1
+        rm "$TEST_PATH"/"$name_test".ass
+
+        differences=$(diff "$TEST_PATH"/"$name_test".txt "$log_err"| head)
+
+        if [ $? -ne 2 ]
+          then
+          if [ "$differences" = "" ]
+            then
+              echo "  ${green}[CORRECT] $name_test${reset}"
+              nb_correct=$((nb_correct+1))
+              rm "$log_err"
+            else
+              echo "  ${red}[INCORRECT] $name_test, here is the start of differences : ${reset}"
+              echo "$differences"
+          fi
+
+          else
+            echo "  ${red}[INCORRECT] $name_test expected result not found ... ${reset}"
+        fi
+    fi
+
+  fi
+
+done
+
+result_invalid_string="Results : $((nb_correct))/$((nb_file))${reset}"
+if [ "$nb_correct" = "$nb_file" ]
+  then
+    result_invalid_string="${green}$result_invalid_string"
+  else
+    result_invalid_string="${red}$result_invalid_string"
+fi
+echo "${base}[DONE CODEGEN INVALID TESTS]${reset} $result_invalid_string"
+echo ""
+
+# Increment total :
+nb_correct_total=$((nb_correct_total+nb_correct))
+nb_file_total=$((nb_file_total+nb_file))
 
 # -----------------------------------------------------------------------------
 # Valid :

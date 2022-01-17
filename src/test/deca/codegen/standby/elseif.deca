@@ -1,7 +1,0 @@
-{
-    if(true){
-        print("x");
-    }elseif(true){
-        print("x");
-    }
-}
