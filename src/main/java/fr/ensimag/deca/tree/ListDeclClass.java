@@ -25,29 +25,33 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
      * Pass 1 of [SyntaxeContextuelle]
      */
     void verifyListClass(DecacCompiler compiler) throws ContextualError {
-        LOG.debug("verify listClassPass1: start");
+        LOG.debug("verify listClass: start");
         for (AbstractDeclClass abstractDeclClass : this.getList()) {
             abstractDeclClass.verifyClass(compiler);
         }
-        LOG.debug("verify listClassPass1: end");
+        LOG.debug("verify listClass: end");
     }
 
     /**
      * Pass 2 of [SyntaxeContextuelle]
      */
     public void verifyListClassMembers(DecacCompiler compiler) throws ContextualError {
-        LOG.debug("verify listClassPass2: start");
+        LOG.debug("verify listClassMembers: start");
         for (AbstractDeclClass abstractDeclClass : this.getList()) {
             abstractDeclClass.verifyClassMembers(compiler);
         }
-        LOG.debug("verify listClassPass2: end");
+        LOG.debug("verify listClassMembers: end");
     }
     
     /**
      * Pass 3 of [SyntaxeContextuelle]
      */
     public void verifyListClassBody(DecacCompiler compiler) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        LOG.debug("verify listClassBody: start");
+        for (AbstractDeclClass abstractDeclClass : this.getList()) {
+            abstractDeclClass.verifyClassBody(compiler);
+        }
+        LOG.debug("verify listClassBody: end");
     }
 
     /**
