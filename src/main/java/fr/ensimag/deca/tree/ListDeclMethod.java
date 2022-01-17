@@ -6,6 +6,7 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable;
+import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
 public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
@@ -14,6 +15,9 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
     protected void verifyListDeclMethod(DecacCompiler compiler, SymbolTable.Symbol superSymbol)
             throws ContextualError {
         LOG.debug("verify listDeclMethod: start");
+        Validate.notNull(compiler, "Compiler (env_types) object should not be null");
+        Validate.notNull(superSymbol, "Symbol of super class should not be null");
+
         for (AbstractDeclMethod abstractDeclMethod : this.getList()) {
             abstractDeclMethod.verifyDeclMethod(compiler, superSymbol);
         }
