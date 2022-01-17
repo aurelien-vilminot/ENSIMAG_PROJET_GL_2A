@@ -1,0 +1,5 @@
+{
+    Object o = new Object();
+    (Object) (o);
+    Object o2 = (Object) (o);
+}
