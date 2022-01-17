@@ -400,7 +400,7 @@ select_expr returns[AbstractExpr tree]
             // we matched "e1.i(args)"
             assert($args.tree != null);
             $tree = new MethodCall($e1.tree, $i.tree, $args.tree);
-            setLocation($tree, $OPARENT);
+            setLocation($tree, $o);
         }
         | /* epsilon */ {
             // we matched "e.i"
@@ -523,9 +523,9 @@ class_decl returns[AbstractDeclClass tree]
     : CLASS name=ident superclass=class_extension OBRACE class_body CBRACE {
             assert($name.tree != null);
             assert($superclass.tree != null);
-            assert($class_body.listdeclmeth != null);
             assert($class_body.listdeclfield != null);
-            $tree = new DeclClass($name.tree, $superclass.tree, $class_body.listdeclmeth, $class_body.listdeclfield);
+            assert($class_body.listdeclmeth != null);
+            $tree = new DeclClass($name.tree, $superclass.tree, $class_body.listdeclfield, $class_body.listdeclmeth);
             setLocation($tree, $CLASS);
         }
     ;
@@ -537,22 +537,20 @@ class_extension returns[AbstractIdentifier tree]
             setLocation($tree, $EXTENDS);
         }
     | /* epsilon */ {
-            $tree = new Identifier(getsymbolTable().create("Object"));
+            $tree = new Identifier(getSymbolTable().create("Object"));
         }
     ;
 
-class_body returns[ListDeclMethod listdeclmeth, ListDeclField listdeclfield]
+class_body returns[ListDeclField listdeclfield, ListDeclMethod listdeclmeth]
 @init {
-    $listdeclmeth = new ListDeclMethod();
     $listdeclfield = new ListDeclField();
+    $listdeclmeth = new ListDeclMethod();
 }
     : (m=decl_method {
-            assert($m.tree != null);
-            listdeclmeth.add($m.tree);
+
         }
       | f=decl_field_set {
-            assert($f.tree != null);
-            listdeclfield.add($f.tree);
+
         }
       )*
     ;

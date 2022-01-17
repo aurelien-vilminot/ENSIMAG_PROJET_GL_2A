@@ -94,6 +94,9 @@ public class DeclClass extends AbstractDeclClass {
 
     @Override
     protected void codeGenDeclClass(DecacCompiler compiler) {
+        // init.name
+        // initialisation des attributs (à 0 si non précisé)
+        // table des méthodes (code.name.methodname)
         throw new UnsupportedOperationException("Not yet supported");
     }
 
