@@ -81,21 +81,21 @@ list_decl returns[ListDeclVar tree]
 
 // sans objet: done
 decl_var_set[ListDeclVar l]
-    : type list_decl_var[$l,$type.tree] SEMI
+    : type list_decl_var[$l,$type.tree, $type.dimension] SEMI
     ;
 
 // sans objet: done
-list_decl_var[ListDeclVar l, AbstractIdentifier t]
-    : dv1=decl_var[$t] {
+list_decl_var[ListDeclVar l, AbstractIdentifier t, int dim]
+    : dv1=decl_var[$t, $dim] {
         $l.add($dv1.tree);
-        } (COMMA dv2=decl_var[$t] {
+        } (COMMA dv2=decl_var[$t, $dim] {
             $l.add($dv2.tree);
         }
       )*
     ;
 
 // sans objet: done
-decl_var[AbstractIdentifier t] returns[AbstractDeclVar tree]
+decl_var[AbstractIdentifier t, int dim] returns[AbstractDeclVar tree]
 @init   {
             AbstractInitialization init = null;
         }
@@ -110,7 +110,11 @@ decl_var[AbstractIdentifier t] returns[AbstractDeclVar tree]
                 init = new NoInitialization();
                 setLocation(init, $i.start);
             }
-            $tree = new DeclVar($t, $i.tree, init);
+            if ($dim > 0){
+                $tree = new DeclVarArray($t, $i.tree, init, $dimension);
+            } else {
+                $tree = new DeclVar($t, $i.tree, init);
+            }
             setLocation($tree, $i.start);
         }
     ;
@@ -464,12 +468,21 @@ primary_expr returns[AbstractExpr tree]
 
 // hello world: done
 // sans objet: done
-type returns[AbstractIdentifier tree]
+type returns[AbstractIdentifier tree, int dimension]
     : ident {
             assert($ident.tree != null);
             $tree = $ident.tree;
             setLocation($tree, $ident.start);
+            $dimension = 0;
         }
+    | ident OBRACKET CBRACKET{
+            assert($ident.tree != null);
+            $tree = $ident.tree;
+            setLocation($tree, $ident.start);
+            $dimension = 1;
+    }(OBRACKET CBRACKET {
+            $dimension = $dimension + 1;
+    })*
     ;
 
 // hello world: done
@@ -609,4 +622,34 @@ multi_line_string returns[String text, Location location]
 param
     : type ident {
         }
+    ;
+
+/**** Extension related rules ****/
+
+// sans objet: done
+// TODO : Should be verified by Clauzon D.
+dim_expr returns[ListExpr tree]
+@init   {
+        $tree = new ListExpr();
+}
+    : OBRACKET e1=expr CBRACKET {
+        assert($e1.tree != null);
+        $tree.add($e1.tree);
+        } (OBRACKET e2=expr CBRACKET {
+            assert($e2.tree != null);
+            $tree.add($e2.tree);
+        }
+      )*
+    ;
+
+
+// TODO : Verify the setLocation
+array_creation_expr returns[NewArray tree]
+    // t for type
+    : NEW t=ident d=dim_expr{
+        assert($i.tree != null);
+        assert($d.tree != null);
+        $tree = new NewArray($t.tree, $d.tree);
+        setLocation($tree, $i.start);
+    }
     ;
