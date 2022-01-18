@@ -3,9 +3,11 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.RegisterOffset;
-import fr.ensimag.ima.pseudocode.instructions.LEA;
+import fr.ensimag.ima.pseudocode.*;
+import fr.ensimag.ima.pseudocode.instructions.BEQ;
+import fr.ensimag.ima.pseudocode.instructions.BNE;
+import fr.ensimag.ima.pseudocode.instructions.CMP;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -68,7 +70,19 @@ public class Selection extends AbstractLValue {
         int index = ident.getFieldDefinition().getIndex();
         expr.codeGenExpr(compiler, n);
         // Rn contient l'adresse dans le tas
-        compiler.addInstruction(new LEA(new RegisterOffset(index, Register.getR(n)), Register.getR(n)));
+        compiler.addInstruction(new LOAD(new RegisterOffset(index, Register.getR(n)), Register.getR(n)));
+    }
+
+    @Override
+    protected void codeGenExprBool(DecacCompiler compiler, boolean bool, Label branch, int n) {
+        codeGenExpr(compiler, n);
+        compiler.addInstruction(new LOAD(Register.getR(n), Register.R0));
+        compiler.addInstruction(new CMP(new ImmediateInteger(0), Register.R0));
+        if (bool) {
+            compiler.addInstruction(new BNE(branch));
+        } else {
+            compiler.addInstruction(new BEQ(branch));
+        }
     }
 
     @Override
