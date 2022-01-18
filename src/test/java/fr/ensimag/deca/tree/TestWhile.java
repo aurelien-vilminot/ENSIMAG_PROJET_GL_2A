@@ -3,9 +3,7 @@ package fr.ensimag.deca.tree;
 import static org.junit.jupiter.api.Assertions.*;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentExp;
-import fr.ensimag.deca.context.Type;
+import fr.ensimag.deca.context.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -19,8 +17,12 @@ public class TestWhile {
     private While w;
     private AbstractExpr condition;
     private ListInst body;
+
     @Mock
     AbstractExpr conditionNonBool;
+
+    @Mock
+    BooleanType fakeBoolType;
     
     @BeforeEach
     void setup() {
@@ -32,7 +34,8 @@ public class TestWhile {
         body = new ListInst();
         w = new While(condition, body);
 
-        when(conditionNonBool.getType().isBoolean()).thenReturn(false);
+        when(conditionNonBool.getType()).thenReturn(fakeBoolType);
+        when(fakeBoolType.isBoolean()).thenReturn(false);
     }
 
     @Test
@@ -45,12 +48,12 @@ public class TestWhile {
         assertEquals(body, w.getBody());
     }
 
-    //@Test
+    @Test
     public void testVerifyInst() {
         w = new While(conditionNonBool, body);
 
         Exception exception = assertThrows(ContextualError.class, () -> {
-            w.verifyInst(compiler, localEnv, null, null);
+            w.verifyInst(compiler, localEnv, null, fakeBoolType);
         });
 
         String expectedMessage = "The condition must be only boolean type";
