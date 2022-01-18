@@ -65,7 +65,7 @@ class matrix{
         while(i < height){
             j = 0;
             while(j < width){
-                mat[height][width] = elem;
+                mat[i][j] = elem;
                 j = j + 1;
             }
             i = i + 1;
@@ -73,16 +73,30 @@ class matrix{
         return mat;
     }
 
+    /*
+    Reshapes a vector in matrix of height * width size.
+    The length of vector parameter must be equals to height * width.
+     */
     float[][] reshape(int height, int width, float[] vector){
         if(vector.length != height * width){
             // return an error ?
         }
         float[][] mat = new float[height][width];
         int i = 0;
-        while(i < vector.length){
-            mat[i % height][]
+        while(i < height){
+            int j = 0;
+            while(j < width){
+                mat[i][j] = vector[i * height + j];
+                j = j + 1;
+            }
+            i = i + 1;
         }
+        return mat;
     }
+
+
+
+
 
 
 }
