@@ -157,12 +157,12 @@ public class DecacCompiler implements Runnable {
                 this.environmentTypes.get(booleanSymbol).getType(),
                 Location.BUILTIN,
                 equalsSignature,
-                0
+                ((ClassDefinition) this.environmentTypes.get(objectSymbol)).incNumberOfMethods()
         );
         equalsDefinition.setLabel(new Label("code." + objectSymbol.getName() + '.' + equalsSymbol.getName()));
 
         try {
-            this.environmentExp.declare(equalsSymbol, equalsDefinition);
+            ((ClassDefinition) this.environmentTypes.get(objectSymbol)).getMembers().declare(equalsSymbol, equalsDefinition);
         } catch (EnvironmentExp.DoubleDefException doubleDefException) {
             LOG.error("Multiple type declaration");
         }

@@ -85,14 +85,21 @@ public class DeclClass extends AbstractDeclClass {
         LOG.debug("verify ClassMembers: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
 
-        EnvironmentExp environmentExpSuperClass = ((ClassDefinition) compiler.getEnvironmentTypes().get(this.superClass.getName())).getMembers();
-        EnvironmentExp environmentExpClass = ((ClassDefinition) compiler.getEnvironmentTypes().get(this.name.getName())).getMembers();
+        ClassDefinition currentClassDefinition = (ClassDefinition) compiler.getEnvironmentTypes().get(this.name.getName());
+        ClassDefinition superClassDefinition = (ClassDefinition) compiler.getEnvironmentTypes().get(this.superClass.getName());
+        EnvironmentExp environmentExpSuperClass = superClassDefinition.getMembers();
+        EnvironmentExp environmentExpClass = currentClassDefinition.getMembers();
 
+        // Stack super-class members
         try {
             environmentExpClass.addSuperExpDefinition(environmentExpSuperClass);
         } catch (EnvironmentExp.DoubleDefException e) {
-            // TODO
+            throw new ContextualError(e.getMessage(), this.getLocation());
         }
+
+        // Increment fields and methods number for current class depending on super-class members
+        currentClassDefinition.setNumberOfFields(superClassDefinition.getNumberOfFields());
+        currentClassDefinition.setNumberOfMethods(superClassDefinition.getNumberOfMethods());
 
         this.listDeclField.verifyListDeclField(compiler, this.superClass.getName(), this.name.getName());
         this.listDeclMethod.verifyListDeclMethod(compiler, this.superClass.getName(), this.name.getName());

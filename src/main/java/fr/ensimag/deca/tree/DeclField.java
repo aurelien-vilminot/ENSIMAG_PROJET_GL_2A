@@ -22,7 +22,6 @@ public class DeclField extends AbstractDeclField {
     final private AbstractInitialization initialization;
     private final Visibility visibility;
 
-    // TODO: visibility
     public DeclField(AbstractIdentifier type,
                      AbstractIdentifier fieldName,
                      AbstractInitialization initialization,
@@ -52,12 +51,6 @@ public class DeclField extends AbstractDeclField {
 
         if (envExpName.get(this.fieldName.getName()) != null && !envExpName.get(this.fieldName.getName()).isField()) {
             throw new ContextualError("Super class symbol must be a field definition", this.getLocation());
-        }
-
-        try {
-            environmentExpCurrentClass.addSuperExpDefinition(envExpName);
-        } catch (EnvironmentExp.DoubleDefException e) {
-            throw new ContextualError("Identifier already declared in super class must be an attribute", this.getLocation());
         }
 
         currentClassDefinition.incNumberOfFields();

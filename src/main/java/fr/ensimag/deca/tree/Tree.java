@@ -110,7 +110,7 @@ public abstract class Tree {
             s.print(" " + getLocation().toString());
         }
         if (getVisibility() != null) {
-            s.print("[visibility=" + getVisibility().toString() + "]");
+            s.print(" [visibility=" + getVisibility().toString() + "]");
         }
         s.print(" ");
         s.print(nodeName);
