@@ -4,6 +4,12 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.LabelOperand;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -100,6 +106,15 @@ public class DeclMethod extends AbstractDeclMethod {
         // label fin.nameClass.nameMethod
         // restauration des registres
         throw new UnsupportedOperationException("not yet implemented");
+    }
+
+    @Override
+    protected void codeGenMethodTable(DecacCompiler compiler, AbstractIdentifier className) {
+        Label methodLabel = new Label("code." + className.getName().toString() + "." + methodName.getName().toString());
+        methodName.getMethodDefinition().setLabel(methodLabel);
+        int addr = compiler.incGlobalStackSize(1);
+        compiler.addInstruction(new LOAD(new LabelOperand(methodLabel), Register.R0));
+        compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(addr, Register.GB)));
     }
 
     @Override

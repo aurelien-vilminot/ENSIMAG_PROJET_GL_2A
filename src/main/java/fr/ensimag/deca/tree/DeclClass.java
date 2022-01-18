@@ -7,7 +7,9 @@ import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.LEA;
 import fr.ensimag.ima.pseudocode.instructions.RTS;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -127,15 +129,6 @@ public class DeclClass extends AbstractDeclClass {
 
     @Override
     protected void codeGenDeclClass(DecacCompiler compiler) {
-        // TODO: move to pass 1
-        // Allocate pointer to superclass + @Objet.equals
-        int addr = compiler.incGlobalStackSize(1);
-        // TODO: @Object.equals
-        DAddr dAddr = new RegisterOffset(addr, Register.GB);
-        name.getClassDefinition().setOperand(dAddr);
-        compiler.incGlobalStackSize(name.getClassDefinition().getNumberOfMethods() + 1);
-        // TODO: @superclass
-
         // CodeGen
         // init.name
         compiler.addLabel(new Label("init." + name.getName().toString()));
@@ -148,10 +141,23 @@ public class DeclClass extends AbstractDeclClass {
         // TODO: restore registers used over R2
         // return
         compiler.addInstruction(new RTS());
-        // table des méthodes (code.name.methodname)
-        // listDeclMethod.codeGenListDeclMethod(compiler);
+        // instruction de la table des méthodes (code.name.methodname)
+        listDeclMethod.codeGenListDeclMethod(compiler);
     }
 
+    @Override
+    protected void codeGenMethodTable(DecacCompiler compiler) {
+        // Allocate pointer to superclass
+        int index = compiler.incGlobalStackSize(1);
+        DAddr dAddr = new RegisterOffset(index, Register.GB);
+        name.getClassDefinition().setOperand(dAddr);
+        DAddr superClassDaddr = superClass.getClassDefinition().getOperand();
+        // Load @superClass inside dAddr
+        compiler.addInstruction(new LEA(superClassDaddr, Register.R0));
+        compiler.addInstruction(new STORE(Register.R0, dAddr));
+        // Generate virtual methods table
+        listDeclMethod.codeGenMethodTable(compiler, name);
+    }
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
