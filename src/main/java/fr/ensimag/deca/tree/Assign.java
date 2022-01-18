@@ -91,8 +91,9 @@ public class Assign extends AbstractBinaryExpr {
         // Calculate rightOperand and load into Rn
         getRightOperand().codeGenExpr(compiler, n);
         // Store rightOperand into leftOperand
-        DAddr dAddr = compiler.getEnvironmentExp().get(((AbstractIdentifier)getLeftOperand()).getName()).getOperand();
-        compiler.addInstruction(new STORE(Register.getR(n), dAddr));
+        getLeftOperand().codeGenStore(compiler, n);
+        //DAddr dAddr = compiler.getEnvironmentExp().get(((AbstractIdentifier)getLeftOperand()).getName()).getOperand();
+        //compiler.addInstruction(new STORE(Register.getR(n), dAddr));
     }
 
     @Override
