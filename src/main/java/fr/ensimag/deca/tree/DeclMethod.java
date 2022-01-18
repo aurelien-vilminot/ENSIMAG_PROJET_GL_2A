@@ -1,18 +1,80 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ClassDefinition;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.EnvironmentExp;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.deca.tools.SymbolTable;
+import org.apache.commons.lang.Validate;
+import org.apache.log4j.Logger;
 
 import java.io.PrintStream;
 
 public class DeclMethod extends AbstractDeclMethod {
+    private static final Logger LOG = Logger.getLogger(Main.class);
+
+    private final AbstractIdentifier returnType;
+    private final AbstractIdentifier methodName;
+    private final ListDeclParam listDeclParam;
+
+    public DeclMethod(AbstractIdentifier returnType, AbstractIdentifier methodName, ListDeclParam listDeclParam) {
+        // TODO: method body
+        Validate.notNull(returnType);
+        Validate.notNull(methodName);
+        this.returnType = returnType;
+        this.methodName = methodName;
+        this.listDeclParam = listDeclParam;
+    }
 
     @Override
-    protected void verifyDeclMethod(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+    protected void verifyDeclMethod(DecacCompiler compiler, SymbolTable.Symbol superSymbol, SymbolTable.Symbol classSymbol) throws ContextualError {
+        LOG.debug("verify DeclMethod: start");
+        Validate.notNull(compiler, "Compiler (env_types) object should not be null");
+
+        Type returnType = this.returnType.verifyType(compiler);
+        Signature signature = this.listDeclParam.verifyDeclParam(compiler);
+
+        EnvironmentExp envExpName = ((ClassDefinition) compiler.getEnvironmentTypes().get(superSymbol)).getMembers();
+
+        if (envExpName.get(this.methodName.getName()) != null && envExpName.get(this.methodName.getName()).isMethod()) {
+            // If there is an override method
+            MethodDefinition methodDefinitionSuperEnvExp = envExpName.get(this.methodName.getName()).asMethodDefinition(
+                    "Impossible to convert in methodDefinition",
+                    this.getLocation()
+            );
+
+            if (!methodDefinitionSuperEnvExp.getSignature().equals(signature)) {
+                // Both signatures must be the same
+                throw new ContextualError("Method prototype must be same as herited", this.getLocation());
+            }
+
+            if (!compiler.getEnvironmentTypes().subTypes(returnType, methodDefinitionSuperEnvExp.getType())) {
+                // Both return types must be the same
+                throw new ContextualError("Return type must be a subtype of hertied method return", this.getLocation());
+            }
+        } else {
+            throw new ContextualError("Super class symbol must be a method definition", this.getLocation());
+        }
+
+        ClassDefinition currentClassDefinition = (ClassDefinition) compiler.getEnvironmentTypes().get(classSymbol);
+        EnvironmentExp environmentExpCurrentClass = currentClassDefinition.getMembers();
+
+        // Method declaration
+        try {
+            environmentExpCurrentClass.declare(
+                    this.methodName.getName(),
+                    new MethodDefinition(
+                            returnType,
+                            this.getLocation(),
+                            signature,
+                            currentClassDefinition.incNumberOfMethods()
+                    )
+                    );
+        } catch (EnvironmentExp.DoubleDefException e) {
+            throw new ContextualError("Method name already declared in the class", this.getLocation());
+        }
+
+        this.methodName.verifyExpr(compiler, environmentExpCurrentClass, currentClassDefinition);
+        LOG.debug("verify DeclMethod: end");
     }
 
     @Override

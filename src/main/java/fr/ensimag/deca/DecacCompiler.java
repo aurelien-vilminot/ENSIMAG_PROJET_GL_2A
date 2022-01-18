@@ -159,6 +159,8 @@ public class DecacCompiler implements Runnable {
                 equalsSignature,
                 0
         );
+        equalsDefinition.setLabel(new Label("code." + objectSymbol.getName() + '.' + equalsSymbol.getName()));
+
         try {
             this.environmentExp.declare(equalsSymbol, equalsDefinition);
         } catch (EnvironmentExp.DoubleDefException doubleDefException) {

@@ -34,4 +34,14 @@ public abstract class AbstractInitialization extends Tree {
      * @param dAddr The address where the expression must be load
      */
     protected abstract void codeGenInit(DecacCompiler compiler, DAddr dAddr);
+
+    /**
+     * Calculate and load the initialized expression in the n-th register
+     * If initialization is null (NoInitialization), load a null value
+     * in the n-th register (0 for int, false for boolean...)
+     *
+     * @param compiler
+     * @param n
+     */
+    protected abstract void codeGenExpr(DecacCompiler compiler, int n, Type type);
 }

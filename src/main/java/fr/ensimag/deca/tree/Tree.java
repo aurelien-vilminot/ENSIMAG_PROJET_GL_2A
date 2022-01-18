@@ -34,6 +34,16 @@ public abstract class Tree {
     }
     private Location location;
 
+    public Visibility getVisibility() {
+        return visibility;
+    }
+
+    public void setVisibility(Visibility visibility) {
+        this.visibility = visibility;
+    }
+
+    private Visibility visibility;
+
     /**
      * Display the tree as a (compilable) source program
      *
@@ -98,6 +108,9 @@ public abstract class Tree {
         }
         if (getLocation() != null) {
             s.print(" " + getLocation().toString());
+        }
+        if (getVisibility() != null) {
+            s.print("[visibility=" + getVisibility().toString() + "]");
         }
         s.print(" ");
         s.print(nodeName);
