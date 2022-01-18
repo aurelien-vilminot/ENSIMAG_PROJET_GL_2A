@@ -39,6 +39,28 @@ public class DeclVarArray extends AbstractDeclVar {
             EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError {
         throw new UnsupportedOperationException("not yet implemented");
+        LOG.debug("verify DeclVar: start");
+        Validate.notNull(compiler, "Compiler (env_types) object should not be null");
+//        Validate.notNull(localEnv, "Env_exp object should not be null");
+
+        // Check type definition
+        Type currentType = this.type.verifyType(compiler);
+        if (currentType.isVoid()) {
+            throw new ContextualError("Void cannot be the type of a variable", this.getLocation());
+        }
+        this.initialization.verifyInitialization(compiler, currentType, localEnv, currentClass);
+
+        // Declare the new variable
+        try {
+            localEnv.declare(this.varName.getName(), new VariableDefinition(currentType, this.getLocation()));
+        } catch (EnvironmentExp.DoubleDefException doubleDefException) {
+            throw new ContextualError("Identifier already declared", this.getLocation());
+        }
+
+        // Check var definition
+        this.varName.verifyExpr(compiler, localEnv, currentClass);
+
+        LOG.debug("verify DeclVar: end");
     }
 
     @Override
