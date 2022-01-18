@@ -64,6 +64,14 @@ public abstract class Type {
         return false;
     }
 
+    public boolean isArrayInt() {
+        return false;
+    }
+
+    public boolean isArrayFloat() {
+        return false;
+    }
+
     public boolean isClassOrNull() {
         return false;
     }
