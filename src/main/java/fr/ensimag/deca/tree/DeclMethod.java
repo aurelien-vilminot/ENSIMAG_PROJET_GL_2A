@@ -118,16 +118,28 @@ public class DeclMethod extends AbstractDeclMethod {
 
     @Override
     public void decompile(IndentPrintStream s) {
-        throw new UnsupportedOperationException("not yet implemented");
+        returnType.decompile(s);
+        s.print(" ");
+        methodName.decompile(s);
+        s.print("(");
+        listDeclParam.decompile(s);
+        s.print(")");
+        methodBody.decompile(s);
     }
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-        throw new UnsupportedOperationException("not yet implemented");
+        returnType.prettyPrint(s, prefix, false);
+        methodName.prettyPrint(s, prefix, false);
+        listDeclParam.prettyPrint(s, prefix, false);
+        methodBody.prettyPrint(s, prefix, true);
     }
 
     @Override
     protected void iterChildren(TreeFunction f) {
-        throw new UnsupportedOperationException("not yet implemented");
+        returnType.iter(f);
+        methodName.iter(f);
+        listDeclParam.iter(f);
+        methodBody.iter(f);
     }
 }
