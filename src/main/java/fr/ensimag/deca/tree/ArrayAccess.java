@@ -28,11 +28,13 @@ public class ArrayAccess extends AbstractLValue{
     }
 
     protected void iterChildren(TreeFunction f){
-
+        tab.iter(f);
+        index.iter(f);
     }
 
     protected void prettyPrintChildren(PrintStream s, String prefix){
-
+        tab.prettyPrint(s, prefix, false);
+        index.prettyPrint(s, prefix, false);
     }
 
 

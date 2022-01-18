@@ -28,19 +28,23 @@ public class NewArray extends AbstractExpr{
 
     }
 
-    protected void iterChildren(TreeFunction f){
 
+    @Override
+    protected void iterChildren(TreeFunction f) {
+        type.iter(f);
+        indexList.iter(f);
     }
 
-    protected void prettyPrintChildren(PrintStream s, String prefix){
-
+    @Override
+    protected void prettyPrintChildren(PrintStream s, String prefix) {
+        type.prettyPrint(s, prefix, false);
+        indexList.prettyPrint(s, prefix, false);
     }
 
 
 
 
-    public Type verifyExpr(DecacCompiler compiler,
-                                    EnvironmentExp localEnv, ClassDefinition currentClass){
+    public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass){
         return null;
     }
 
