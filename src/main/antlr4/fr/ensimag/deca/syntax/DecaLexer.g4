@@ -55,6 +55,8 @@ OPARENT : '(';
 CPARENT : ')';
 OBRACE :  '{';
 CBRACE : '}';
+OBRACKET : '[';
+CBRACKET : ']';
 EXCLAM : '!';
 SEMI : ';';
 EQEQ : '==';

@@ -7,6 +7,7 @@ import fr.ensimag.deca.context.VoidType;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 
+import fr.ensimag.ima.pseudocode.instructions.HALT;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -42,6 +43,7 @@ public class Main extends AbstractMain {
         declVariables.codeGenListDeclVar(compiler);
         compiler.addComment("Main instructions");
         insts.codeGenListInst(compiler);
+        compiler.addInstruction(new HALT());
     }
 
     @Override

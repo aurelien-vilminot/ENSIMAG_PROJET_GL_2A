@@ -6,7 +6,8 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.DAddr;
+import fr.ensimag.ima.pseudocode.*;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import org.apache.log4j.Logger;
 
 import java.io.PrintStream;
@@ -35,6 +36,16 @@ public class NoInitialization extends AbstractInitialization {
         // nothing
     }
 
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, int n, Type type) {
+        if (type.isBoolean() || type.isInt()) {
+            compiler.addInstruction(new LOAD(new ImmediateInteger(0), Register.getR(n)));
+        } else if (type.isFloat()) {
+            compiler.addInstruction(new LOAD(new ImmediateFloat(0), Register.getR(n)));
+        } else if (type.isClass()) {
+            compiler.addInstruction(new LOAD(new NullOperand(), Register.getR(n)));
+        }
+    }
 
     /**
      * Node contains no real information, nothing to check.

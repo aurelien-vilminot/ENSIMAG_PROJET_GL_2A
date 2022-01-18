@@ -26,23 +26,50 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
      */
     void verifyListClass(DecacCompiler compiler) throws ContextualError {
         LOG.debug("verify listClass: start");
-        throw new UnsupportedOperationException("not yet implemented");
-        // LOG.debug("verify listClass: end");
+        for (AbstractDeclClass abstractDeclClass : this.getList()) {
+            abstractDeclClass.verifyClass(compiler);
+        }
+        LOG.debug("verify listClass: end");
     }
 
     /**
      * Pass 2 of [SyntaxeContextuelle]
      */
     public void verifyListClassMembers(DecacCompiler compiler) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        LOG.debug("verify listClassMembers: start");
+        for (AbstractDeclClass abstractDeclClass : this.getList()) {
+            abstractDeclClass.verifyClassMembers(compiler);
+        }
+        LOG.debug("verify listClassMembers: end");
     }
     
     /**
      * Pass 3 of [SyntaxeContextuelle]
      */
     public void verifyListClassBody(DecacCompiler compiler) throws ContextualError {
+        LOG.debug("verify listClassBody: start");
+        for (AbstractDeclClass abstractDeclClass : this.getList()) {
+            abstractDeclClass.verifyClassBody(compiler);
+        }
+        LOG.debug("verify listClassBody: end");
+    }
+
+    /**
+     * Pass 1 of [CodeGen]
+     * @param compiler
+     */
+    protected void codeGenMethodTable(DecacCompiler compiler) {
         throw new UnsupportedOperationException("not yet implemented");
     }
 
+    /**
+     * Pass 2 of [CodeGen]
+     * @param compiler
+     */
+    protected void codeGenListDeclClass(DecacCompiler compiler) {
+        for (AbstractDeclClass c : getList()) {
+            c.codeGenDeclClass(compiler);
+        }
+    }
 
 }

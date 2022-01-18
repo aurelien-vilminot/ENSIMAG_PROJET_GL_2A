@@ -38,21 +38,22 @@ public class Program extends AbstractProgram {
     public void verifyProgram(DecacCompiler compiler) throws ContextualError {
         LOG.debug("verify program: start");
         Validate.notNull(compiler, "Compiler object should not be null");
-        // TODO: reactivate pass 1 and pass 2 after hello world
+        // TODO: reactivate pass 2 after hello world
         // Pass 1
-//        classes.verifyListClass(compiler);
+        classes.verifyListClass(compiler);
         // Pass 2
-//        classes.verifyListClassMembers(compiler);
+        classes.verifyListClassMembers(compiler);
         // Pass 3
-//        classes.verifyListClassBody(compiler);
+        classes.verifyListClassBody(compiler);
         main.verifyMain(compiler);
         LOG.debug("verify program: end");
     }
 
     @Override
     public void codeGenProgram(DecacCompiler compiler) {
+        // classes.codeGenMethodTable(compiler);
         main.codeGenMain(compiler);
-        compiler.addInstruction(new HALT());
+        classes.codeGenListDeclClass(compiler);
         this.codeGenInit(compiler);
         this.codeGenError(compiler);
     }

@@ -63,6 +63,10 @@ public class Initialization extends AbstractInitialization {
         compiler.addInstruction(new STORE(Register.getR(2), dAddr));
     }
 
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, int n, Type type) {
+        expression.codeGenExpr(compiler, n);
+    }
 
     @Override
     public void decompile(IndentPrintStream s) {
