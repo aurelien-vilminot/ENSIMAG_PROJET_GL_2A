@@ -56,6 +56,7 @@ public class DecacCompiler implements Runnable {
     private int globalStackSize = 0; // number of global variables
     private int tempStackCurrent = 0; // current temporary stack usage
     private int tempStackMax = 0; // maximal temporary stack usage
+    private int currentRegister = 0; // current register number being used
 
     public int getGlobalStackSize() {
         return globalStackSize;
@@ -78,6 +79,23 @@ public class DecacCompiler implements Runnable {
 
     public int getTempStackMax() {
         return tempStackMax;
+    }
+
+    /**
+     * Set current register to n, and return the maxRegister
+     * Used to know which temporary registers are currently used
+     *
+     * @param n
+     */
+    public int setAndVerifyCurrentRegister(int n) {
+        int maxRegister = getCompilerOptions().getRegisterNumber() - 1;
+        Validate.isTrue(n <= maxRegister);
+        currentRegister = n;
+        return maxRegister;
+    }
+
+    public int getCurrentRegister() {
+        return currentRegister;
     }
 
 
