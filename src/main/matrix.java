@@ -1,10 +1,45 @@
 class matrix{
     ///// Vector part /////
-    float[] add(float[] vector1, float[] vector2){
-        if(vector1.length != vector2.length){
-
+    float[] plus(float[] vector1, float[] vector2){
+        if(vector1.length == vector2.length) {
+            float[] vec = float[vector1.length];
+            int i = 0;
+            while(i<vector1.length){
+                vec[i] = vector1[i] + vector2[i];
+                i = i + 1;
+            }
+            return vec;
         } else {
+            // Throw an error ?
+        }
+    }
 
+
+    float[] minus(float[] vector1, float[] vector2){
+        if(vector1.length == vector2.length) {
+            float[] vec = float[vector1.length];
+            int i = 0;
+            while(i<vector1.length){
+                vec[i] = vector1[i] - vector2[i];
+                i = i + 1;
+            }
+            return vec;
+        } else {
+            // Throw an error ?
+        }
+    }
+
+    float mult(float[] vector1, float[] vector2){
+        if(vector1.length == vector2.length) {
+            float result;
+            int i = 0;
+            while(i<vector1.length){
+                result = result + vector1[i] * vector2[i];
+                i = i + 1;
+            }
+            return result;
+        } else {
+            // Throw an error ?
         }
     }
 
@@ -20,19 +55,35 @@ class matrix{
 
     ///// Matrix part /////
 
-    float[][] ones(int height, int width){
+    /*
+    Returns a matrix filled with elem at each component.
+    The size of the matrix is height x width.
+     */
+    float[][] uniform(int height, int width, float elem){
         float[][] mat = new float[height][width];
         i = 0;
         while(i < height){
             j = 0;
             while(j < width){
-                mat[height][width] = 1.0;
+                mat[height][width] = elem;
                 j = j + 1;
             }
             i = i + 1;
         }
         return mat;
     }
+
+    float[][] reshape(int height, int width, float[] vector){
+        if(vector.length != height * width){
+            // return an error ?
+        }
+        float[][] mat = new float[height][width];
+        int i = 0;
+        while(i < vector.length){
+            mat[i % height][]
+        }
+    }
+
 
 }
 
