@@ -43,6 +43,11 @@ public class DeclMethod extends AbstractDeclMethod {
         Signature signature = this.listDeclParam.verifyDeclParam(compiler);
 
         EnvironmentExp envExpName = ((ClassDefinition) compiler.getEnvironmentTypes().get(superSymbol)).getMembers();
+        ClassDefinition currentClassDefinition = (ClassDefinition) compiler.getEnvironmentTypes().get(classSymbol);
+        EnvironmentExp environmentExpCurrentClass = currentClassDefinition.getMembers();
+
+        // Default index
+        int indexMethod = currentClassDefinition.incNumberOfMethods();
 
         if (envExpName.get(this.methodName.getName()) != null) {
             if (envExpName.get(this.methodName.getName()).isMethod()) {
@@ -62,13 +67,13 @@ public class DeclMethod extends AbstractDeclMethod {
                     throw new ContextualError("Return type must be a subtype of hertied method return", this.getLocation());
                 }
 
+                // Get index of override method
+                indexMethod = methodDefinitionSuperEnvExp.getIndex();
+
             } else {
                 throw new ContextualError("Super class symbol must be a method definition", this.getLocation());
             }
         }
-
-        ClassDefinition currentClassDefinition = (ClassDefinition) compiler.getEnvironmentTypes().get(classSymbol);
-        EnvironmentExp environmentExpCurrentClass = currentClassDefinition.getMembers();
 
         // Method declaration
         try {
@@ -78,7 +83,7 @@ public class DeclMethod extends AbstractDeclMethod {
                             returnType,
                             this.getLocation(),
                             signature,
-                            currentClassDefinition.incNumberOfMethods()
+                            indexMethod
                     )
                     );
         } catch (EnvironmentExp.DoubleDefException e) {

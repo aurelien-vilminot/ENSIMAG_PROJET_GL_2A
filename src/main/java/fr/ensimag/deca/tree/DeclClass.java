@@ -65,7 +65,7 @@ public class DeclClass extends AbstractDeclClass {
                                     this.superClass.getClassDefinition()
                             ),
                             this.getLocation(),
-                            this.superClass.getClassDefinition()
+                            (ClassDefinition) compiler.getEnvironmentTypes().get(this.superClass.getName())
                     )
             );
         } catch (EnvironmentTypes.DoubleDefException e) {
@@ -87,15 +87,6 @@ public class DeclClass extends AbstractDeclClass {
 
         ClassDefinition currentClassDefinition = (ClassDefinition) compiler.getEnvironmentTypes().get(this.name.getName());
         ClassDefinition superClassDefinition = (ClassDefinition) compiler.getEnvironmentTypes().get(this.superClass.getName());
-        EnvironmentExp environmentExpSuperClass = superClassDefinition.getMembers();
-        EnvironmentExp environmentExpClass = currentClassDefinition.getMembers();
-
-        // Stack super-class members
-        try {
-            environmentExpClass.addSuperExpDefinition(environmentExpSuperClass);
-        } catch (EnvironmentExp.DoubleDefException e) {
-            throw new ContextualError(e.getMessage(), this.getLocation());
-        }
 
         // Increment fields and methods number for current class depending on super-class members
         currentClassDefinition.setNumberOfFields(superClassDefinition.getNumberOfFields());
