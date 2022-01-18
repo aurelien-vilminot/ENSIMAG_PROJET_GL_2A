@@ -6,6 +6,7 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
+import jdk.tools.jaotc.binformat.Symbol;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -23,12 +24,24 @@ public class DeclVarArray extends AbstractDeclVar {
     final private AbstractInitialization initialization;
     final private int dimension;
 
-    public DeclVarArray(AbstractIdentifier type, AbstractIdentifier varName, AbstractInitialization initialization, int dimension) {
-        Validate.notNull(type);
+    public DeclVarArray(AbstractIdentifier primitiveType, AbstractIdentifier varName, AbstractInitialization initialization, int dimension) {
+        Validate.notNull(primitiveType);
+        /*
+        String primitiveName = primitiveType.getName().getName();
+        String typeName = primitiveName;
+        // Put '[]' behinds :
+        int i = 0;
+        while(i < dimension){
+            typeName = typeName + "[]";
+            i = i + 1;
+        }
+        */
+
         Validate.notNull(varName);
         Validate.notNull(initialization);
         Validate.notNull(dimension);
-        this.type = type;
+
+        this.type = primitiveType;
         this.varName = varName;
         this.initialization = initialization;
         this.dimension = dimension;
@@ -38,10 +51,10 @@ public class DeclVarArray extends AbstractDeclVar {
     protected void verifyDeclVar(DecacCompiler compiler,
             EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        //throw new UnsupportedOperationException("not yet implemented");
         LOG.debug("verify DeclVar: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
-//        Validate.notNull(localEnv, "Env_exp object should not be null");
+        // Validate.notNull(localEnv, "Env_exp object should not be null");
 
         // Check type definition
         Type currentType = this.type.verifyType(compiler);

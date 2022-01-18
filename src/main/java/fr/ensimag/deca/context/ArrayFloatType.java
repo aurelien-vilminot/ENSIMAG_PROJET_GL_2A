@@ -24,7 +24,7 @@ public class ArrayFloatType extends Type {
     public boolean sameType(Type otherType) {
         Validate.notNull(otherType, "otherType object should not be null");
         if(otherType.isArrayFloat()){
-            Validate.isTrue(otherType.getClass().getName().equals("ArrayFloatType"), "otherType object should be a class of type ArrayfloatType");
+            Validate.isTrue(otherType instanceof ArrayFloatType, "otherType object should be a class of type ArrayfloatType");
             return this.dimension == ((ArrayFloatType) otherType).getDimension();
         }
         return false;
