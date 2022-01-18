@@ -18,7 +18,7 @@ public class TestEnvironmentExp {
         this.environmentExpParent = new EnvironmentExp(null);
         this.symbolTable = new SymbolTable();
         this.symbolTest = symbolTable.create("test");
-        this.fieldDefinition = new FieldDefinition(null, null, null, null, -1);
+        this.fieldDefinition = new FieldDefinition(null, null, null, null, 0);
     }
 
     @Test
@@ -91,7 +91,7 @@ public class TestEnvironmentExp {
     @Test
     public void testToString() throws EnvironmentExp.DoubleDefException {
         // Check empty environment
-        String expectedString = "Environnement d'identificateur : \n";
+        String expectedString = "Environnement d'identificateur :";
         assertEquals(expectedString, this.environmentExpParent.toString());
 
         this.environmentExpParent.declare(this.symbolTest, this.fieldDefinition);
@@ -101,9 +101,9 @@ public class TestEnvironmentExp {
 
         // Check environment with declared definition
         expectedString =
-                "Environnement d'identificateur : \n" +
-                "\ttest : \n" +
-                "\t\tfield defined at null, type=null";
+                "Environnement d'identificateur :" +
+                "\n\ttest : \n" +
+                "\t\tfield defined at null, type=null | Index : 0";
         assertEquals(expectedString, this.environmentExpParent.toString());
     }
 }
