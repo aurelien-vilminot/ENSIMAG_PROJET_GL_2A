@@ -43,25 +43,29 @@ public class DeclMethod extends AbstractDeclMethod {
 
         EnvironmentExp envExpName = ((ClassDefinition) compiler.getEnvironmentTypes().get(superSymbol)).getMembers();
 
-        if (envExpName.get(this.methodName.getName()) != null && envExpName.get(this.methodName.getName()).isMethod()) {
-            // If there is an override method
-            MethodDefinition methodDefinitionSuperEnvExp = envExpName.get(this.methodName.getName()).asMethodDefinition(
-                    "Impossible to convert in methodDefinition",
-                    this.getLocation()
-            );
+        if (envExpName.get(this.methodName.getName()) != null) {
+            if (envExpName.get(this.methodName.getName()).isMethod()) {
+                // If there is an override method
+                MethodDefinition methodDefinitionSuperEnvExp = envExpName.get(this.methodName.getName()).asMethodDefinition(
+                        "Impossible to convert in methodDefinition",
+                        this.getLocation()
+                );
 
-            if (!methodDefinitionSuperEnvExp.getSignature().equals(signature)) {
-                // Both signatures must be the same
-                throw new ContextualError("Method prototype must be same as herited", this.getLocation());
-            }
+                if (!methodDefinitionSuperEnvExp.getSignature().equals(signature)) {
+                    // Both signatures must be the same
+                    throw new ContextualError("Method prototype must be same as herited", this.getLocation());
+                }
 
-            if (!compiler.getEnvironmentTypes().subTypes(returnType, methodDefinitionSuperEnvExp.getType())) {
-                // Both return types must be the same
-                throw new ContextualError("Return type must be a subtype of hertied method return", this.getLocation());
+                if (!compiler.getEnvironmentTypes().subTypes(returnType, methodDefinitionSuperEnvExp.getType())) {
+                    // Both return types must be the same
+                    throw new ContextualError("Return type must be a subtype of hertied method return", this.getLocation());
+                }
+
+            } else {
+                throw new ContextualError("Super class symbol must be a method definition", this.getLocation());
             }
-        } else {
-            throw new ContextualError("Super class symbol must be a method definition", this.getLocation());
         }
+
 
         ClassDefinition currentClassDefinition = (ClassDefinition) compiler.getEnvironmentTypes().get(classSymbol);
         EnvironmentExp environmentExpCurrentClass = currentClassDefinition.getMembers();
@@ -86,11 +90,12 @@ public class DeclMethod extends AbstractDeclMethod {
     }
 
     @Override
-    protected void verifyMethodBody(DecacCompiler compiler) throws ContextualError {
+    protected void verifyMethodBody(DecacCompiler compiler, SymbolTable.Symbol classSymbol) throws ContextualError {
         LOG.debug("verify MethodBody: start");
 
         EnvironmentExp environmentExpParams = this.listDeclParam.verifyParamEnvExp(compiler);
-        this.methodBody.verifyMethodBody(compiler, environmentExpParams, this.methodName.getClassDefinition(), this.returnType.getType());
+        ClassDefinition methodClassDefinition = (ClassDefinition) compiler.getEnvironmentTypes().get(classSymbol);
+        this.methodBody.verifyMethodBody(compiler, environmentExpParams, methodClassDefinition, this.returnType.getType());
 
         LOG.debug("verify MethodBody: end");
     }
@@ -118,16 +123,28 @@ public class DeclMethod extends AbstractDeclMethod {
 
     @Override
     public void decompile(IndentPrintStream s) {
-        throw new UnsupportedOperationException("not yet implemented");
+        returnType.decompile(s);
+        s.print(" ");
+        methodName.decompile(s);
+        s.print("(");
+        listDeclParam.decompile(s);
+        s.print(")");
+        methodBody.decompile(s);
     }
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-        throw new UnsupportedOperationException("not yet implemented");
+        returnType.prettyPrint(s, prefix, false);
+        methodName.prettyPrint(s, prefix, false);
+        listDeclParam.prettyPrint(s, prefix, false);
+        methodBody.prettyPrint(s, prefix, true);
     }
 
     @Override
     protected void iterChildren(TreeFunction f) {
-        throw new UnsupportedOperationException("not yet implemented");
+        returnType.iter(f);
+        methodName.iter(f);
+        listDeclParam.iter(f);
+        methodBody.iter(f);
     }
 }

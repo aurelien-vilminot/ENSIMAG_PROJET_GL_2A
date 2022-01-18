@@ -119,12 +119,12 @@ public class DeclClass extends AbstractDeclClass {
         name.decompile(s);
         s.print(" extends ");
         superClass.decompile(s);
-        s.print(" {");
+        s.println(" {");
         s.indent();
         listDeclField.decompile(s);
         listDeclMethod.decompile(s);
         s.unindent();
-        s.print("}");
+        s.println("}");
     }
 
     @Override

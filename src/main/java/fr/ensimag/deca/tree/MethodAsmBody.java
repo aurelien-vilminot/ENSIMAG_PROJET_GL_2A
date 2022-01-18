@@ -33,16 +33,18 @@ public class MethodAsmBody extends AbstractMethodBody{
 
     @Override
     public void decompile(IndentPrintStream s) {
-
+        s.print(" asm(");
+        stringLiteral.decompile(s);
+        s.println(");");
     }
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-
+        stringLiteral.prettyPrint(s, prefix, true);
     }
 
     @Override
     protected void iterChildren(TreeFunction f) {
-
+        stringLiteral.iter(f);
     }
 }

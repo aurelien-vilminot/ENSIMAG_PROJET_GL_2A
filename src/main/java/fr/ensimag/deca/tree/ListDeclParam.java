@@ -9,6 +9,8 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
+import java.util.Iterator;
+
 public class ListDeclParam extends TreeList<AbstractDeclParam> {
     private static final Logger LOG = Logger.getLogger(ListDeclClass.class);
 
@@ -39,6 +41,13 @@ public class ListDeclParam extends TreeList<AbstractDeclParam> {
 
     @Override
     public void decompile(IndentPrintStream s) {
-
+        Iterator<AbstractDeclParam> ite = getList().iterator();
+        if (ite.hasNext()) {
+            ite.next().decompile(s);
+        }
+        while (ite.hasNext()) {
+            s.print(", ");
+            ite.next().decompile(s);
+        }
     }
 }

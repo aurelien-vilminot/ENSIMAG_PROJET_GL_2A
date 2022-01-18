@@ -38,7 +38,13 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
 
     @Override
     public void decompile(IndentPrintStream s) {
-        // TODO
+        if (getList().isEmpty()) {
+            return;
+        }
+        for (AbstractDeclField v : getList()) {
+            v.decompile(s);
+            s.println();
+        }
     }
 
     protected void codeGenListDeclField(DecacCompiler compiler) {

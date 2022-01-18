@@ -617,14 +617,17 @@ decl_method returns[AbstractDeclMethod tree]
         }
       | ASM OPARENT code=multi_line_string CPARENT SEMI {
             assert($code.text != null);
-            methodBody = new MethodAsmBody(new StringLiteral($code.text));
-            methodBody.setLocation($code.location);
+            StringLiteral st = new StringLiteral($code.text.substring(1, $code.text.length() - 1));
+            st.setLocation($code.location);
+            methodBody = new MethodAsmBody(st);
+            setLocation(methodBody, $ASM);
         }
       ) {
             assert($type.tree != null);
             assert($ident.tree != null);
             assert($params.tree != null);
             $tree = new DeclMethod($type.tree, $ident.tree, $params.tree, methodBody);
+            setLocation($tree, $type.start);
         }
     ;
 

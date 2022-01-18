@@ -55,16 +55,20 @@ public class DeclParam extends AbstractDeclParam {
 
     @Override
     public void decompile(IndentPrintStream s) {
-
+        type.decompile(s);
+        s.print(" ");
+        name.decompile(s);
     }
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
-
+        type.prettyPrint(s, prefix, false);
+        name.prettyPrint(s, prefix, true);
     }
 
     @Override
     protected void iterChildren(TreeFunction f) {
-
+        type.iter(f);
+        name.iter(f);
     }
 }
