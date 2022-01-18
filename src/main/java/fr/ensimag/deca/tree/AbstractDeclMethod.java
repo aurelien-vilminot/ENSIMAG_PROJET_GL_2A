@@ -14,10 +14,21 @@ public abstract class AbstractDeclMethod extends Tree {
                                              SymbolTable.Symbol classSymbol)
             throws ContextualError;
 
+    protected abstract void verifyMethodBody(DecacCompiler compiler)
+            throws ContextualError;
+
     /**
      * Generate assembly code for the method declaration.
      *
      * @param compiler
      */
     protected abstract void codeGenDeclMethod(DecacCompiler compiler);
+
+
+    /**
+     * Generate assembly code to build the virtual methods table
+     *
+     * @param compiler
+     */
+    protected abstract void codeGenMethodTable(DecacCompiler compiler, AbstractIdentifier className);
 }

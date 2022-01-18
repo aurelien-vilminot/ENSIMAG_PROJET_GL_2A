@@ -1,9 +1,7 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ContextualError;
-import fr.ensimag.deca.context.Signature;
-import fr.ensimag.deca.context.Type;
+import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
@@ -26,6 +24,7 @@ public class DeclParam extends AbstractDeclParam {
     @Override
     protected Type verifyDeclParam(DecacCompiler compiler) throws ContextualError {
         LOG.debug("verify DeclParam: start");
+        Validate.notNull(compiler);
 
         Type type = this.type.verifyType(compiler);
         if (type.isVoid()) {
@@ -35,6 +34,24 @@ public class DeclParam extends AbstractDeclParam {
         LOG.debug("verify DeclParam: end");
         return type;
     }
+
+    @Override
+    protected void verifyParamEnvExp(DecacCompiler compiler, EnvironmentExp localEnv) throws ContextualError {
+        LOG.debug("verify ParamEnvExp: start");
+        Validate.notNull(compiler);
+        Validate.notNull(localEnv);
+
+        ExpDefinition paramDefinition = new ParamDefinition(this.name.getType(), this.getLocation());
+
+        try {
+            localEnv.declare(this.name.getName(), paramDefinition);
+        } catch (EnvironmentExp.DoubleDefException e) {
+            throw new ContextualError("Param identifier already declared", this.getLocation());
+        }
+
+        LOG.debug("verify ParamEnvExp: end");
+    }
+
 
     @Override
     public void decompile(IndentPrintStream s) {

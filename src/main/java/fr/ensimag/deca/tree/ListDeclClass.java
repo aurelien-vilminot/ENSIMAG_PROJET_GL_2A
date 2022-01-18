@@ -3,6 +3,10 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import fr.ensimag.deca.tools.SymbolTable;
+import fr.ensimag.ima.pseudocode.*;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
 import org.apache.log4j.Logger;
 
 /**
@@ -59,7 +63,27 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
      * @param compiler
      */
     protected void codeGenMethodTable(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("not yet implemented");
+        if (!getList().isEmpty()) {
+            // Generate Object.equals
+            int index = compiler.incGlobalStackSize(1);
+            compiler.addInstruction(new LOAD(new NullOperand(), Register.R0));
+            compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(index, Register.GB)));
+            Label equalsLabel = null;
+            try {
+                equalsLabel = compiler.getEnvironmentTypes()
+                        .get(compiler.getSymbolTable().create("equals"))
+                        .asMethodDefinition("Impossible to convert in method definition", this.getLocation())
+                        .getLabel();
+            } catch (ContextualError contextualError) {
+                contextualError.printStackTrace();
+            }
+            index = compiler.incGlobalStackSize(1);
+            compiler.addInstruction(new LOAD(new LabelOperand(equalsLabel), Register.R0));
+            compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(index, Register.GB)));
+        }
+        for (AbstractDeclClass c : getList()) {
+            c.codeGenMethodTable(compiler);
+        }
     }
 
     /**

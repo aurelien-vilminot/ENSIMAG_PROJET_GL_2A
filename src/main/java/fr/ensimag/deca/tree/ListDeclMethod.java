@@ -24,6 +24,18 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
         LOG.debug("verify listDeclMethod: end");
     }
 
+    protected void verifyListMethodBody(DecacCompiler compiler, SymbolTable.Symbol superSymbol, SymbolTable.Symbol classSymbol)
+            throws ContextualError {
+        LOG.debug("verify listMethodBody: start");
+        Validate.notNull(compiler, "Compiler (env_types) object should not be null");
+        Validate.notNull(superSymbol, "Symbol of super class should not be null");
+
+        for (AbstractDeclMethod abstractDeclMethod : this.getList()) {
+            abstractDeclMethod.verifyMethodBody(compiler);
+        }
+        LOG.debug("verify listMethodBody: end");
+    }
+
     @Override
     public void decompile(IndentPrintStream s) {
         // TODO
@@ -32,6 +44,12 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
     protected void codeGenListDeclMethod(DecacCompiler compiler) {
         for (AbstractDeclMethod c : getList()) {
             c.codeGenDeclMethod(compiler);
+        }
+    }
+
+    protected void codeGenMethodTable(DecacCompiler compiler, AbstractIdentifier className) {
+        for (AbstractDeclMethod c : getList()) {
+            c.codeGenMethodTable(compiler, className);
         }
     }
 }
