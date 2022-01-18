@@ -31,7 +31,9 @@ public class NewArray extends AbstractExpr{
         // Code of ListExpr copied, with brackets added.
         Iterator<AbstractExpr> ite = indexList.getList().iterator();
         if (ite.hasNext()) {
+            s.print("[");
             ite.next().decompile(s);
+            s.print("]");
         }
         while (ite.hasNext()) {
             s.print("[");
