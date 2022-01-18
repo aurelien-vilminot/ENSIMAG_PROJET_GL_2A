@@ -551,7 +551,7 @@ class_body returns[ListDeclField listdeclfield, ListDeclMethod listdeclmeth]
 }
     : (m=decl_method {
             assert($m.tree != null);
-            listdeclmeth.add($m.tree);
+            $listdeclmeth.add($m.tree);
         }
       | f=decl_field_set[$listdeclfield]
       )*
