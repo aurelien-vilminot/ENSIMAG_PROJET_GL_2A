@@ -114,13 +114,13 @@ public class DeclMethod extends AbstractDeclMethod {
         // label code.nameClass.nameMethod
         compiler.addLabel(methodName.getMethodDefinition().getLabel());
         // TODO: TSTO / BOV stack_overflow
-        // TODO: sauvegarde des registres
+        compiler.saveRegisters();
         listDeclParam.codeGenDeclMethod(compiler);
         // code methode (valeur de retour dans R0)
         methodBody.codeGenDeclMethod(compiler);
         Label fin = new Label("fin." + methodName.getMethodDefinition().getLabel().toString().substring(4));
         compiler.addLabel(fin);
-        // TODO: restauration des registres
+        compiler.restoreRegisters();
         compiler.addInstruction(new RTS());
     }
 

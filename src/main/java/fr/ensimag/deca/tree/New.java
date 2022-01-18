@@ -50,7 +50,7 @@ public class New extends AbstractExpr {
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
-        Validate.isTrue((n <= compiler.getCompilerOptions().getRegisterNumber() - 1));
+        compiler.setAndVerifyCurrentRegister(n);
 
         // heap allocation
         int size = ident.getClassDefinition().getNumberOfFields() + 1;

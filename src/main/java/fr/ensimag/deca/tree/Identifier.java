@@ -242,7 +242,7 @@ public class Identifier extends AbstractIdentifier {
 
     @Override
     protected void codeGenStore(DecacCompiler compiler, int n) {
-        Validate.isTrue((n <= compiler.getCompilerOptions().getRegisterNumber() - 1));
+        compiler.setAndVerifyCurrentRegister(n);
 
         DAddr dAddr = (DAddr) dval(compiler);
         compiler.addInstruction(new STORE(Register.getR(n), dAddr));

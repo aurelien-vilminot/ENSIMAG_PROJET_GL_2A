@@ -148,6 +148,8 @@ public abstract class AbstractExpr extends AbstractInst {
             this.codeGenExpr(compiler, 1);
             // Output R1
             compiler.addInstruction(outputInstruction);
+            // Registers are no longer used
+            compiler.setAndVerifyCurrentRegister(0);
         }
     }
 
@@ -171,7 +173,7 @@ public abstract class AbstractExpr extends AbstractInst {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        // nothing to do
+        codeGenExpr(compiler, 2);
     }
 
     public DVal dval(DecacCompiler compiler) {
@@ -205,7 +207,7 @@ public abstract class AbstractExpr extends AbstractInst {
      * @param n Register number
      */
     protected void codeGenExpr(DecacCompiler compiler, int n) {
-        Validate.isTrue((n <= compiler.getCompilerOptions().getRegisterNumber() - 1));
+        compiler.setAndVerifyCurrentRegister(n);
 
         DVal dval = this.dval(compiler);
         if (dval != null) {

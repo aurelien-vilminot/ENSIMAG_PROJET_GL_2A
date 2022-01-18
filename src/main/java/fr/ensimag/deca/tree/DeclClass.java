@@ -147,10 +147,10 @@ public class DeclClass extends AbstractDeclClass {
         // TODO: TSTO
         // TODO: BOV stack_overflow
         // TODO: ADDSP
-        // TODO: save registers used over R2
+        compiler.saveRegisters();
         // initialisation des attributs (à 0 si non précisé)
         listDeclField.codeGenListDeclField(compiler);
-        // TODO: restore registers used over R2
+        compiler.restoreRegisters();
         // return
         compiler.addInstruction(new RTS());
         // instruction de la table des méthodes (code.name.methodname)

@@ -61,7 +61,7 @@ public class Assign extends AbstractBinaryExpr {
     @Override
     protected void codeGenExprBool(DecacCompiler compiler, boolean bool, Label branch, int n) {
         Validate.isTrue(this.getType().isBoolean());
-        Validate.isTrue((n <= compiler.getCompilerOptions().getRegisterNumber() - 1));
+        compiler.setAndVerifyCurrentRegister(n);
 
         codeGenInst(compiler, n);
         this.getLeftOperand().codeGenExprBool(compiler, bool, branch, n);
@@ -69,7 +69,7 @@ public class Assign extends AbstractBinaryExpr {
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
-        Validate.isTrue((n <= compiler.getCompilerOptions().getRegisterNumber() - 1));
+        compiler.setAndVerifyCurrentRegister(n);
 
         codeGenInst(compiler, n);
     }
@@ -77,6 +77,8 @@ public class Assign extends AbstractBinaryExpr {
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
         codeGenInst(compiler, 2);
+        // Registers are no longer used
+        compiler.setAndVerifyCurrentRegister(0);
     }
 
     /**
@@ -86,14 +88,12 @@ public class Assign extends AbstractBinaryExpr {
      * @param n
      */
     protected void codeGenInst(DecacCompiler compiler, int n) {
-        Validate.isTrue((n <= compiler.getCompilerOptions().getRegisterNumber() - 1));
+        compiler.setAndVerifyCurrentRegister(n);
 
         // Calculate rightOperand and load into Rn
         getRightOperand().codeGenExpr(compiler, n);
         // Store rightOperand into leftOperand
         getLeftOperand().codeGenStore(compiler, n);
-        //DAddr dAddr = compiler.getEnvironmentExp().get(((AbstractIdentifier)getLeftOperand()).getName()).getOperand();
-        //compiler.addInstruction(new STORE(Register.getR(n), dAddr));
     }
 
     @Override

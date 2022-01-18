@@ -64,8 +64,7 @@ public class Selection extends AbstractLValue {
 
     @Override
     protected void codeGenStore(DecacCompiler compiler, int n) {
-        int maxRegister = compiler.getCompilerOptions().getRegisterNumber() - 1;
-        Validate.isTrue((n <= maxRegister));
+        int maxRegister = compiler.setAndVerifyCurrentRegister(n);
 
         int index = ident.getFieldDefinition().getIndex();
         if (n < maxRegister) {
@@ -89,7 +88,7 @@ public class Selection extends AbstractLValue {
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
-        Validate.isTrue((n <= compiler.getCompilerOptions().getRegisterNumber() - 1));
+        compiler.setAndVerifyCurrentRegister(n);
 
         int index = ident.getFieldDefinition().getIndex();
         // Calculate heap address of the object into Rn
@@ -99,7 +98,7 @@ public class Selection extends AbstractLValue {
 
     @Override
     protected void codeGenExprBool(DecacCompiler compiler, boolean bool, Label branch, int n) {
-        Validate.isTrue((n <= compiler.getCompilerOptions().getRegisterNumber() - 1));
+        compiler.setAndVerifyCurrentRegister(n);
 
         // Calculate the selection and load result into Rn
         codeGenExpr(compiler, n);
