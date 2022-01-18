@@ -14,7 +14,7 @@ public abstract class AbstractDeclMethod extends Tree {
                                              SymbolTable.Symbol classSymbol)
             throws ContextualError;
 
-    protected abstract void verifyMethodBody(DecacCompiler compiler)
+    protected abstract void verifyMethodBody(DecacCompiler compiler, SymbolTable.Symbol classSymbol)
             throws ContextualError;
 
     /**

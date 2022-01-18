@@ -31,7 +31,7 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
         Validate.notNull(superSymbol, "Symbol of super class should not be null");
 
         for (AbstractDeclMethod abstractDeclMethod : this.getList()) {
-            abstractDeclMethod.verifyMethodBody(compiler);
+            abstractDeclMethod.verifyMethodBody(compiler, classSymbol);
         }
         LOG.debug("verify listMethodBody: end");
     }
