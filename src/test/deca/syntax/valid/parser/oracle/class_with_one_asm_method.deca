@@ -1,5 +1,6 @@
 class A{
-	void f(int x) asm("\"Hello \n
+	void f(int x) asm("\"Hello 
+
 	\\ World
 	!\"");
 

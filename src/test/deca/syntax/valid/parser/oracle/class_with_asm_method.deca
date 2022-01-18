@@ -1,5 +1,6 @@
 class E{
-	void f() asm("\"Hello \n
+	void f() asm("\"Hello 
+
 	\\ World
 	!\"");
 }

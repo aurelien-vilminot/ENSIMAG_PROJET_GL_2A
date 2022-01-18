@@ -20,7 +20,8 @@ class World{
 
 	protected protec fooo;
 
-	void foo2() asm("World !\n");
+	void foo2() asm("World !
+");
 }
 
 {

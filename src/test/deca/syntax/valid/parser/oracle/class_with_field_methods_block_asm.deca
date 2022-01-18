@@ -4,5 +4,6 @@ class G{
 	}
 	protected int y = 50;-
 
-	void f() asm("Hello You\n !");
+	void f() asm("Hello You
+ !");
 }

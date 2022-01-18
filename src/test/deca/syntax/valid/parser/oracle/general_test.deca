@@ -18,7 +18,8 @@ class World extends Hello{
 
 	protected protec f;
 
-	void foo(int x) asm("World !\n");
+	void foo(int x) asm("World !
+");
 }
 
 {
