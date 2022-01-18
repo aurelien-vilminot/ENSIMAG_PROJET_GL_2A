@@ -550,12 +550,13 @@ class_body returns[ListDeclField listdeclfield, ListDeclMethod listdeclmeth]
     $listdeclmeth = new ListDeclMethod();
 }
     : (m=decl_method {
+            assert($m.tree != null);
+            listdeclmeth.add($m.tree);
         }
       | f=decl_field_set[$listdeclfield]
       )*
     ;
 
-// TODO: visibility
 decl_field_set[ListDeclField l]
     : v=visibility t=type list_decl_field[$l, $t.tree, $v.v]
       SEMI
