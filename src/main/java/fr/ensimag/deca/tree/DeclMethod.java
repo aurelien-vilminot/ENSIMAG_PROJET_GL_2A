@@ -9,6 +9,7 @@ import fr.ensimag.ima.pseudocode.LabelOperand;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.RTS;
 import fr.ensimag.ima.pseudocode.instructions.STORE;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
@@ -112,12 +113,16 @@ public class DeclMethod extends AbstractDeclMethod {
     @Override
     protected void codeGenDeclMethod(DecacCompiler compiler) {
         // label code.nameClass.nameMethod
-        // TSTO / BOV stack_overflow
-        // sauvegarde des registres
+        compiler.addLabel(methodName.getMethodDefinition().getLabel());
+        // TODO: TSTO / BOV stack_overflow
+        // TODO: sauvegarde des registres
+        listDeclParam.codeGenDeclMethod(compiler);
         // code methode (valeur de retour dans R0)
-        // label fin.nameClass.nameMethod
-        // restauration des registres
-        throw new UnsupportedOperationException("not yet implemented");
+        methodBody.codeGenDeclMethod(compiler);
+        Label fin = new Label("fin." + methodName.getMethodDefinition().getLabel().toString().substring(4));
+        compiler.addLabel(fin);
+        // TODO: restauration des registres
+        compiler.addInstruction(new RTS());
     }
 
     @Override
