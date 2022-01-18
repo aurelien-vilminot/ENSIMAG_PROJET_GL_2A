@@ -31,7 +31,7 @@ public class TestInstanceOf {
         localEnv = new EnvironmentExp(null);
 
         when(classType.isClass()).thenReturn(true);
-        when(classType.isNull()).thenReturn(false);
+        when(classType.isClassOrNull()).thenReturn(true);
         when(classExpr.verifyExpr(compiler, localEnv, null)).thenReturn(classType);
         when(classId.verifyType(compiler)).thenReturn(classType);
     }
