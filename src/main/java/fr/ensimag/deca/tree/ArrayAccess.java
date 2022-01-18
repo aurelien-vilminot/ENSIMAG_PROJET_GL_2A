@@ -27,7 +27,7 @@ public class ArrayAccess extends AbstractLValue{
         tab.decompile(s);
         s.print("[");
         index.decompile(s);
-        s.print("];");
+        s.print("]");
     }
 
     protected void iterChildren(TreeFunction f){

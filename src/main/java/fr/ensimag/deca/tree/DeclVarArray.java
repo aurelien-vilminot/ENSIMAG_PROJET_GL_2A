@@ -38,38 +38,12 @@ public class DeclVarArray extends AbstractDeclVar {
     protected void verifyDeclVar(DecacCompiler compiler,
             EnvironmentExp localEnv, ClassDefinition currentClass)
             throws ContextualError {
-        LOG.debug("verify DeclVar: start");
-        Validate.notNull(compiler, "Compiler (env_types) object should not be null");
-//        Validate.notNull(localEnv, "Env_exp object should not be null");
-
-        // Check type definition
-        Type currentType = this.type.verifyType(compiler);
-        if (currentType.isVoid()) {
-            throw new ContextualError("Void cannot be the type of a variable", this.getLocation());
-        }
-        this.initialization.verifyInitialization(compiler, currentType, localEnv, currentClass);
-
-        // Declare the new variable
-        try {
-            localEnv.declare(this.varName.getName(), new VariableDefinition(currentType, this.getLocation()));
-        } catch (EnvironmentExp.DoubleDefException doubleDefException) {
-            throw new ContextualError("Identifier already declared", this.getLocation());
-        }
-
-        // Check var definition
-        this.varName.verifyExpr(compiler, localEnv, currentClass);
-
-        LOG.debug("verify DeclVar: end");
+        throw new UnsupportedOperationException("not yet implemented");
     }
 
     @Override
     protected void codeGenDeclVar(DecacCompiler compiler) {
-        // Set operand global address
-        int addr = compiler.incGlobalStackSize(1);
-        DAddr dAddr = new RegisterOffset(addr, Register.GB);
-        compiler.getEnvironmentExp().get(varName.getName()).setOperand(dAddr);
-        // Generate code for initialization
-        initialization.codeGenInit(compiler, dAddr);
+        throw new UnsupportedOperationException("not yet implemented");
     }
 
     @Override
@@ -79,6 +53,7 @@ public class DeclVarArray extends AbstractDeclVar {
         int i = 0;
         while(i<dimension){
             s.print("[]");
+            i = i + 1;
         }
         s.print(" ");
         varName.decompile(s);
