@@ -4,8 +4,8 @@ class A {}
     Object o = null;
     A a = null;
 
-    (null) o;
-    (null) a;
+    (null) (o);
+    (null) (a);
 
-    Object o2 = (null) 0;
+    Object o2 = (null) (o);
 }

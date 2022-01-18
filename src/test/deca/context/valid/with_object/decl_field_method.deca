@@ -2,7 +2,11 @@
 
 class A {
     protected int a;
-    protected float m1(){return 1.1f;}
+
+   float m1(){
+        return 1.1f;
+    }
+
     int z;
     protected int e;
     int r;
@@ -10,7 +14,7 @@ class A {
     int t;
     protected int y;
     float m4(){return 1.1f;}
-    protected float m3(){return 1.1f;}
+    float m3(){return 1.1f;}
     float m5(){return 1.1f;}
     int u;
     int i;

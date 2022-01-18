@@ -27,7 +27,7 @@ class A{
 
     ");
 
-    B m5(B a, int b, int x, int r, float b) asm ("sdfsdf
+    B m5(B a, int b, int x, int r, float p) asm ("sdfsdf
     sdfdsfdsfsd
     sefsdfsdf
     sdfdsfsdf
