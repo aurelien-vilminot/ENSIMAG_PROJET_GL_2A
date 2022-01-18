@@ -18,9 +18,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 
-import fr.ensimag.ima.pseudocode.instructions.BEQ;
-import fr.ensimag.ima.pseudocode.instructions.BOV;
-import fr.ensimag.ima.pseudocode.instructions.CMP;
+import fr.ensimag.ima.pseudocode.instructions.*;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.apache.commons.lang.Validate;
@@ -57,6 +55,7 @@ public class DecacCompiler implements Runnable {
     private int tempStackCurrent = 0; // current temporary stack usage
     private int tempStackMax = 0; // maximal temporary stack usage
     private int currentRegister = 0; // current register number being used
+    private int savedRegister = 0; // saved register number, used to restore registers
 
     public int getGlobalStackSize() {
         return globalStackSize;
@@ -140,6 +139,21 @@ public class DecacCompiler implements Runnable {
             addInstruction(new CMP(new NullOperand(), Register.getR(n)));
             addInstruction(new BEQ(getLabelGenerator().getDereferenceLabel()));
         }
+    }
+
+    public void saveRegisters() {
+        savedRegister = currentRegister;
+        for (int i = 2; i <= savedRegister; i++) {
+            addInstruction(new PUSH(Register.getR(i)));
+        }
+        currentRegister = 0;
+    }
+
+    public void restoreRegisters() {
+        for (int i = 2; i <= savedRegister; i++) {
+            addInstruction(new POP(Register.getR(i)));
+        }
+        savedRegister = 0;
     }
 
     public DecacCompiler(CompilerOptions compilerOptions, File source) {
