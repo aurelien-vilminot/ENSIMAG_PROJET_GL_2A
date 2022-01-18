@@ -27,10 +27,10 @@ public class ListDeclParam extends TreeList<AbstractDeclParam> {
         return signature;
     }
 
-    protected EnvironmentExp verifyParamEnvExp(DecacCompiler compiler) throws ContextualError {
+    protected EnvironmentExp verifyParamEnvExp(DecacCompiler compiler, EnvironmentExp localEnv) throws ContextualError {
         LOG.debug("verify ListParamEnvExp: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
-        EnvironmentExp environmentExpParam = new EnvironmentExp(null);
+        EnvironmentExp environmentExpParam = new EnvironmentExp(localEnv);
 
         for (AbstractDeclParam abstractDeclParam : this.getList()) {
             abstractDeclParam.verifyParamEnvExp(compiler, environmentExpParam);

@@ -70,6 +70,13 @@ public class DeclMethod extends AbstractDeclMethod {
         ClassDefinition currentClassDefinition = (ClassDefinition) compiler.getEnvironmentTypes().get(classSymbol);
         EnvironmentExp environmentExpCurrentClass = currentClassDefinition.getMembers();
 
+        try {
+            environmentExpCurrentClass.addSuperExpDefinition(envExpName);
+        } catch (EnvironmentExp.DoubleDefException e) {
+            throw new ContextualError(e.getMessage(), this.getLocation());
+        }
+
+
         // Method declaration
         try {
             environmentExpCurrentClass.declare(
@@ -93,9 +100,10 @@ public class DeclMethod extends AbstractDeclMethod {
     protected void verifyMethodBody(DecacCompiler compiler, SymbolTable.Symbol classSymbol) throws ContextualError {
         LOG.debug("verify MethodBody: start");
 
-        EnvironmentExp environmentExpParams = this.listDeclParam.verifyParamEnvExp(compiler);
+        EnvironmentExp environmentExpCurrentClass = ((ClassDefinition) compiler.getEnvironmentTypes().get(classSymbol)).getMembers();
+        EnvironmentExp localExp = this.listDeclParam.verifyParamEnvExp(compiler, environmentExpCurrentClass);
         ClassDefinition methodClassDefinition = (ClassDefinition) compiler.getEnvironmentTypes().get(classSymbol);
-        this.methodBody.verifyMethodBody(compiler, environmentExpParams, methodClassDefinition, this.returnType.getType());
+        this.methodBody.verifyMethodBody(compiler, localExp, methodClassDefinition, this.returnType.getType());
 
         LOG.debug("verify MethodBody: end");
     }

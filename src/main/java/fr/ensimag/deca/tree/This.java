@@ -6,14 +6,24 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.context.Type;
 import fr.ensimag.deca.tools.IndentPrintStream;
+import org.apache.log4j.Logger;
 
 import java.io.PrintStream;
 
 public class This extends AbstractExpr {
+    private static final Logger LOG = Logger.getLogger(Main.class);
 
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        LOG.debug("verify This: start");
+
+        if (currentClass == null || !currentClass.getType().isClass()) {
+            throw new ContextualError("'This does not exist", this.getLocation());
+        }
+
+        this.setType(currentClass.getType());
+        LOG.debug("verify This: end");
+        return currentClass.getType();
     }
 
     @Override
