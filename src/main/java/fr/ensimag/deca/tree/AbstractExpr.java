@@ -210,6 +210,9 @@ public abstract class AbstractExpr extends AbstractInst {
         DVal dval = this.dval(compiler);
         if (dval != null) {
             compiler.addInstruction(new LOAD(dval, Register.getR(n)));
+            if (type.isClass()) {
+                compiler.addDereference(n);
+            }
         }
     }
 
