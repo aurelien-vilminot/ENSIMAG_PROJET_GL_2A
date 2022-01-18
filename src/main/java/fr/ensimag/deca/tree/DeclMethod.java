@@ -43,28 +43,39 @@ public class DeclMethod extends AbstractDeclMethod {
 
         EnvironmentExp envExpName = ((ClassDefinition) compiler.getEnvironmentTypes().get(superSymbol)).getMembers();
 
-        if (envExpName.get(this.methodName.getName()) != null && envExpName.get(this.methodName.getName()).isMethod()) {
-            // If there is an override method
-            MethodDefinition methodDefinitionSuperEnvExp = envExpName.get(this.methodName.getName()).asMethodDefinition(
-                    "Impossible to convert in methodDefinition",
-                    this.getLocation()
-            );
+        if (envExpName.get(this.methodName.getName()) != null) {
+            if (envExpName.get(this.methodName.getName()).isMethod()) {
+                // If there is an override method
+                MethodDefinition methodDefinitionSuperEnvExp = envExpName.get(this.methodName.getName()).asMethodDefinition(
+                        "Impossible to convert in methodDefinition",
+                        this.getLocation()
+                );
 
-            if (!methodDefinitionSuperEnvExp.getSignature().equals(signature)) {
-                // Both signatures must be the same
-                throw new ContextualError("Method prototype must be same as herited", this.getLocation());
-            }
+                if (!methodDefinitionSuperEnvExp.getSignature().equals(signature)) {
+                    // Both signatures must be the same
+                    throw new ContextualError("Method prototype must be same as herited", this.getLocation());
+                }
 
-            if (!compiler.getEnvironmentTypes().subTypes(returnType, methodDefinitionSuperEnvExp.getType())) {
-                // Both return types must be the same
-                throw new ContextualError("Return type must be a subtype of hertied method return", this.getLocation());
+                if (!compiler.getEnvironmentTypes().subTypes(returnType, methodDefinitionSuperEnvExp.getType())) {
+                    // Both return types must be the same
+                    throw new ContextualError("Return type must be a subtype of hertied method return", this.getLocation());
+                }
+
+            } else {
+                throw new ContextualError("Super class symbol must be a method definition", this.getLocation());
             }
-        } else {
-            throw new ContextualError("Super class symbol must be a method definition", this.getLocation());
         }
+
 
         ClassDefinition currentClassDefinition = (ClassDefinition) compiler.getEnvironmentTypes().get(classSymbol);
         EnvironmentExp environmentExpCurrentClass = currentClassDefinition.getMembers();
+
+        try {
+            environmentExpCurrentClass.addSuperExpDefinition(envExpName);
+        } catch (EnvironmentExp.DoubleDefException e) {
+            throw new ContextualError(e.getMessage(), this.getLocation());
+        }
+
 
         // Method declaration
         try {
@@ -86,11 +97,13 @@ public class DeclMethod extends AbstractDeclMethod {
     }
 
     @Override
-    protected void verifyMethodBody(DecacCompiler compiler) throws ContextualError {
+    protected void verifyMethodBody(DecacCompiler compiler, SymbolTable.Symbol classSymbol) throws ContextualError {
         LOG.debug("verify MethodBody: start");
 
-        EnvironmentExp environmentExpParams = this.listDeclParam.verifyParamEnvExp(compiler);
-        this.methodBody.verifyMethodBody(compiler, environmentExpParams, this.methodName.getClassDefinition(), this.returnType.getType());
+        EnvironmentExp environmentExpCurrentClass = ((ClassDefinition) compiler.getEnvironmentTypes().get(classSymbol)).getMembers();
+        EnvironmentExp localExp = this.listDeclParam.verifyParamEnvExp(compiler, environmentExpCurrentClass);
+        ClassDefinition methodClassDefinition = (ClassDefinition) compiler.getEnvironmentTypes().get(classSymbol);
+        this.methodBody.verifyMethodBody(compiler, localExp, methodClassDefinition, this.returnType.getType());
 
         LOG.debug("verify MethodBody: end");
     }
