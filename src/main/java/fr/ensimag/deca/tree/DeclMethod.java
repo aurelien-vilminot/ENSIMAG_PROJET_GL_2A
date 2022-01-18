@@ -15,14 +15,16 @@ public class DeclMethod extends AbstractDeclMethod {
     private final AbstractIdentifier returnType;
     private final AbstractIdentifier methodName;
     private final ListDeclParam listDeclParam;
+    private final AbstractMethodBody methodBody;
 
-    public DeclMethod(AbstractIdentifier returnType, AbstractIdentifier methodName, ListDeclParam listDeclParam) {
-        // TODO: method body
+    public DeclMethod(AbstractIdentifier returnType, AbstractIdentifier methodName, ListDeclParam listDeclParam, AbstractMethodBody methodBody) {
         Validate.notNull(returnType);
         Validate.notNull(methodName);
+        Validate.notNull(methodBody);
         this.returnType = returnType;
         this.methodName = methodName;
         this.listDeclParam = listDeclParam;
+        this.methodBody = methodBody;
     }
 
     @Override
@@ -76,6 +78,18 @@ public class DeclMethod extends AbstractDeclMethod {
         this.methodName.verifyExpr(compiler, environmentExpCurrentClass, currentClassDefinition);
         LOG.debug("verify DeclMethod: end");
     }
+
+    @Override
+    protected void verifyMethodBody(DecacCompiler compiler) throws ContextualError {
+        LOG.debug("verify MethodBody: start");
+
+        //TODO: Environnement de param
+        EnvironmentExp environmentExpParams = new EnvironmentExp(null);
+        this.methodBody.verifyMethodBody(compiler, environmentExpParams, this.methodName.getClassDefinition(), this.returnType.getType());
+
+        LOG.debug("verify MethodBody: end");
+    }
+
 
     @Override
     protected void codeGenDeclMethod(DecacCompiler compiler) {

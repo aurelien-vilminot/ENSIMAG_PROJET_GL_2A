@@ -106,7 +106,7 @@ public class DeclClass extends AbstractDeclClass {
         this.listDeclField.verifyListInitField(compiler, this.name.getName());
 
         // Methods body
-        // TODO
+        this.listDeclMethod.verifyListMethodBody(compiler, this.superClass.getName(), this.name.getName());
 
         LOG.debug("verify ClassBody: end");
     }
