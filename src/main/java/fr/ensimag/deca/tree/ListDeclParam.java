@@ -1,6 +1,5 @@
 package fr.ensimag.deca.tree;
 
-import com.sun.tools.javac.comp.Env;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
