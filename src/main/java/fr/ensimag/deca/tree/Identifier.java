@@ -199,8 +199,21 @@ public class Identifier extends AbstractIdentifier {
 
         return currentType.getType();
     }
-    
-    
+
+    @Override
+    public MethodDefinition verifyMethod(DecacCompiler compiler, EnvironmentExp localEnv) throws ContextualError {
+        LOG.debug("verify Method: start");
+        Validate.notNull(compiler, "Compiler (env_types) object should not be null");
+        Validate.notNull(localEnv, "Local environment object should not be null");
+
+        MethodDefinition methodDefinition = localEnv.get(this.getName()).asMethodDefinition("Cannot convert into a method", this.getLocation());
+        this.setDefinition(methodDefinition);
+        LOG.debug("verify Method: end");
+
+        return methodDefinition;
+    }
+
+
     private Definition definition;
 
 
