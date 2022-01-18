@@ -27,7 +27,7 @@ class World{
 {
 	int a; float b = 1.0, c;
 	while(a > 1){
-		ident 2 = new World();
+		ident2 = new World();
 		ident.f();
 		(Hello) (a + 2);
 		a = a && true;
