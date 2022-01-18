@@ -223,8 +223,8 @@ public abstract class AbstractExpr extends AbstractInst {
     protected void codeGenExprBool(DecacCompiler compiler, boolean bool, Label branch, int n) {
         DVal dval = this.dval(compiler);
         if (dval != null) {
-            compiler.addInstruction(new LOAD(this.dval(compiler), Register.getR(0)));
-            compiler.addInstruction(new CMP(new ImmediateInteger(0), Register.getR(0)));
+            compiler.addInstruction(new LOAD(this.dval(compiler), Register.R0));
+            compiler.addInstruction(new CMP(new ImmediateInteger(0), Register.R0));
             if (bool) {
                 compiler.addInstruction(new BNE(branch));
             } else {
