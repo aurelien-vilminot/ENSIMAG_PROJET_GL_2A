@@ -32,7 +32,7 @@ public class InstanceOf extends AbstractExpr {
         Type instanceType = this.type.verifyType(compiler);
         Type returnType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("boolean")).getType();
 
-        if (!((exprType.isClass() || exprType.isNull()) && !instanceType.isClass())) {
+        if (!(exprType.isClassOrNull() && instanceType.isClass())) {
             throw new ContextualError("InstanceOf works only with two class types operands", this.getLocation());
         }
 
