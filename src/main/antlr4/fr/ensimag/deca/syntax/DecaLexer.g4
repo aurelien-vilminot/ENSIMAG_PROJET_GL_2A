@@ -82,7 +82,8 @@ FLOAT : FLOATDEC | FLOATHEX;
 // Strings
 fragment STRING_CAR : ~('"' | '\\' | '\n');
 STRING : '"' (STRING_CAR | '\\"' | '\\\\')* '"';
-MULTI_LINE_STRING : '"' (STRING_CAR | EOF | '\\"' | '\\\\')* '"';
+fragment EOL : '\n';
+MULTI_LINE_STRING : '"' (STRING_CAR | EOL | '\\"' | '\\\\')* '"';
 
 // Separators (Skips)
 WS : (' ' | '\t' | '\r' | '\n') {skip();}; // ignore white spaces
