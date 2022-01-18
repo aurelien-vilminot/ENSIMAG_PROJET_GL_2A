@@ -128,6 +128,20 @@ public class DeclClass extends AbstractDeclClass {
     }
 
     @Override
+    protected void codeGenMethodTable(DecacCompiler compiler) {
+        // Allocate pointer to superclass
+        int index = compiler.incGlobalStackSize(1);
+        DAddr dAddr = new RegisterOffset(index, Register.GB);
+        name.getClassDefinition().setOperand(dAddr);
+        DAddr superClassDaddr = superClass.getClassDefinition().getOperand();
+        // Load @superClass inside dAddr
+        compiler.addInstruction(new LEA(superClassDaddr, Register.R0));
+        compiler.addInstruction(new STORE(Register.R0, dAddr));
+        // Generate virtual methods table
+        listDeclMethod.codeGenMethodTable(compiler, name);
+    }
+
+    @Override
     protected void codeGenDeclClass(DecacCompiler compiler) {
         // CodeGen
         // init.name
@@ -143,20 +157,6 @@ public class DeclClass extends AbstractDeclClass {
         compiler.addInstruction(new RTS());
         // instruction de la table des méthodes (code.name.methodname)
         listDeclMethod.codeGenListDeclMethod(compiler);
-    }
-
-    @Override
-    protected void codeGenMethodTable(DecacCompiler compiler) {
-        // Allocate pointer to superclass
-        int index = compiler.incGlobalStackSize(1);
-        DAddr dAddr = new RegisterOffset(index, Register.GB);
-        name.getClassDefinition().setOperand(dAddr);
-        DAddr superClassDaddr = superClass.getClassDefinition().getOperand();
-        // Load @superClass inside dAddr
-        compiler.addInstruction(new LEA(superClassDaddr, Register.R0));
-        compiler.addInstruction(new STORE(Register.R0, dAddr));
-        // Generate virtual methods table
-        listDeclMethod.codeGenMethodTable(compiler, name);
     }
 
     @Override

@@ -1,11 +1,13 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.ima.pseudocode.*;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.RTS;
 import fr.ensimag.ima.pseudocode.instructions.STORE;
 import org.apache.log4j.Logger;
 
@@ -64,23 +66,19 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
      */
     protected void codeGenMethodTable(DecacCompiler compiler) {
         if (!getList().isEmpty()) {
+            compiler.addComment("Virtual methods table");
             // Generate Object.equals
             int index = compiler.incGlobalStackSize(1);
+            DAddr dAddr = new RegisterOffset(index, Register.GB);
+            ((ClassDefinition)(compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("Object")))).setOperand(dAddr);
             compiler.addInstruction(new LOAD(new NullOperand(), Register.R0));
-            compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(index, Register.GB)));
-            Label equalsLabel = null;
-            try {
-                equalsLabel = compiler.getEnvironmentTypes()
-                        .get(compiler.getSymbolTable().create("equals"))
-                        .asMethodDefinition("Impossible to convert in method definition", this.getLocation())
-                        .getLabel();
-            } catch (ContextualError contextualError) {
-                contextualError.printStackTrace();
-            }
+            compiler.addInstruction(new STORE(Register.R0, dAddr));
+            Label equalsLabel = new Label("code.Object.equals");
             index = compiler.incGlobalStackSize(1);
             compiler.addInstruction(new LOAD(new LabelOperand(equalsLabel), Register.R0));
             compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(index, Register.GB)));
         }
+        // TODO: héritage
         for (AbstractDeclClass c : getList()) {
             c.codeGenMethodTable(compiler);
         }
@@ -91,6 +89,18 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
      * @param compiler
      */
     protected void codeGenListDeclClass(DecacCompiler compiler) {
+        if (!getList().isEmpty()) {
+            compiler.addComment("Methods table");
+            // Generate code.Object.equals
+            Label equalsLabel = new Label("code.Object.equals");
+            Label endEqualsLabel = new Label("fin.Object.equals");
+            compiler.addLabel(equalsLabel);
+            // TODO: object.equals method
+            compiler.addInstruction(new RTS());
+            compiler.addLabel(endEqualsLabel);
+            compiler.addInstruction(new RTS());
+
+        }
         for (AbstractDeclClass c : getList()) {
             c.codeGenDeclClass(compiler);
         }
