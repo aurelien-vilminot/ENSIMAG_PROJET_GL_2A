@@ -20,4 +20,12 @@ public abstract class AbstractDeclMethod extends Tree {
      * @param compiler
      */
     protected abstract void codeGenDeclMethod(DecacCompiler compiler);
+
+
+    /**
+     * Generate assembly code to build the virtual methods table
+     *
+     * @param compiler
+     */
+    protected abstract void codeGenMethodTable(DecacCompiler compiler, AbstractIdentifier className);
 }
