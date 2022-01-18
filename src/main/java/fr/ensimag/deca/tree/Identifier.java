@@ -7,7 +7,10 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import java.io.PrintStream;
 
+import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.DVal;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -235,6 +238,14 @@ public class Identifier extends AbstractIdentifier {
     @Override
     public DVal dval(DecacCompiler compiler) {
         return compiler.getEnvironmentExp().get(name).getOperand();
+    }
+
+    @Override
+    protected void codeGenStore(DecacCompiler compiler, int n) {
+        Validate.isTrue((n <= compiler.getCompilerOptions().getRegisterNumber() - 1));
+
+        DAddr dAddr = (DAddr) dval(compiler);
+        compiler.addInstruction(new STORE(Register.getR(n), dAddr));
     }
 
     @Override

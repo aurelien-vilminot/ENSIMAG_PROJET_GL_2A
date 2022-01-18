@@ -49,6 +49,9 @@ public class DeclParam extends AbstractDeclParam {
             throw new ContextualError("Param identifier already declared", this.getLocation());
         }
 
+        // Check param definition
+        this.name.verifyExpr(compiler, localEnv, null);
+
         LOG.debug("verify ParamEnvExp: end");
     }
 

@@ -18,7 +18,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 
+import fr.ensimag.ima.pseudocode.instructions.BEQ;
 import fr.ensimag.ima.pseudocode.instructions.BOV;
+import fr.ensimag.ima.pseudocode.instructions.CMP;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.apache.commons.lang.Validate;
@@ -115,6 +117,13 @@ public class DecacCompiler implements Runnable {
         }
     }
 
+    public void addDereference(int n) {
+        if (!this.compilerOptions.getNoCheck()) {
+            addInstruction(new CMP(new NullOperand(), Register.getR(n)));
+            addInstruction(new BEQ(getLabelGenerator().getDereferenceLabel()));
+        }
+    }
+
     public DecacCompiler(CompilerOptions compilerOptions, File source) {
         super();
         if (compilerOptions == null) {
@@ -157,12 +166,12 @@ public class DecacCompiler implements Runnable {
                 this.environmentTypes.get(booleanSymbol).getType(),
                 Location.BUILTIN,
                 equalsSignature,
-                0
+                ((ClassDefinition) this.environmentTypes.get(objectSymbol)).incNumberOfMethods()
         );
         equalsDefinition.setLabel(new Label("code." + objectSymbol.getName() + '.' + equalsSymbol.getName()));
 
         try {
-            this.environmentExp.declare(equalsSymbol, equalsDefinition);
+            ((ClassDefinition) this.environmentTypes.get(objectSymbol)).getMembers().declare(equalsSymbol, equalsDefinition);
         } catch (EnvironmentExp.DoubleDefException doubleDefException) {
             LOG.error("Multiple type declaration");
         }

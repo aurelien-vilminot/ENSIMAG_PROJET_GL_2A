@@ -115,6 +115,11 @@ public class EnvironmentExp {
 
             for (ExpDefinition expDefinition: couple.getValue()) {
                 str.append("\n\t\t").append(expDefinition);
+                if (expDefinition.isMethod()) {
+                    str.append(" | Index : ").append(((MethodDefinition) expDefinition).getIndex());
+                } else if (expDefinition.isField()){
+                    str.append(" | Index : ").append(((FieldDefinition) expDefinition).getIndex());
+                }
             }
         }
 

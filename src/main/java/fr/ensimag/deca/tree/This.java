@@ -18,7 +18,7 @@ public class This extends AbstractExpr {
         LOG.debug("verify This: start");
 
         if (currentClass == null || !currentClass.getType().isClass()) {
-            throw new ContextualError("'This does not exist", this.getLocation());
+            throw new ContextualError("Impossible to use 'this' identifier in the main program", this.getLocation());
         }
 
         this.setType(currentClass.getType());

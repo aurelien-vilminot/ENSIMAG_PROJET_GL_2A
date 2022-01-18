@@ -9,6 +9,7 @@ import fr.ensimag.ima.pseudocode.LabelOperand;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.RTS;
 import fr.ensimag.ima.pseudocode.instructions.STORE;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
@@ -42,6 +43,11 @@ public class DeclMethod extends AbstractDeclMethod {
         Signature signature = this.listDeclParam.verifyDeclParam(compiler);
 
         EnvironmentExp envExpName = ((ClassDefinition) compiler.getEnvironmentTypes().get(superSymbol)).getMembers();
+        ClassDefinition currentClassDefinition = (ClassDefinition) compiler.getEnvironmentTypes().get(classSymbol);
+        EnvironmentExp environmentExpCurrentClass = currentClassDefinition.getMembers();
+
+        // Default index
+        int indexMethod = currentClassDefinition.incNumberOfMethods();
 
         if (envExpName.get(this.methodName.getName()) != null) {
             if (envExpName.get(this.methodName.getName()).isMethod()) {
@@ -61,21 +67,13 @@ public class DeclMethod extends AbstractDeclMethod {
                     throw new ContextualError("Return type must be a subtype of hertied method return", this.getLocation());
                 }
 
+                // Get index of override method
+                indexMethod = methodDefinitionSuperEnvExp.getIndex();
+
             } else {
                 throw new ContextualError("Super class symbol must be a method definition", this.getLocation());
             }
         }
-
-
-        ClassDefinition currentClassDefinition = (ClassDefinition) compiler.getEnvironmentTypes().get(classSymbol);
-        EnvironmentExp environmentExpCurrentClass = currentClassDefinition.getMembers();
-
-        try {
-            environmentExpCurrentClass.addSuperExpDefinition(envExpName);
-        } catch (EnvironmentExp.DoubleDefException e) {
-            throw new ContextualError(e.getMessage(), this.getLocation());
-        }
-
 
         // Method declaration
         try {
@@ -85,7 +83,7 @@ public class DeclMethod extends AbstractDeclMethod {
                             returnType,
                             this.getLocation(),
                             signature,
-                            currentClassDefinition.incNumberOfMethods()
+                            indexMethod
                     )
                     );
         } catch (EnvironmentExp.DoubleDefException e) {
@@ -100,9 +98,11 @@ public class DeclMethod extends AbstractDeclMethod {
     protected void verifyMethodBody(DecacCompiler compiler, SymbolTable.Symbol classSymbol) throws ContextualError {
         LOG.debug("verify MethodBody: start");
 
+        // Get params for verify method
         EnvironmentExp environmentExpCurrentClass = ((ClassDefinition) compiler.getEnvironmentTypes().get(classSymbol)).getMembers();
         EnvironmentExp localExp = this.listDeclParam.verifyParamEnvExp(compiler, environmentExpCurrentClass);
         ClassDefinition methodClassDefinition = (ClassDefinition) compiler.getEnvironmentTypes().get(classSymbol);
+
         this.methodBody.verifyMethodBody(compiler, localExp, methodClassDefinition, this.returnType.getType());
 
         LOG.debug("verify MethodBody: end");
@@ -112,12 +112,16 @@ public class DeclMethod extends AbstractDeclMethod {
     @Override
     protected void codeGenDeclMethod(DecacCompiler compiler) {
         // label code.nameClass.nameMethod
-        // TSTO / BOV stack_overflow
-        // sauvegarde des registres
+        compiler.addLabel(methodName.getMethodDefinition().getLabel());
+        // TODO: TSTO / BOV stack_overflow
+        // TODO: sauvegarde des registres
+        listDeclParam.codeGenDeclMethod(compiler);
         // code methode (valeur de retour dans R0)
-        // label fin.nameClass.nameMethod
-        // restauration des registres
-        throw new UnsupportedOperationException("not yet implemented");
+        methodBody.codeGenDeclMethod(compiler);
+        Label fin = new Label("fin." + methodName.getMethodDefinition().getLabel().toString().substring(4));
+        compiler.addLabel(fin);
+        // TODO: restauration des registres
+        compiler.addInstruction(new RTS());
     }
 
     @Override
