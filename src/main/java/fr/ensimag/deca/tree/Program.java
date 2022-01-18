@@ -77,6 +77,9 @@ public class Program extends AbstractProgram {
         if (gen.getIoError()) {
             compiler.getLabelGenerator().generateErrorLabel(compiler, gen.getIoLabel(), "Error: Input/Output error");
         }
+        if (gen.getDereferenceError()) {
+            compiler.getLabelGenerator().generateErrorLabel(compiler, gen.getDereferenceLabel(), "Error: null dereference");
+        }
     }
 
     @Override

@@ -4,10 +4,7 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.*;
-import fr.ensimag.ima.pseudocode.instructions.BEQ;
-import fr.ensimag.ima.pseudocode.instructions.BNE;
-import fr.ensimag.ima.pseudocode.instructions.CMP;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.*;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -66,15 +63,45 @@ public class Selection extends AbstractLValue {
     }
 
     @Override
-    protected void codeGenExpr(DecacCompiler compiler, int n) {
+    protected void codeGenStore(DecacCompiler compiler, int n) {
+        int maxRegister = compiler.getCompilerOptions().getRegisterNumber() - 1;
+        Validate.isTrue((n <= maxRegister));
+
         int index = ident.getFieldDefinition().getIndex();
+        if (n < maxRegister) {
+            // Calculate heap address of the object into Rn+1
+            expr.codeGenExpr(compiler, n+1);
+            compiler.addInstruction(new STORE(Register.getR(n), new RegisterOffset(index, Register.getR(n+1))));
+        } else {
+            compiler.incTempStackCurrent(1);
+            compiler.setTempStackMax();
+            compiler.addInstruction(new PUSH(Register.getR(n)), "save");
+            // Calculate heap address of the object into Rn
+            expr.codeGenExpr(compiler, n);
+            compiler.addInstruction(new LOAD(Register.getR(n), Register.R0));
+            // R0 contains heap address of the object
+            compiler.addInstruction(new POP(Register.getR(n)), "restore");
+            compiler.incTempStackCurrent(-1);
+            // Load R0 into correct field in the object
+            compiler.addInstruction(new STORE(Register.getR(n), new RegisterOffset(index, Register.R0)));
+        }
+    }
+
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, int n) {
+        Validate.isTrue((n <= compiler.getCompilerOptions().getRegisterNumber() - 1));
+
+        int index = ident.getFieldDefinition().getIndex();
+        // Calculate heap address of the object into Rn
         expr.codeGenExpr(compiler, n);
-        // Rn contient l'adresse dans le tas
         compiler.addInstruction(new LOAD(new RegisterOffset(index, Register.getR(n)), Register.getR(n)));
     }
 
     @Override
     protected void codeGenExprBool(DecacCompiler compiler, boolean bool, Label branch, int n) {
+        Validate.isTrue((n <= compiler.getCompilerOptions().getRegisterNumber() - 1));
+
+        // Calculate the selection and load result into Rn
         codeGenExpr(compiler, n);
         compiler.addInstruction(new LOAD(Register.getR(n), Register.R0));
         compiler.addInstruction(new CMP(new ImmediateInteger(0), Register.R0));

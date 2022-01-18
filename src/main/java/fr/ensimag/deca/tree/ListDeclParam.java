@@ -50,4 +50,8 @@ public class ListDeclParam extends TreeList<AbstractDeclParam> {
             ite.next().decompile(s);
         }
     }
+
+    protected void codeGenDeclMethod(DecacCompiler compiler) {
+        throw new UnsupportedOperationException("Class not yet implemented, or cast conversion is not allowed");
+    }
 }

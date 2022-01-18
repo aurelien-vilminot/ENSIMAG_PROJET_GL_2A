@@ -39,6 +39,11 @@ public class MethodAsmBody extends AbstractMethodBody{
     }
 
     @Override
+    protected void codeGenDeclMethod(DecacCompiler compiler) {
+        throw new UnsupportedOperationException("not yet implemented");
+    }
+
+    @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         stringLiteral.prettyPrint(s, prefix, true);
     }

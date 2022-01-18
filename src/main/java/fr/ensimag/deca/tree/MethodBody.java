@@ -43,6 +43,11 @@ public class MethodBody extends AbstractMethodBody {
     }
 
     @Override
+    protected void codeGenDeclMethod(DecacCompiler compiler) {
+        throw new UnsupportedOperationException("Class not yet implemented, or cast conversion is not allowed");
+    }
+
+    @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         listDeclVar.prettyPrint(s, prefix, false);
         listInst.prettyPrint(s, prefix, true);
