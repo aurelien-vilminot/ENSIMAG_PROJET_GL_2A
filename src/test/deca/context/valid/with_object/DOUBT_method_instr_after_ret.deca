@@ -1,0 +1,16 @@
+class B (){
+    int a = 1;
+    void m(){
+        this.a = 2;
+    }
+
+    int intr_after_return(){
+        return this.a;
+        this.a = 2;
+    }
+
+    int m3(){
+        this.a = 2;
+        return this.a;
+    }
+}

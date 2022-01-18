@@ -1,0 +1,17 @@
+class A{
+    int a;
+    int aa = 1;
+    int aaa = 1344;
+}
+
+class B extends A(){
+    void m(){
+        this.a = 1;
+        this.aa = 0;
+        this.aaa = 0;
+    }
+
+    int m2(){
+        return this.a + aa + aaa;
+    }
+}

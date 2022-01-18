@@ -1,0 +1,42 @@
+class B {}
+
+class A{
+    int m1() asm (" HELLO
+        WORLD
+        HELLO
+        WORLD !");
+
+    void m2() asm (" HELLO
+        WORLD
+        HELLO
+        WORLD
+                HELLOWORLD
+                             HELLOWORLD
+                                          HELLOWORLD
+                                                       HELLOWORLD
+                                                                    HELLO
+        WORLD !");
+
+    B m3() asm ("dsfsdfs");
+    B m33() asm ("");
+    B m4() asm ("
+
+
+
+
+
+    ");
+
+    B m5(B a, int b, int x, int r, float b) asm ("sdfsdf
+    sdfdsfdsfsd
+    sefsdfsdf
+    sdfdsfsdf
+    sdfsdfsdf
+    dfs
+   sdfsdf ");
+
+    void m6(int a) asm (" HELLO
+        WORLD
+        HELLO
+        WORLD !");
+}

@@ -1,0 +1,16 @@
+class A {
+    int a = 0;
+    int x = 0;
+}
+
+class B extends A {
+    int b = 0;
+}
+
+{
+    B b = new B();
+    int x = 0;
+    print(x);
+    print(b.a, b.b);
+    print(b.x);
+}

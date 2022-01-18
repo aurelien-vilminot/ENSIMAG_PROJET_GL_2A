@@ -1,0 +1,9 @@
+class A {
+    protected float f = 0;
+    protected void method(){
+        ;
+    }
+    protected int method2(){
+        return 1;
+    }
+}

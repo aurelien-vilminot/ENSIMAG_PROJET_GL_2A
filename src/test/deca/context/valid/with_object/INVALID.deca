@@ -1,5 +1,0 @@
-class A extends B {}
-
--
-
-Overrdide un field

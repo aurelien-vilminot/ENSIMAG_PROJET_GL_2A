@@ -1,0 +1,16 @@
+class A {
+    void method(int x, float f){
+        print(x, f);
+    }
+    boolean inv(boolean b){
+        return !b;
+    }
+}
+
+{
+    A a = new A();
+    a.method();
+    if(a.inv(false)){
+        print("It must print this !");
+    }
+}
