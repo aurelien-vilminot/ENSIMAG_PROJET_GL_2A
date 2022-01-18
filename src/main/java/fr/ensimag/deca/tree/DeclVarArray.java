@@ -78,7 +78,6 @@ public class DeclVarArray extends AbstractDeclVar {
         type.decompile(s);
         int i = 0;
         while(i<dimension){
-            i += 1;
             s.print("[]");
         }
         s.print(" ");
@@ -94,7 +93,6 @@ public class DeclVarArray extends AbstractDeclVar {
         varName.iter(f);
         initialization.iter(f);
     }
-    
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         type.prettyPrint(s, prefix, false);

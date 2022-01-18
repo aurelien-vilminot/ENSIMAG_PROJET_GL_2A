@@ -24,7 +24,10 @@ public class ArrayAccess extends AbstractLValue{
     }
     // TODO
     public void decompile(IndentPrintStream s){
-
+        tab.decompile(s);
+        s.print("[");
+        index.decompile(s);
+        s.print("];");
     }
 
     protected void iterChildren(TreeFunction f){
