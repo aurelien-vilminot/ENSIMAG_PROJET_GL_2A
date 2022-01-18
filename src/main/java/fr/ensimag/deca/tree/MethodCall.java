@@ -26,7 +26,27 @@ public class MethodCall extends AbstractExpr {
 
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
-        throw new UnsupportedOperationException("not yet implemented");
+        LOG.debug("verify MethodCall: start");
+        Type typeClass = this.obj.verifyExpr(compiler, localEnv, currentClass);
+
+        if (!compiler.getEnvironmentTypes().get(typeClass.getName()).isClass()) {
+            // If object is not a class type
+            throw new ContextualError("Undefined class", this.getLocation());
+        }
+        this.obj.setType(typeClass);
+
+        // Get environment exp of class object
+        EnvironmentExp environmentExp2 = ((ClassDefinition) compiler.getEnvironmentTypes().get(typeClass.getName())).getMembers();
+        MethodDefinition methodDefinition = this.meth.verifyMethod(compiler, environmentExp2);
+
+        int i = 0;
+        for (AbstractExpr param: this.param.getList()) {
+            Type expectedType = methodDefinition.getSignature().paramNumber(i++);
+            param.verifyRValue(compiler, environmentExp2, (ClassDefinition) compiler.getEnvironmentTypes().get(typeClass.getName()), expectedType);
+        }
+
+        LOG.debug("verify MethodCall: end");
+        return methodDefinition.getType();
     }
 
     @Override
