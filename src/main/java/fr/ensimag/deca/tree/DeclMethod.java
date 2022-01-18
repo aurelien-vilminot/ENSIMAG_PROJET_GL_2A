@@ -89,8 +89,7 @@ public class DeclMethod extends AbstractDeclMethod {
     protected void verifyMethodBody(DecacCompiler compiler) throws ContextualError {
         LOG.debug("verify MethodBody: start");
 
-        //TODO: Environnement de param
-        EnvironmentExp environmentExpParams = new EnvironmentExp(null);
+        EnvironmentExp environmentExpParams = this.listDeclParam.verifyParamEnvExp(compiler);
         this.methodBody.verifyMethodBody(compiler, environmentExpParams, this.methodName.getClassDefinition(), this.returnType.getType());
 
         LOG.debug("verify MethodBody: end");
