@@ -10,6 +10,7 @@ import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
 import java.io.PrintStream;
+import java.util.Iterator;
 
 // TODO : Trouver la classe dont elle hérite.
 public class NewArray extends AbstractExpr{
@@ -25,7 +26,18 @@ public class NewArray extends AbstractExpr{
 
     // TODO
     public void decompile(IndentPrintStream s){
-
+        s.print("new ");
+        type.decompile(s);
+        // Code of ListExpr copied, with brackets added.
+        Iterator<AbstractExpr> ite = indexList.getList().iterator();
+        if (ite.hasNext()) {
+            ite.next().decompile(s);
+        }
+        while (ite.hasNext()) {
+            s.print("[");
+            ite.next().decompile(s);
+            s.print("]");
+        }
     }
 
 
