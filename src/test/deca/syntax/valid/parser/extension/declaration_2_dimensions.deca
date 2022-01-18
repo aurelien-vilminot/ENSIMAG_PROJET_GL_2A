@@ -1,0 +1,3 @@
+{
+    float[][] array = new float [2][6];
+}
