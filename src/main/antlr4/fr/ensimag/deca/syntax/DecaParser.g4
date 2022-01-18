@@ -111,7 +111,7 @@ decl_var[AbstractIdentifier t, int dim] returns[AbstractDeclVar tree]
                 setLocation(init, $i.start);
             }
             if ($dim > 0){
-                $tree = new DeclVarArray($t, $i.tree, init, $dimension);
+                $tree = new DeclVarArray($t, $i.tree, init, $dim);
             } else {
                 $tree = new DeclVar($t, $i.tree, init);
             }
@@ -385,11 +385,12 @@ unary_expr returns[AbstractExpr tree]
             $tree = new Not($e.tree);
             setLocation($tree, $op);
         }
-    | select_expr {
-            assert($select_expr.tree != null);
-            $tree = $select_expr.tree;
+    | choose_expr {
+            assert($choose_expr.tree != null);
+            $tree = $choose_expr.tree;
         }
     ;
+
 
 // TODO
 select_expr returns[AbstractExpr tree]
@@ -413,7 +414,14 @@ select_expr returns[AbstractExpr tree]
             setLocation($tree, $i.start);
         }
         )
+    | s=select_expr OBRACKET e2=expr CBRACKET{
+              assert($s.tree != null);
+              assert($e2.tree != null);
+              $tree = new ArrayAccess($s.tree, $e2.tree);
+              setLocation($tree, $s.start);
+          }
     ;
+
 
 primary_expr returns[AbstractExpr tree]
     : ident {
@@ -660,6 +668,28 @@ param
 
 /**** Extension related rules ****/
 
+
+choose_expr returns[AbstractExpr tree]
+    :   e=select_expr {
+        assert($e.tree != null);
+        $tree = $e.tree;
+    }
+    | a=array_creator_expr {
+        assert($a.tree != null);
+        $tree = $a.tree;
+    }
+    ;
+
+array_creator_expr returns[NewArray tree]
+    // t for type
+    : NEW t=ident d=dim_expr{
+        assert($t.tree != null);
+        assert($d.tree != null);
+        $tree = new NewArray($t.tree, $d.tree);
+        setLocation($tree, $NEW);
+    }
+    ;
+
 // sans objet: done
 // TODO : Should be verified by Clauzon D.
 dim_expr returns[ListExpr tree]
@@ -674,14 +704,4 @@ dim_expr returns[ListExpr tree]
             $tree.add($e2.tree);
         }
       )*
-    ;
-
-array_creation_expr returns[NewArray tree]
-    // t for type
-    : NEW t=ident d=dim_expr{
-        assert($t.tree != null);
-        assert($d.tree != null);
-        $tree = new NewArray($t.tree, $d.tree);
-        setLocation($tree, $NEW);
-    }
     ;
