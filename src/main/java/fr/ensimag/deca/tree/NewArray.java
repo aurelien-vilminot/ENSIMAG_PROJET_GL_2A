@@ -6,7 +6,6 @@ import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
-import sun.jvm.hotspot.types.WrongTypeException;
 
 import java.io.PrintStream;
 import java.util.Iterator;
@@ -58,13 +57,13 @@ public class NewArray extends AbstractExpr{
 
 
 
-    public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass){
+    public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
         LOG.debug("verify NewArray: start");
 
         // Check array type (int or float):
         Type arrayPrimitiveType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create(type.getName().getName())).getType();
         if(!(arrayPrimitiveType.isFloat() || arrayPrimitiveType.isInt())){
-            throw new WrongTypeException("Type of arrays must be int or float.");
+            throw new ContextualError("Type of arrays must be int or float.", this.getLocation());
         }
         this.setType(arrayPrimitiveType);
 
@@ -73,9 +72,9 @@ public class NewArray extends AbstractExpr{
         indexList.getList().get(0).getType();
         Iterator<AbstractExpr> ite = indexList.getList().iterator();
         while (ite.hasNext()) {
-            Type currentType = ite.next().getType();
+            Type currentType = ite.next().verifyExpr(compiler, localEnv, currentClass);
             if (!currentType.isInt()) {
-                throw new WrongTypeException("Index of array must be int.");
+                throw new ContextualError("Index of array must be int.", this.getLocation());
             }
         }
         // now, we sure that all index are int !
@@ -87,7 +86,7 @@ public class NewArray extends AbstractExpr{
             }else if(arrayPrimitiveType.isFloat()){
                 returnType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("float[]")).getType();
             }else{
-                throw new WrongTypeException("Type of arrays must be int or float.");
+                throw new ContextualError("Type of arrays must be int or float.", this.getLocation());
             }
         }else if(indexList.getList().size() == 2){
             if(arrayPrimitiveType.isInt()){
@@ -95,11 +94,11 @@ public class NewArray extends AbstractExpr{
             }else if(arrayPrimitiveType.isFloat()){
                 returnType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("float[][]")).getType();
             }else{
-                throw new WrongTypeException("Type of arrays must be int or float.");
+                throw new ContextualError("Type of arrays must be int or float.", this.getLocation());
             }
         }else{
             // TODO Change exception
-            throw new WrongTypeException("Dimensions higher than 2 have not been implemented.");
+            throw new ContextualError("Dimensions higher than 2 have not been implemented.", this.getLocation());
         }
         LOG.debug("verify NewArray: end");
         return returnType;
