@@ -10,6 +10,8 @@ import java.io.PrintStream;
 import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.DVal;
 import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.STORE;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
@@ -237,7 +239,22 @@ public class Identifier extends AbstractIdentifier {
 
     @Override
     public DVal dval(DecacCompiler compiler) {
-        return compiler.getEnvironmentExp().get(name).getOperand();
+        if (definition.isField()) {
+            return new RegisterOffset(-2, Register.LB);
+        } else {
+            return compiler.getEnvironmentExp().get(name).getOperand();
+        }
+    }
+
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, int n) {
+        super.codeGenExpr(compiler, n);
+
+        if (definition.isField()) {
+            // if identifier is field, Rn contains its heap address
+            int index = getFieldDefinition().getIndex();
+            compiler.addInstruction(new LOAD(new RegisterOffset(index, Register.getR(n)), Register.getR(n)));
+        }
     }
 
     @Override

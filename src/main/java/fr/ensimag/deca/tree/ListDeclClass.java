@@ -61,7 +61,7 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
     }
 
     /**
-     * Pass 1 of [CodeGen]
+     * Pass 1 of [Gencode]
      * @param compiler
      */
     protected void codeGenMethodTable(DecacCompiler compiler) {
@@ -70,22 +70,25 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
             // Generate Object.equals
             int index = compiler.incGlobalStackSize(1);
             DAddr dAddr = new RegisterOffset(index, Register.GB);
-            ((ClassDefinition)(compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("Object")))).setOperand(dAddr);
+
+            Label equalsLabel = new Label("code.Object.equals");
+            ClassDefinition objectDefinition = ((ClassDefinition)(compiler.getEnvironmentTypes()
+                    .get(compiler.getSymbolTable().create("Object"))));
+            objectDefinition.setOperand(dAddr);
+            objectDefinition.getLabelArrayList().add(equalsLabel);
             compiler.addInstruction(new LOAD(new NullOperand(), Register.R0));
             compiler.addInstruction(new STORE(Register.R0, dAddr));
-            Label equalsLabel = new Label("code.Object.equals");
             index = compiler.incGlobalStackSize(1);
             compiler.addInstruction(new LOAD(new LabelOperand(equalsLabel), Register.R0));
             compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(index, Register.GB)));
         }
-        // TODO: héritage
         for (AbstractDeclClass c : getList()) {
             c.codeGenMethodTable(compiler);
         }
     }
 
     /**
-     * Pass 2 of [CodeGen]
+     * Pass 2 of [Gencode]
      * @param compiler
      */
     protected void codeGenListDeclClass(DecacCompiler compiler) {

@@ -6,6 +6,12 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable;
+import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.LabelOperand;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -44,14 +50,25 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
     }
 
     protected void codeGenListDeclMethod(DecacCompiler compiler) {
-        for (AbstractDeclMethod c : getList()) {
-            c.codeGenDeclMethod(compiler);
+        for (AbstractDeclMethod m : getList()) {
+            m.codeGenDeclMethod(compiler);
         }
     }
 
-    protected void codeGenMethodTable(DecacCompiler compiler, AbstractIdentifier className) {
-        for (AbstractDeclMethod c : getList()) {
-            c.codeGenMethodTable(compiler, className);
+    protected void codeGenMethodTable(DecacCompiler compiler, AbstractIdentifier className, AbstractIdentifier superClass) {
+        // Construct labelArrayList from parent
+        className.getClassDefinition().getLabelArrayList().addAll(superClass.getClassDefinition().getLabelArrayList());
+
+        // Generate parent class methods
+        for (Label l : className.getClassDefinition().getLabelArrayList()) {
+            int addr = compiler.incGlobalStackSize(1);
+            compiler.addInstruction(new LOAD(new LabelOperand(l), Register.R0));
+            compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(addr, Register.GB)));
+        }
+
+        // Generate current class methods
+        for (AbstractDeclMethod m : getList()) {
+            m.codeGenMethodTable(compiler, className);
         }
     }
 }
