@@ -136,9 +136,16 @@ public class TestEnvironmentTypes {
         // Check if int types are compatibles
         assertTrue(this.environmentTypes.assignCompatible(type1, type1));
 
-        // Check class and int types not compatibles
+        // Check class and float types not compatibles
         ClassType classType = new ClassType(this.symbolTest);
         assertFalse(this.environmentTypes.assignCompatible(classType, type1));
+
+        // Check null is compatible to class type
+        NullType nullType = new NullType(this.symbolTest);
+        assertTrue(this.environmentTypes.assignCompatible(classType, nullType));
+
+        // Check class is not compatible to null type
+        assertFalse(this.environmentTypes.assignCompatible(nullType, classType));
     }
 
     @Test
