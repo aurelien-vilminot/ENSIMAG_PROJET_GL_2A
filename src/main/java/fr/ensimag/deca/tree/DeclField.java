@@ -90,11 +90,15 @@ public class DeclField extends AbstractDeclField {
 
     @Override
     protected void codeGenDeclField(DecacCompiler compiler) {
+        // Set operand
+        DAddr dAddr = new RegisterOffset(-2, Register.LB);
+        fieldName.getFieldDefinition().setOperand(dAddr);
+        // Initialize expression in R0
         initialization.codeGenExpr(compiler, 0, type.getType());
         // -2(LB) is the address of the object to initialize
-        compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), Register.R1));
+        compiler.addInstruction(new LOAD(dAddr, Register.R1));
         // index(R1) is the address of the current field
-        int index = this.fieldName.getFieldDefinition().getIndex();
+        int index = fieldName.getFieldDefinition().getIndex();
         compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(index, Register.R1)));
 
     }

@@ -174,7 +174,7 @@ public class Identifier extends AbstractIdentifier {
         // Check if identifier is already declared
         ExpDefinition expDefinition = localEnv.get(this.name);
         if (expDefinition == null) {
-            throw new ContextualError("Undeclared identifier", this.getLocation());
+            throw new ContextualError("Undeclared identifier : " + this.name, this.getLocation());
         } else {
             this.definition = expDefinition;
             this.setType(expDefinition.getType());
@@ -211,7 +211,8 @@ public class Identifier extends AbstractIdentifier {
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
         Validate.notNull(localEnv, "Local environment object should not be null");
 
-        MethodDefinition methodDefinition = localEnv.get(this.getName()).asMethodDefinition("Cannot convert into a method", this.getLocation());
+        MethodDefinition methodDefinition = localEnv.get(this.getName())
+                .asMethodDefinition("This identifier is not a method : " + this.getName(), this.getLocation());
         this.setDefinition(methodDefinition);
         LOG.debug("verify Method: end");
 
@@ -239,11 +240,7 @@ public class Identifier extends AbstractIdentifier {
 
     @Override
     public DVal dval(DecacCompiler compiler) {
-        if (definition.isField()) {
-            return new RegisterOffset(-2, Register.LB);
-        } else {
-            return compiler.getEnvironmentExp().get(name).getOperand();
-        }
+        return getExpDefinition().getOperand();
     }
 
     @Override
