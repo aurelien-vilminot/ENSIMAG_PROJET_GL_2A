@@ -129,10 +129,12 @@ public class DeclMethod extends AbstractDeclMethod {
     protected void codeGenMethodTable(DecacCompiler compiler, AbstractIdentifier className) {
         Label methodLabel = new Label("code." + className.getName().toString() + "." + methodName.getName().toString());
         methodName.getMethodDefinition().setLabel(methodLabel);
-        className.getClassDefinition().getLabelArrayList().add(methodLabel);
-        int addr = compiler.incGlobalStackSize(1);
-        compiler.addInstruction(new LOAD(new LabelOperand(methodLabel), Register.R0));
-        compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(addr, Register.GB)));
+        int index = methodName.getMethodDefinition().getIndex() - 1;
+        if (index < className.getClassDefinition().getLabelArrayList().size()) {
+            className.getClassDefinition().getLabelArrayList().set(index, methodLabel);
+        } else {
+            className.getClassDefinition().getLabelArrayList().add(methodLabel);
+        }
     }
 
     @Override
