@@ -15,7 +15,7 @@ import org.apache.log4j.Logger;
 
 /**
  * @author gl07
- * @date 01/01/2022
+ * @date 19/01/2022
  */
 public class DeclVar extends AbstractDeclVar {
     private static final Logger LOG = Logger.getLogger(Main.class);
@@ -57,7 +57,6 @@ public class DeclVar extends AbstractDeclVar {
 
         // Check var definition
         this.varName.verifyExpr(compiler, localEnv, currentClass);
-
         LOG.debug("verify DeclVar: end");
     }
 
