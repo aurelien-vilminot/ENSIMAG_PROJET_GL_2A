@@ -1,0 +1,3 @@
+{
+    float[][] a = new float[3][9.1f];
+}
