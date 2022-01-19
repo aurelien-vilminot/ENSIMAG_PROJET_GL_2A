@@ -78,22 +78,23 @@ list_decl returns[ListDeclVar tree]
     ;
 
 decl_var_set[ListDeclVar l]
-    : type list_decl_var[$l,$type.tree, $type.dimension] SEMI
+    : type list_decl_var[$l,$type.tree] SEMI
     ;
 
 
-list_decl_var[ListDeclVar l, AbstractIdentifier t, int dim]
-    : dv1=decl_var[$t, $dim] {
+
+list_decl_var[ListDeclVar l, AbstractIdentifier t]
+    : dv1=decl_var[$t] {
         assert($dv1.tree != null);
         $l.add($dv1.tree);
-        } (COMMA dv2=decl_var[$t, $dim] {
+        } (COMMA dv2=decl_var[$t] {
             assert($dv2.tree != null);
             $l.add($dv2.tree);
         }
       )*
     ;
 
-decl_var[AbstractIdentifier t, int dim] returns[AbstractDeclVar tree]
+decl_var[AbstractIdentifier t] returns[AbstractDeclVar tree]
 @init   {
             AbstractInitialization init = null;
         }
@@ -110,11 +111,7 @@ decl_var[AbstractIdentifier t, int dim] returns[AbstractDeclVar tree]
                 init = new NoInitialization();
                 setLocation(init, $i.start);
             }
-            if ($dim > 0){
-                $tree = new DeclVarArray($t, $i.tree, init, $dim);
-            } else {
-                $tree = new DeclVar($t, $i.tree, init);
-            }
+            $tree = new DeclVar($t, $i.tree, init);
             setLocation($tree, $i.start);
         }
     ;
@@ -466,21 +463,17 @@ primary_expr returns[AbstractExpr tree]
     ;
 
 
-type returns[AbstractIdentifier tree, int dimension]
+type returns[AbstractIdentifier tree]
     : ident {
             assert($ident.tree != null);
             $tree = $ident.tree;
             setLocation($tree, $ident.start);
-            $dimension = 0;
         }
-    | ident OBRACKET CBRACKET{
-            assert($ident.tree != null);
-            $tree = $ident.tree;
-            setLocation($tree, $ident.start);
-            $dimension = 1;
-    }(OBRACKET CBRACKET {
-            $dimension = $dimension + 1;
-    })*
+    | ident_tab {
+            assert($ident_tab.tree != null);
+            $tree = $ident_tab.tree;
+            setLocation($tree, $ident_tab.start);
+    }
     ;
 
 literal returns[AbstractExpr tree]
@@ -668,6 +661,12 @@ param
 
 /**** Extension related rules ****/
 
+ident_tab returns[AbstractIdentifier tree]
+    : IDENT_TAB {
+        $tree = new Identifier(getSymbolTable().create($IDENT_TAB.text));
+        setLocation($tree, $IDENT_TAB);
+        }
+    ;
 
 choose_expr returns[AbstractExpr tree]
     :   e=select_expr {
@@ -705,3 +704,4 @@ dim_expr returns[ListExpr tree]
         }
       )*
     ;
+
