@@ -8,7 +8,6 @@ import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
-import sun.jvm.hotspot.types.WrongTypeException;
 
 import java.io.PrintStream;
 
@@ -46,14 +45,14 @@ public class ArrayAccess extends AbstractLValue{
 
 
     public Type verifyExpr(DecacCompiler compiler,
-                           EnvironmentExp localEnv, ClassDefinition currentClass){
+                           EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
         LOG.debug("verify BooleanLiteral: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
 //        Validate.notNull(localEnv, "Env_exp object should not be null");
 
         // Verify that the expression index is an integer
         if(!index.getType().isInt()){
-            throw new WrongTypeException("The index of an ArrayAccess must be an integer");
+            throw new ContextualError("The index of an ArrayAccess must be an integer", this.getLocation());
         } else {
             // If 'tab' is a matrix, returns an access to one of its component, a vector of the same type.
             if (tab.getType().isMatrixFloat()) {
@@ -66,7 +65,7 @@ public class ArrayAccess extends AbstractLValue{
             } else if (tab.getType().isVectorInt()){
                 return compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("int")).getType();
             } else {
-                throw new WrongTypeException("Attribut 'tab' must be a Vector or a Matrix of Int or Float");
+                throw new ContextualError("Attribut 'tab' must be a Vector or a Matrix of Int or Float", this.getLocation());
             }
         }
     }
