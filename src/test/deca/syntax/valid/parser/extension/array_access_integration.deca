@@ -1,8 +1,4 @@
 {
-    /*
-        int[] a = new int[10];
-    */
-
     // one for each derivation on rule "select_expr"
 
     int x = a[0];
