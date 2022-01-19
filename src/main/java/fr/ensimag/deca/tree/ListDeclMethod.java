@@ -49,26 +49,39 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
         }
     }
 
+    /**
+     * Generate assembly code for the method declaration (pass 2 of [Gencode])
+     *
+     * @param compiler
+     */
     protected void codeGenListDeclMethod(DecacCompiler compiler) {
         for (AbstractDeclMethod m : getList()) {
             m.codeGenDeclMethod(compiler);
         }
     }
 
+    /**
+     * Generate assembly code to build the virtual methods table (pass 1 of [Gencode])
+     *
+     *
+     * @param compiler
+     * @param className
+     * @param superClass
+     */
     protected void codeGenMethodTable(DecacCompiler compiler, AbstractIdentifier className, AbstractIdentifier superClass) {
         // Construct labelArrayList from parent
         className.getClassDefinition().getLabelArrayList().addAll(superClass.getClassDefinition().getLabelArrayList());
 
-        // Generate parent class methods
+        // Construct labelArrayList from current class
+        for (AbstractDeclMethod m : getList()) {
+            m.codeGenMethodTable(compiler, className);
+        }
+
+        // Generate parent and current class methods
         for (Label l : className.getClassDefinition().getLabelArrayList()) {
             int addr = compiler.incGlobalStackSize(1);
             compiler.addInstruction(new LOAD(new LabelOperand(l), Register.R0));
             compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(addr, Register.GB)));
-        }
-
-        // Generate current class methods
-        for (AbstractDeclMethod m : getList()) {
-            m.codeGenMethodTable(compiler, className);
         }
     }
 }
