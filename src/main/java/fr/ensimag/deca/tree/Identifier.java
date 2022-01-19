@@ -264,13 +264,14 @@ public class Identifier extends AbstractIdentifier {
         if (definition.isField()) {
             int index = getFieldDefinition().getIndex();
             if (n < maxRegister) {
+                compiler.setAndVerifyCurrentRegister(n+1);
+
                 // Calculate heap address of the object into Rn+1
                 compiler.addInstruction(new LOAD(dAddr, Register.getR(n+1)));
                 // Store into Rn the field
                 compiler.addInstruction(new STORE(Register.getR(n), new RegisterOffset(index, Register.getR(n+1))));
             } else {
                 compiler.incTempStackCurrent(1);
-                compiler.setTempStackMax();
                 compiler.addInstruction(new PUSH(Register.getR(n)), "save");
                 // Calculate heap address of the object into Rn
                 compiler.addInstruction(new LOAD(dAddr, Register.getR(n)));

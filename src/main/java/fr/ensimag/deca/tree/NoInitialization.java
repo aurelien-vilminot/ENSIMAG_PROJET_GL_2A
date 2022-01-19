@@ -38,6 +38,8 @@ public class NoInitialization extends AbstractInitialization {
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n, Type type) {
+        compiler.setAndVerifyCurrentRegister(n);
+
         if (type.isBoolean() || type.isInt()) {
             compiler.addInstruction(new LOAD(new ImmediateInteger(0), Register.getR(n)));
         } else if (type.isFloat()) {
