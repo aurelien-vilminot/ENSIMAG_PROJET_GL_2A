@@ -1,0 +1,9 @@
+{
+    int a = 9;
+    int[] aa = new int [-654565];
+    int[][] aaa = new int [1][2+4-5-7*5/6];
+
+    float f = 8.2;
+    float[] ff = new float [-14631];
+    float[][] fff = new float [19][3*6+2-4+7];
+}

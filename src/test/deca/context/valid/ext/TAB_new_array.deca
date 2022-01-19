@@ -1,0 +1,9 @@
+{
+    new int[1];
+    new float[3];
+    new int[1][4+384];
+    new float[3][6545/54];
+
+    int[][] a = (((((new int [5][9])))));
+    float[] a = (((((((((new float [9])))))))));
+}
