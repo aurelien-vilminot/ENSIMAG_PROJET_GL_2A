@@ -34,7 +34,8 @@ public class Return extends AbstractInst {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("not yet implemented");
+        expr.codeGenExpr(compiler, 0);
+        compiler.addInstruction(new BRA(compiler.getLabelGenerator().getEndLabel()));
     }
 
     @Override
