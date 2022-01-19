@@ -4,6 +4,7 @@ import fr.ensimag.deca.codegen.LabelGenerator;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.syntax.DecaLexer;
 import fr.ensimag.deca.syntax.DecaParser;
+import fr.ensimag.deca.syntax.RuntimeLocationException;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
@@ -323,6 +324,9 @@ public class DecacCompiler implements Runnable {
         LOG.debug("Compiling file " + sourceFile + " to assembly file " + destFile);
         try {
             return doCompile(sourceFile, destFile, out, err);
+        } catch (RuntimeLocationException e) {
+            err.println(e.getMessage());
+            return true;
         } catch (LocationException e) {
             e.display(err);
             return true;
