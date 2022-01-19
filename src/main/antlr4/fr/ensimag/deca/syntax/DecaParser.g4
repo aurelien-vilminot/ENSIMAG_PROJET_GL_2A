@@ -474,6 +474,12 @@ literal returns[AbstractExpr tree]
         }
     | fd=FLOAT {
         try {
+            Float f = Float.parseFloat($fd.text);
+            if (Float.isInfinite(f)) {
+                    throw new RuntimeLocationException("Literal float cannot be infinite", tokenLocation($fd));
+            } else if (Float.isNaN(f)) {
+                    throw new RuntimeLocationException("Literal float cannot be NaN", tokenLocation($fd));
+            }
             $tree = new FloatLiteral(Float.parseFloat($fd.text));
             setLocation($tree, $fd);
         } catch (NumberFormatException e) {
