@@ -57,7 +57,7 @@ public class DecacCompiler implements Runnable {
     private int tempStackCurrent = 0; // current temporary stack usage
     private int tempStackMax = 0; // maximal temporary stack usage
     private int currentRegister = 0; // current register number being used
-    private int savedRegister = 0; // saved register number, used to restore registers
+    private int maxUsedRegister = 0; // maximal register number being used after reset
 
     public int getGlobalStackSize() {
         return globalStackSize;
@@ -78,13 +78,18 @@ public class DecacCompiler implements Runnable {
         localStackSize = n;
     }
 
+    public int getLocalStackSize() {
+        return localStackSize;
+    }
+
     public int incTempStackCurrent(int inc) {
         tempStackCurrent += inc;
+        tempStackMax = Integer.max(tempStackMax, tempStackCurrent);
         return tempStackCurrent;
     }
 
-    public void setTempStackMax() {
-        tempStackMax = Integer.max(tempStackMax, tempStackCurrent);
+    public void setTempStackMax(int n) {
+        tempStackMax = n;
     }
 
     public int getTempStackMax() {
@@ -101,7 +106,20 @@ public class DecacCompiler implements Runnable {
         int maxRegister = getCompilerOptions().getRegisterNumber() - 1;
         Validate.isTrue(n <= maxRegister);
         currentRegister = n;
+        maxUsedRegister = Integer.max(maxUsedRegister, currentRegister);
         return maxRegister;
+    }
+
+    public void setMaxUsedRegister(int n) {
+        maxUsedRegister = n;
+    }
+
+    public int getNumberOfRegistersUsed() {
+        if (maxUsedRegister <= 1) {
+            return 0;
+        } else {
+            return maxUsedRegister - 1;
+        }
     }
 
     public int getCurrentRegister() {
@@ -152,25 +170,24 @@ public class DecacCompiler implements Runnable {
         }
     }
 
-    public void addReturnError() {
-        if (!this.compilerOptions.getNoCheck()) {
-            addInstruction(new BOV(getLabelGenerator().getReturnLabel()));
-        }
-    }
-
     public void saveRegisters() {
-        savedRegister = currentRegister;
-        for (int i = 2; i <= savedRegister; i++) {
-            addInstruction(new PUSH(Register.getR(i)));
+        for (int i = maxUsedRegister; i >= 2; i--) {
+            addFirst(new Line(new PUSH(Register.getR(i))));
         }
-        currentRegister = 0;
     }
 
     public void restoreRegisters() {
-        for (int i = 2; i <= savedRegister; i++) {
+        for (int i = 2; i <= maxUsedRegister; i++) {
             addInstruction(new POP(Register.getR(i)));
         }
-        savedRegister = 0;
+    }
+
+    public void setProgram(IMAProgram program) {
+        this.program = program;
+    }
+
+    public IMAProgram getProgram() {
+        return program;
     }
 
     public DecacCompiler(CompilerOptions compilerOptions, File source) {
@@ -314,7 +331,7 @@ public class DecacCompiler implements Runnable {
     /**
      * The main program. Every instruction generated will eventually end up here.
      */
-    private final IMAProgram program = new IMAProgram();
+    private IMAProgram program = new IMAProgram();
  
 
     /**

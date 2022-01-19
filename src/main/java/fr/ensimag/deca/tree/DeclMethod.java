@@ -5,13 +5,8 @@ import fr.ensimag.deca.codegen.LabelGenerator;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable;
-import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.LabelOperand;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.RegisterOffset;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
-import fr.ensimag.ima.pseudocode.instructions.RTS;
-import fr.ensimag.ima.pseudocode.instructions.STORE;
+import fr.ensimag.ima.pseudocode.*;
+import fr.ensimag.ima.pseudocode.instructions.*;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -113,27 +108,58 @@ public class DeclMethod extends AbstractDeclMethod {
 
     @Override
     protected void codeGenDeclMethod(DecacCompiler compiler) {
+        compiler.addLabel(new Label("code." + methodName.getMethodDefinition().getLabel()));
+
+        // Create a new IMAProgram to be able to add instructions at the beginning of the block
+        IMAProgram backupProgram = compiler.getProgram();
+        IMAProgram initClassProgram = new IMAProgram();
+        compiler.setProgram(initClassProgram);
+
         LabelGenerator gen = compiler.getLabelGenerator();
 
-        // label code.nameClass.nameMethod
-        compiler.addLabel(new Label("code." + methodName.getMethodDefinition().getLabel()));
-        // TODO: TSTO / BOV stack_overflow
-        compiler.saveRegisters();
+        // Declare parameters
         listDeclParam.codeGenDeclMethod(compiler, localEnv);
-        // method code
+
+        // Method body code
+        compiler.setMaxUsedRegister(0);
+        compiler.setTempStackMax(0);
+        compiler.setLocalStackSize(0);
         Label finLabel = new Label("fin." + methodName.getMethodDefinition().getLabel());
         gen.setEndLabel(finLabel);
         methodBody.codeGenDeclMethod(compiler, localEnv);
-        // return an error
+
+        // Generate an error if method has a return type and end of method is reached without a return instruction
         if (!returnType.getType().isVoid()) {
             if (!compiler.getCompilerOptions().getNoCheck()) {
                 gen.generateErrorLabel(compiler, gen.getReturnLabel(), "Error: end of method "
                         + methodName.getMethodDefinition().getLabel() + " without return instruction");
             }
         }
+
+        // Instructions added at the beginning of the block
+        compiler.saveRegisters();
+        int v = compiler.getLocalStackSize();
+        int d = compiler.getNumberOfRegistersUsed() + compiler.getTempStackMax();
+        if (v > 0) {
+            compiler.addFirst(new Line(new ADDSP(new ImmediateInteger(v))));
+        }
+        if (d > 0) {
+            compiler.addStackOverflowError(true);
+            compiler.addFirst(new Line(new TSTO(new ImmediateInteger(d))));
+        }
+
+        // Return
         compiler.addLabel(finLabel);
         compiler.restoreRegisters();
         compiler.addInstruction(new RTS());
+
+        // Restore initial IMAProgram
+        backupProgram.append(initClassProgram);
+        compiler.setProgram(backupProgram);
+        compiler.setMaxUsedRegister(0);
+        compiler.setTempStackMax(0);
+        compiler.setLocalStackSize(0);
+
     }
 
     @Override
