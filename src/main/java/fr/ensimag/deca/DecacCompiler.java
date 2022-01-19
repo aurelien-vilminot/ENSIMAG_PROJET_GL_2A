@@ -135,10 +135,10 @@ public class DecacCompiler implements Runnable {
         Symbol intSymbol = this.symbolTable.create("int");
         Symbol objectSymbol = this.symbolTable.create("Object");
         Symbol equalsSymbol = this.symbolTable.create("equals");
-        Symbol float1DimSymbol = this.symbolTable.create("float[]");
-        Symbol int1DimSymbol = this.symbolTable.create("int[]");
-        Symbol float2DimSymbol = this.symbolTable.create("float[][]");
-        Symbol int2DimSymbol = this.symbolTable.create("int[][]");
+        Symbol vectorFloatSymbol = this.symbolTable.create("float[]");
+        Symbol vectorIntSymbol = this.symbolTable.create("int[]");
+        Symbol matrixFloatSymbol = this.symbolTable.create("float[][]");
+        Symbol matrixIntSymbol = this.symbolTable.create("int[][]");
 
         // Define default types environment
         try {
@@ -146,10 +146,10 @@ public class DecacCompiler implements Runnable {
             this.environmentTypes.declare(booleanSymbol, new TypeDefinition(new BooleanType(booleanSymbol), Location.BUILTIN));
             this.environmentTypes.declare(floatSymbol, new TypeDefinition(new FloatType(floatSymbol), Location.BUILTIN));
             this.environmentTypes.declare(intSymbol, new TypeDefinition(new IntType(intSymbol), Location.BUILTIN));
-            this.environmentTypes.declare(float1DimSymbol, new TypeDefinition(new ArrayFloatType(float1DimSymbol, 1), Location.BUILTIN));
-            this.environmentTypes.declare(float2DimSymbol, new TypeDefinition(new ArrayFloatType(float2DimSymbol, 2), Location.BUILTIN));
-            this.environmentTypes.declare(int1DimSymbol, new TypeDefinition(new ArrayIntType(int1DimSymbol, 1), Location.BUILTIN));
-            this.environmentTypes.declare(int2DimSymbol, new TypeDefinition(new ArrayIntType(int2DimSymbol, 2), Location.BUILTIN));
+            this.environmentTypes.declare(vectorFloatSymbol, new TypeDefinition(new VectorFloatType(vectorFloatSymbol), Location.BUILTIN));
+            this.environmentTypes.declare(matrixFloatSymbol, new TypeDefinition(new MatrixFloatType(matrixFloatSymbol), Location.BUILTIN));
+            this.environmentTypes.declare(vectorIntSymbol, new TypeDefinition(new VectorIntType(vectorIntSymbol), Location.BUILTIN));
+            this.environmentTypes.declare(matrixIntSymbol, new TypeDefinition(new MatrixFloatType(matrixIntSymbol), Location.BUILTIN));
 
             this.environmentTypes.declare(objectSymbol, new ClassDefinition(
                     new ClassType(objectSymbol, Location.BUILTIN, null),
