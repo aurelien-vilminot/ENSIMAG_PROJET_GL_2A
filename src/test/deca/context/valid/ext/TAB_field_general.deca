@@ -1,0 +1,37 @@
+class A {
+    int[] tab = new int[3];
+    float[] tab2 = new float[3];
+    int[][] tab3 = new int[3][6];
+    float[][] tab4 = new float[3][8];
+
+    int[] method(int[][] a, float[] b){
+        tab[0] = 1;
+        tab3[0] = tab;
+        this.tab2 = b;
+        return a[0];
+    }
+
+    float[][] method2(){
+        return tab4;
+    }
+}
+
+class B extends A{
+    float[][] method2(){
+        return tab4;
+    }
+
+    float[] method3(){
+        return tab4[0];
+    }
+
+    int[] method4(){
+        return new int[5];
+    }
+}
+
+{
+    A a = new A();
+    float[][] f = a.method2();
+    int[] i = (new A()).tab;
+}

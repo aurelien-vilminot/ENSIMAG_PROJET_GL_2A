@@ -1,0 +1,8 @@
+class A{
+    protected float[][] f;
+    protected int[] i;
+}
+
+class B extends A{
+    protected int[][] ii = new int[5][5];
+}

@@ -1,0 +1,8 @@
+class A{
+    int[] a = new int[4];
+    float[][] b;
+
+    int[][] method(){
+        return new int[5][5];
+    }
+}

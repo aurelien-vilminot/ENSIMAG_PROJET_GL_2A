@@ -1,0 +1,8 @@
+class A{
+    protected float[][] f;
+}
+
+{
+    A a = new A();
+    a.f;
+}
