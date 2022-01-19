@@ -11,7 +11,6 @@ import org.apache.log4j.Logger;
 
 import java.io.PrintStream;
 
-// TODO : Verify the extends
 public class ArrayAccess extends AbstractLValue{
     private final AbstractExpr tab;
     private final AbstractExpr index;
@@ -23,7 +22,7 @@ public class ArrayAccess extends AbstractLValue{
         this.tab = tab;
         this.index = index;
     }
-    // TODO
+
     public void decompile(IndentPrintStream s){
         tab.decompile(s);
         s.print("[");
@@ -41,44 +40,40 @@ public class ArrayAccess extends AbstractLValue{
         index.prettyPrint(s, prefix, false);
     }
 
-
-
-
     public Type verifyExpr(DecacCompiler compiler,
                            EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
         LOG.debug("verify BooleanLiteral: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
-//        Validate.notNull(localEnv, "Env_exp object should not be null");
+        // Validate.notNull(localEnv, "Env_exp object should not be null");
 
         Type indexType = index.verifyExpr(compiler, localEnv, currentClass);
         Type tabType = tab.verifyExpr(compiler, localEnv, currentClass);
+        Type returnType;
 
         // Verify that the expression index is an integer
         if(!indexType.isInt()){
             throw new ContextualError("The index of an ArrayAccess must be an integer", this.getLocation());
         } else {
-            System.out.println(tabType);
             // If 'tab' is a matrix, returns an access to one of its component, a vector of the same type.
             if (tabType.isMatrixFloat()) {
-                Type returnType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("float[]")).getType();
+                returnType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("float[]")).getType();
                 this.setType(returnType);
-                return returnType;
             } else if (tabType.isMatrixInt()){
-                Type returnType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("int[]")).getType();
+                returnType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("int[]")).getType();
                 this.setType(returnType);
-                return returnType;
                 // If 'tab' is a vector, returns an access to one of its component, a literal of the same type.
             } else if (tabType.isVectorFloat()){
-                Type returnType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("float")).getType();
+                returnType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("float")).getType();
                 this.setType(returnType);
-                return returnType;
             } else if (tabType.isVectorInt()){
-                Type returnType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("int")).getType();
+                returnType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("int")).getType();
                 this.setType(returnType);
-                return returnType;
             } else {
-                throw new ContextualError("Attribut 'tab' must be a Vector or a Matrix of Int or Float", this.getLocation());
+                throw new ContextualError("Identifier for array access must be a 1D or 2D array of float or int.", this.getLocation());
             }
         }
+
+        LOG.debug("verify BooleanLiteral: start");
+        return returnType;
     }
 }
