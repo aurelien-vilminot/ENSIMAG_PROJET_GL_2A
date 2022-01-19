@@ -211,7 +211,8 @@ public class Identifier extends AbstractIdentifier {
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
         Validate.notNull(localEnv, "Local environment object should not be null");
 
-        MethodDefinition methodDefinition = localEnv.get(this.getName()).asMethodDefinition("Cannot convert into a method", this.getLocation());
+        MethodDefinition methodDefinition = localEnv.get(this.getName())
+                .asMethodDefinition("This identifier is not a method : " + this.getName(), this.getLocation());
         this.setDefinition(methodDefinition);
         LOG.debug("verify Method: end");
 
