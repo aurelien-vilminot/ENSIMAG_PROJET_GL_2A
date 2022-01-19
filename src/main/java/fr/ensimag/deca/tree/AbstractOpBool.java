@@ -50,8 +50,7 @@ public abstract class AbstractOpBool extends AbstractBinaryExpr {
 
     @Override
     protected void codeGenExprBool(DecacCompiler compiler, boolean bool, Label branch, int n) {
-        int maxRegister = compiler.getCompilerOptions().getRegisterNumber() - 1;
-        Validate.isTrue((n <= maxRegister));
+        int maxRegister = compiler.setAndVerifyCurrentRegister(n);
 
         DVal dval = this.dval(compiler);
         if (dval != null && bool) {

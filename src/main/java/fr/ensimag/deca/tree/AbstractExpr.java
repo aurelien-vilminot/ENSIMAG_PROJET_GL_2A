@@ -148,6 +148,8 @@ public abstract class AbstractExpr extends AbstractInst {
             this.codeGenExpr(compiler, 1);
             // Output R1
             compiler.addInstruction(outputInstruction);
+            // Registers are no longer used
+            compiler.setAndVerifyCurrentRegister(0);
         }
     }
 
@@ -205,11 +207,14 @@ public abstract class AbstractExpr extends AbstractInst {
      * @param n Register number
      */
     protected void codeGenExpr(DecacCompiler compiler, int n) {
-        Validate.isTrue((n <= compiler.getCompilerOptions().getRegisterNumber() - 1));
+        compiler.setAndVerifyCurrentRegister(n);
 
         DVal dval = this.dval(compiler);
         if (dval != null) {
             compiler.addInstruction(new LOAD(dval, Register.getR(n)));
+            if (type.isClass()) {
+                compiler.addDereference(n);
+            }
         }
     }
 
@@ -223,8 +228,8 @@ public abstract class AbstractExpr extends AbstractInst {
     protected void codeGenExprBool(DecacCompiler compiler, boolean bool, Label branch, int n) {
         DVal dval = this.dval(compiler);
         if (dval != null) {
-            compiler.addInstruction(new LOAD(this.dval(compiler), Register.getR(0)));
-            compiler.addInstruction(new CMP(new ImmediateInteger(0), Register.getR(0)));
+            compiler.addInstruction(new LOAD(this.dval(compiler), Register.R0));
+            compiler.addInstruction(new CMP(new ImmediateInteger(0), Register.R0));
             if (bool) {
                 compiler.addInstruction(new BNE(branch));
             } else {

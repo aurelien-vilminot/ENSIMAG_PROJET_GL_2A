@@ -4,6 +4,7 @@ import fr.ensimag.deca.codegen.LabelGenerator;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.syntax.DecaLexer;
 import fr.ensimag.deca.syntax.DecaParser;
+import fr.ensimag.deca.syntax.RuntimeLocationException;
 import fr.ensimag.deca.tools.DecacInternalError;
 import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
@@ -18,7 +19,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 
-import fr.ensimag.ima.pseudocode.instructions.BOV;
+import fr.ensimag.ima.pseudocode.instructions.*;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.apache.commons.lang.Validate;
@@ -52,8 +53,11 @@ public class DecacCompiler implements Runnable {
     private SymbolTable symbolTable = new SymbolTable();
 
     private int globalStackSize = 0; // number of global variables
+    private int localStackSize = 0;
     private int tempStackCurrent = 0; // current temporary stack usage
     private int tempStackMax = 0; // maximal temporary stack usage
+    private int currentRegister = 0; // current register number being used
+    private int savedRegister = 0; // saved register number, used to restore registers
 
     public int getGlobalStackSize() {
         return globalStackSize;
@@ -63,6 +67,15 @@ public class DecacCompiler implements Runnable {
         Validate.isTrue(inc >= 0, "The incrementation should be positive");
         globalStackSize += inc;
         return globalStackSize;
+    }
+
+    public int incLocalStackSize(int inc) {
+        localStackSize += inc;
+        return localStackSize;
+    }
+
+    public void setLocalStackSize(int n) {
+        localStackSize = n;
     }
 
     public int incTempStackCurrent(int inc) {
@@ -76,6 +89,23 @@ public class DecacCompiler implements Runnable {
 
     public int getTempStackMax() {
         return tempStackMax;
+    }
+
+    /**
+     * Set current register to n, and return the maxRegister
+     * Used to know which temporary registers are currently used
+     *
+     * @param n
+     */
+    public int setAndVerifyCurrentRegister(int n) {
+        int maxRegister = getCompilerOptions().getRegisterNumber() - 1;
+        Validate.isTrue(n <= maxRegister);
+        currentRegister = n;
+        return maxRegister;
+    }
+
+    public int getCurrentRegister() {
+        return currentRegister;
     }
 
 
@@ -113,6 +143,28 @@ public class DecacCompiler implements Runnable {
         if (!this.compilerOptions.getNoCheck()) {
             addInstruction(new BOV(getLabelGenerator().getIoLabel()));
         }
+    }
+
+    public void addDereference(int n) {
+        if (!this.compilerOptions.getNoCheck()) {
+            addInstruction(new CMP(new NullOperand(), Register.getR(n)));
+            addInstruction(new BEQ(getLabelGenerator().getDereferenceLabel()));
+        }
+    }
+
+    public void saveRegisters() {
+        savedRegister = currentRegister;
+        for (int i = 2; i <= savedRegister; i++) {
+            addInstruction(new PUSH(Register.getR(i)));
+        }
+        currentRegister = 0;
+    }
+
+    public void restoreRegisters() {
+        for (int i = 2; i <= savedRegister; i++) {
+            addInstruction(new POP(Register.getR(i)));
+        }
+        savedRegister = 0;
     }
 
     public DecacCompiler(CompilerOptions compilerOptions, File source) {
@@ -166,10 +218,12 @@ public class DecacCompiler implements Runnable {
                 this.environmentTypes.get(booleanSymbol).getType(),
                 Location.BUILTIN,
                 equalsSignature,
-                0
+                ((ClassDefinition) this.environmentTypes.get(objectSymbol)).incNumberOfMethods()
         );
+        equalsDefinition.setLabel(new Label("code." + objectSymbol.getName() + '.' + equalsSymbol.getName()));
+
         try {
-            this.environmentExp.declare(equalsSymbol, equalsDefinition);
+            ((ClassDefinition) this.environmentTypes.get(objectSymbol)).getMembers().declare(equalsSymbol, equalsDefinition);
         } catch (EnvironmentExp.DoubleDefException doubleDefException) {
             LOG.error("Multiple type declaration");
         }
@@ -279,6 +333,9 @@ public class DecacCompiler implements Runnable {
         LOG.debug("Compiling file " + sourceFile + " to assembly file " + destFile);
         try {
             return doCompile(sourceFile, destFile, out, err);
+        } catch (RuntimeLocationException e) {
+            err.println(e.getMessage());
+            return true;
         } catch (LocationException e) {
             e.display(err);
             return true;

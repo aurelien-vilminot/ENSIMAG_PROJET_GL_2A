@@ -7,7 +7,9 @@ import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.LEA;
 import fr.ensimag.ima.pseudocode.instructions.RTS;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -60,10 +62,10 @@ public class DeclClass extends AbstractDeclClass {
                             new ClassType(
                                     this.name.getName(),
                                     this.getLocation(),
-                                    this.superClass.getClassDefinition()
+                                    (ClassDefinition) superClassType
                             ),
                             this.getLocation(),
-                            this.superClass.getClassDefinition()
+                            (ClassDefinition) superClassType
                     )
             );
         } catch (EnvironmentTypes.DoubleDefException e) {
@@ -83,14 +85,12 @@ public class DeclClass extends AbstractDeclClass {
         LOG.debug("verify ClassMembers: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
 
-        EnvironmentExp environmentExpSuperClass = ((ClassDefinition) compiler.getEnvironmentTypes().get(this.superClass.getName())).getMembers();
-        EnvironmentExp environmentExpClass = ((ClassDefinition) compiler.getEnvironmentTypes().get(this.name.getName())).getMembers();
+        ClassDefinition currentClassDefinition = (ClassDefinition) compiler.getEnvironmentTypes().get(this.name.getName());
+        ClassDefinition superClassDefinition = (ClassDefinition) compiler.getEnvironmentTypes().get(this.superClass.getName());
 
-        try {
-            environmentExpClass.addSuperExpDefinition(environmentExpSuperClass);
-        } catch (EnvironmentExp.DoubleDefException e) {
-            // TODO
-        }
+        // Increment fields and methods number for current class depending on super-class members
+        currentClassDefinition.setNumberOfFields(superClassDefinition.getNumberOfFields());
+        currentClassDefinition.setNumberOfMethods(superClassDefinition.getNumberOfMethods());
 
         this.listDeclField.verifyListDeclField(compiler, this.superClass.getName(), this.name.getName());
         this.listDeclMethod.verifyListDeclMethod(compiler, this.superClass.getName(), this.name.getName());
@@ -106,7 +106,7 @@ public class DeclClass extends AbstractDeclClass {
         this.listDeclField.verifyListInitField(compiler, this.name.getName());
 
         // Methods body
-        // TODO
+        this.listDeclMethod.verifyListMethodBody(compiler, this.superClass.getName(), this.name.getName());
 
         LOG.debug("verify ClassBody: end");
     }
@@ -117,41 +117,45 @@ public class DeclClass extends AbstractDeclClass {
         name.decompile(s);
         s.print(" extends ");
         superClass.decompile(s);
-        s.print(" {");
+        s.println(" {");
         s.indent();
         listDeclField.decompile(s);
         listDeclMethod.decompile(s);
         s.unindent();
-        s.print("}");
+        s.println("}");
+    }
+
+    @Override
+    protected void codeGenMethodTable(DecacCompiler compiler) {
+        // Allocate pointer to superclass
+        int index = compiler.incGlobalStackSize(1);
+        DAddr dAddr = new RegisterOffset(index, Register.GB);
+        name.getClassDefinition().setOperand(dAddr);
+        DAddr superClassDaddr = superClass.getClassDefinition().getOperand();
+        // Load @superClass inside dAddr
+        compiler.addInstruction(new LEA(superClassDaddr, Register.R0));
+        compiler.addInstruction(new STORE(Register.R0, dAddr));
+        // Generate virtual methods table
+        listDeclMethod.codeGenMethodTable(compiler, name, superClass);
     }
 
     @Override
     protected void codeGenDeclClass(DecacCompiler compiler) {
-        // TODO: move to pass 1
-        // Allocate pointer to superclass + @Objet.equals
-        int addr = compiler.incGlobalStackSize(1);
-        // TODO: @Object.equals
-        DAddr dAddr = new RegisterOffset(addr, Register.GB);
-        name.getClassDefinition().setOperand(dAddr);
-        compiler.incGlobalStackSize(name.getClassDefinition().getNumberOfMethods() + 1);
-        // TODO: @superclass
-
         // CodeGen
         // init.name
         compiler.addLabel(new Label("init." + name.getName().toString()));
         // TODO: TSTO
         // TODO: BOV stack_overflow
         // TODO: ADDSP
-        // TODO: save registers used over R2
-        // initialisation des attributs (à 0 si non précisé)
+        compiler.saveRegisters();
+        // Initialize fields (to default value if not initialized)
         listDeclField.codeGenListDeclField(compiler);
-        // TODO: restore registers used over R2
+        compiler.restoreRegisters();
         // return
         compiler.addInstruction(new RTS());
-        // table des méthodes (code.name.methodname)
-        // listDeclMethod.codeGenListDeclMethod(compiler);
+        // Generate method instruction (code.name.methodname)
+        listDeclMethod.codeGenListDeclMethod(compiler);
     }
-
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {

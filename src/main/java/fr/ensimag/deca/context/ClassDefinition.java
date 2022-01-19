@@ -5,6 +5,9 @@ import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.Label;
 import org.apache.commons.lang.Validate;
 
+import java.util.ArrayList;
+import java.util.Objects;
+
 /**
  * Definition of a class.
  *
@@ -42,6 +45,12 @@ public class ClassDefinition extends TypeDefinition {
 
     private int numberOfFields = 0;
     private int numberOfMethods = 0;
+
+    private final ArrayList<Label> labelArrayList = new ArrayList<>();
+
+    public ArrayList<Label> getLabelArrayList() {
+        return labelArrayList;
+    }
 
     public void setOperand(DAddr operand) {
         this.operand = operand;
@@ -87,5 +96,18 @@ public class ClassDefinition extends TypeDefinition {
         members = new EnvironmentExp(parent);
         this.superClass = superClass;
     }
-    
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ClassDefinition other = (ClassDefinition) o;
+        // Two classes are equals only if they are the same symbol
+        return this.getType().getName().getName().equals(other.getType().getName().getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(numberOfFields, numberOfMethods, operand, members, superClass);
+    }
 }

@@ -50,10 +50,11 @@ public class New extends AbstractExpr {
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
-        Validate.isTrue((n <= compiler.getCompilerOptions().getRegisterNumber() - 1));
+        compiler.setAndVerifyCurrentRegister(n);
 
         // heap allocation
         int size = ident.getClassDefinition().getNumberOfFields() + 1;
+        // TODO: verify if this works inside a class
         DAddr methodAddr = ((ClassDefinition) (compiler.getEnvironmentTypes().get(ident.getName()))).getOperand();
         compiler.addInstruction(new NEW(size, Register.getR(n)));
         compiler.addOverflowError();

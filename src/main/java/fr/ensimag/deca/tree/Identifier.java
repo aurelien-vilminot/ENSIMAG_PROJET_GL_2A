@@ -7,7 +7,12 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import java.io.PrintStream;
 
+import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.DVal;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -169,7 +174,7 @@ public class Identifier extends AbstractIdentifier {
         // Check if identifier is already declared
         ExpDefinition expDefinition = localEnv.get(this.name);
         if (expDefinition == null) {
-            throw new ContextualError("Undeclared identifier", this.getLocation());
+            throw new ContextualError("Undeclared identifier : " + this.name, this.getLocation());
         } else {
             this.definition = expDefinition;
             this.setType(expDefinition.getType());
@@ -199,8 +204,22 @@ public class Identifier extends AbstractIdentifier {
 
         return currentType.getType();
     }
-    
-    
+
+    @Override
+    public MethodDefinition verifyMethod(DecacCompiler compiler, EnvironmentExp localEnv) throws ContextualError {
+        LOG.debug("verify Method: start");
+        Validate.notNull(compiler, "Compiler (env_types) object should not be null");
+        Validate.notNull(localEnv, "Local environment object should not be null");
+
+        MethodDefinition methodDefinition = localEnv.get(this.getName())
+                .asMethodDefinition("This identifier is not a method : " + this.getName(), this.getLocation());
+        this.setDefinition(methodDefinition);
+        LOG.debug("verify Method: end");
+
+        return methodDefinition;
+    }
+
+
     private Definition definition;
 
 
@@ -221,7 +240,26 @@ public class Identifier extends AbstractIdentifier {
 
     @Override
     public DVal dval(DecacCompiler compiler) {
-        return compiler.getEnvironmentExp().get(name).getOperand();
+        return getExpDefinition().getOperand();
+    }
+
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, int n) {
+        super.codeGenExpr(compiler, n);
+
+        if (definition.isField()) {
+            // if identifier is field, Rn contains its heap address
+            int index = getFieldDefinition().getIndex();
+            compiler.addInstruction(new LOAD(new RegisterOffset(index, Register.getR(n)), Register.getR(n)));
+        }
+    }
+
+    @Override
+    protected void codeGenStore(DecacCompiler compiler, int n) {
+        compiler.setAndVerifyCurrentRegister(n);
+
+        DAddr dAddr = (DAddr) dval(compiler);
+        compiler.addInstruction(new STORE(Register.getR(n), dAddr));
     }
 
     @Override

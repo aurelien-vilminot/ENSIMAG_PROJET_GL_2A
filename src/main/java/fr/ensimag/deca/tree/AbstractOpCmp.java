@@ -95,8 +95,7 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
 
     @Override
     protected void codeGenExprBool(DecacCompiler compiler, boolean bool, Label branch, int n) {
-        int maxRegister = compiler.getCompilerOptions().getRegisterNumber() - 1;
-        Validate.isTrue((n <= maxRegister));
+        compiler.setAndVerifyCurrentRegister(n);
 
         // Evaluate left operand
         this.getLeftOperand().codeGenExpr(compiler, n);

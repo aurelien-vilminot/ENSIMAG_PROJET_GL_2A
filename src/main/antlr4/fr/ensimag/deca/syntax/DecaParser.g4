@@ -25,6 +25,7 @@ options {
 // which packages should be imported?
 @header {
     import fr.ensimag.deca.tree.*;
+    import fr.ensimag.deca.syntax.RuntimeLocationException;
     import fr.ensimag.deca.tools.SymbolTable;
     import java.io.PrintStream;
 }
@@ -428,8 +429,9 @@ primary_expr returns[AbstractExpr tree]
     | m=ident OPARENT args=list_expr CPARENT {
             assert($args.tree != null);
             assert($m.tree != null);
-            // TODO: replace null by symbol this
-            $tree = new MethodCall(null, $m.tree, $args.tree);
+            AbstractExpr obj = new This(true);
+            setLocation(obj, $m.start);
+            $tree = new MethodCall(obj, $m.tree, $args.tree);
             setLocation($tree, $OPARENT);
         }
     | OPARENT expr CPARENT {
@@ -484,6 +486,7 @@ literal returns[AbstractExpr tree]
         } catch (NumberFormatException e) {
             // Integer could not be parsed
             $tree = null;
+            throw new RuntimeLocationException("Integer could not be parsed", tokenLocation($INT));
         }
         }
     | fd=FLOAT {
@@ -493,6 +496,7 @@ literal returns[AbstractExpr tree]
         } catch (NumberFormatException e) {
             // Float could not be parsed
             $tree = null;
+            throw new RuntimeLocationException("Float could not be parsed", tokenLocation($fd));
         }
         }
     | STRING {
@@ -508,7 +512,7 @@ literal returns[AbstractExpr tree]
         setLocation($tree, $FALSE);
         }
     | THIS {
-        $tree = new This();
+        $tree = new This(false);
         setLocation($tree, $THIS);
         }
     | NULL {
@@ -567,12 +571,13 @@ class_body returns[ListDeclField listdeclfield, ListDeclMethod listdeclmeth]
     $listdeclmeth = new ListDeclMethod();
 }
     : (m=decl_method {
+            assert($m.tree != null);
+            $listdeclmeth.add($m.tree);
         }
       | f=decl_field_set[$listdeclfield]
       )*
     ;
 
-// TODO: visibility
 decl_field_set[ListDeclField l]
     : v=visibility t=type list_decl_field[$l, $t.tree, $v.v]
       SEMI
@@ -621,27 +626,46 @@ decl_field[AbstractIdentifier t, Visibility v] returns[AbstractDeclField tree]
         }
     ;
 
-// TODO
 decl_method returns[AbstractDeclMethod tree]
 @init {
+    AbstractMethodBody methodBody;
 }
     : type ident OPARENT params=list_params CPARENT (block {
+            assert($block.decls != null);
+            assert($block.insts != null);
+            methodBody = new MethodBody($block.decls, $block.insts);
+            setLocation(methodBody, $block.start);
         }
       | ASM OPARENT code=multi_line_string CPARENT SEMI {
+            assert($code.text != null);
+            StringLiteral st = new StringLiteral($code.text.substring(1, $code.text.length() - 1));
+            st.setLocation($code.location);
+            methodBody = new MethodAsmBody(st);
+            setLocation(methodBody, $ASM);
         }
       ) {
+            assert($type.tree != null);
+            assert($ident.tree != null);
+            assert($params.tree != null);
+            $tree = new DeclMethod($type.tree, $ident.tree, $params.tree, methodBody);
+            setLocation($tree, $type.start);
         }
     ;
 
-// TODO
-list_params
+list_params returns[ListDeclParam tree]
+@init {
+    $tree = new ListDeclParam();
+}
     : (p1=param {
+            assert($p1.tree != null);
+            $tree.add($p1.tree);
         } (COMMA p2=param {
+            assert($p2.tree != null);
+            $tree.add($p2.tree);
         }
       )*)?
     ;
 
-// TODO
 multi_line_string returns[String text, Location location]
     : s=STRING {
             $text = $s.text;
@@ -653,9 +677,12 @@ multi_line_string returns[String text, Location location]
         }
     ;
 
-// TODO
-param
+param returns[AbstractDeclParam tree]
     : type ident {
+            assert($type.tree != null);
+            assert($ident.tree != null);
+            $tree = new DeclParam($type.tree, $ident.tree);
+            setLocation($tree, $type.start);
         }
     ;
 

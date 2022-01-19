@@ -51,7 +51,7 @@ public class Program extends AbstractProgram {
 
     @Override
     public void codeGenProgram(DecacCompiler compiler) {
-        // classes.codeGenMethodTable(compiler);
+        classes.codeGenMethodTable(compiler);
         main.codeGenMain(compiler);
         classes.codeGenListDeclClass(compiler);
         this.codeGenInit(compiler);
@@ -76,6 +76,9 @@ public class Program extends AbstractProgram {
         }
         if (gen.getIoError()) {
             compiler.getLabelGenerator().generateErrorLabel(compiler, gen.getIoLabel(), "Error: Input/Output error");
+        }
+        if (gen.getDereferenceError()) {
+            compiler.getLabelGenerator().generateErrorLabel(compiler, gen.getDereferenceLabel(), "Error: null dereference");
         }
     }
 

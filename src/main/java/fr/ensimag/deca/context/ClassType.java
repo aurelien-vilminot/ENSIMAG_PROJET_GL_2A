@@ -67,25 +67,12 @@ public class ClassType extends Type {
         ClassDefinition currentClassDefinition = definition;
         // This loop follows all superclasses of this class.
         // It ends when the superclass is equals of the potential superclass
-        while (!(currentClassDefinition == null)) {
+        while (currentClassDefinition != null) {
             if (currentClassDefinition.equals(potentialSuperClass.definition)) {
                 return true;
             }
             currentClassDefinition = currentClassDefinition.getSuperClass();
         }
         return false;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ClassType classType = (ClassType) o;
-        return Objects.equals(definition, classType.definition);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(definition);
     }
 }

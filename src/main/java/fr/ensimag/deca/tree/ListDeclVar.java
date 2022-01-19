@@ -17,9 +17,9 @@ import org.apache.log4j.Logger;
 public class ListDeclVar extends TreeList<AbstractDeclVar> {
     private static final Logger LOG = Logger.getLogger(Main.class);
 
-    public void codeGenListDeclVar(DecacCompiler compiler) {
+    public void codeGenListDeclVar(DecacCompiler compiler, EnvironmentExp localEnv) {
         for (AbstractDeclVar d : getList()) {
-            d.codeGenDeclVar(compiler);
+            d.codeGenDeclVar(compiler, localEnv);
         }
     }
 
