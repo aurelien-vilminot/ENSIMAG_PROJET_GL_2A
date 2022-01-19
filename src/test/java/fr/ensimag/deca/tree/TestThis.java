@@ -22,7 +22,7 @@ public class TestThis {
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this);
-        thisRef = new This();
+        thisRef = new This(true);
         compiler = new DecacCompiler(null, null);
         localEnv = new EnvironmentExp(null);
         when(currentClass.getType()).thenReturn(classType);
