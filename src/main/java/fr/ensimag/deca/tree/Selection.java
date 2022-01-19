@@ -32,7 +32,7 @@ public class Selection extends AbstractLValue {
 
         TypeDefinition typeDefinition = compiler.getEnvironmentTypes().get(classType.getName());
         if (typeDefinition == null || !typeDefinition.isClass()) {
-            throw new ContextualError("Undefined class", this.getLocation());
+            throw new ContextualError("Undefined class : " + this.ident.getName(), this.getLocation());
         }
 
         if (this.ident.getFieldDefinition().getVisibility() == Visibility.PUBLIC) {
