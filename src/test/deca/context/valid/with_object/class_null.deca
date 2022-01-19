@@ -3,9 +3,9 @@ class A {}
 {
     Object o = null;
     A a = null;
+    Object o2 = (null) (o);
 
     (null) (o);
     (null) (a);
 
-    Object o2 = (null) (o);
 }
