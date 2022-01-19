@@ -46,7 +46,7 @@ public class TestIdentifier {
             ident.verifyExpr(compiler, localEnv, null);
         });
 
-        String expectedMessage = "Undeclared identifier";
+        String expectedMessage = "Undeclared identifier : " + ident.getName();
         String actualMessage = exception.getMessage();
         assertEquals(expectedMessage, actualMessage);
     }
