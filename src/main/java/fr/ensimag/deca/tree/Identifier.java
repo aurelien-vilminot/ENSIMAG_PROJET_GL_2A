@@ -239,11 +239,7 @@ public class Identifier extends AbstractIdentifier {
 
     @Override
     public DVal dval(DecacCompiler compiler) {
-        if (definition.isField()) {
-            return new RegisterOffset(-2, Register.LB);
-        } else {
-            return compiler.getEnvironmentExp().get(name).getOperand();
-        }
+        return getExpDefinition().getOperand();
     }
 
     @Override
