@@ -1,11 +1,11 @@
-class T1 {}
-class T2 extends T1 {}
+class Animal {}
+class Horse extends Animal {}
 
 {
-    T1 a = new T1();
-    T1 c = new T2();
-    T1 aa = null;
+    Animal a = new Animal();
+    Animal c = new Horse();
+    Animal aa = null;
 
-    T2 b = new T2();
-    T2 bb = null;
+    Horse b = new Horse();
+    Horse bb = null;
 }

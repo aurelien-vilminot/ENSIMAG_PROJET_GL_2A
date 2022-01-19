@@ -1,3 +1,3 @@
 class A {
-    A a(){ return A;}
+    A a(){ return new A();}
 }

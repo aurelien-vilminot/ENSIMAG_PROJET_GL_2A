@@ -2,6 +2,6 @@ class A{
     int a;
 }
 
-class B extends A(){
+class B extends A{
     int a = 1;
 }

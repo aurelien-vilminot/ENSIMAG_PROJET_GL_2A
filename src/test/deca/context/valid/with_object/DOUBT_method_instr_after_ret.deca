@@ -1,4 +1,4 @@
-class B (){
+class B {
     int a = 1;
     void m(){
         this.a = 2;
