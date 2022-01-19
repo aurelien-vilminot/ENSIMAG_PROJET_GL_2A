@@ -174,7 +174,7 @@ public class Identifier extends AbstractIdentifier {
         // Check if identifier is already declared
         ExpDefinition expDefinition = localEnv.get(this.name);
         if (expDefinition == null) {
-            throw new ContextualError("Undeclared identifier", this.getLocation());
+            throw new ContextualError("Undeclared identifier : " + this.getName().getName(), this.getLocation());
         } else {
             this.definition = expDefinition;
             this.setType(expDefinition.getType());
