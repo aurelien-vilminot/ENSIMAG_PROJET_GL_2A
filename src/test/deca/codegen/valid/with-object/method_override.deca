@@ -1,0 +1,26 @@
+class Animal {
+    void scream(){
+        println("hahaha");
+    }
+
+    void eat(){
+        println("hum");
+    }
+}
+class Horse extends Animal {
+    void scream(){
+        println("bbbrrr");
+    }
+}
+
+{
+    Animal a = new Animal();
+    a.scream();
+    a.eat();
+
+    Animal c = new Horse();
+    c.scream()
+
+    Horse b = new Horse();
+    b.scream();
+}

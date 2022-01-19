@@ -1,0 +1,31 @@
+class A {
+    int a;
+    int b = 6;
+    float f = 3.6f;
+
+    int compute_sum_a(int c){
+        int a = 8;
+        return a + c;
+    }
+
+    int compute_sum_2(int c){
+        return this.a + c;
+    }
+
+    int compute_sum_3(int c){
+        return a + c;
+    }
+
+    int compute_sum_4(int c){
+        int a = 9;
+        return this.a + c;
+    }
+}
+
+{
+    A a = new A();
+    println(e.compute_sum_a(1));
+    println(e.compute_sum_a(1));
+    println(e.compute_sum_a(1));
+    println(e.compute_sum_a(1));
+}

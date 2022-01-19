@@ -1,0 +1,49 @@
+class Rationnel{
+    // Le rationnel vaut 1 par défaut.
+    protected int numerateur = 1;
+    protected int denominateur = 1;
+
+    int getNum(){
+        return this.numerateur;
+    }
+
+    int getDen(){
+        return this.denominateur;
+    }
+
+    void setNum(int i){
+        this.numerateur = i;
+    }
+
+    void setDen(int i){
+        if(i != 0){
+            this.denominateur = i;
+        }else{
+            println("Erreur : le dénominateur ne peut pas valoir 0");
+        }
+    }
+
+    void afficheRationnel(){
+        println("Le rationnel vaut : ", (float)(numerateur)/(float)(denominateur));
+    }
+
+    void addRat(Rationnel r){
+        this.setNum(r.getNum() * this.getDen() + this.getNum() * r.getDen());
+        this.setDenom(r.getDen() * this.getDen());
+    }
+}
+
+{
+    Rationnel r1 = new Rationnel();
+    r1.setNum(5);
+    r1.setDen(7);
+    r1.afficheRationnel();
+
+    Rationnel r2 = new Rationnel();
+    r2.setNum(8);
+    r2.setDen(3);
+    r2.afficheRationnel();
+
+    r1.addRat(r2);
+    r1.afficheRationnel();
+}
