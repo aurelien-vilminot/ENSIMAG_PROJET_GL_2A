@@ -152,6 +152,12 @@ public class DecacCompiler implements Runnable {
         }
     }
 
+    public void addReturnError() {
+        if (!this.compilerOptions.getNoCheck()) {
+            addInstruction(new BOV(getLabelGenerator().getReturnLabel()));
+        }
+    }
+
     public void saveRegisters() {
         savedRegister = currentRegister;
         for (int i = 2; i <= savedRegister; i++) {

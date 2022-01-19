@@ -97,6 +97,12 @@ public class MethodCall extends AbstractExpr {
     }
 
     @Override
+    protected void codeGenExpr(DecacCompiler compiler, int n) {
+        codeGenInst(compiler);
+        compiler.addInstruction(new LOAD(Register.R0, Register.getR(n)));
+    }
+
+    @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {
         obj.prettyPrint(s, prefix, false);
         meth.prettyPrint(s, prefix, false);
