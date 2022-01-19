@@ -35,5 +35,4 @@ class A {
     if (a.b == false) {
             println("If I am printed, the new value of boolean 'b' is 'false'");
     }
-
 }
