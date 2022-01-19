@@ -259,6 +259,15 @@ exec_test_from_dir (){
                       # ----- and spot differences ------
                       log_output="$TEST_PATH"/"$name_test".res
                       exec_ima "$?" "$TEST_PATH"/"$name_test".ass "$log_output" "$expected_out" "$name_test"
+                  elif [ "$VALIDITY" = "INVALID" ]; then
+                      if [ $rep -eq 1 ]; then
+                        echo "  ${red}[INCORRECT] $4 does not produce an .ass file.${reset}"
+                      else
+                        log_output="$TEST_PATH"/"$name_test".res
+                        ima  "$TEST_PATH"/"$name_test".ass 1> /dev/null 2> "$log_output"
+                        # rm "$2"
+                        non_empty_file "$log_output" "$name_test"
+                      fi
                   else
                       specify_error "Development error about 'VALIDITY'"
                       return
