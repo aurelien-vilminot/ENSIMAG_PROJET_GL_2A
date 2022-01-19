@@ -54,7 +54,7 @@ public class New extends AbstractExpr {
 
         // heap allocation
         int size = ident.getClassDefinition().getNumberOfFields() + 1;
-        // TODO: verify localEnv
+        // TODO: verify if this works inside a class
         DAddr methodAddr = ((ClassDefinition) (compiler.getEnvironmentTypes().get(ident.getName()))).getOperand();
         compiler.addInstruction(new NEW(size, Register.getR(n)));
         compiler.addOverflowError();
