@@ -1,0 +1,39 @@
+class A {
+    int defaultInt;
+    boolean defaultBoolean;
+    float defaultFloat;
+
+    int x = 5;
+    boolean b = true;
+    float y = 1.2;
+}
+
+{
+    A a = new A();
+    println("---- Declared class fields values ----");
+    println("Attribute 'x' has value : ", a.x);
+    println("Attribute 'y' has value : ", a.y);
+    if (a.b == true) {
+            println("If I am printed, the boolean 'b' value is 'true'");
+    }
+
+    println();
+    println("---- Default class fields values ----");
+    println("Attribute 'defaultInt' has value : ", a.defaultInt);
+    println("Attribute 'defaultFloat' has value : ", a.defaultFloat);
+    if (a.defaultBoolean == false) {
+        println("If I am printed, the default boolean value is 'false'");
+    }
+
+    println();
+    println("---- Assign class fields ----");
+    a.x = 3;
+    a.y = 3.2;
+    a.b = false;
+    println("The new value of 'x' is ", a.x);
+    println("The new value of 'y' is ", a.y);
+    if (a.b == false) {
+            println("If I am printed, the new value of boolean 'b' is 'false'");
+    }
+
+}
