@@ -52,6 +52,7 @@ public class DecacCompiler implements Runnable {
     private SymbolTable symbolTable = new SymbolTable();
 
     private int globalStackSize = 0; // number of global variables
+    private int localStackSize = 0;
     private int tempStackCurrent = 0; // current temporary stack usage
     private int tempStackMax = 0; // maximal temporary stack usage
     private int currentRegister = 0; // current register number being used
@@ -65,6 +66,15 @@ public class DecacCompiler implements Runnable {
         Validate.isTrue(inc >= 0, "The incrementation should be positive");
         globalStackSize += inc;
         return globalStackSize;
+    }
+
+    public int incLocalStackSize(int inc) {
+        localStackSize += inc;
+        return localStackSize;
+    }
+
+    public void setLocalStackSize(int n) {
+        localStackSize = n;
     }
 
     public int incTempStackCurrent(int inc) {

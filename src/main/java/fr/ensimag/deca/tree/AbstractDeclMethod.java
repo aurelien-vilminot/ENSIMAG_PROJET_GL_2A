@@ -18,7 +18,7 @@ public abstract class AbstractDeclMethod extends Tree {
             throws ContextualError;
 
     /**
-     * Generate assembly code for the method declaration.
+     * Generate assembly code for the method declaration (pass 2 of [Gencode])
      *
      * @param compiler
      */
@@ -26,7 +26,7 @@ public abstract class AbstractDeclMethod extends Tree {
 
 
     /**
-     * Generate assembly code to build the virtual methods table
+     * Generate assembly code to build the virtual methods table (pass 1 of [Gencode])
      *
      * @param compiler
      */
