@@ -62,10 +62,10 @@ public class DeclClass extends AbstractDeclClass {
                             new ClassType(
                                     this.name.getName(),
                                     this.getLocation(),
-                                    this.superClass.getClassDefinition()
+                                    (ClassDefinition) superClassType
                             ),
                             this.getLocation(),
-                            (ClassDefinition) compiler.getEnvironmentTypes().get(this.superClass.getName())
+                            (ClassDefinition) superClassType
                     )
             );
         } catch (EnvironmentTypes.DoubleDefException e) {
