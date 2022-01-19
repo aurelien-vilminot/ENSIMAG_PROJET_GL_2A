@@ -98,7 +98,8 @@ public class NewArray extends AbstractExpr{
                 throw new WrongTypeException("Type of arrays must be int or float.");
             }
         }else{
-            throw new DecacFatalError("Dimensions higher than 2 have not been implemented.");
+            // TODO Change exception
+            throw new WrongTypeException("Dimensions higher than 2 have not been implemented.");
         }
         LOG.debug("verify NewArray: end");
         return returnType;
