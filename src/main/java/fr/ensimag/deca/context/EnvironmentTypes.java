@@ -87,6 +87,7 @@ public class EnvironmentTypes {
         if (t2.isClass()) {
             // For a class t2, null is always a subclass of t2
             if (t1.isNull()) return true;
+            if (!t1.isClass()) return false;
 
             ClassType t1ClassType = (ClassType) t1;
             ClassType t2ClassType = (ClassType) t2;
