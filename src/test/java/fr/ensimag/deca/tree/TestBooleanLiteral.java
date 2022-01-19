@@ -24,4 +24,10 @@ public class TestBooleanLiteral {
         assertEquals("#1",T.dval(compiler).toString());
         assertEquals("#0",F.dval(compiler).toString());
     }
+
+    @Test
+    public void testGetValue() {
+        BooleanLiteral literal = new BooleanLiteral(true);
+        assertEquals(true, literal.getValue());
+    }
 }
