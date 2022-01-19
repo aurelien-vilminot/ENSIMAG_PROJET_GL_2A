@@ -64,11 +64,19 @@ public abstract class Type {
         return false;
     }
 
-    public boolean isArrayInt() {
+    public boolean isMatrixInt() {
         return false;
     }
 
-    public boolean isArrayFloat() {
+    public boolean isMatrixFloat() {
+        return false;
+    }
+
+    public boolean isVectorInt() {
+        return false;
+    }
+
+    public boolean isVectorFloat() {
         return false;
     }
 
