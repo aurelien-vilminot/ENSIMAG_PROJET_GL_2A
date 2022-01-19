@@ -23,6 +23,7 @@ public class DeclMethod extends AbstractDeclMethod {
     private final AbstractIdentifier methodName;
     private final ListDeclParam listDeclParam;
     private final AbstractMethodBody methodBody;
+    private EnvironmentExp localEnv;
 
     public DeclMethod(AbstractIdentifier returnType, AbstractIdentifier methodName, ListDeclParam listDeclParam, AbstractMethodBody methodBody) {
         Validate.notNull(returnType);
@@ -100,10 +101,10 @@ public class DeclMethod extends AbstractDeclMethod {
 
         // Get params for verify method
         EnvironmentExp environmentExpCurrentClass = ((ClassDefinition) compiler.getEnvironmentTypes().get(classSymbol)).getMembers();
-        EnvironmentExp localExp = this.listDeclParam.verifyParamEnvExp(compiler, environmentExpCurrentClass);
+        localEnv = this.listDeclParam.verifyParamEnvExp(compiler, environmentExpCurrentClass);
         ClassDefinition methodClassDefinition = (ClassDefinition) compiler.getEnvironmentTypes().get(classSymbol);
 
-        this.methodBody.verifyMethodBody(compiler, localExp, methodClassDefinition, this.returnType.getType());
+        this.methodBody.verifyMethodBody(compiler, localEnv, methodClassDefinition, this.returnType.getType());
 
         LOG.debug("verify MethodBody: end");
     }
@@ -115,9 +116,9 @@ public class DeclMethod extends AbstractDeclMethod {
         compiler.addLabel(methodName.getMethodDefinition().getLabel());
         // TODO: TSTO / BOV stack_overflow
         compiler.saveRegisters();
-        listDeclParam.codeGenDeclMethod(compiler);
+        listDeclParam.codeGenDeclMethod(compiler, localEnv);
         // code methode (valeur de retour dans R0)
-        methodBody.codeGenDeclMethod(compiler);
+        methodBody.codeGenDeclMethod(compiler, localEnv);
         Label fin = new Label("fin." + methodName.getMethodDefinition().getLabel().toString().substring(4));
         compiler.addLabel(fin);
         compiler.restoreRegisters();
@@ -128,6 +129,7 @@ public class DeclMethod extends AbstractDeclMethod {
     protected void codeGenMethodTable(DecacCompiler compiler, AbstractIdentifier className) {
         Label methodLabel = new Label("code." + className.getName().toString() + "." + methodName.getName().toString());
         methodName.getMethodDefinition().setLabel(methodLabel);
+        className.getClassDefinition().getLabelArrayList().add(methodLabel);
         int addr = compiler.incGlobalStackSize(1);
         compiler.addInstruction(new LOAD(new LabelOperand(methodLabel), Register.R0));
         compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(addr, Register.GB)));

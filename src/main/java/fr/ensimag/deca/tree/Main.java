@@ -40,7 +40,7 @@ public class Main extends AbstractMain {
     @Override
     protected void codeGenMain(DecacCompiler compiler) {
         compiler.addComment("Main declarations");
-        declVariables.codeGenListDeclVar(compiler);
+        declVariables.codeGenListDeclVar(compiler, compiler.getEnvironmentExp());
         compiler.addComment("Main instructions");
         insts.codeGenListInst(compiler);
         compiler.addInstruction(new HALT());

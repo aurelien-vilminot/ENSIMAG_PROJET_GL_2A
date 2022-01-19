@@ -50,7 +50,10 @@ public class ListDeclParam extends TreeList<AbstractDeclParam> {
         }
     }
 
-    protected void codeGenDeclMethod(DecacCompiler compiler) {
-        throw new UnsupportedOperationException("Class not yet implemented, or cast conversion is not allowed");
+    protected void codeGenDeclMethod(DecacCompiler compiler, EnvironmentExp localEnv) {
+        int index = -3;
+        for (AbstractDeclParam p : getList()) {
+            p.codeGenDeclMethod(compiler, localEnv, index--);
+        }
     }
 }

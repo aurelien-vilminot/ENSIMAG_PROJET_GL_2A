@@ -91,7 +91,7 @@ public class EnvironmentTypes {
             ClassType t1ClassType = (ClassType) t1;
             ClassType t2ClassType = (ClassType) t2;
             // Test if t1 is a subclass of t2
-            return t1ClassType.isSubClassOf(t2ClassType);
+            return t2ClassType.isSubClassOf(t1ClassType);
         }
         return false;
     }

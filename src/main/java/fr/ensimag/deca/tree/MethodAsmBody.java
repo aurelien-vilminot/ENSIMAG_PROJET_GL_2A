@@ -39,7 +39,7 @@ public class MethodAsmBody extends AbstractMethodBody{
     }
 
     @Override
-    protected void codeGenDeclMethod(DecacCompiler compiler) {
+    protected void codeGenDeclMethod(DecacCompiler compiler, EnvironmentExp localEnv) {
         throw new UnsupportedOperationException("not yet implemented");
     }
 

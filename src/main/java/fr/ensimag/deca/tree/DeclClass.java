@@ -62,10 +62,10 @@ public class DeclClass extends AbstractDeclClass {
                             new ClassType(
                                     this.name.getName(),
                                     this.getLocation(),
-                                    this.superClass.getClassDefinition()
+                                    (ClassDefinition) superClassType
                             ),
                             this.getLocation(),
-                            (ClassDefinition) compiler.getEnvironmentTypes().get(this.superClass.getName())
+                            (ClassDefinition) superClassType
                     )
             );
         } catch (EnvironmentTypes.DoubleDefException e) {
@@ -136,7 +136,7 @@ public class DeclClass extends AbstractDeclClass {
         compiler.addInstruction(new LEA(superClassDaddr, Register.R0));
         compiler.addInstruction(new STORE(Register.R0, dAddr));
         // Generate virtual methods table
-        listDeclMethod.codeGenMethodTable(compiler, name);
+        listDeclMethod.codeGenMethodTable(compiler, name, superClass);
     }
 
     @Override
@@ -148,12 +148,12 @@ public class DeclClass extends AbstractDeclClass {
         // TODO: BOV stack_overflow
         // TODO: ADDSP
         compiler.saveRegisters();
-        // initialisation des attributs (à 0 si non précisé)
+        // Initialize fields (to default value if not initialized)
         listDeclField.codeGenListDeclField(compiler);
         compiler.restoreRegisters();
         // return
         compiler.addInstruction(new RTS());
-        // instruction de la table des méthodes (code.name.methodname)
+        // Generate method instruction (code.name.methodname)
         listDeclMethod.codeGenListDeclMethod(compiler);
     }
 
