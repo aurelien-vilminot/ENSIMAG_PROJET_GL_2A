@@ -45,7 +45,7 @@ public class Return extends AbstractInst {
         LOG.debug("verify Return: start");
 
         if (returnType.isVoid()) {
-            throw new ContextualError("Return type cannot be void", this.getLocation());
+            throw new ContextualError("Method return type is void", this.getLocation());
         }
 
         this.expr.verifyRValue(compiler, localEnv, currentClass, returnType);
