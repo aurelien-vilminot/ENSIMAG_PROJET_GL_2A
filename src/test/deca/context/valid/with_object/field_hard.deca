@@ -11,6 +11,6 @@ class B extends A {
     A a = new B();
     int x = 0;
     print(x);
-    print(a.a, a.b);
+    print(a.a);
     print(a.x);
 }
