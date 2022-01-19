@@ -78,15 +78,16 @@ list_decl returns[ListDeclVar tree]
     ;
 
 decl_var_set[ListDeclVar l]
-    : type list_decl_var[$l,$type.tree, $type.dimension] SEMI
+    : type list_decl_var[$l,$type.tree] SEMI
     ;
 
 
-list_decl_var[ListDeclVar l, AbstractIdentifier t, int dim]
-    : dv1=decl_var[$t, $dim] {
+
+list_decl_var[ListDeclVar l, AbstractIdentifier t]
+    : dv1=decl_var[$t] {
         assert($dv1.tree != null);
         $l.add($dv1.tree);
-        } (COMMA dv2=decl_var[$t, $dim] {
+        } (COMMA dv2=decl_var[$t] {
             assert($dv2.tree != null);
             $l.add($dv2.tree);
         }
