@@ -10,7 +10,6 @@ import org.apache.log4j.Logger;
 import java.io.PrintStream;
 import java.util.Iterator;
 
-// TODO : Trouver la classe dont elle hérite.
 public class NewArray extends AbstractExpr{
     private static final Logger LOG = Logger.getLogger(Main.class);
     final private AbstractIdentifier type;
@@ -23,24 +22,16 @@ public class NewArray extends AbstractExpr{
         this.indexList = indexList;
     }
 
-    // TODO
     public void decompile(IndentPrintStream s){
         s.print("new ");
         type.decompile(s);
-        // Code of ListExpr copied, with brackets added.
-        Iterator<AbstractExpr> ite = indexList.getList().iterator();
-        if (ite.hasNext()) {
+        // Code of ListExpr printed, with brackets added.
+        for (AbstractExpr abstractExpr : indexList.getList()) {
             s.print("[");
-            ite.next().decompile(s);
-            s.print("]");
-        }
-        while (ite.hasNext()) {
-            s.print("[");
-            ite.next().decompile(s);
+            abstractExpr.decompile(s);
             s.print("]");
         }
     }
-
 
     @Override
     protected void iterChildren(TreeFunction f) {
@@ -54,30 +45,23 @@ public class NewArray extends AbstractExpr{
         indexList.prettyPrint(s, prefix, false);
     }
 
-
-
-
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
         LOG.debug("verify NewArray: start");
 
         // Check array type (int or float):
         Type arrayPrimitiveType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create(type.getName().getName())).getType();
         if(!(arrayPrimitiveType.isFloat() || arrayPrimitiveType.isInt())){
-            throw new ContextualError("Type of arrays must be int or float.", this.getLocation());
+            throw new ContextualError("An array must contain float or int", this.getLocation());
         }
         this.setType(arrayPrimitiveType);
 
         // Check that every index is an int
-        // TODO cast float to int ?? or not ...
-        indexList.getList().get(0).getType();
-        Iterator<AbstractExpr> ite = indexList.getList().iterator();
-        while (ite.hasNext()) {
-            Type currentType = ite.next().verifyExpr(compiler, localEnv, currentClass);
+        for (AbstractExpr abstractExpr : indexList.getList()) {
+            Type currentType = abstractExpr.verifyExpr(compiler, localEnv, currentClass);
             if (!currentType.isInt()) {
-                throw new ContextualError("Index of array must be int.", this.getLocation());
+                throw new ContextualError("Index of array must be an integer", this.getLocation());
             }
         }
-        // now, we sure that all index are int !
 
         Type returnType;
         if(indexList.getList().size() == 1){
@@ -86,7 +70,7 @@ public class NewArray extends AbstractExpr{
             }else if(arrayPrimitiveType.isFloat()){
                 returnType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("float[]")).getType();
             }else{
-                throw new ContextualError("Type of arrays must be int or float.", this.getLocation());
+                throw new ContextualError("An array must contain float or int", this.getLocation());
             }
         }else if(indexList.getList().size() == 2){
             if(arrayPrimitiveType.isInt()){
@@ -94,12 +78,12 @@ public class NewArray extends AbstractExpr{
             }else if(arrayPrimitiveType.isFloat()){
                 returnType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("float[][]")).getType();
             }else{
-                throw new ContextualError("Type of arrays must be int or float.", this.getLocation());
+                throw new ContextualError("An array must contain float or int", this.getLocation());
             }
         }else{
-            // TODO Change exception
-            throw new ContextualError("Dimensions higher than 2 have not been implemented.", this.getLocation());
+            throw new ContextualError("The dimension of an array cannot be greater than 2", this.getLocation());
         }
+
         LOG.debug("verify NewArray: end");
         return returnType;
     }
