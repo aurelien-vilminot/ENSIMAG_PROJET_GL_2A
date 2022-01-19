@@ -25,6 +25,7 @@ options {
 // which packages should be imported?
 @header {
     import fr.ensimag.deca.tree.*;
+    import fr.ensimag.deca.syntax.RuntimeLocationException;
     import fr.ensimag.deca.tools.SymbolTable;
     import java.io.PrintStream;
 }
@@ -468,6 +469,7 @@ literal returns[AbstractExpr tree]
         } catch (NumberFormatException e) {
             // Integer could not be parsed
             $tree = null;
+            throw new RuntimeLocationException("Integer could not be parsed", tokenLocation($INT));
         }
         }
     | fd=FLOAT {
@@ -477,6 +479,7 @@ literal returns[AbstractExpr tree]
         } catch (NumberFormatException e) {
             // Float could not be parsed
             $tree = null;
+            throw new RuntimeLocationException("Float could not be parsed", tokenLocation($fd));
         }
         }
     | STRING {
