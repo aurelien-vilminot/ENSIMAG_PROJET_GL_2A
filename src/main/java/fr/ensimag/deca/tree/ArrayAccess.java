@@ -51,24 +51,23 @@ public class ArrayAccess extends AbstractLValue{
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
 //        Validate.notNull(localEnv, "Env_exp object should not be null");
 
+        // Verify that the expression index is an integer
         if(!index.getType().isInt()){
             throw new WrongTypeException("The index of an ArrayAccess must be an integer");
         } else {
-
+            // If 'tab' is a matrix, returns an access to one of its component, a vector of the same type.
             if (tab.getType().isMatrixFloat()) {
-
-            } else if (tab.getType().isVectorFloat()) {
-
+                return compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("float[]")).getType();
             } else if (tab.getType().isMatrixInt()){
-
+                return compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("int[]")).getType();
+            // If 'tab' is a vector, returns an access to one of its component, a literal of the same type.
+            } else if (tab.getType().isVectorFloat()){
+                return compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("float")).getType();
             } else if (tab.getType().isVectorInt()){
-
+                return compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("int")).getType();
             } else {
                 throw new WrongTypeException("Attribut 'tab' must be a Vector or a Matrix of Int or Float");
             }
-
-                Type elementAccessed = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("boolean")).getType();
         }
-        throw new WrongTypeException("Attribut 'tab' must be a Vector or a Matrix of Int or Float");
     }
 }
