@@ -1,0 +1,8 @@
+{
+    int i;
+    float f;
+    int[] x;
+    float[] y;
+    int[][] a;
+    float[][] b;
+}

@@ -76,4 +76,9 @@ public class ArrayAccess extends AbstractLValue{
         LOG.debug("verify BooleanLiteral: start");
         return returnType;
     }
+
+    @Override
+    protected void codeGenStore(DecacCompiler compiler, int n) {
+        return;
+    }
 }

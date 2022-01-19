@@ -1,0 +1,6 @@
+{
+    int[] x = ----new int[2];
+    int[] y = !-!-!-!-!-new int[2];
+    int[] a = !!!!! new int[8];
+    int[] b = !-!-!-!-! int[80];
+}

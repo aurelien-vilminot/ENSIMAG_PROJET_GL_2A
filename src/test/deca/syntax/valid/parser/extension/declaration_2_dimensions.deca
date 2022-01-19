@@ -1,3 +1,0 @@
-{
-    float[][] array = new float [6+96+9];
-}

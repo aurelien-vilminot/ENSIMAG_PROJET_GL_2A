@@ -1,0 +1,6 @@
+{
+    int[] p = new int[78];
+    float[] q = new float[99];
+    int[][] x = new int[89][89];
+    float[][] y = new float[12][89];
+}

@@ -1,0 +1,10 @@
+{
+    int[] x = new int [5] + new float[8][2];
+    int[] x = new int [5] - new float[8][2];
+    int[] x = new int [5] * new float[8][2];
+    int[] x = new int [5] / new float[8][2];
+    int[] x = new int [5] == new float[8][2];
+    int[] x = new int [5] <= new float[8][2];
+    int[] x = new int [5] > new float[8][2];
+    int[] x = new int [5] && !new float[8][2];
+}

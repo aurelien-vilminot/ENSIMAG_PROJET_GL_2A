@@ -1,0 +1,8 @@
+{
+    int[][] x = new int[1][2];
+    float[] a = new float[8];
+    a[0] = 89.0 * 5;
+    f(a[0], x);
+    f(x, a[0]);
+    f(a[0], a[0]);
+}

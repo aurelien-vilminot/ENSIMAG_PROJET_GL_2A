@@ -1,0 +1,7 @@
+{
+    int a = 80, b = 50;
+    int[] p = new int[a];
+    float[] q = new float[b];
+    int[][] x = new int[b * 4][8 + a % 45];
+    float[][] y = new float[a + b][b - 5];
+}
