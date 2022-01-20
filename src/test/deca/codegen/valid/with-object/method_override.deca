@@ -20,8 +20,6 @@ class Horse extends Animal {
 
     a.scream();
     a.eat();
-
     c.scream();
-
     b.scream();
 }
