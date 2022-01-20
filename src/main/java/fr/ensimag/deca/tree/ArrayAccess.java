@@ -69,20 +69,6 @@ public class ArrayAccess extends AbstractLValue{
             );
         }
 
-//        // If 'tab' is a matrix, returns an access to one of its component, a vector of the same type.
-//        if (tabType.isMatrixFloat()) {
-//            returnType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("float[]")).getType();
-//        } else if (tabType.isMatrixInt()){
-//            returnType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("int[]")).getType();
-//            // If 'tab' is a vector, returns an access to one of its component, a literal of the same type.
-//        } else if (tabType.isVectorFloat()){
-//            returnType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("float")).getType();
-//        } else if (tabType.isVectorInt()){
-//            returnType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("int")).getType();
-//        } else {
-//            throw new ContextualError("Identifier for array access must be a 1D or 2D array of float or int.", this.getLocation());
-//        }
-
         this.setType(returnType);
         LOG.debug("verify ArrayAccess: end");
         return returnType;
