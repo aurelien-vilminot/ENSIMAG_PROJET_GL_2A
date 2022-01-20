@@ -56,6 +56,8 @@ public class MethodCall extends AbstractExpr {
             param.verifyRValue(compiler, localEnv, (ClassDefinition) compiler.getEnvironmentTypes().get(typeClass.getName()), expectedType);
         }
 
+        this.setType(methodDefinition.getType());
+
         LOG.debug("verify MethodCall: end");
         return methodDefinition.getType();
     }
