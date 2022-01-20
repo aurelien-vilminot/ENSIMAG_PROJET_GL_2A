@@ -1,0 +1,32 @@
+class A{
+
+    void setX(int x){
+        this.x = x;
+    }
+
+    int getX(){
+        return this.x;
+    }
+
+    protected int x = 0;
+
+    void f(A element){
+        println(element.x);
+    }
+}
+
+{
+    A element = new A();
+    A oth = new A();
+
+    println("x attribut of element : ", element.getX());
+    element.setX(50);
+    println("x attribut of element after setX called : ", element.getX());
+
+    oth.setX(20);
+    oth.f(element);
+    element.f(element);
+
+
+
+}

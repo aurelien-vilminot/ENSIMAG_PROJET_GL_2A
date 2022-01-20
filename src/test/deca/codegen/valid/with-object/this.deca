@@ -13,13 +13,13 @@ class B extends A{
 
     int m2(int aa){
         int a = 10;
-        return this.a + aa + aaa; // not sure it is possible wo this.
+        return a + this.aa + this.aaa; // not sure it is possible wo this.
     }
 }
 
 {
     B b = new B();
     b.m();
-    println(b.m2(12)); // 12+5+90 = 107
+    println(b.m2(12)); // 10 + 5+ 90 = 107
 
 }

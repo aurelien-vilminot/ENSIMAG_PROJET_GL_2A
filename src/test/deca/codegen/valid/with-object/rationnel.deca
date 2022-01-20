@@ -24,7 +24,7 @@ class Rationnel{
     }
 
     void afficheRationnel(){
-        println("Le rationnel vaut : ", (float)(numerateur)/(float)(denominateur));
+        println("Le rationnel vaut : ", (float)(numerateur)/denominateur);
     }
 
     void addRat(Rationnel r){

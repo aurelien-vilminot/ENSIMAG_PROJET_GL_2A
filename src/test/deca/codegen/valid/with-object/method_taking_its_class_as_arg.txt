@@ -1,0 +1,4 @@
+x attribut of element : 0
+x attribut of element after setX called : 50
+50
+50

@@ -17,6 +17,6 @@ class Car {
     int x = 5;
     Car Rosalie;
     Rosalie = new Car();
-    Rosalie.motor(2, 50.0 * x - 6);
+    Rosalie.motor(2, 50.0 * x - 6, true);
     Rosalie.accident();
 }

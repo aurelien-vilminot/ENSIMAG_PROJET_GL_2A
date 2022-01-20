@@ -8,9 +8,15 @@ class Animal {
     }
 }
 
+class Test{
+}
+
 {
     Animal Mike = null;
     if(null instanceof Animal){
+        println("Yes");
+    }
+    if(Mike instanceof Test{
         println("Yes");
     }
 }
