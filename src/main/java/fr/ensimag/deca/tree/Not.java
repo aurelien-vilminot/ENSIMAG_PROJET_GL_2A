@@ -54,6 +54,7 @@ public class Not extends AbstractUnaryExpr {
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
         compiler.setAndVerifyCurrentRegister(n);
+
         getOperand().codeGenExpr(compiler, n);
         // Rn <- 1 - Rn
         compiler.addInstruction(new OPP(Register.getR(n), Register.getR(n)));

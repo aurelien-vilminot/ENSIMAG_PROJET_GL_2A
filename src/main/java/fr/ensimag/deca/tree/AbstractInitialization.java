@@ -42,6 +42,7 @@ public abstract class AbstractInitialization extends Tree {
      *
      * @param compiler
      * @param n
+     * @param type
      */
     protected abstract void codeGenExpr(DecacCompiler compiler, int n, Type type);
 }

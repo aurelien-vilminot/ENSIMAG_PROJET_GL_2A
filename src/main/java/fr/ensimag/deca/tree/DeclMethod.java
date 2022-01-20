@@ -1,16 +1,12 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.LabelGenerator;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable;
-import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.LabelOperand;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.RegisterOffset;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
-import fr.ensimag.ima.pseudocode.instructions.RTS;
-import fr.ensimag.ima.pseudocode.instructions.STORE;
+import fr.ensimag.ima.pseudocode.*;
+import fr.ensimag.ima.pseudocode.instructions.*;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -112,28 +108,72 @@ public class DeclMethod extends AbstractDeclMethod {
 
     @Override
     protected void codeGenDeclMethod(DecacCompiler compiler) {
-        // label code.nameClass.nameMethod
-        compiler.addLabel(methodName.getMethodDefinition().getLabel());
-        // TODO: TSTO / BOV stack_overflow
-        compiler.saveRegisters();
+        compiler.addLabel(new Label("code." + methodName.getMethodDefinition().getLabel()));
+
+        // Create a new IMAProgram to be able to add instructions at the beginning of the block
+        IMAProgram backupProgram = compiler.getProgram();
+        IMAProgram initClassProgram = new IMAProgram();
+        compiler.setProgram(initClassProgram);
+
+        LabelGenerator gen = compiler.getLabelGenerator();
+
+        // Declare parameters
         listDeclParam.codeGenDeclMethod(compiler, localEnv);
-        // code methode (valeur de retour dans R0)
+
+        // Method body code
+        compiler.setMaxUsedRegister(0);
+        compiler.setTempStackMax(0);
+        compiler.setLocalStackSize(0);
+        Label finLabel = new Label("fin." + methodName.getMethodDefinition().getLabel());
+        gen.setEndLabel(finLabel);
         methodBody.codeGenDeclMethod(compiler, localEnv);
-        Label fin = new Label("fin." + methodName.getMethodDefinition().getLabel().toString().substring(4));
-        compiler.addLabel(fin);
+
+        // Generate an error if method has a return type and end of method is reached without a return instruction
+        if (!returnType.getType().isVoid()) {
+            if (!compiler.getCompilerOptions().getNoCheck()) {
+                gen.generateErrorLabel(compiler, gen.getReturnLabel(), "Error: end of method "
+                        + methodName.getMethodDefinition().getLabel() + " without return instruction");
+            }
+        }
+
+        // Instructions added at the beginning of the block
+        compiler.saveRegisters();
+        int v = compiler.getLocalStackSize();
+        int d = compiler.getNumberOfRegistersUsed() + compiler.getTempStackMax();
+        if (v > 0) {
+            compiler.addFirst(new Line(new ADDSP(new ImmediateInteger(v))));
+        }
+        if (d > 0) {
+            compiler.addStackOverflowError(true);
+            compiler.addFirst(new Line(new TSTO(new ImmediateInteger(d))));
+        }
+
+        // Return
+        compiler.addLabel(finLabel);
         compiler.restoreRegisters();
         compiler.addInstruction(new RTS());
+
+        // Restore initial IMAProgram
+        backupProgram.append(initClassProgram);
+        compiler.setProgram(backupProgram);
+        compiler.setMaxUsedRegister(0);
+        compiler.setTempStackMax(0);
+        compiler.setLocalStackSize(0);
+
     }
 
     @Override
     protected void codeGenMethodTable(DecacCompiler compiler, AbstractIdentifier className) {
-        Label methodLabel = new Label("code." + className.getName().toString() + "." + methodName.getName().toString());
+        Label methodLabel = new Label(className.getName().toString() + "." + methodName.getName().toString());
         methodName.getMethodDefinition().setLabel(methodLabel);
+        Label codeLabel = new Label("code." + methodLabel);
         int index = methodName.getMethodDefinition().getIndex() - 1;
         if (index < className.getClassDefinition().getLabelArrayList().size()) {
-            className.getClassDefinition().getLabelArrayList().set(index, methodLabel);
+            // Replace existing parent method in labelArrayList
+            className.getClassDefinition().getLabelArrayList().set(index, codeLabel);
         } else {
-            className.getClassDefinition().getLabelArrayList().add(methodLabel);
+            // Add method to labelArrayList
+            className.getClassDefinition().getLabelArrayList().add(codeLabel);
         }
     }
 

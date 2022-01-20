@@ -12,6 +12,8 @@ import fr.ensimag.ima.pseudocode.DVal;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.POP;
+import fr.ensimag.ima.pseudocode.instructions.PUSH;
 import fr.ensimag.ima.pseudocode.instructions.STORE;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
@@ -256,10 +258,34 @@ public class Identifier extends AbstractIdentifier {
 
     @Override
     protected void codeGenStore(DecacCompiler compiler, int n) {
-        compiler.setAndVerifyCurrentRegister(n);
+        int maxRegister = compiler.setAndVerifyCurrentRegister(n);
 
         DAddr dAddr = (DAddr) dval(compiler);
-        compiler.addInstruction(new STORE(Register.getR(n), dAddr));
+        if (definition.isField()) {
+            int index = getFieldDefinition().getIndex();
+            if (n < maxRegister) {
+                compiler.setAndVerifyCurrentRegister(n+1);
+
+                // Calculate heap address of the object into Rn+1
+                compiler.addInstruction(new LOAD(dAddr, Register.getR(n+1)));
+                // Store into Rn the field
+                compiler.addInstruction(new STORE(Register.getR(n), new RegisterOffset(index, Register.getR(n+1))));
+            } else {
+                compiler.incTempStackCurrent(1);
+                compiler.addInstruction(new PUSH(Register.getR(n)), "save");
+                // Calculate heap address of the object into Rn
+                compiler.addInstruction(new LOAD(dAddr, Register.getR(n)));
+
+                compiler.addInstruction(new LOAD(Register.getR(n), Register.R0));
+                // R0 contains heap address of the object
+                compiler.addInstruction(new POP(Register.getR(n)), "restore");
+                compiler.incTempStackCurrent(-1);
+                // Load R0 into correct field in the object
+                compiler.addInstruction(new STORE(Register.getR(n), new RegisterOffset(index, Register.R0)));
+            }
+        } else {
+            compiler.addInstruction(new STORE(Register.getR(n), dAddr));
+        }
     }
 
     @Override

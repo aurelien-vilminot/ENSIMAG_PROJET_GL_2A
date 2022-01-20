@@ -22,5 +22,12 @@ public abstract class AbstractDeclField extends Tree{
      *
      * @param compiler
      */
+    protected abstract void codeGenDeclFieldDefault(DecacCompiler compiler);
+
+    /**
+     * Generate assembly code for the field declaration.
+     *
+     * @param compiler
+     */
     protected abstract void codeGenDeclField(DecacCompiler compiler);
 }

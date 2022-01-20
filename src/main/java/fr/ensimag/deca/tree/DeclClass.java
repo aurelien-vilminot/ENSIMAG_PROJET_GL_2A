@@ -3,13 +3,8 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.DAddr;
-import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.RegisterOffset;
-import fr.ensimag.ima.pseudocode.instructions.LEA;
-import fr.ensimag.ima.pseudocode.instructions.RTS;
-import fr.ensimag.ima.pseudocode.instructions.STORE;
+import fr.ensimag.ima.pseudocode.*;
+import fr.ensimag.ima.pseudocode.instructions.*;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -141,18 +136,48 @@ public class DeclClass extends AbstractDeclClass {
 
     @Override
     protected void codeGenDeclClass(DecacCompiler compiler) {
-        // CodeGen
-        // init.name
         compiler.addLabel(new Label("init." + name.getName().toString()));
-        // TODO: TSTO
-        // TODO: BOV stack_overflow
-        // TODO: ADDSP
-        compiler.saveRegisters();
-        // Initialize fields (to default value if not initialized)
+
+        // Create a new IMAProgram to be able to add instructions at the beginning of the block
+        IMAProgram backupProgram = compiler.getProgram();
+        IMAProgram initClassProgram = new IMAProgram();
+        compiler.setProgram(initClassProgram);
+
+        // Call parent init
+        if (superClass.getClassDefinition().getNumberOfFields() != 0 ) {
+            // Initialize fields address, and store default value if superClass has fields
+            // TODO: not optimized ?
+            listDeclField.codeGenListDeclFieldDefault(compiler);
+            compiler.addInstruction(new PUSH(Register.R1));
+            compiler.addInstruction(new BSR(new Label("init."+superClass.getName().getName())));
+            // TODO: verify why SUBSP #1
+            compiler.addInstruction(new SUBSP(new ImmediateInteger(1)));
+        }
+
+        // Initialize fields
+        compiler.setMaxUsedRegister(0);
+        compiler.setTempStackMax(0);
         listDeclField.codeGenListDeclField(compiler);
+
+        // Restore registers
         compiler.restoreRegisters();
-        // return
+
+        // Return
         compiler.addInstruction(new RTS());
+
+        // Instructions added at the beginning of the block
+        compiler.saveRegisters();
+        int d = compiler.getNumberOfRegistersUsed() + compiler.getTempStackMax();
+        if (d > 0) {
+            compiler.addStackOverflowError(true);
+            compiler.addFirst(new Line(new TSTO(new ImmediateInteger(d))));
+        }
+        // Restore initial IMAProgram
+        backupProgram.append(initClassProgram);
+        compiler.setProgram(backupProgram);
+        compiler.setMaxUsedRegister(0);
+        compiler.setTempStackMax(0);
+
         // Generate method instruction (code.name.methodname)
         listDeclMethod.codeGenListDeclMethod(compiler);
     }

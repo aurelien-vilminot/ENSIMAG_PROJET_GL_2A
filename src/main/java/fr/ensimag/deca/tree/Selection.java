@@ -73,7 +73,6 @@ public class Selection extends AbstractLValue {
             compiler.addInstruction(new STORE(Register.getR(n), new RegisterOffset(index, Register.getR(n+1))));
         } else {
             compiler.incTempStackCurrent(1);
-            compiler.setTempStackMax();
             compiler.addInstruction(new PUSH(Register.getR(n)), "save");
             // Calculate heap address of the object into Rn
             expr.codeGenExpr(compiler, n);

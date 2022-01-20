@@ -44,7 +44,6 @@ public class MethodBody extends AbstractMethodBody {
 
     @Override
     protected void codeGenDeclMethod(DecacCompiler compiler, EnvironmentExp localEnv) {
-        compiler.setLocalStackSize(0);
         listDeclVar.codeGenListDeclVar(compiler, localEnv);
         listInst.codeGenListInst(compiler);
     }
