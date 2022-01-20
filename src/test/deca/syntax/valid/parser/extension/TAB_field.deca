@@ -1,0 +1,6 @@
+class A{
+    int[][] mat = new int[5][5];
+    float[][] mat2;
+    int[] vec;
+    float[] vec2 = new float[9];
+}

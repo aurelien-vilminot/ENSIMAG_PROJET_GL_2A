@@ -1,0 +1,14 @@
+class A{
+    int[] f(){
+        return new int[8];
+    }
+    float[] g(){
+        return new float[2];
+    }
+    int[][] a(){
+        return new int[1][2];
+    }
+    float[][] b(){
+        return new float[2][2];
+    }
+}
