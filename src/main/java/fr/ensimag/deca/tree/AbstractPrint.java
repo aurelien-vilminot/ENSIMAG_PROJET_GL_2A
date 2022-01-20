@@ -52,7 +52,7 @@ public abstract class AbstractPrint extends AbstractInst {
             if (argType.isInt() || argType.isFloat() || argType.isString()) {
                 expr.setType(argType);
             } else {
-                throw new ContextualError("Impossible to print this type of element", this.getLocation());
+                throw new ContextualError("Impossible to print this type of element : " + argType, this.getLocation());
             }
         }
         LOG.debug("verify Print" + getSuffix() + ": end");

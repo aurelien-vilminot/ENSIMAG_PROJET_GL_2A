@@ -7,7 +7,14 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import java.io.PrintStream;
 
+import fr.ensimag.ima.pseudocode.DAddr;
 import fr.ensimag.ima.pseudocode.DVal;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.POP;
+import fr.ensimag.ima.pseudocode.instructions.PUSH;
+import fr.ensimag.ima.pseudocode.instructions.STORE;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -169,7 +176,7 @@ public class Identifier extends AbstractIdentifier {
         // Check if identifier is already declared
         ExpDefinition expDefinition = localEnv.get(this.name);
         if (expDefinition == null) {
-            throw new ContextualError("Undeclared identifier", this.getLocation());
+            throw new ContextualError("Undeclared identifier : " + this.name, this.getLocation());
         } else {
             this.definition = expDefinition;
             this.setType(expDefinition.getType());
@@ -199,8 +206,26 @@ public class Identifier extends AbstractIdentifier {
 
         return currentType.getType();
     }
-    
-    
+
+    @Override
+    public MethodDefinition verifyMethod(DecacCompiler compiler, EnvironmentExp localEnv) throws ContextualError {
+        LOG.debug("verify Method: start");
+        Validate.notNull(compiler, "Compiler (env_types) object should not be null");
+        Validate.notNull(localEnv, "Local environment object should not be null");
+
+        ExpDefinition expDefinition = localEnv.get(this.getName());
+        if (expDefinition == null) {
+            throw new ContextualError("Impossible to find the method : " + this.getName(), this.getLocation());
+        }
+        // Convert the expression into a method definition
+        MethodDefinition methodDefinition = expDefinition.asMethodDefinition("This identifier is not a method : " + this.getName(), this.getLocation());
+
+        this.setDefinition(methodDefinition);
+        LOG.debug("verify Method: end");
+        return methodDefinition;
+    }
+
+
     private Definition definition;
 
 
@@ -221,7 +246,50 @@ public class Identifier extends AbstractIdentifier {
 
     @Override
     public DVal dval(DecacCompiler compiler) {
-        return compiler.getEnvironmentExp().get(name).getOperand();
+        return getExpDefinition().getOperand();
+    }
+
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, int n) {
+        super.codeGenExpr(compiler, n);
+
+        if (definition.isField()) {
+            // if identifier is field, Rn contains its heap address
+            int index = getFieldDefinition().getIndex();
+            compiler.addInstruction(new LOAD(new RegisterOffset(index, Register.getR(n)), Register.getR(n)));
+        }
+    }
+
+    @Override
+    protected void codeGenStore(DecacCompiler compiler, int n) {
+        int maxRegister = compiler.setAndVerifyCurrentRegister(n);
+
+        DAddr dAddr = (DAddr) dval(compiler);
+        if (definition.isField()) {
+            int index = getFieldDefinition().getIndex();
+            if (n < maxRegister) {
+                compiler.setAndVerifyCurrentRegister(n+1);
+
+                // Calculate heap address of the object into Rn+1
+                compiler.addInstruction(new LOAD(dAddr, Register.getR(n+1)));
+                // Store into Rn the field
+                compiler.addInstruction(new STORE(Register.getR(n), new RegisterOffset(index, Register.getR(n+1))));
+            } else {
+                compiler.incTempStackCurrent(1);
+                compiler.addInstruction(new PUSH(Register.getR(n)), "save");
+                // Calculate heap address of the object into Rn
+                compiler.addInstruction(new LOAD(dAddr, Register.getR(n)));
+
+                compiler.addInstruction(new LOAD(Register.getR(n), Register.R0));
+                // R0 contains heap address of the object
+                compiler.addInstruction(new POP(Register.getR(n)), "restore");
+                compiler.incTempStackCurrent(-1);
+                // Load R0 into correct field in the object
+                compiler.addInstruction(new STORE(Register.getR(n), new RegisterOffset(index, Register.R0)));
+            }
+        } else {
+            compiler.addInstruction(new STORE(Register.getR(n), dAddr));
+        }
     }
 
     @Override

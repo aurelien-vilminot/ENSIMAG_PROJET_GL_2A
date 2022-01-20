@@ -70,6 +70,8 @@ public class IfThenElse extends AbstractInst {
 
         // Generate code for condition
         this.condition.codeGenExprBool(compiler, false, elseLabel, 2);
+        // Registers are no longer used
+        compiler.setAndVerifyCurrentRegister(0);
         // Generate code for instruction(s)
         this.thenBranch.codeGenListInst(compiler);
         // Go to the end of if statement after the instruction execution

@@ -5,6 +5,12 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable;
+import fr.ensimag.ima.pseudocode.DAddr;
+import fr.ensimag.ima.pseudocode.ImmediateInteger;
+import fr.ensimag.ima.pseudocode.Register;
+import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.instructions.LOAD;
+import fr.ensimag.ima.pseudocode.instructions.PUSH;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -38,9 +44,32 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
 
     @Override
     public void decompile(IndentPrintStream s) {
-        // TODO
+        if (getList().isEmpty()) {
+            return;
+        }
+        for (AbstractDeclField v : getList()) {
+            v.decompile(s);
+            s.println();
+        }
     }
 
+    /**
+     * Initialize fields address, and store default value if superClass has fields
+     *
+     * @param compiler
+     */
+    protected void codeGenListDeclFieldDefault(DecacCompiler compiler) {
+        compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), Register.R1));
+        for (AbstractDeclField c : getList()) {
+            c.codeGenDeclFieldDefault(compiler);
+        }
+    }
+
+    /**
+     * Initialize fields
+     *
+     * @param compiler
+     */
     protected void codeGenListDeclField(DecacCompiler compiler) {
         for (AbstractDeclField c : getList()) {
             c.codeGenDeclField(compiler);

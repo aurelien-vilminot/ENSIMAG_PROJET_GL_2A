@@ -3,9 +3,7 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.DAddr;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.*;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.STORE;
 import fr.ensimag.deca.tools.SymbolTable;
@@ -22,7 +20,6 @@ public class DeclField extends AbstractDeclField {
     final private AbstractInitialization initialization;
     private final Visibility visibility;
 
-    // TODO: visibility
     public DeclField(AbstractIdentifier type,
                      AbstractIdentifier fieldName,
                      AbstractInitialization initialization,
@@ -44,20 +41,14 @@ public class DeclField extends AbstractDeclField {
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
         Type type = this.type.verifyType(compiler);
         if (type.isVoid()) {
-            throw new ContextualError("Void type cannot be declared as an attribute type", this.getLocation());
+            throw new ContextualError("Void type cannot be declared as a field type", this.getLocation());
         }
         ClassDefinition currentClassDefinition = (ClassDefinition) compiler.getEnvironmentTypes().get(symbolCurrentClass);
         EnvironmentExp environmentExpCurrentClass = currentClassDefinition.getMembers();
         EnvironmentExp envExpName =((ClassDefinition) compiler.getEnvironmentTypes().get(superSymbol)).getMembers();
 
         if (envExpName.get(this.fieldName.getName()) != null && !envExpName.get(this.fieldName.getName()).isField()) {
-            throw new ContextualError("Super class symbol must be a field definition", this.getLocation());
-        }
-
-        try {
-            environmentExpCurrentClass.addSuperExpDefinition(envExpName);
-        } catch (EnvironmentExp.DoubleDefException e) {
-            throw new ContextualError("Identifier already declared in super class must be an attribute", this.getLocation());
+            throw new ContextualError("Super-class redefinition identifier must be a field", this.getLocation());
         }
 
         currentClassDefinition.incNumberOfFields();
@@ -74,7 +65,7 @@ public class DeclField extends AbstractDeclField {
                     )
             );
         } catch (EnvironmentExp.DoubleDefException e) {
-            throw new ContextualError("Attribute name already declared", this.getLocation());
+            throw new ContextualError("Field name '"+ this.fieldName.getName() + "' already declared", this.getLocation());
         }
 
         this.fieldName.verifyExpr(compiler, environmentExpCurrentClass, currentClassDefinition);
@@ -95,20 +86,40 @@ public class DeclField extends AbstractDeclField {
         LOG.debug("verify InitField: end");
     }
 
+    protected void codeGenDeclFieldDefault(DecacCompiler compiler) {
+        if (type.getType().isBoolean() || type.getType().isInt()) {
+            compiler.addInstruction(new LOAD(new ImmediateInteger(0), Register.R0));
+        } else if (type.getType().isFloat()) {
+            compiler.addInstruction(new LOAD(new ImmediateFloat(0), Register.R0));
+        } else if (type.getType().isClass()) {
+            compiler.addInstruction(new LOAD(new NullOperand(), Register.R0));
+        }
+        int index = fieldName.getFieldDefinition().getIndex();
+        compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(index, Register.R1)));
+    }
+
     @Override
     protected void codeGenDeclField(DecacCompiler compiler) {
+        // Set operand
+        DAddr dAddr = new RegisterOffset(-2, Register.LB);
+        fieldName.getFieldDefinition().setOperand(dAddr);
+        // Initialize expression in R0
         initialization.codeGenExpr(compiler, 0, type.getType());
         // -2(LB) is the address of the object to initialize
-        compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), Register.R1));
-        // n(R1) is the address of the current field
-        int n = this.fieldName.getFieldDefinition().getIndex();
-        compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(n, Register.R1)));
+        compiler.addInstruction(new LOAD(dAddr, Register.R1));
+        // index(R1) is the address of the current field
+        int index = fieldName.getFieldDefinition().getIndex();
+        compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(index, Register.R1)));
 
     }
 
     @Override
     public void decompile(IndentPrintStream s) {
-        // TODO: visibility
+        if (visibility == Visibility.PUBLIC) {
+            s.print("public ");
+        } else {
+            s.print("protected ");
+        }
         type.decompile(s);
         s.print(" ");
         fieldName.decompile(s);

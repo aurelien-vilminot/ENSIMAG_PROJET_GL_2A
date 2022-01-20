@@ -106,8 +106,7 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
-        int maxRegister = compiler.getCompilerOptions().getRegisterNumber() - 1;
-        Validate.isTrue((n <= maxRegister));
+        compiler.setAndVerifyCurrentRegister(n);
 
         // Evaluate left operand
         this.getLeftOperand().codeGenExpr(compiler, n);

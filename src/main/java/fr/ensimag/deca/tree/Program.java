@@ -51,7 +51,7 @@ public class Program extends AbstractProgram {
 
     @Override
     public void codeGenProgram(DecacCompiler compiler) {
-        // classes.codeGenMethodTable(compiler);
+        classes.codeGenMethodTable(compiler);
         main.codeGenMain(compiler);
         classes.codeGenListDeclClass(compiler);
         this.codeGenInit(compiler);
@@ -69,13 +69,16 @@ public class Program extends AbstractProgram {
         compiler.addComment("Main errors");
         LabelGenerator gen = compiler.getLabelGenerator();
         if (gen.getOverflowError()) {
-            compiler.getLabelGenerator().generateErrorLabel(compiler, gen.getOverFlowLabel(), "Error: Overflow during arithmetic operation");
+            gen.generateErrorLabel(compiler, gen.getOverFlowLabel(), "Error: Overflow during arithmetic operation");
         }
         if (gen.getStackOverflowError()) {
-            compiler.getLabelGenerator().generateErrorLabel(compiler, gen.getStackOverFlowLabel(), "Error: Stack Overflow");
+            gen.generateErrorLabel(compiler, gen.getStackOverFlowLabel(), "Error: Stack Overflow");
         }
         if (gen.getIoError()) {
-            compiler.getLabelGenerator().generateErrorLabel(compiler, gen.getIoLabel(), "Error: Input/Output error");
+            gen.generateErrorLabel(compiler, gen.getIoLabel(), "Error: Input/Output error");
+        }
+        if (gen.getDereferenceError()) {
+            gen.generateErrorLabel(compiler, gen.getDereferenceLabel(), "Error: null dereference");
         }
     }
 

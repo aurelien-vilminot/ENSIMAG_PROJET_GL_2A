@@ -23,7 +23,7 @@ public abstract class AbstractReadExpr extends AbstractExpr {
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
-        Validate.isTrue((n <= compiler.getCompilerOptions().getRegisterNumber() - 1));
+        compiler.setAndVerifyCurrentRegister(n);
 
         if (this.getType().isInt()) {
             // R1 <- readInt()

@@ -15,6 +15,9 @@ public class LabelGenerator {
     private boolean overflowError = false;
     private boolean stackOverflowError = false;
     private boolean ioError = false;
+    private boolean dereferenceError = false;
+    private boolean returnError = false;
+    private Label endLabel;
 
     public Label getOverFlowLabel() {
         setOverflowError();
@@ -50,6 +53,40 @@ public class LabelGenerator {
     }
     public void setIoError() {
         this.ioError = true;
+    }
+
+    public Label getDereferenceLabel() {
+        setDereferenceError();
+        return new Label("null_dereference");
+    }
+
+    public void setDereferenceError() {
+        this.dereferenceError = true;
+    }
+
+    public boolean getDereferenceError() {
+        return dereferenceError;
+    }
+
+    public void setReturnError() {
+        this.returnError = true;
+    }
+
+    public boolean getReturnError() {
+        return returnError;
+    }
+
+    public Label getReturnLabel() {
+        setReturnError();
+        return new Label("no_return");
+    }
+
+    public void setEndLabel(Label endLabel) {
+        this.endLabel = endLabel;
+    }
+
+    public Label getEndLabel() {
+        return endLabel;
     }
 
     /**

@@ -38,7 +38,7 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
         if (isEqOrNeq && !(isIntOrFloat || isClassOrNull || isBoolean)) {
             // For "==" and "!=" comparisons, the operand types must be int, float, class, null or boolean
             throw new ContextualError(
-                    "Equals or not equals comparison is only with int, float, class, null or boolean types",
+                    "Equals or not equals comparison is only allowed with int, float, class, null or boolean types",
                     this.getLocation()
             );
         } else if (!isEqOrNeq && !isIntOrFloat) {
@@ -95,8 +95,7 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
 
     @Override
     protected void codeGenExprBool(DecacCompiler compiler, boolean bool, Label branch, int n) {
-        int maxRegister = compiler.getCompilerOptions().getRegisterNumber() - 1;
-        Validate.isTrue((n <= maxRegister));
+        compiler.setAndVerifyCurrentRegister(n);
 
         // Evaluate left operand
         this.getLeftOperand().codeGenExpr(compiler, n);

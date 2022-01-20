@@ -23,6 +23,7 @@ public class DeclVar extends AbstractDeclVar {
     final private AbstractIdentifier type;
     final private AbstractIdentifier varName;
     final private AbstractInitialization initialization;
+    private ClassDefinition currentClass;
 
     public DeclVar(AbstractIdentifier type, AbstractIdentifier varName, AbstractInitialization initialization) {
         Validate.notNull(type);
@@ -41,6 +42,8 @@ public class DeclVar extends AbstractDeclVar {
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
 //        Validate.notNull(localEnv, "Env_exp object should not be null");
 
+        this.currentClass = currentClass;
+
         // Check type definition
         Type currentType = this.type.verifyType(compiler);
         if (currentType.isVoid()) {
@@ -52,7 +55,7 @@ public class DeclVar extends AbstractDeclVar {
         try {
             localEnv.declare(this.varName.getName(), new VariableDefinition(currentType, this.getLocation()));
         } catch (EnvironmentExp.DoubleDefException doubleDefException) {
-            throw new ContextualError("Identifier already declared", this.getLocation());
+            throw new ContextualError("Variable name '"+ this.varName.getName() + "' already declared", this.getLocation());
         }
 
         // Check var definition
@@ -61,11 +64,19 @@ public class DeclVar extends AbstractDeclVar {
     }
 
     @Override
-    protected void codeGenDeclVar(DecacCompiler compiler) {
-        // Set operand global address
-        int addr = compiler.incGlobalStackSize(1);
-        DAddr dAddr = new RegisterOffset(addr, Register.GB);
-        compiler.getEnvironmentExp().get(varName.getName()).setOperand(dAddr);
+    protected void codeGenDeclVar(DecacCompiler compiler, EnvironmentExp localEnv) {
+        DAddr dAddr;
+        if (currentClass == null) {
+            // Set operand global address
+            int addr = compiler.incGlobalStackSize(1);
+            dAddr = new RegisterOffset(addr, Register.GB);
+        } else {
+            // Set operand local address
+            int addr = compiler.incLocalStackSize(1);
+            dAddr = new RegisterOffset(addr, Register.LB);
+        }
+
+        localEnv.get(varName.getName()).setOperand(dAddr);
         // Generate code for initialization
         initialization.codeGenInit(compiler, dAddr);
     }

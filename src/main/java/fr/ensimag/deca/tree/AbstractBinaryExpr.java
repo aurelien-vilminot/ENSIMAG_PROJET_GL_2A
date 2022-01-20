@@ -67,7 +67,7 @@ public abstract class AbstractBinaryExpr extends AbstractExpr {
      * @param n
      */
     protected void codeGenExpr(DecacCompiler compiler, boolean bool, Label branch, int n) {
-        Validate.isTrue((n <= compiler.getCompilerOptions().getRegisterNumber() - 1));
+        compiler.setAndVerifyCurrentRegister(n);
 
         Label continueBranch = new Label(compiler.getLabelGenerator().generateLabel("continue"));
         // Generate code that sends to "branch" if "this" is evaluated to "bool"
@@ -105,15 +105,13 @@ public abstract class AbstractBinaryExpr extends AbstractExpr {
      * @return register number where right operand is loaded
      */
     protected int codeGenExprRightOperand(DecacCompiler compiler, int n) {
-        int maxRegister = compiler.getCompilerOptions().getRegisterNumber() - 1;
-        Validate.isTrue((n <= maxRegister));
+        int maxRegister = compiler.setAndVerifyCurrentRegister(n);
 
         if (n < maxRegister) {
             this.getRightOperand().codeGenExpr(compiler, n+1);
             return n+1;
         } else {
             compiler.incTempStackCurrent(1);
-            compiler.setTempStackMax();
             compiler.addInstruction(new PUSH(Register.getR(n)), "save");
             this.getRightOperand().codeGenExpr(compiler, n);
             compiler.addInstruction(new LOAD(Register.getR(n), Register.R0));

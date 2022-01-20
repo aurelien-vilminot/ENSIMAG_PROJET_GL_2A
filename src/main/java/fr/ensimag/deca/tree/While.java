@@ -44,13 +44,16 @@ public class While extends AbstractInst {
         Label begin = new Label(compiler.getLabelGenerator().generateLabel("begin"));
         Label cond = new Label(compiler.getLabelGenerator().generateLabel("cond"));
 
+        // Jump to cond, which enters the loop if true
         compiler.addInstruction(new BRA(cond));
-
+        // Loop body
         compiler.addLabel(begin); // loop body
         body.codeGenListInst(compiler);
-
-        compiler.addLabel(cond); // test condition
+        // Test condition
+        compiler.addLabel(cond);
         condition.codeGenExprBool(compiler, true, begin, 2);
+        // Registers are no longer used
+        compiler.setAndVerifyCurrentRegister(0);
     }
 
     @Override

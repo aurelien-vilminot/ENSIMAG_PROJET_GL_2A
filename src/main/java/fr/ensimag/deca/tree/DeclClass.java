@@ -3,11 +3,8 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.DAddr;
-import fr.ensimag.ima.pseudocode.Label;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.RegisterOffset;
-import fr.ensimag.ima.pseudocode.instructions.RTS;
+import fr.ensimag.ima.pseudocode.*;
+import fr.ensimag.ima.pseudocode.instructions.*;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -49,7 +46,10 @@ public class DeclClass extends AbstractDeclClass {
         // Check type of super-class identifier
         TypeDefinition superClassType = compiler.getEnvironmentTypes().get(this.superClass.getName());
         if (superClassType == null || !superClassType.isClass()) {
-            throw new ContextualError("Expected class identifier", this.getLocation());
+            throw new ContextualError(
+                    "The super-class name is a not a class : " + this.superClass.getName()
+                    , this.getLocation()
+            );
         }
 
         // Add new class if not already existed
@@ -60,14 +60,14 @@ public class DeclClass extends AbstractDeclClass {
                             new ClassType(
                                     this.name.getName(),
                                     this.getLocation(),
-                                    this.superClass.getClassDefinition()
+                                    (ClassDefinition) superClassType
                             ),
                             this.getLocation(),
-                            this.superClass.getClassDefinition()
+                            (ClassDefinition) superClassType
                     )
             );
         } catch (EnvironmentTypes.DoubleDefException e) {
-            throw new ContextualError("Already class identifier declared", this.getLocation());
+            throw new ContextualError("The class name '"+ this.name.getName() + "' is already declared", this.getLocation());
         }
 
         // Tree decoration for classes identifiers
@@ -83,14 +83,12 @@ public class DeclClass extends AbstractDeclClass {
         LOG.debug("verify ClassMembers: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
 
-        EnvironmentExp environmentExpSuperClass = ((ClassDefinition) compiler.getEnvironmentTypes().get(this.superClass.getName())).getMembers();
-        EnvironmentExp environmentExpClass = ((ClassDefinition) compiler.getEnvironmentTypes().get(this.name.getName())).getMembers();
+        ClassDefinition currentClassDefinition = (ClassDefinition) compiler.getEnvironmentTypes().get(this.name.getName());
+        ClassDefinition superClassDefinition = (ClassDefinition) compiler.getEnvironmentTypes().get(this.superClass.getName());
 
-        try {
-            environmentExpClass.addSuperExpDefinition(environmentExpSuperClass);
-        } catch (EnvironmentExp.DoubleDefException e) {
-            // TODO
-        }
+        // Increment fields and methods number for current class depending on super-class members
+        currentClassDefinition.setNumberOfFields(superClassDefinition.getNumberOfFields());
+        currentClassDefinition.setNumberOfMethods(superClassDefinition.getNumberOfMethods());
 
         this.listDeclField.verifyListDeclField(compiler, this.superClass.getName(), this.name.getName());
         this.listDeclMethod.verifyListDeclMethod(compiler, this.superClass.getName(), this.name.getName());
@@ -106,7 +104,7 @@ public class DeclClass extends AbstractDeclClass {
         this.listDeclField.verifyListInitField(compiler, this.name.getName());
 
         // Methods body
-        // TODO
+        this.listDeclMethod.verifyListMethodBody(compiler, this.superClass.getName(), this.name.getName());
 
         LOG.debug("verify ClassBody: end");
     }
@@ -117,41 +115,75 @@ public class DeclClass extends AbstractDeclClass {
         name.decompile(s);
         s.print(" extends ");
         superClass.decompile(s);
-        s.print(" {");
+        s.println(" {");
         s.indent();
         listDeclField.decompile(s);
         listDeclMethod.decompile(s);
         s.unindent();
-        s.print("}");
+        s.println("}");
+    }
+
+    @Override
+    protected void codeGenMethodTable(DecacCompiler compiler) {
+        // Allocate pointer to superclass
+        int index = compiler.incGlobalStackSize(1);
+        DAddr dAddr = new RegisterOffset(index, Register.GB);
+        name.getClassDefinition().setOperand(dAddr);
+        DAddr superClassDaddr = superClass.getClassDefinition().getOperand();
+        // Load @superClass inside dAddr
+        compiler.addInstruction(new LEA(superClassDaddr, Register.R0));
+        compiler.addInstruction(new STORE(Register.R0, dAddr));
+        // Generate virtual methods table
+        listDeclMethod.codeGenMethodTable(compiler, name, superClass);
     }
 
     @Override
     protected void codeGenDeclClass(DecacCompiler compiler) {
-        // TODO: move to pass 1
-        // Allocate pointer to superclass + @Objet.equals
-        int addr = compiler.incGlobalStackSize(1);
-        // TODO: @Object.equals
-        DAddr dAddr = new RegisterOffset(addr, Register.GB);
-        name.getClassDefinition().setOperand(dAddr);
-        compiler.incGlobalStackSize(name.getClassDefinition().getNumberOfMethods() + 1);
-        // TODO: @superclass
-
-        // CodeGen
-        // init.name
         compiler.addLabel(new Label("init." + name.getName().toString()));
-        // TODO: TSTO
-        // TODO: BOV stack_overflow
-        // TODO: ADDSP
-        // TODO: save registers used over R2
-        // initialisation des attributs (à 0 si non précisé)
-        listDeclField.codeGenListDeclField(compiler);
-        // TODO: restore registers used over R2
-        // return
-        compiler.addInstruction(new RTS());
-        // table des méthodes (code.name.methodname)
-        // listDeclMethod.codeGenListDeclMethod(compiler);
-    }
 
+        // Create a new IMAProgram to be able to add instructions at the beginning of the block
+        IMAProgram backupProgram = compiler.getProgram();
+        IMAProgram initClassProgram = new IMAProgram();
+        compiler.setProgram(initClassProgram);
+
+        // Call parent init
+        if (superClass.getClassDefinition().getNumberOfFields() != 0 ) {
+            // Initialize fields address, and store default value if superClass has fields
+            // TODO: not optimized ?
+            listDeclField.codeGenListDeclFieldDefault(compiler);
+            compiler.addInstruction(new PUSH(Register.R1));
+            compiler.addInstruction(new BSR(new Label("init."+superClass.getName().getName())));
+            // TODO: verify why SUBSP #1
+            compiler.addInstruction(new SUBSP(new ImmediateInteger(1)));
+        }
+
+        // Initialize fields
+        compiler.setMaxUsedRegister(0);
+        compiler.setTempStackMax(0);
+        listDeclField.codeGenListDeclField(compiler);
+
+        // Restore registers
+        compiler.restoreRegisters();
+
+        // Return
+        compiler.addInstruction(new RTS());
+
+        // Instructions added at the beginning of the block
+        compiler.saveRegisters();
+        int d = compiler.getNumberOfRegistersUsed() + compiler.getTempStackMax();
+        if (d > 0) {
+            compiler.addStackOverflowError(true);
+            compiler.addFirst(new Line(new TSTO(new ImmediateInteger(d))));
+        }
+        // Restore initial IMAProgram
+        backupProgram.append(initClassProgram);
+        compiler.setProgram(backupProgram);
+        compiler.setMaxUsedRegister(0);
+        compiler.setTempStackMax(0);
+
+        // Generate method instruction (code.name.methodname)
+        listDeclMethod.codeGenListDeclMethod(compiler);
+    }
 
     @Override
     protected void prettyPrintChildren(PrintStream s, String prefix) {

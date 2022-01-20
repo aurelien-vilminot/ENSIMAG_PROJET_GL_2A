@@ -93,6 +93,7 @@ public class EnvironmentTypes {
         if (t2.isClass()) {
             // For a class t2, null is always a subclass of t2
             if (t1.isNull()) return true;
+            if (!t1.isClass()) return false;
 
             ClassType t1ClassType = (ClassType) t1;
             ClassType t2ClassType = (ClassType) t2;
@@ -111,7 +112,7 @@ public class EnvironmentTypes {
     public boolean assignCompatible(Type t1, Type t2) {
         Validate.notNull(t1, "Type t1 should not be null");
         Validate.notNull(t2, "Type t2 should not be null");
-        return (t1.isFloat() && t2.isInt()) || subTypes(t1, t2);
+        return (t1.isFloat() && t2.isInt()) || subTypes(t2, t1);
     }
 
     /**
