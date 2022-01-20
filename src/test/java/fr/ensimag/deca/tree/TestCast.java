@@ -53,6 +53,6 @@ public class TestCast {
         exception = assertThrows(ContextualError.class, () -> {
            finalCast.verifyExpr(compiler, null, null);
         });
-        assertEquals(exception.getMessage(), "The origin type cannot be cast into the destination type");
+        assertEquals(exception.getMessage(), "The origin type (+ int) cannot be cast into the destination type (boolean)");
     }
 }

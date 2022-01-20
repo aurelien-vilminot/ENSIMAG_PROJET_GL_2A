@@ -56,10 +56,13 @@ public class TestDeclClass {
         Identifier intIdentifier= new Identifier(intSymbol);
         DeclClass declClass1 = new DeclClass(identifierClass, intIdentifier, listDeclField, listDeclMethod);
         exception = assertThrows(ContextualError.class, () -> declClass1.verifyClass(compiler));
-        assertEquals("Expected class identifier", exception.getMessage());
+        assertEquals("The super-class name is a not a class : " + intSymbol, exception.getMessage());
 
         // Check already declared class identifier
         exception = assertThrows(ContextualError.class, () -> declClass.verifyClass(compiler));
-        assertEquals("Already class identifier declared", exception.getMessage());
+        assertEquals(
+                "The class name '"+ identifierClass.getName() + "' is already declared",
+                exception.getMessage()
+        );
     }
 }

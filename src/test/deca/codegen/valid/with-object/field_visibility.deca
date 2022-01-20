@@ -1,0 +1,22 @@
+class Animal {
+    int weight = 0;
+}
+
+class Horse extends Animal {
+    int f(){
+        return this.weight;
+    }
+
+    int g(){
+        this.weight = 25;
+        return this.weight;
+    }
+}
+
+{
+    Animal Mike = new Animal();
+    Horse Lucie = new Horse();
+    println(Mike.weight);
+    println(Lucie.f());
+    println(Lucie.g());
+}

@@ -1,0 +1,25 @@
+class Animal {
+    int weight = 0 % 50 + 40;
+    float size;
+    boolean isAlive = true;
+
+
+    void Death(int x){
+        isAlive = false;
+    }
+}
+
+{
+    Animal Mike = new Animal();
+    println(Mike.weight);
+    println(Mike.size);
+
+    if(Mike.isAlive){
+        println("Coin Coin");
+    }
+
+    Mike.Death(Mike.weight);
+    if(!Mike.isAlive){
+        println("...");
+    }
+}
