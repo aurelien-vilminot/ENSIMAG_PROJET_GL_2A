@@ -1,5 +1,4 @@
 {
-    int x;
     float[] a = new float[5];
     a[x];
 }

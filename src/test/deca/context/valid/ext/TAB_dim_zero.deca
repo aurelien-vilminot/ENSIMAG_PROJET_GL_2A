@@ -10,7 +10,7 @@
     float[] d = new float [0];
 
     int[] a = new int [ 0];;
-    int[][] b = new int [8 ][9];;;
+    int[][] b = new int [8 ][9];
     float[][] c = new float [9 ][1];;;;;;
     float[] d = new float [ 8];
 }
