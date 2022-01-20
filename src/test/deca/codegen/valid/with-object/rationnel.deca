@@ -35,11 +35,13 @@ class Rationnel{
 
 {
     Rationnel r1 = new Rationnel();
+    Rationnel r2 = new Rationnel();
+
     r1.setNum(5);
     r1.setDen(7);
     r1.afficheRationnel();
 
-    Rationnel r2 = new Rationnel();
+
     r2.setNum(8);
     r2.setDen(3);
     r2.afficheRationnel();

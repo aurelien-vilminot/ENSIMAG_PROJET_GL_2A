@@ -15,12 +15,13 @@ class Horse extends Animal {
 
 {
     Animal a = new Animal();
+    Horse c = new Animal();
+    Horse b = new Horse();
+
     a.scream();
     a.eat();
 
-    Animal c = new Horse();
-    c.scream()
+    c.scream();
 
-    Horse b = new Horse();
     b.scream();
 }
