@@ -4,13 +4,13 @@
     float[][] c = new float [0][0];
     float[] d = new float [0];
 
-    int[] a = new int [0];
-    int[][] b = new int [0][9];
-    float[][] c = new float [9][0];
-    float[] d = new float [0];
+    int[] aa = new int [0];
+    int[][] bb = new int [0][9];
+    float[][] cc = new float [9][0];
+    float[] dd = new float [0];
 
-    int[] a = new int [ 0];;
-    int[][] b = new int [8 ][9];
-    float[][] c = new float [9 ][1];;;;;;
-    float[] d = new float [ 8];
+    int[] aaa = new int [ 0];
+    int[][] bbb = new int [8 ][9];
+    float[][] ccc = new float [9 ][1];
+    float[] ddd = new float [ 8];
 }

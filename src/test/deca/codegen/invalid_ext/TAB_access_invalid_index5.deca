@@ -1,0 +1,4 @@
+{
+    float[] f = new float[8];
+    f[8];
+}

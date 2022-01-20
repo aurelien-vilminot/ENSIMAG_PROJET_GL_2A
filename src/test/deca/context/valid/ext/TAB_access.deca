@@ -3,8 +3,8 @@
    float[][] b = new float [2][165];
    int[] c = new int [2];
    float[] d = new float [2];
-   (a[0])[2];
    int x = a[2][4];
+   (a[0])[2];
    b[0][0];
    c[0];
    d[5];

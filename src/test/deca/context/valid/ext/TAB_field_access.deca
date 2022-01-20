@@ -17,9 +17,8 @@ class B extends A{
     float[][] f = a.method2();
     float[] ff = a.method2()[0];
     float fff = a.method2()[0][567];
-    a.tab4[0];
     int ii = a.tab4[5][6];
     int i = (new int [5])[5];
-
     float[] ffff = (new B()).method2()[8];
+    a.tab4[0];
 }

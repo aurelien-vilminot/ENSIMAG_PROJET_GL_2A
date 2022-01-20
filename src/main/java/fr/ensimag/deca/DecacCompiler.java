@@ -224,7 +224,7 @@ public class DecacCompiler implements Runnable {
             this.environmentTypes.declare(vectorFloatSymbol, new TypeDefinition(new VectorFloatType(vectorFloatSymbol), Location.BUILTIN));
             this.environmentTypes.declare(matrixFloatSymbol, new TypeDefinition(new MatrixFloatType(matrixFloatSymbol), Location.BUILTIN));
             this.environmentTypes.declare(vectorIntSymbol, new TypeDefinition(new VectorIntType(vectorIntSymbol), Location.BUILTIN));
-            this.environmentTypes.declare(matrixIntSymbol, new TypeDefinition(new MatrixFloatType(matrixIntSymbol), Location.BUILTIN));
+            this.environmentTypes.declare(matrixIntSymbol, new TypeDefinition(new MatrixIntType(matrixIntSymbol), Location.BUILTIN));
 
             this.environmentTypes.declare(objectSymbol, new ClassDefinition(
                     new ClassType(objectSymbol, Location.BUILTIN, null),
