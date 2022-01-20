@@ -67,7 +67,8 @@ public class New extends AbstractExpr {
         // save Rn at the top of the stack
         compiler.addInstruction(new PUSH(Register.getR(n)));
         // initialize object
-        compiler.addInstruction(new BSR(new Label("init." + ident.getName())));
+        Label classLabel = new Label(compiler.getLabelGenerator().getLabel(ident.getName().toString()));
+        compiler.addInstruction(new BSR(new Label("init." + classLabel)));
         // remove Rn from stack
         compiler.addInstruction(new POP(Register.getR(n)));
     }

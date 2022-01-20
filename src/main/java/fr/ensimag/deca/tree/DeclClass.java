@@ -129,6 +129,7 @@ public class DeclClass extends AbstractDeclClass {
         int index = compiler.incGlobalStackSize(1);
         DAddr dAddr = new RegisterOffset(index, Register.GB);
         name.getClassDefinition().setOperand(dAddr);
+        compiler.getLabelGenerator().generateLabel(name.getName().toString());
         DAddr superClassDaddr = superClass.getClassDefinition().getOperand();
         // Load @superClass inside dAddr
         compiler.addInstruction(new LEA(superClassDaddr, Register.R0));
@@ -139,7 +140,8 @@ public class DeclClass extends AbstractDeclClass {
 
     @Override
     protected void codeGenDeclClass(DecacCompiler compiler) {
-        compiler.addLabel(new Label("init." + name.getName().toString()));
+        Label classLabel = new Label(compiler.getLabelGenerator().getLabel(name.getName().toString()));
+        compiler.addLabel(new Label("init." + classLabel));
 
         // Create a new IMAProgram to be able to add instructions at the beginning of the block
         IMAProgram backupProgram = compiler.getProgram();
@@ -152,7 +154,8 @@ public class DeclClass extends AbstractDeclClass {
             // TODO: not optimized ?
             listDeclField.codeGenListDeclFieldDefault(compiler);
             compiler.addInstruction(new PUSH(Register.R1));
-            compiler.addInstruction(new BSR(new Label("init."+superClass.getName().getName())));
+            Label superClassLabel = new Label(compiler.getLabelGenerator().getLabel(superClass.getName().getName()));
+            compiler.addInstruction(new BSR(new Label("init."+superClassLabel)));
             // TODO: verify why SUBSP #1
             compiler.addInstruction(new SUBSP(new ImmediateInteger(1)));
         }
