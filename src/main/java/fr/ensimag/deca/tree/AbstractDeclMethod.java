@@ -27,6 +27,7 @@ public abstract class AbstractDeclMethod extends Tree {
 
     /**
      * Generate assembly code to build the virtual methods table (pass 1 of [Gencode])
+     * Construct the labelArrayList for the current class
      *
      * @param compiler
      */

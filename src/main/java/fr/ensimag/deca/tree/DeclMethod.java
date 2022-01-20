@@ -1,6 +1,7 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.deca.codegen.LabelGenerator;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable;
@@ -112,27 +113,42 @@ public class DeclMethod extends AbstractDeclMethod {
 
     @Override
     protected void codeGenDeclMethod(DecacCompiler compiler) {
+        LabelGenerator gen = compiler.getLabelGenerator();
+
         // label code.nameClass.nameMethod
-        compiler.addLabel(methodName.getMethodDefinition().getLabel());
+        compiler.addLabel(new Label("code." + methodName.getMethodDefinition().getLabel()));
         // TODO: TSTO / BOV stack_overflow
         compiler.saveRegisters();
         listDeclParam.codeGenDeclMethod(compiler, localEnv);
-        // code methode (valeur de retour dans R0)
+        // method code
+        Label finLabel = new Label("fin." + methodName.getMethodDefinition().getLabel());
+        gen.setEndLabel(finLabel);
         methodBody.codeGenDeclMethod(compiler, localEnv);
-        Label fin = new Label("fin." + methodName.getMethodDefinition().getLabel().toString().substring(4));
-        compiler.addLabel(fin);
+        // return an error
+        if (!returnType.getType().isVoid()) {
+            if (!compiler.getCompilerOptions().getNoCheck()) {
+                gen.generateErrorLabel(compiler, gen.getReturnLabel(), "Error: end of method "
+                        + methodName.getMethodDefinition().getLabel() + " without return instruction");
+            }
+        }
+        compiler.addLabel(finLabel);
         compiler.restoreRegisters();
         compiler.addInstruction(new RTS());
     }
 
     @Override
     protected void codeGenMethodTable(DecacCompiler compiler, AbstractIdentifier className) {
-        Label methodLabel = new Label("code." + className.getName().toString() + "." + methodName.getName().toString());
+        Label methodLabel = new Label(className.getName().toString() + "." + methodName.getName().toString());
         methodName.getMethodDefinition().setLabel(methodLabel);
-        className.getClassDefinition().getLabelArrayList().add(methodLabel);
-        int addr = compiler.incGlobalStackSize(1);
-        compiler.addInstruction(new LOAD(new LabelOperand(methodLabel), Register.R0));
-        compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(addr, Register.GB)));
+        Label codeLabel = new Label("code." + methodLabel);
+        int index = methodName.getMethodDefinition().getIndex() - 1;
+        if (index < className.getClassDefinition().getLabelArrayList().size()) {
+            // Replace existing parent method in labelArrayList
+            className.getClassDefinition().getLabelArrayList().set(index, codeLabel);
+        } else {
+            // Add method to labelArrayList
+            className.getClassDefinition().getLabelArrayList().add(codeLabel);
+        }
     }
 
     @Override

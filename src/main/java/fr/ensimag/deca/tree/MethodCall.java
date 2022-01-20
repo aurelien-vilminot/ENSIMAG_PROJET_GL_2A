@@ -46,6 +46,10 @@ public class MethodCall extends AbstractExpr {
         EnvironmentExp environmentExp2 = ((ClassDefinition) compiler.getEnvironmentTypes().get(typeClass.getName())).getMembers();
         MethodDefinition methodDefinition = this.meth.verifyMethod(compiler, environmentExp2);
 
+        if (this.param.getList().size() != methodDefinition.getSignature().size()) {
+            throw new ContextualError("Number of parameters doesn't match method signature", this.getLocation());
+        }
+
         int i = 0;
         for (AbstractExpr param: this.param.getList()) {
             Type expectedType = methodDefinition.getSignature().paramNumber(i++);
@@ -90,6 +94,12 @@ public class MethodCall extends AbstractExpr {
         int methodIndex = meth.getMethodDefinition().getIndex();
         compiler.addInstruction(new BSR(new RegisterOffset(methodIndex, Register.getR(2))));
         compiler.addInstruction(new SUBSP(param.size() + 1));
+    }
+
+    @Override
+    protected void codeGenExpr(DecacCompiler compiler, int n) {
+        codeGenInst(compiler);
+        compiler.addInstruction(new LOAD(Register.R0, Register.getR(n)));
     }
 
     @Override
