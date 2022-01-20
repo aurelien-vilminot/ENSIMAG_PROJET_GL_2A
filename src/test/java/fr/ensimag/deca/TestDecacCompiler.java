@@ -26,9 +26,22 @@ public class TestDecacCompiler {
         assertEquals(10, this.decacCompiler.incTempStackCurrent(10));
 
         // Stack max usage
-        assertEquals(0, this.decacCompiler.getTempStackMax());
-        this.decacCompiler.setTempStackMax();
         assertEquals(10, this.decacCompiler.getTempStackMax());
+        this.decacCompiler.setTempStackMax(0);
+        assertEquals(0, this.decacCompiler.getTempStackMax());
+    }
+
+    @Test
+    public void testUsedRegsiter() {
+        assertEquals(0, this.decacCompiler.getCurrentRegister());
+        assertEquals(0, this.decacCompiler.getNumberOfRegistersUsed());
+
+        this.decacCompiler.setMaxUsedRegister(5);
+        assertEquals(4, this.decacCompiler.getNumberOfRegistersUsed());
+
+        assertEquals(15, this.decacCompiler.setAndVerifyCurrentRegister(4));
+        assertEquals(4, this.decacCompiler.getCurrentRegister());
+        assertEquals(4, this.decacCompiler.getNumberOfRegistersUsed());
     }
 
 }
