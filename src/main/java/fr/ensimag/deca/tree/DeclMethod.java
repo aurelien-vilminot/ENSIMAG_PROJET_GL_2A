@@ -131,8 +131,10 @@ public class DeclMethod extends AbstractDeclMethod {
         // Generate an error if method has a return type and end of method is reached without a return instruction
         if (!returnType.getType().isVoid()) {
             if (!compiler.getCompilerOptions().getNoCheck()) {
-                gen.generateErrorLabel(compiler, gen.getReturnLabel(), "Error: end of method "
-                        + methodName.getMethodDefinition().getLabel() + " without return instruction");
+                compiler.addInstruction(new WSTR("Error: end of method "
+                        + methodName.getMethodDefinition().getLabel() + " without return instruction"));
+                compiler.addInstruction(new WNL());
+                compiler.addInstruction(new ERROR());
             }
         }
 
