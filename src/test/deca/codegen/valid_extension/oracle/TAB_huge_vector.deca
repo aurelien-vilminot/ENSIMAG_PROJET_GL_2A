@@ -1,0 +1,4 @@
+{
+    float[] vec = float[600];
+    int[] vec2 = int[80000];
+}

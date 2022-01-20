@@ -1,6 +1,0 @@
-{
-    new float[454][42];
-    new float[4+54];
-    new int[42];
-    new int[454][42];
-}

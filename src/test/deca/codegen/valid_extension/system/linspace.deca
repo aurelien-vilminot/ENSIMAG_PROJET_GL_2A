@@ -1,0 +1,25 @@
+class Vector{
+    float[] linspace(float min, float max, float step){
+        int len = (int) ((max - min) / step), i = 0;
+        float[] vec = new float[len];
+        while(i < len){
+            vec[i] = min + step * i;
+            i = i + 1;
+        }
+        return vec;
+    }
+}
+
+{
+    Vector x = new Vector();
+    float[] vec;
+    vec = x.linspace(0, 1, 0.1);
+    float[] vec2 = x.linspace(0, 1, 0.1);
+    int i = 0;
+    while(i < vec.length){
+        if(vec[i] == vec2[i]{
+            println(vec[i]);
+        }
+    }
+}
+
