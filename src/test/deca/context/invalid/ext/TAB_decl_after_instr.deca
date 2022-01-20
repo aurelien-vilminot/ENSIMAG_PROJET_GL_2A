@@ -1,0 +1,4 @@
+{
+    float[][] c = new float [9 ][1];;
+    float[] d = new float [ 8];
+}
