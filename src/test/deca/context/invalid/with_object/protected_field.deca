@@ -1,0 +1,10 @@
+class A {
+    protected int x;
+}
+
+class X {
+    void m(){
+        A a = new A();
+        println(a.x) ; // Erreur contextuelle : x est protege
+    }
+}

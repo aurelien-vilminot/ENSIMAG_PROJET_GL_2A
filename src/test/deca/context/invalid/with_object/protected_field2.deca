@@ -1,0 +1,20 @@
+// poly page 92 :
+
+class A {
+    protected int x;
+}
+
+class B extends A {
+    int getX(A a) {
+        return a.x;// Erreur contextuelle : le type de 'a' (A) n'est pas
+                   // un sous-type de B.
+    }
+}
+
+class X {
+    void m() {
+        A a = new A();
+        B b = new B();
+        println(b.getX(a)); // Ok du point de vue de la condition (2)
+    }
+}
