@@ -76,7 +76,7 @@ public class Cast extends AbstractExpr {
             // Rn <- ConversionEntier(V[Rn])
             compiler.addInstruction(new INT(Register.getR(n), Register.getR(n)));
         } else {
-            throw new UnsupportedOperationException("Class not yet implemented, or cast conversion is not allowed");
+            // Nothing to do
         }
     }
 
