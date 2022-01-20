@@ -1,0 +1,33 @@
+class Animal {
+    int weight;
+    int size = 200;
+    boolean isAlive = true;
+
+    void scream(){
+        println("hahaha");
+    }
+}
+
+class Horse extends Animal {
+    void eat(){
+        println("hum");
+    }
+}
+
+{
+    Animal Mike = new Animal();
+    Horse Lucie = new Horse();
+
+    if(Mike instanceof Animal){
+        println("Yes");
+    }
+    if(Mike instanceof Horse){
+        println("No");
+    }
+    if(Lucie instanceof Horse){
+        println("Yes");
+    }
+    if(Lucie instanceof Animal){
+        println("Yes");
+    }
+}

@@ -3,6 +3,9 @@ class Car {
         if(b){
             println("vroum");
         }
+        if(!b){
+            println("VROUM");
+        }
     }
 
     void accident(){
