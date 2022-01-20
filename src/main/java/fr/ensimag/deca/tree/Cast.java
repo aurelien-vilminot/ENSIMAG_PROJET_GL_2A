@@ -39,7 +39,10 @@ public class Cast extends AbstractExpr {
 
         boolean isCastCompatible = compiler.getEnvironmentTypes().castCompatible(exprType, castType);
         if (!isCastCompatible) {
-            throw new ContextualError("The origin type cannot be cast into the destination type", this.getLocation());
+            throw new ContextualError(
+                    "The origin type (" + exprType + ") cannot be cast into the destination type (" + castType +")"
+                    , this.getLocation()
+            );
         }
 
         this.setType(castType);

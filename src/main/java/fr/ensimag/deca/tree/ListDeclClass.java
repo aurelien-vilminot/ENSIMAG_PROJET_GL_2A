@@ -6,9 +6,7 @@ import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.ima.pseudocode.*;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
-import fr.ensimag.ima.pseudocode.instructions.RTS;
-import fr.ensimag.ima.pseudocode.instructions.STORE;
+import fr.ensimag.ima.pseudocode.instructions.*;
 import org.apache.log4j.Logger;
 
 /**
@@ -95,18 +93,40 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
         if (!getList().isEmpty()) {
             compiler.addComment("Methods table");
             // Generate code.Object.equals
-            Label equalsLabel = new Label("code.Object.equals");
-            Label endEqualsLabel = new Label("fin.Object.equals");
-            compiler.addLabel(equalsLabel);
-            // TODO: object.equals method
-            compiler.addInstruction(new RTS());
-            compiler.addLabel(endEqualsLabel);
-            compiler.addInstruction(new RTS());
+            codeGenObjectEquals(compiler);
 
         }
         for (AbstractDeclClass c : getList()) {
             c.codeGenDeclClass(compiler);
         }
+    }
+
+    protected void codeGenObjectEquals(DecacCompiler compiler) {
+        Label equalsLabel = new Label("code.Object.equals");
+        Label endEqualsLabel = new Label("fin.Object.equals");
+        compiler.addLabel(equalsLabel);
+
+        Label trueBranch = new Label(compiler.getLabelGenerator().generateLabel("boolIsTrue"));
+        Label continueBranch = new Label(compiler.getLabelGenerator().generateLabel("continue"));
+
+        // Generate code that sends to "branch" if objects are equal
+        compiler.addInstruction(new LOAD(new RegisterOffset(-3, Register.LB), Register.R0));
+        compiler.addInstruction(new CMP(new RegisterOffset(-4, Register.LB), Register.R0));
+        compiler.addInstruction(new BEQ(trueBranch));
+
+        // If "this" is not evaluated to "bool", load !bool and jump to continue
+        compiler.addInstruction(new LOAD(new ImmediateInteger(0), Register.getR(0)));
+        compiler.addInstruction(new BRA(continueBranch));
+        // If "this" is evaluated to "bool", load bool
+        compiler.addLabel(trueBranch);
+        compiler.addInstruction(new LOAD(new ImmediateInteger(1), Register.getR(0)));
+        // Generate label continue
+        compiler.addLabel(continueBranch);
+
+        // End method
+        compiler.addInstruction(new RTS());
+        compiler.addLabel(endEqualsLabel);
+        compiler.addInstruction(new RTS());
     }
 
 }

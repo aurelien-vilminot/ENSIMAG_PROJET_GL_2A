@@ -34,7 +34,7 @@ public class New extends AbstractExpr {
 
         Type type = this.ident.verifyType(compiler);
         if (!type.isClass()) {
-            throw new ContextualError("Cannot instantiate a class, the type must a class", this.getLocation());
+            throw new ContextualError("Cannot instantiate a class, the type must be a class", this.getLocation());
         }
 
         LOG.debug("verify New: end");
@@ -50,17 +50,20 @@ public class New extends AbstractExpr {
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
+        int zero = 0;
+        if (n == 0) {
+            zero = 1;
+        }
         compiler.setAndVerifyCurrentRegister(n);
 
         // heap allocation
         int size = ident.getClassDefinition().getNumberOfFields() + 1;
-        // TODO: verify if this works inside a class
         DAddr methodAddr = ((ClassDefinition) (compiler.getEnvironmentTypes().get(ident.getName()))).getOperand();
         compiler.addInstruction(new NEW(size, Register.getR(n)));
         compiler.addOverflowError();
         // store method table adress in Rn
-        compiler.addInstruction(new LEA(methodAddr, Register.R0));
-        compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(0, Register.getR(n))));
+        compiler.addInstruction(new LEA(methodAddr, Register.getR(zero)));
+        compiler.addInstruction(new STORE(Register.getR(zero), new RegisterOffset(0, Register.getR(n))));
         // save Rn at the top of the stack
         compiler.addInstruction(new PUSH(Register.getR(n)));
         // initialize object

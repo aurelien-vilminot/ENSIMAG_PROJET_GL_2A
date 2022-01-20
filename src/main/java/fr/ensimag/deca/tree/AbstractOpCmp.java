@@ -38,7 +38,7 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
         if (isEqOrNeq && !(isIntOrFloat || isClassOrNull || isBoolean)) {
             // For "==" and "!=" comparisons, the operand types must be int, float, class, null or boolean
             throw new ContextualError(
-                    "Equals or not equals comparison is only with int, float, class, null or boolean types",
+                    "Equals or not equals comparison is only allowed with int, float, class, null or boolean types",
                     this.getLocation()
             );
         } else if (!isEqOrNeq && !isIntOrFloat) {

@@ -4,6 +4,7 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.ImmediateInteger;
+import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.*;
@@ -56,6 +57,8 @@ public class MethodCall extends AbstractExpr {
             param.verifyRValue(compiler, localEnv, (ClassDefinition) compiler.getEnvironmentTypes().get(typeClass.getName()), expectedType);
         }
 
+        this.setType(methodDefinition.getType());
+
         LOG.debug("verify MethodCall: end");
         return methodDefinition.getType();
     }
@@ -84,7 +87,7 @@ public class MethodCall extends AbstractExpr {
         int index = -1;
         for (AbstractExpr expr : param.getList()) {
             expr.codeGenExpr(compiler, 2);
-            compiler.addInstruction(new STORE(Register.getR(2), new RegisterOffset(index, Register.SP)));
+            compiler.addInstruction(new STORE(Register.getR(2), new RegisterOffset(index--, Register.SP)));
         }
 
         compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.SP), Register.getR(2)));
@@ -98,8 +101,24 @@ public class MethodCall extends AbstractExpr {
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
+        compiler.setAndVerifyCurrentRegister(n);
+
         codeGenInst(compiler);
         compiler.addInstruction(new LOAD(Register.R0, Register.getR(n)));
+    }
+
+    @Override
+    protected void codeGenExprBool(DecacCompiler compiler, boolean bool, Label branch, int n) {
+        compiler.setAndVerifyCurrentRegister(n);
+
+        // Calculate the selection and load result into Rn
+        codeGenExpr(compiler, n);
+        compiler.addInstruction(new CMP(new ImmediateInteger(0), Register.getR(n)));
+        if (bool) {
+            compiler.addInstruction(new BNE(branch));
+        } else {
+            compiler.addInstruction(new BEQ(branch));
+        }
     }
 
     @Override

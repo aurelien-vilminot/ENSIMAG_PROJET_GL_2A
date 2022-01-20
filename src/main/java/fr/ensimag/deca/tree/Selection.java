@@ -42,6 +42,12 @@ public class Selection extends AbstractLValue {
             return identType;
         } else {
             // Case PROTECTED
+            if (currentClass == null) {
+                // Cannot access to protected field in the main program
+                throw new ContextualError(
+                        "The identifier '" + this.ident.getName() + "' is protected and it is impossible to access it in the main program",
+                        this.getLocation());
+            }
             boolean isSubClass = compiler.getEnvironmentTypes().subTypes(classType, currentClass.getType());
             boolean isSubClassField = compiler.getEnvironmentTypes().subTypes(classType, this.ident.getFieldDefinition().getContainingClass().getType());
 
@@ -52,7 +58,7 @@ public class Selection extends AbstractLValue {
             }
         }
 
-        throw new ContextualError("A class is not a subtype of an other class", this.getLocation());
+        throw new ContextualError("Impossible to select this identifier : " + this.ident.getName(), this.getLocation());
     }
 
     @Override
@@ -73,7 +79,6 @@ public class Selection extends AbstractLValue {
             compiler.addInstruction(new STORE(Register.getR(n), new RegisterOffset(index, Register.getR(n+1))));
         } else {
             compiler.incTempStackCurrent(1);
-            compiler.setTempStackMax();
             compiler.addInstruction(new PUSH(Register.getR(n)), "save");
             // Calculate heap address of the object into Rn
             expr.codeGenExpr(compiler, n);
@@ -93,6 +98,9 @@ public class Selection extends AbstractLValue {
         int index = ident.getFieldDefinition().getIndex();
         // Calculate heap address of the object into Rn
         expr.codeGenExpr(compiler, n);
+        if (expr.getType().isClass()) {
+            compiler.addDereference(n);
+        }
         compiler.addInstruction(new LOAD(new RegisterOffset(index, Register.getR(n)), Register.getR(n)));
     }
 

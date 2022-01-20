@@ -3,9 +3,7 @@ package fr.ensimag.deca.tree;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.DAddr;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.RegisterOffset;
+import fr.ensimag.ima.pseudocode.*;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.STORE;
 import fr.ensimag.deca.tools.SymbolTable;
@@ -43,14 +41,14 @@ public class DeclField extends AbstractDeclField {
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
         Type type = this.type.verifyType(compiler);
         if (type.isVoid()) {
-            throw new ContextualError("Void type cannot be declared as an attribute type", this.getLocation());
+            throw new ContextualError("Void type cannot be declared as a field type", this.getLocation());
         }
         ClassDefinition currentClassDefinition = (ClassDefinition) compiler.getEnvironmentTypes().get(symbolCurrentClass);
         EnvironmentExp environmentExpCurrentClass = currentClassDefinition.getMembers();
         EnvironmentExp envExpName =((ClassDefinition) compiler.getEnvironmentTypes().get(superSymbol)).getMembers();
 
         if (envExpName.get(this.fieldName.getName()) != null && !envExpName.get(this.fieldName.getName()).isField()) {
-            throw new ContextualError("Super class symbol must be a field definition", this.getLocation());
+            throw new ContextualError("Super-class redefinition identifier must be a field", this.getLocation());
         }
 
         currentClassDefinition.incNumberOfFields();
@@ -67,7 +65,7 @@ public class DeclField extends AbstractDeclField {
                     )
             );
         } catch (EnvironmentExp.DoubleDefException e) {
-            throw new ContextualError("Attribute name already declared", this.getLocation());
+            throw new ContextualError("Field name '"+ this.fieldName.getName() + "' already declared", this.getLocation());
         }
 
         this.fieldName.verifyExpr(compiler, environmentExpCurrentClass, currentClassDefinition);
@@ -86,6 +84,18 @@ public class DeclField extends AbstractDeclField {
                 currentClassDefinition
         );
         LOG.debug("verify InitField: end");
+    }
+
+    protected void codeGenDeclFieldDefault(DecacCompiler compiler) {
+        if (type.getType().isBoolean() || type.getType().isInt()) {
+            compiler.addInstruction(new LOAD(new ImmediateInteger(0), Register.R0));
+        } else if (type.getType().isFloat()) {
+            compiler.addInstruction(new LOAD(new ImmediateFloat(0), Register.R0));
+        } else if (type.getType().isClass()) {
+            compiler.addInstruction(new LOAD(new NullOperand(), Register.R0));
+        }
+        int index = fieldName.getFieldDefinition().getIndex();
+        compiler.addInstruction(new STORE(Register.R0, new RegisterOffset(index, Register.R1)));
     }
 
     @Override

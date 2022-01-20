@@ -30,7 +30,7 @@ public class DeclParam extends AbstractDeclParam {
 
         Type type = this.type.verifyType(compiler);
         if (type.isVoid()) {
-            throw new ContextualError("Void parameter is not allowed", this.getLocation());
+            throw new ContextualError("Void type is not allowed for this parameter : " + this.type.getName(), this.getLocation());
         }
         this.name.setType(type);
         LOG.debug("verify DeclParam: end");
@@ -48,7 +48,7 @@ public class DeclParam extends AbstractDeclParam {
         try {
             localEnv.declare(this.name.getName(), paramDefinition);
         } catch (EnvironmentExp.DoubleDefException e) {
-            throw new ContextualError("Param identifier already declared", this.getLocation());
+            throw new ContextualError("Param name '" + this.name.getName() + "' already used", this.getLocation());
         }
 
         // Check param definition

@@ -112,7 +112,6 @@ public abstract class AbstractBinaryExpr extends AbstractExpr {
             return n+1;
         } else {
             compiler.incTempStackCurrent(1);
-            compiler.setTempStackMax();
             compiler.addInstruction(new PUSH(Register.getR(n)), "save");
             this.getRightOperand().codeGenExpr(compiler, n);
             compiler.addInstruction(new LOAD(Register.getR(n), Register.R0));
