@@ -29,6 +29,7 @@ nb_file=0
 # $3 = validity (VALID; INVALID)
 # $4 = type (ORACLE; BLACK_BOX)
 exec_test_from_dir (){
+
   # Getting clean args :
   TEST_PATH="$1"
   PART_NAME="$2"

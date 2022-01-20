@@ -10,6 +10,6 @@ PATH=./src/test/script/launchers:"$PATH"
 
 echo ""
 
-exec_test_from_dir "./src/test/deca/context/valid/with_object" "CONTEXT" "VALID" "ORACLE"
-
-exec_test_from_dir "./src/test/deca/context/invalid/with_object" "CONTEXT" "INVALID" "ORACLE"
+# Call the function exec_test_from_dir located in working_scripts/main-functions.sh
+# with arguments : codegen, valid, black_box.
+exec_test_from_dir "./src/test/deca/codegen/valid/with-object" "CODEGEN" "VALID" "BLACK_BOX"
