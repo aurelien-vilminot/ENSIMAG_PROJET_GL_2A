@@ -65,7 +65,7 @@ public class DeclField extends AbstractDeclField {
                     )
             );
         } catch (EnvironmentExp.DoubleDefException e) {
-            throw new ContextualError("Attribute name already declared", this.getLocation());
+            throw new ContextualError("Field name '"+ this.fieldName.getName() + "' already declared", this.getLocation());
         }
 
         this.fieldName.verifyExpr(compiler, environmentExpCurrentClass, currentClassDefinition);
