@@ -38,11 +38,9 @@ public class TestReturn {
 
     @Test
     public void testVerifyInstReturnVoidError() {
-        Exception exception = assertThrows(ContextualError.class, () -> {
-            returnInst.verifyInst(compiler, localEnv, null, voidType);
-        });
+        Exception exception = assertThrows(ContextualError.class, () -> returnInst.verifyInst(compiler, localEnv, null, voidType));
 
-        String expectedMessage = "Return type cannot be void";
+        String expectedMessage = "Method return type is void";
         String actualMessage = exception.getMessage();
         assertEquals(expectedMessage, actualMessage);
     }
