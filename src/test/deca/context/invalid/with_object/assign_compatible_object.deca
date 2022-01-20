@@ -3,5 +3,5 @@ class Animal{
 }
 
 {
-    Animal animal =  new Object();
+     Animal animal =  new Object();
 }

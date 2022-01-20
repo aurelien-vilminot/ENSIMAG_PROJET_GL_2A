@@ -11,55 +11,51 @@ public class TestDeclParam {
     DeclParam declParam;
     DecacCompiler compiler;
     EnvironmentExp localEnv;
-    AbstractIdentifier intId, voidId, name;
+    AbstractIdentifier INT, VOID, name;
 
     @BeforeEach
     void setup() throws ContextualError, EnvironmentExp.DoubleDefException {
         compiler = new DecacCompiler(null,null);
         localEnv = new EnvironmentExp(null);
 
-        intId = new Identifier(compiler.getSymbolTable().create("int"));
-        voidId = new Identifier(compiler.getSymbolTable().create("void"));
+        INT = new Identifier(compiler.getSymbolTable().create("int"));
+        VOID = new Identifier(compiler.getSymbolTable().create("void"));
         name = new Identifier(compiler.getSymbolTable().create("name"));
     }
 
     @Test
     public void testVerifyDeclParam() throws ContextualError {
-        declParam = new DeclParam(intId, name);
+        declParam = new DeclParam(INT, name);
         assertTrue(declParam.verifyDeclParam(compiler).isInt());
     }
 
     @Test
     public void testVerifyDeclParamVoidError(){
-        declParam = new DeclParam(voidId, name);
+        declParam = new DeclParam(VOID, name);
 
-        Exception exception = assertThrows(ContextualError.class, () -> {
-            declParam.verifyDeclParam(compiler);
-        });
+        Exception exception = assertThrows(ContextualError.class, () -> declParam.verifyDeclParam(compiler));
 
-        String expectedMessage = "Void parameter is not allowed";
+        String expectedMessage = "Void type is not allowed for this parameter : void";
         String actualMessage = exception.getMessage();
         assertEquals(expectedMessage, actualMessage);
     }
 
     @Test
     public void testVerifyParamEnvExp() throws ContextualError {
-        declParam = new DeclParam(intId, name);
+        declParam = new DeclParam(INT, name);
         declParam.verifyDeclParam(compiler);
         declParam.verifyParamEnvExp(compiler, localEnv);
     }
 
     @Test
     public void testVerifyParamEnvExpDoubleDef() throws ContextualError {
-        declParam = new DeclParam(intId, name);
+        declParam = new DeclParam(INT, name);
         declParam.verifyDeclParam(compiler);
         declParam.verifyParamEnvExp(compiler, localEnv);
 
-        Exception exception = assertThrows(ContextualError.class, () -> {
-            declParam.verifyParamEnvExp(compiler, localEnv);
-        });
+        Exception exception = assertThrows(ContextualError.class, () -> declParam.verifyParamEnvExp(compiler, localEnv));
 
-        String expectedMessage = "Param identifier already declared";
+        String expectedMessage = "Param name 'name' already used";
         String actualMessage = exception.getMessage();
         assertEquals(expectedMessage, actualMessage);
     }

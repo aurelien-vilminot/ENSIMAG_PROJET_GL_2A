@@ -11,3 +11,5 @@ PATH=./src/test/script/launchers:"$PATH"
 echo ""
 
 exec_test_from_dir "./src/test/deca/context/valid/with_object" "CONTEXT" "VALID" "ORACLE"
+
+exec_test_from_dir "./src/test/deca/context/invalid/with_object" "CONTEXT" "INVALID" "ORACLE"

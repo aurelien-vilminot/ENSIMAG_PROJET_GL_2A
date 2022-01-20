@@ -8,9 +8,9 @@ class B extends A {
 }
 
 {
-    A a = new B();
+    B b = new B();
     int x = 0;
     print(x);
-    print(a.a);
-    print(a.x);
+    print(b.a);
+    print(b.x);
 }
