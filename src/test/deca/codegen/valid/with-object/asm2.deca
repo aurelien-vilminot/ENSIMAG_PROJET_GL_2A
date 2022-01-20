@@ -1,0 +1,11 @@
+class A{
+    void print_method() asm ("
+                                // ajouter autre chose
+                            ");
+
+}
+
+{
+    A a = new A();
+    a.print_methode();
+}

@@ -1,0 +1,11 @@
+class A{ // not sure of this one ...
+    protected void m(){
+        print("ok");
+    }
+}
+
+class B extends A{
+    void m(){
+        print("OK");
+    }
+}
