@@ -42,6 +42,12 @@ public class Selection extends AbstractLValue {
             return identType;
         } else {
             // Case PROTECTED
+            if (currentClass == null) {
+                // Cannot access to protected field in the main program
+                throw new ContextualError(
+                        "The identifier '" + this.ident.getName() + "' is protected and it is impossible to access it in the main program",
+                        this.getLocation());
+            }
             boolean isSubClass = compiler.getEnvironmentTypes().subTypes(classType, currentClass.getType());
             boolean isSubClassField = compiler.getEnvironmentTypes().subTypes(classType, this.ident.getFieldDefinition().getContainingClass().getType());
 
