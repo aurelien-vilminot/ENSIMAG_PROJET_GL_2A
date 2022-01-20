@@ -4,6 +4,7 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.ima.pseudocode.ImmediateInteger;
+import fr.ensimag.ima.pseudocode.Label;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.*;
@@ -104,6 +105,20 @@ public class MethodCall extends AbstractExpr {
 
         codeGenInst(compiler);
         compiler.addInstruction(new LOAD(Register.R0, Register.getR(n)));
+    }
+
+    @Override
+    protected void codeGenExprBool(DecacCompiler compiler, boolean bool, Label branch, int n) {
+        compiler.setAndVerifyCurrentRegister(n);
+
+        // Calculate the selection and load result into Rn
+        codeGenExpr(compiler, n);
+        compiler.addInstruction(new CMP(new ImmediateInteger(0), Register.getR(n)));
+        if (bool) {
+            compiler.addInstruction(new BNE(branch));
+        } else {
+            compiler.addInstruction(new BEQ(branch));
+        }
     }
 
     @Override

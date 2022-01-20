@@ -1,0 +1,16 @@
+class Animal {
+    int weight;
+    int size = 200;
+    boolean isAlive = true;
+
+    void scream(){
+        println("hahaha");
+    }
+}
+
+{
+    Animal Mike = null;
+    if(null instanceof Animal){
+        println("Yes");
+    }
+}
