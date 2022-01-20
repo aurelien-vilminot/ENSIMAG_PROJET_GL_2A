@@ -1,4 +1,5 @@
 {
     int[][] a = new int[2][3];
     float[][] b = a;
+    int[][] c = b;
 }
