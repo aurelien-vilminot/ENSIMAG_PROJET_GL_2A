@@ -228,6 +228,7 @@ public class DecacCompiler implements Runnable {
 
         // Init equals method
         Signature equalsSignature = new Signature();
+        equalsSignature.add(this.environmentTypes.get(objectSymbol).getType());
         MethodDefinition equalsDefinition = new MethodDefinition(
                 this.environmentTypes.get(booleanSymbol).getType(),
                 Location.BUILTIN,
