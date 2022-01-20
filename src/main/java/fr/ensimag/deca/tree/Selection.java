@@ -52,7 +52,7 @@ public class Selection extends AbstractLValue {
             }
         }
 
-        throw new ContextualError("A class is not a subtype of an other class", this.getLocation());
+        throw new ContextualError("Impossible to select this identifier : " + this.ident.getName(), this.getLocation());
     }
 
     @Override

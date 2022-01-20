@@ -48,7 +48,7 @@ public class DeclParam extends AbstractDeclParam {
         try {
             localEnv.declare(this.name.getName(), paramDefinition);
         } catch (EnvironmentExp.DoubleDefException e) {
-            throw new ContextualError("Param identifier '" + this.name.getName() + "'already used", this.getLocation());
+            throw new ContextualError("Param name '" + this.name.getName() + "' already used", this.getLocation());
         }
 
         // Check param definition
