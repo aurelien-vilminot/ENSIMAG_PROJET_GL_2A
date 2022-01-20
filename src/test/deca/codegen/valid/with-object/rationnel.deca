@@ -29,7 +29,7 @@ class Rationnel{
 
     void addRat(Rationnel r){
         this.setNum(r.getNum() * this.getDen() + this.getNum() * r.getDen());
-        this.setDenom(r.getDen() * this.getDen());
+        this.setDen(r.getDen() * this.getDen());
     }
 }
 

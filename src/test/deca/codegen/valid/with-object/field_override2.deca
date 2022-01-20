@@ -24,7 +24,7 @@ class A {
 {
     A a = new A();
     println(a.compute_sum_a(1));
-    println(a.compute_sum_a(1));
-    println(a.compute_sum_a(1));
-    println(a.compute_sum_a(1));
+    println(a.compute_sum_2(1));
+    println(a.compute_sum_3(1));
+    println(a.compute_sum_4(1));
 }
