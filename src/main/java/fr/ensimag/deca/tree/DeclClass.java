@@ -100,11 +100,7 @@ public class DeclClass extends AbstractDeclClass {
         this.listDeclMethod.verifyListDeclMethod(compiler, this.superClass.getName(), this.name.getName());
 
         // Stack super-class members
-        try {
-            environmentExpClass.addSuperExpDefinition(environmentExpSuperClass);
-        } catch (EnvironmentExp.DoubleDefException e) {
-            // Nothing to do
-        }
+        environmentExpClass.addSuperExpDefinition(environmentExpSuperClass);
 
         LOG.debug("verify ClassMembers: end");
     }
