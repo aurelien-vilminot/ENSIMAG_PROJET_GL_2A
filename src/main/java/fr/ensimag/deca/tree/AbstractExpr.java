@@ -95,7 +95,10 @@ public abstract class AbstractExpr extends AbstractInst {
         // Check type compatibility
         boolean areCompatible = compiler.getEnvironmentTypes().assignCompatible(expectedType, currentType);
         if (!areCompatible) {
-            throw new ContextualError("Types are not compatible", this.getLocation());
+            throw new ContextualError(
+                    "These types are not compatibles. Expected type : " + expectedType + ". Current type : " + currentType,
+                    this.getLocation()
+            );
         }
         this.setType(currentType);
         LOG.debug("verify RValue: end");

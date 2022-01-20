@@ -56,6 +56,8 @@ public class MethodCall extends AbstractExpr {
             param.verifyRValue(compiler, localEnv, (ClassDefinition) compiler.getEnvironmentTypes().get(typeClass.getName()), expectedType);
         }
 
+        this.setType(methodDefinition.getType());
+
         LOG.debug("verify MethodCall: end");
         return methodDefinition.getType();
     }
@@ -84,7 +86,7 @@ public class MethodCall extends AbstractExpr {
         int index = -1;
         for (AbstractExpr expr : param.getList()) {
             expr.codeGenExpr(compiler, 2);
-            compiler.addInstruction(new STORE(Register.getR(2), new RegisterOffset(index, Register.SP)));
+            compiler.addInstruction(new STORE(Register.getR(2), new RegisterOffset(index--, Register.SP)));
         }
 
         compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.SP), Register.getR(2)));

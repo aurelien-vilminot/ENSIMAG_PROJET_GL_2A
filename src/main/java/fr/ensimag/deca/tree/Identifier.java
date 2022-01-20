@@ -213,11 +213,15 @@ public class Identifier extends AbstractIdentifier {
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
         Validate.notNull(localEnv, "Local environment object should not be null");
 
-        MethodDefinition methodDefinition = localEnv.get(this.getName())
-                .asMethodDefinition("This identifier is not a method : " + this.getName(), this.getLocation());
+        ExpDefinition expDefinition = localEnv.get(this.getName());
+        if (expDefinition == null) {
+            throw new ContextualError("Impossible to find the method : " + this.getName(), this.getLocation());
+        }
+        // Convert the expression into a method definition
+        MethodDefinition methodDefinition = expDefinition.asMethodDefinition("This identifier is not a method : " + this.getName(), this.getLocation());
+
         this.setDefinition(methodDefinition);
         LOG.debug("verify Method: end");
-
         return methodDefinition;
     }
 
