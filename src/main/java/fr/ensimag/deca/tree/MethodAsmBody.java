@@ -1,6 +1,7 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
+import fr.ensimag.ima.pseudocode.AsmLine;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
@@ -10,6 +11,7 @@ import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
 import java.io.PrintStream;
+import java.util.Scanner;
 
 public class MethodAsmBody extends AbstractMethodBody{
     private static final Logger LOG = Logger.getLogger(Main.class);
@@ -40,7 +42,13 @@ public class MethodAsmBody extends AbstractMethodBody{
 
     @Override
     protected void codeGenDeclMethod(DecacCompiler compiler, EnvironmentExp localEnv) {
-        throw new UnsupportedOperationException("not yet implemented");
+        String asm = stringLiteral.decompile();
+        asm = asm.substring(1, asm.length() - 1);
+        Scanner scanner = new Scanner(asm);
+        while (scanner.hasNextLine()) {
+            compiler.add(new AsmLine(scanner.nextLine()));
+        }
+        scanner.close();
     }
 
     @Override

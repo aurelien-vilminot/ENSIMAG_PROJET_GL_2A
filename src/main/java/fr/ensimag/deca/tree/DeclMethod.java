@@ -56,19 +56,19 @@ public class DeclMethod extends AbstractDeclMethod {
 
                 if (!methodDefinitionSuperEnvExp.getSignature().equals(signature)) {
                     // Both signatures must be the same
-                    throw new ContextualError("Method prototype must be same as herited", this.getLocation());
+                    throw new ContextualError("Method prototype must be same as inherited", this.getLocation());
                 }
 
                 if (!compiler.getEnvironmentTypes().subTypes(returnType, methodDefinitionSuperEnvExp.getType())) {
                     // Both return types must be the same
-                    throw new ContextualError("Return type must be a subtype of hertied method return", this.getLocation());
+                    throw new ContextualError("Return type must be a subtype of inherited method return", this.getLocation());
                 }
 
                 // Get index of override method
                 indexMethod = methodDefinitionSuperEnvExp.getIndex();
 
             } else {
-                throw new ContextualError("Super class symbol must be a method definition", this.getLocation());
+                throw new ContextualError("Super-class symbol must be a method definition", this.getLocation());
             }
         }
 
@@ -131,8 +131,10 @@ public class DeclMethod extends AbstractDeclMethod {
         // Generate an error if method has a return type and end of method is reached without a return instruction
         if (!returnType.getType().isVoid()) {
             if (!compiler.getCompilerOptions().getNoCheck()) {
-                gen.generateErrorLabel(compiler, gen.getReturnLabel(), "Error: end of method "
-                        + methodName.getMethodDefinition().getLabel() + " without return instruction");
+                compiler.addInstruction(new WSTR("Error: end of method "
+                        + methodName.getMethodDefinition().getLabel() + " without return instruction"));
+                compiler.addInstruction(new WNL());
+                compiler.addInstruction(new ERROR());
             }
         }
 
