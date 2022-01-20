@@ -10,23 +10,22 @@ import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.context.EnvironmentExp.DoubleDefException;
 
 public class TestAssign {
-    final Type INT = new IntType(null);
-    final Type FLOAT = new FloatType(null);
-
     private DecacCompiler compiler;
     private EnvironmentExp localEnv;
     private AbstractLValue leftOperand;
     private AbstractExpr rightOperand;
     private Assign assign;
+    private FloatType floatType;
 
     @BeforeEach
     void setup() throws DoubleDefException {
         compiler = new DecacCompiler(null, null);
         leftOperand = new Identifier(compiler.getSymbolTable().create("x"));
+        floatType = new FloatType(compiler.getSymbolTable().create("float"));
         localEnv = new EnvironmentExp(null);
         localEnv.declare(
             compiler.getSymbolTable().create("x"),
-            new VariableDefinition(FLOAT, Location.BUILTIN)
+            new VariableDefinition(floatType, Location.BUILTIN)
         );
     }
 
@@ -53,8 +52,8 @@ public class TestAssign {
             assign.verifyExpr(compiler, localEnv, null);
         });
 
-        String expectedMessage = "Types are not compatible";
-        String actualMessage = exception.getMessage();
-        assertEquals(expectedMessage, actualMessage);
+        assertEquals(
+                "These types are not compatibles. Expected type : " + floatType + ". Current type : " + rightOperand.getType(),
+                exception.getMessage());
     }
 }
