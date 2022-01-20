@@ -34,7 +34,7 @@ public class New extends AbstractExpr {
 
         Type type = this.ident.verifyType(compiler);
         if (!type.isClass()) {
-            throw new ContextualError("Cannot instantiate a class, the type must a class", this.getLocation());
+            throw new ContextualError("Cannot instantiate a class, the type must be a class", this.getLocation());
         }
 
         LOG.debug("verify New: end");

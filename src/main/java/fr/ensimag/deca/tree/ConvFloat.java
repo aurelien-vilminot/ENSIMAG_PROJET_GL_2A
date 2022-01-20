@@ -33,7 +33,7 @@ public class ConvFloat extends AbstractUnaryExpr {
         if (typeOperand.isInt()) {
             this.setType(typeFloat);
         } else {
-            throw new ContextualError("An int can be cast in float only", this.getLocation());
+            throw new ContextualError("Implicit cast works only with int to float", this.getLocation());
         }
 
         LOG.debug("verify ConvFloat: end");

@@ -46,7 +46,10 @@ public class DeclClass extends AbstractDeclClass {
         // Check type of super-class identifier
         TypeDefinition superClassType = compiler.getEnvironmentTypes().get(this.superClass.getName());
         if (superClassType == null || !superClassType.isClass()) {
-            throw new ContextualError("Expected class identifier", this.getLocation());
+            throw new ContextualError(
+                    "The super-class name is a not a class : " + this.superClass.getName()
+                    , this.getLocation()
+            );
         }
 
         // Add new class if not already existed
@@ -64,7 +67,7 @@ public class DeclClass extends AbstractDeclClass {
                     )
             );
         } catch (EnvironmentTypes.DoubleDefException e) {
-            throw new ContextualError("Already class identifier declared", this.getLocation());
+            throw new ContextualError("The class name '"+ this.name.getName() + "' is already declared", this.getLocation());
         }
 
         // Tree decoration for classes identifiers
