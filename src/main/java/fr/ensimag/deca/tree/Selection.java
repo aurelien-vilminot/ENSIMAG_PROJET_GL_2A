@@ -76,18 +76,12 @@ public class Selection extends AbstractLValue {
         if (n < maxRegister) {
             // Calculate heap address of the object into Rn+1
             expr.codeGenExpr(compiler, n+1);
-            if (expr.getType().isClass()) {
-                compiler.addDereference(n);
-            }
             compiler.addInstruction(new STORE(Register.getR(n), new RegisterOffset(index, Register.getR(n+1))));
         } else {
             compiler.incTempStackCurrent(1);
             compiler.addInstruction(new PUSH(Register.getR(n)), "save");
             // Calculate heap address of the object into Rn
             expr.codeGenExpr(compiler, n);
-            if (expr.getType().isClass()) {
-                compiler.addDereference(n);
-            }
             compiler.addInstruction(new LOAD(Register.getR(n), Register.R0));
             // R0 contains heap address of the object
             compiler.addInstruction(new POP(Register.getR(n)), "restore");
