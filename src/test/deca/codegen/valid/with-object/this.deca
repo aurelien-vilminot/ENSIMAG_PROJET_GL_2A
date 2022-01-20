@@ -13,7 +13,7 @@ class B extends A{
 
     int m2(int aa){
         int a = 10;
-        return this.a + aa + aaa;
+        return this.a + aa + aaa; // not sure it is possible wo this.
     }
 }
 
