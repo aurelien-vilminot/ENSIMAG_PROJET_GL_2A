@@ -1,0 +1,5 @@
+class A{
+    int[2] f(){
+        return new int[2];
+    }
+}

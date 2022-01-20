@@ -1,0 +1,5 @@
+class A{
+    float[][ ] f(){
+        return new float[2][2];
+    }
+}
