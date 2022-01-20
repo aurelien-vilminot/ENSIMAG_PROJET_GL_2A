@@ -1,0 +1,10 @@
+{
+    int[] a = new int[5];
+    int[][] b = new int[8][5];
+    float[] c = new float[5];
+    float[][] d = new float[5][4];
+    float[] z;
+    float[] y;
+    new float[3];
+    new int[1][4+384];
+}

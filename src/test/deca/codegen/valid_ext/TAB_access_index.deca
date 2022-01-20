@@ -1,0 +1,12 @@
+{
+    int x = 0;
+    int y = 5;
+    float[] a = new float[8];
+    float[][] b = new float[7][6];
+
+    a[x];
+    b[x][y];
+    a[x] = x;
+    a[x] = b[x][5];
+    b[x] = a;
+}
