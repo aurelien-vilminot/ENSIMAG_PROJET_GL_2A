@@ -1,0 +1,15 @@
+class Factorial {
+    int factorial(int i){
+        if(i <= 1){
+            return 1;
+        }
+        return i * factorial(i - 1);
+    }
+}
+
+{
+    Factorial fact = new Factorial();
+    println("10! = ", fact.factorial(10));
+    println("-5! = ", fact.factorial(-5));
+    println("1000! = ", fact.factorial(1000));
+}

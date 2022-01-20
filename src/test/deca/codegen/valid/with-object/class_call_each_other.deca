@@ -1,0 +1,30 @@
+class A{
+    B element;
+
+    void setB(B b){
+        this.element = b;
+    }
+}
+
+class B{
+    A element;
+    int x = 50;
+
+    A g(A a){
+        return new A();
+    }
+
+    B f(A a){
+        return a.element;
+    }
+}
+
+{
+    B b = new B();
+    A a = new A();
+    a.setB(b);
+    println(a.element.x);
+    println(b.f(a).x);
+    println(b.g(a).element.x);
+
+}

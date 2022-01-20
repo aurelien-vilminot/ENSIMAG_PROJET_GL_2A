@@ -16,7 +16,7 @@ class Test{
     if(null instanceof Animal){
         println("Yes");
     }
-    if(Mike instanceof Test{
+    if(Mike instanceof Test){
         println("Yes");
     }
 }
