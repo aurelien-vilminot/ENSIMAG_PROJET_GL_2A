@@ -53,6 +53,6 @@ public class TestNew {
         exception = assertThrows(ContextualError.class, () -> {
             intNew.verifyExpr(compiler, null, null);
         });
-        assertEquals("Cannot instantiate a class, the type must a class", exception.getMessage());
+        assertEquals("Cannot instantiate a class, the type must be a class", exception.getMessage());
     }
 }

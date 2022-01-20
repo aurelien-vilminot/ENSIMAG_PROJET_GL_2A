@@ -43,7 +43,7 @@ public class TestConvFloat {
         exception = assertThrows(ContextualError.class, () -> {
             finalGreater.verifyExpr(compiler, null, null);
         });
-        expectedMessage = "An int can be cast in float only";
+        expectedMessage = "Implicit cast works only with int to float";
         actualMessage = exception.getMessage();
         assertEquals(actualMessage, expectedMessage);
 
@@ -53,7 +53,7 @@ public class TestConvFloat {
         exception = assertThrows(ContextualError.class, () -> {
             finalGreater1.verifyExpr(compiler, null, null);
         });
-        expectedMessage = "An int can be cast in float only";
+        expectedMessage = "Implicit cast works only with int to float";
         actualMessage = exception.getMessage();
         assertEquals(actualMessage, expectedMessage);
 
@@ -63,7 +63,7 @@ public class TestConvFloat {
         exception = assertThrows(ContextualError.class, () -> {
             finalGreater2.verifyExpr(compiler, null, null);
         });
-        expectedMessage = "An int can be cast in float only";
+        expectedMessage = "Implicit cast works only with int to float";
         actualMessage = exception.getMessage();
         assertEquals(actualMessage, expectedMessage);
     }

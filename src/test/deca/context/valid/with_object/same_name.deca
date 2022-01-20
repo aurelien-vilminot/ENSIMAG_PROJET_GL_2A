@@ -1,4 +1,4 @@
-class A{
+class A{ // fonctionne en java
     int a;
     void a(){
         print("ok");

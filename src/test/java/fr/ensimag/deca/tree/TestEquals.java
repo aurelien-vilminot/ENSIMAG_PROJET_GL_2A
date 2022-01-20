@@ -79,7 +79,7 @@ public class TestEquals {
         exception = assertThrows(ContextualError.class, () -> {
             finalEquals.verifyExpr(compiler, null, null);
         });
-        expectedMessage = "Equals or not equals comparison is only with int, float, class, null or boolean types";
+        expectedMessage = "Equals or not equals comparison is only allowed with int, float, class, null or boolean types";
         actualMessage = exception.getMessage();
         assertEquals(actualMessage, expectedMessage);
 
@@ -89,7 +89,7 @@ public class TestEquals {
         exception = assertThrows(ContextualError.class, () -> {
             finalEquals1.verifyExpr(compiler, null, null);
         });
-        expectedMessage = "Equals or not equals comparison is only with int, float, class, null or boolean types";
+        expectedMessage = "Equals or not equals comparison is only allowed with int, float, class, null or boolean types";
         actualMessage = exception.getMessage();
         assertEquals(actualMessage, expectedMessage);
 
@@ -99,7 +99,7 @@ public class TestEquals {
         exception = assertThrows(ContextualError.class, () -> {
             finalEquals2.verifyExpr(compiler, null, null);
         });
-        expectedMessage = "Equals or not equals comparison is only with int, float, class, null or boolean types";
+        expectedMessage = "Equals or not equals comparison is only allowed with int, float, class, null or boolean types";
         actualMessage = exception.getMessage();
         assertEquals(actualMessage, expectedMessage);
 
@@ -109,7 +109,7 @@ public class TestEquals {
         exception = assertThrows(ContextualError.class, () -> {
             finalEquals3.verifyExpr(compiler, null, null);
         });
-        expectedMessage = "Equals or not equals comparison is only with int, float, class, null or boolean types";
+        expectedMessage = "Equals or not equals comparison is only allowed with int, float, class, null or boolean types";
         actualMessage = exception.getMessage();
         assertEquals(actualMessage, expectedMessage);
     }

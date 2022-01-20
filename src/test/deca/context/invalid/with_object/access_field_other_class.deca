@@ -8,5 +8,5 @@ class B extends A {
 
 {
     A object_a = new B();
-    print(object_a.a);
+    print(object_a.a, object_a.b);
 }

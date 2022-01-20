@@ -13,5 +13,5 @@ class DarkHorse extends Horse {}
     Horse f = null;
 
     DarkHorse g = new DarkHorse();
-    DarkHorse g = null;
+    DarkHorse gg = null;
 }

@@ -2,8 +2,8 @@ class A {}
 
 {
     Object o = null;
+    Object o2 = (null) (o); // null is a class ?
     A a = null;
-    Object o2 = (null) (o);
 
     (null) (o);
     (null) (a);

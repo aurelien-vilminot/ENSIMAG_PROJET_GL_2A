@@ -2,10 +2,11 @@ class Animal {}
 class Horse extends Animal {}
 
 {
-    Animal a = new Animal();
-    Animal c = new Horse();
-    Animal aa = null;
+    Animal a = new Horse();
+    Horse aa = null;
+    Animal aaa = null;
 
-    Horse b = new Horse();
-    Horse bb = null;
+    // Horse c = new Animal();
+    // Horse b = new Horse();
+    // Horse bb = null;
 }
