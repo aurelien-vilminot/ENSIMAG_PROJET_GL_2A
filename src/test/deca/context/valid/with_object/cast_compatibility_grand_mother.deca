@@ -9,6 +9,12 @@ class T{}
     Horse b = new Horse();
     DarkHorse c = new DarkHorse();
 
+    Animal aa = (Animal) (a);
+    Animal bb = (Horse) (a);
+    Animal cc = (DarkHorse) (o);
+    Horse dd = (DarkHorse) (o);
+    Horse ddd = (Horse) (a);
+
     (Object) (o);
     (Object) (a);
     (Object) (b);
@@ -29,9 +35,5 @@ class T{}
     (DarkHorse) (b);
     (DarkHorse) (c);
 
-    Animal aa = (Animal) (a);
-    Animal bb = (Horse) (a);
-    Animal cc = (DarkHorse) (o);
-    Horse dd = (DarkHorse) (o);
-    Horse dd = (Horse) (a);
+
 }

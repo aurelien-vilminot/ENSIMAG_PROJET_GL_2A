@@ -7,5 +7,5 @@ class Cow extends Animal{
 }
 
 {
-    Cow cow =  new Animal();
+    Cow a =  new Animal();
 }
