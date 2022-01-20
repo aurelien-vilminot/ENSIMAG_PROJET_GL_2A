@@ -47,8 +47,8 @@ public class DeclClass extends AbstractDeclClass {
         TypeDefinition superClassType = compiler.getEnvironmentTypes().get(this.superClass.getName());
         if (superClassType == null || !superClassType.isClass()) {
             throw new ContextualError(
-                    "The super-class name is a not a class : " + this.superClass.getName()
-                    , this.getLocation()
+                    "The super-class name is a not a class : " + this.superClass.getName(),
+                    this.getLocation()
             );
         }
 
@@ -67,7 +67,10 @@ public class DeclClass extends AbstractDeclClass {
                     )
             );
         } catch (EnvironmentTypes.DoubleDefException e) {
-            throw new ContextualError("The class name '"+ this.name.getName() + "' is already declared", this.getLocation());
+            throw new ContextualError(
+                    "The class name '"+ this.name.getName() + "' is already declared",
+                    this.getLocation()
+            );
         }
 
         // Tree decoration for classes identifiers
@@ -86,12 +89,22 @@ public class DeclClass extends AbstractDeclClass {
         ClassDefinition currentClassDefinition = (ClassDefinition) compiler.getEnvironmentTypes().get(this.name.getName());
         ClassDefinition superClassDefinition = (ClassDefinition) compiler.getEnvironmentTypes().get(this.superClass.getName());
 
+        EnvironmentExp environmentExpSuperClass = superClassDefinition.getMembers();
+        EnvironmentExp environmentExpClass = currentClassDefinition.getMembers();
+
         // Increment fields and methods number for current class depending on super-class members
         currentClassDefinition.setNumberOfFields(superClassDefinition.getNumberOfFields());
         currentClassDefinition.setNumberOfMethods(superClassDefinition.getNumberOfMethods());
 
         this.listDeclField.verifyListDeclField(compiler, this.superClass.getName(), this.name.getName());
         this.listDeclMethod.verifyListDeclMethod(compiler, this.superClass.getName(), this.name.getName());
+
+        // Stack super-class members
+        try {
+            environmentExpClass.addSuperExpDefinition(environmentExpSuperClass);
+        } catch (EnvironmentExp.DoubleDefException e) {
+            // Nothing to do
+        }
 
         LOG.debug("verify ClassMembers: end");
     }
