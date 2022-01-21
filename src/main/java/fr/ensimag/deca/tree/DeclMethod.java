@@ -91,7 +91,10 @@ public class DeclMethod extends AbstractDeclMethod {
                     )
                     );
         } catch (EnvironmentExp.DoubleDefException e) {
-            throw new ContextualError("Method name '" + this.methodName.getName() + "' already declared in the class", this.getLocation());
+            throw new ContextualError(
+                    "Method name '" + this.methodName.getName() + "' already declared in the class",
+                    this.getLocation()
+            );
         }
 
         this.methodName.verifyExpr(compiler, environmentExpCurrentClass, currentClassDefinition);

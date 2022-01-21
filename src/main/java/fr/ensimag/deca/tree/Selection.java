@@ -28,12 +28,13 @@ public class Selection extends AbstractLValue {
         LOG.debug("verify Selection: start");
 
         Type classType = this.expr.verifyExpr(compiler, localEnv, currentClass);
-        Type identType = this.ident.verifyExpr(compiler, ((ClassDefinition)compiler.getEnvironmentTypes().get(classType.getName())).getMembers(), currentClass);
 
         TypeDefinition typeDefinition = compiler.getEnvironmentTypes().get(classType.getName());
         if (typeDefinition == null || !typeDefinition.isClass()) {
-            throw new ContextualError("Undefined class : " + this.ident.getName(), this.getLocation());
+            throw new ContextualError("Can't select field from non-class type : " + this.expr.getType().getName(), this.getLocation());
         }
+
+        Type identType = this.ident.verifyExpr(compiler, ((ClassDefinition)compiler.getEnvironmentTypes().get(classType.getName())).getMembers(), currentClass);
 
         if (this.ident.getFieldDefinition().getVisibility() == Visibility.PUBLIC) {
             // Case PUBLIC
