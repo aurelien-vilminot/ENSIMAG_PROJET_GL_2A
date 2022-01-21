@@ -98,6 +98,7 @@ public class MethodCall extends AbstractExpr {
         }
 
         compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.SP), Register.getR(2)));
+        compiler.addDereference(2);
 
         // Get method table address
         compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.getR(2)), Register.getR(2)));
