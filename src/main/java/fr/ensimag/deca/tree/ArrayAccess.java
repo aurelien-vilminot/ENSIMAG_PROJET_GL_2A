@@ -75,6 +75,11 @@ public class ArrayAccess extends AbstractLValue{
     }
 
     @Override
+    protected void codeGenExpr(DecacCompiler compiler, int n) {
+        throw new UnsupportedOperationException("not yet implemented");
+    }
+
+    @Override
     protected void codeGenStore(DecacCompiler compiler, int n) {
         throw new UnsupportedOperationException("not yet implemented");
     }

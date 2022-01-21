@@ -80,6 +80,10 @@ public abstract class Type {
         return false;
     }
 
+    public boolean isArray() {
+        return false;
+    }
+
     public boolean isClassOrNull() {
         return false;
     }
