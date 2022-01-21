@@ -103,10 +103,11 @@ public class Selection extends AbstractLValue {
     protected void codeGenExpr(DecacCompiler compiler, int n) {
         compiler.setAndVerifyCurrentRegister(n);
 
-        int index = ident.getFieldDefinition().getIndex();
+        int index = 0;
         // Calculate heap address of the object into Rn
         expr.codeGenExpr(compiler, n);
         if (expr.getType().isClass()) {
+            index = ident.getFieldDefinition().getIndex();
             compiler.addDereference(n);
         }
         compiler.addInstruction(new LOAD(new RegisterOffset(index, Register.getR(n)), Register.getR(n)));
