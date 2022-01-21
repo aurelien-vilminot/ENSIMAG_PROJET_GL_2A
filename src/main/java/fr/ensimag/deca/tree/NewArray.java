@@ -89,8 +89,7 @@ public class NewArray extends AbstractExpr{
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
-        compiler.addInstruction(new ADDSP(new ImmediateInteger(2)));
-        compiler.addInstruction(new PUSH(Register.getR(2)));
+        // TODO: at return, restore R1 & R2
         indexList.getList().get(0).codeGenExpr(compiler, 3);
         if (indexList.getList().size() == 1) {
             createEmptyTable(compiler);
@@ -100,8 +99,6 @@ public class NewArray extends AbstractExpr{
             throw new UnsupportedOperationException("Arrays of dimension >2 are not supported.");
         }
         compiler.addInstruction(new LEA(new RegisterOffset(0, Register.getR(2)), Register.getR(n)));
-        compiler.addInstruction(new POP(Register.getR(2)));
-        compiler.addInstruction(new SUBSP(new ImmediateInteger(2)));
     }
 
     /**
@@ -161,7 +158,7 @@ public class NewArray extends AbstractExpr{
      */
     protected void createEmptyTableOfTable(DecacCompiler compiler) {
         compiler.addComment("Matrix begin");
-        compiler.addInstruction(new ADDSP(new ImmediateInteger(4)));
+        compiler.addInstruction(new ADDSP(new ImmediateInteger(3)));
 
         // Load size of array in R1
         compiler.addInstruction(new LOAD(Register.getR(3), Register.R1));
@@ -176,9 +173,7 @@ public class NewArray extends AbstractExpr{
         compiler.addInstruction(new STORE(Register.R1, new RegisterOffset(0, Register.R0)));
 
         // R3 <- size of the empty tables to generate inside
-        compiler.addInstruction(new PUSH(Register.R0));
         indexList.getList().get(1).codeGenExpr(compiler, 3);
-        compiler.addInstruction(new POP(Register.R0));
 
         // Fill table with empty tables
         Label begin_fill = new Label(compiler.getLabelGenerator().generateLabel("begin_fill"));
@@ -208,7 +203,7 @@ public class NewArray extends AbstractExpr{
 
         // Restore erased register
         compiler.addInstruction(new POP(Register.getR(2)));
-        compiler.addInstruction(new SUBSP(new ImmediateInteger(4)));
+        compiler.addInstruction(new SUBSP(new ImmediateInteger(3)));
         compiler.addComment("Matrix end");
     }
 }
