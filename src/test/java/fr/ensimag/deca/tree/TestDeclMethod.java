@@ -17,8 +17,8 @@ public class TestDeclMethod {
     EnvironmentExp localEnv;
     AbstractIdentifier VOID, INT;
     DeclMethod declMethod;
-    SymbolTable.Symbol superClassSymbol, classSymbol;
-    ListDeclParam listDeclParam;
+    SymbolTable.Symbol superClassSymbol, classSymbol, objectClassSymbol;
+    ClassDefinition classDefinition, superClassDefinition;
 
     @BeforeEach
     void setup() throws EnvironmentTypes.DoubleDefException {
@@ -27,18 +27,29 @@ public class TestDeclMethod {
         VOID = new Identifier(compiler.getSymbolTable().create("void"));
         INT = new Identifier(compiler.getSymbolTable().create("int"));
 
-        // Define a class
-        superClassSymbol = compiler.getSymbolTable().create("Object");
+        // Class SuperPangolin {  }
+        // Class Pangolin extends SuperPangolin {  }
+        objectClassSymbol = compiler.getSymbolTable().create("Object");
+        superClassSymbol = compiler.getSymbolTable().create("SuperPangolin");
         classSymbol = compiler.getSymbolTable().create("Pangolin");
-        ClassType pangolinType = new ClassType(classSymbol, null, null);
-        ClassDefinition classDefinition = new ClassDefinition(pangolinType,null,null);
+
+        // Class SuperPangolin
+        ClassType superPangolinType = new ClassType(superClassSymbol, Location.BUILTIN, null);
+        superClassDefinition = new ClassDefinition(superPangolinType,Location.BUILTIN,null);
+        compiler.getEnvironmentTypes().declare(superClassSymbol, superClassDefinition);
+
+        // Class Pangolin
+        ClassType pangolinType = new ClassType(classSymbol, Location.BUILTIN, superClassDefinition);
+        classDefinition = new ClassDefinition(pangolinType,Location.BUILTIN, superClassDefinition);
         compiler.getEnvironmentTypes().declare(classSymbol, classDefinition);
     }
 
     @Test
     public void testVerify() throws ContextualError {
+        int numMethods = classDefinition.getNumberOfMethods();
+
         // Add parameter declaration to list
-        listDeclParam = new ListDeclParam();
+        ListDeclParam listDeclParam = new ListDeclParam();
         Identifier arg1 = new Identifier(compiler.getSymbolTable().create("arg1"));
         listDeclParam.add(new DeclParam(INT,arg1));
 
@@ -52,6 +63,133 @@ public class TestDeclMethod {
 
         declMethod.verifyDeclMethod(compiler, superClassSymbol, classSymbol);
         declMethod.verifyMethodBody(compiler, classSymbol);
+
+        assertEquals(numMethods+1, classDefinition.getNumberOfMethods());
+    }
+
+    @Test
+    public void testVerifyOverride() throws ContextualError {
+        int numMethods = classDefinition.getNumberOfMethods();
+
+        // Create method declaration ( void f(); {})
+        declMethod = new DeclMethod(
+                VOID,
+                new Identifier(compiler.getSymbolTable().create("f")),
+                new ListDeclParam(),
+                new MethodBody(new ListDeclVar(), new ListInst())
+        );
+
+        // Declare method in super class
+        declMethod.verifyDeclMethod(compiler, objectClassSymbol, superClassSymbol);
+        // Declare method in child class
+        declMethod.verifyDeclMethod(compiler, superClassSymbol, classSymbol);
+
+        assertEquals(numMethods, classDefinition.getNumberOfMethods());
+    }
+
+    @Test
+    public void testVerifyOverrideDifferentSignatureError() throws ContextualError {
+        Identifier f = new Identifier(compiler.getSymbolTable().create("y"));
+        ListDeclParam listDeclParam = new ListDeclParam();
+
+        // Create method declaration (int f() {})
+        declMethod = new DeclMethod(
+                INT,
+                f,
+                listDeclParam,
+                new MethodBody(new ListDeclVar(), new ListInst())
+        );
+        // Declare method in super class
+        declMethod.verifyDeclMethod(compiler, objectClassSymbol, superClassSymbol);
+
+        // Add parameter to method declaration signature ( int f(int x) {})
+        listDeclParam.add(new DeclParam(INT,new Identifier(compiler.getSymbolTable().create("x"))));
+
+        // Declare method in child class
+        Exception exception = assertThrows(ContextualError.class, () -> declMethod.verifyDeclMethod(compiler, superClassSymbol, classSymbol));
+
+        String expectedMessage = "Method prototype must be same as inherited";
+        String actualMessage = exception.getMessage();
+        assertEquals(expectedMessage, actualMessage);
+    }
+
+    @Test
+    public void testVerifyOverrideDifferentReturnTypeError() throws ContextualError {
+        Identifier f = new Identifier(compiler.getSymbolTable().create("y"));
+
+        // Create method declaration (int f() {})
+        declMethod = new DeclMethod(
+                INT,
+                f,
+                new ListDeclParam(),
+                new MethodBody(new ListDeclVar(), new ListInst())
+        );
+        // Declare method in super class
+        declMethod.verifyDeclMethod(compiler, objectClassSymbol, superClassSymbol);
+
+        // Create method declaration (void f() {})
+        declMethod = new DeclMethod(
+                VOID,
+                f,
+                new ListDeclParam(),
+                new MethodBody(new ListDeclVar(), new ListInst())
+        );
+
+        // Declare method in child class
+        Exception exception = assertThrows(ContextualError.class, () -> declMethod.verifyDeclMethod(compiler, superClassSymbol, classSymbol));
+
+        String expectedMessage = "Return type must be a subtype of inherited method return";
+        String actualMessage = exception.getMessage();
+        assertEquals(expectedMessage, actualMessage);
+    }
+
+    @Test
+    public void testVerifyOverrideFieldError() throws ContextualError {
+        Identifier f = new Identifier(compiler.getSymbolTable().create("y"));
+
+        // Create field declaration (int f = 0;)
+        DeclField declField = new DeclField(
+                INT,
+                f,
+                new Initialization(new IntLiteral(0)),
+                Visibility.PUBLIC
+        );
+        // Declare field in super class
+        declField.verifyDeclField(compiler, objectClassSymbol, superClassSymbol);
+
+
+        // Create method declaration (int f(); {})
+        declMethod = new DeclMethod(
+                INT,
+                f,
+                new ListDeclParam(),
+                new MethodBody(new ListDeclVar(), new ListInst())
+        );
+
+        // Declare method in child class
+        Exception exception = assertThrows(ContextualError.class, () -> declMethod.verifyDeclMethod(compiler, superClassSymbol, classSymbol));
+
+        String expectedMessage = "Super-class symbol must be a method definition";
+        String actualMessage = exception.getMessage();
+        assertEquals(expectedMessage, actualMessage);
+    }
+
+    @Test
+    public void testVerifyDoubleDefError() throws ContextualError {
+        declMethod = new DeclMethod(
+                VOID,
+                new Identifier(compiler.getSymbolTable().create("f")),
+                new ListDeclParam(),
+                new MethodBody(new ListDeclVar(), new ListInst())
+        );
+
+        declMethod.verifyDeclMethod(compiler, superClassSymbol, classSymbol);
+
+        Exception exception = assertThrows(ContextualError.class, () -> declMethod.verifyDeclMethod(compiler, superClassSymbol, classSymbol));
+
+        String expectedMessage = "Method name 'f' already declared in the class";
+        String actualMessage = exception.getMessage();
+        assertEquals(expectedMessage, actualMessage);
     }
 
     // TODO: Test errors from verifyDeclMethod()

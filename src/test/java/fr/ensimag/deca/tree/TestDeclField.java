@@ -13,7 +13,7 @@ public class TestDeclField {
     DecacCompiler compiler;
     EnvironmentExp localEnv;
     SymbolTable.Symbol superClassSymbol, classSymbol;
-    AbstractIdentifier VOID, INT, BOOL;
+    AbstractIdentifier VOID, INT;
     DeclField declField;
     AbstractIdentifier fieldName;
     AbstractInitialization initialization;
@@ -25,7 +25,6 @@ public class TestDeclField {
         localEnv = new EnvironmentExp(null);
         VOID = new Identifier(compiler.getSymbolTable().create("void"));
         INT = new Identifier(compiler.getSymbolTable().create("int"));
-        BOOL = new Identifier(compiler.getSymbolTable().create("bool"));
 
         // Define classes
         superClassSymbol = compiler.getSymbolTable().create("SuperPangolin");
@@ -41,7 +40,7 @@ public class TestDeclField {
 
         // Initialize field declaration parameters
         fieldName = new Identifier(compiler.getSymbolTable().create("x"));
-        initialization = new Initialization(new IntLiteral(0));
+        initialization = new Initialization(new IntLiteral(42));
     }
 
     @Test
@@ -95,5 +94,12 @@ public class TestDeclField {
         String expectedMessage = "Field name '"+ fieldName.getName() + "' already declared";
         String actualMessage = exception.getMessage();
         assertEquals(expectedMessage, actualMessage);
+    }
+
+    @Test
+    public void testVerifyInitField() throws ContextualError {
+        declField = new DeclField(INT, fieldName, initialization, Visibility.PUBLIC);
+        declField.verifyDeclField(compiler, superClassSymbol, classSymbol);
+        declField.verifyInitField(compiler, classSymbol);
     }
 }
