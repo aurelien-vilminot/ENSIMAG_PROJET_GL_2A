@@ -86,7 +86,7 @@ public class EnvironmentTypes {
         if (t1.sameType(t2) && !t1.isClass() && !t2.isClass()) return true;
 
         // Null is always a subtype of matrix and vector
-        if (t1.isNull() && (t2.isMatrixFloat() || t2.isMatrixInt() || t2.isVectorFloat() || t2.isVectorInt())) {
+        if (t1.isNull() && t2.isArray()) {
             return true;
         }
 
