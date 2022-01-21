@@ -12,18 +12,23 @@
     println("Test dimension/size functions");
 
     if(Mat.isSquarred(matrix)){
-        println("Matrix is a squarred matrix");
+        Mat.printMatrix(matrix);
+        println("matrix is a squarred matrix");
     }
 
     if(Mat.isSquarred(matrix2)){
+        Mat.printMatrix(matrix2);
         println("Matrix2 isn't a squarred matrix");
     }
 
     if(Mat.sameSize(vector, vector)){
+        Mat.printVector(vector);
         println("Vector has, of course the same dimension than itself");
     }
 
     if(!(Mat.sameDim(matrix, matrix2))){
+        Mat.printMatrix(matrix);
+        Mat.printMatrix(matrix2);
         println("Matrix 1 and Matrix2 are not of the same dimensions");
     }
 }

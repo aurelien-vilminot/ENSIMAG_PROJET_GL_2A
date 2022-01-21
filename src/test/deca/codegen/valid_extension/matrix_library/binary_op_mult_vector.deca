@@ -1,0 +1,28 @@
+#include "Library.decah"
+
+{
+    AlgebraLib Vec = new AlgebraLib();
+    float[] vector = Vec.uniformVector(3, -3.0), vector2 = Vec.uniformMatrix(3, 5.0);
+    float[] vector3 = Vec.uniformMatrix(3, 1.0), vector4 = Vec.uniformMatrix(5, 1.758), vec;
+    vector[0] = 0.5; vector2[1] = 2.7589;
+
+    println("#####################");
+    println("Test the multiplication of the two following vectors (negative result)");
+    Vec.printVector(vector);
+    Vec.printVector(vector3);
+    vec = Vec.multVec(vector, vector3);
+    Vec.printVector(vec);
+
+    println("Test the multiplication of the two following vectors (positive result)");
+    Vec.printVector(vector2);
+    Vec.printVector(vector3);
+    vec = Vec.multVec(vector2, vector3);
+    Vec.printVector(vec);
+
+    println("#####################");
+    println("Test the multiplication of the two following vectors (op not defined)");
+    Vec.printVector(vector);
+    Vec.printVector(vector4);
+    vec = Vec.multVec(vector, vector4);
+    Vec.printVector(vec);
+}
