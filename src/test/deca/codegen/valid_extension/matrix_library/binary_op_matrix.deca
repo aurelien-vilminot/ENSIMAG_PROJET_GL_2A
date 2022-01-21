@@ -4,11 +4,10 @@
     AlgebraLib Mat = new AlgebraLib();
 
     float[][] matrix = Mat.uniformMatrix(2, 2, -3.0), matrix2 = Mat.uniformMatrix(2, 2, 5.0), matrix5;
-    println("hello world");
 
-    matrix5 = matrix = Mat.addMat(matrix, matrix2);
+    Mat.printMatrix(matrix);
+    Mat.printMatrix(matrix2);
 
-    println("hello world");
-
+    matrix5 = Mat.addMat(matrix, matrix2);
     Mat.printMatrix(matrix5);
 }

@@ -157,7 +157,8 @@ class AlgebraLib{
     If mat1 and mat2 don't have same dimensions, return null.
      */
     float[][] addMat(float[][] mat1, float[][] mat2){
-        float[][] mat = new float[2][8];
+        int x = mat1[0].length;
+        float[][] mat = new float[mat1.length][mat1[0].length];
         int i = 0, j = 0;
         println("Hello WOrld !");
 
@@ -166,7 +167,6 @@ class AlgebraLib{
             println("The length of mat1 must be equals to the length of mat2");
             return null;
         }
-
         // Sum each component of mat1 with each of mat2
         while(i < mat1.length){
             j = 0;

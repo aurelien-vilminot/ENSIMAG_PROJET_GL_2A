@@ -13,6 +13,8 @@
     Mat.printVector(vector);
     Mat.printVector(vector2);
     Mat.printMatrix(matrix);
+    Mat.printVector(matrix[0]);
+    println(matrix[0].length);
 
     // Reshape the uniform vector in a 4 * 2 matrix
     println("##########################");
