@@ -74,13 +74,13 @@ public class ArrayAccess extends AbstractLValue{
     }
 
     /**
-     * Load into R0 the address of tab[index]
-     * Precondition: R0 = heap address of array ; Rn = index
+     * Load into Rx the address of tab[index]
+     * Precondition: Rx = heap address of array ; Rn = index
      *
      * @param compiler
      * @param n
      */
-    protected void codeGenAddress(DecacCompiler compiler, int n) {
+    protected void codeGenAddress(DecacCompiler compiler, int n, int x) {
         // Iterate through array
         Label begin_access = new Label(compiler.getLabelGenerator().generateLabel("begin_access"));
         Label cond_access = new Label(compiler.getLabelGenerator().generateLabel("cond_access"));
@@ -89,7 +89,7 @@ public class ArrayAccess extends AbstractLValue{
         compiler.addInstruction(new BRA(cond_access));
         compiler.addLabel(begin_access);
         // R0 <- address of 1(R0)
-        compiler.addInstruction(new LEA(new RegisterOffset(1, Register.R0), Register.R0));
+        compiler.addInstruction(new LEA(new RegisterOffset(1, Register.getR(x)), Register.getR(x)));
         // size -= 1
         compiler.addInstruction(new SUB(new ImmediateInteger(1), Register.getR(n)));
 
@@ -101,25 +101,48 @@ public class ArrayAccess extends AbstractLValue{
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
         // TODO: verify that n >= 0 and n < size
-        // TODO: restore R0
+        int maxRegister = compiler.setAndVerifyCurrentRegister(n);
+
+        int x;
+        if (n < maxRegister - 1) {
+            x = n + 1;
+        } else {
+            x = 0;
+            compiler.addInstruction(new ADDSP(new ImmediateInteger(1)));
+            compiler.addInstruction(new PUSH(Register.R0));
+        }
 
         tab.codeGenExpr(compiler, n);
-        compiler.addInstruction(new LEA(new RegisterOffset(0, Register.getR(n)), Register.R0));
+        compiler.addInstruction(new LEA(new RegisterOffset(0, Register.getR(n)), Register.getR(x)));
         // Start at index 0
-        compiler.addInstruction(new LEA(new RegisterOffset(1, Register.R0), Register.R0));
+        compiler.addInstruction(new LEA(new RegisterOffset(1, Register.getR(x)), Register.getR(x)));
         index.codeGenExpr(compiler, n);
 
         // R0 <- address of tab[index]
-        codeGenAddress(compiler, n);
+        codeGenAddress(compiler, n, x);
 
         // Load tab[index] into Rn
-        compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.R0), Register.getR(n)));
+        compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.getR(x)), Register.getR(n)));
+        if (x == 0) {
+            compiler.addInstruction(new POP(Register.R0));
+            compiler.addInstruction(new SUBSP(new ImmediateInteger(1)));
+        }
     }
 
     @Override
     protected void codeGenStore(DecacCompiler compiler, int n) {
         // TODO: verify n
-        // TODO: if n+1 > maxRegister ; also restore R0
+        int maxRegister = compiler.setAndVerifyCurrentRegister(n);
+
+        int x;
+        if (n < maxRegister - 1) {
+            x = n + 1;
+        } else {
+            x = 0;
+            compiler.addInstruction(new ADDSP(new ImmediateInteger(1)));
+            compiler.addInstruction(new PUSH(Register.R0));
+        }
+
         // Rn = value to store
         // Rn+1 <- value to store
         compiler.addInstruction(new LOAD(Register.getR(n), Register.getR(n+1)));
@@ -131,8 +154,12 @@ public class ArrayAccess extends AbstractLValue{
         index.codeGenExpr(compiler, n);
 
         // R0 <- address of tab[index]
-        codeGenAddress(compiler, n);
+        codeGenAddress(compiler, n, x);
 
         compiler.addInstruction(new STORE(Register.getR(n+1), new RegisterOffset(0, Register.getR(0))));
+        if (x == 0) {
+            compiler.addInstruction(new POP(Register.R0));
+            compiler.addInstruction(new SUBSP(new ImmediateInteger(1)));
+        }
     }
 }
