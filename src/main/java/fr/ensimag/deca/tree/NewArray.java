@@ -49,14 +49,14 @@ public class NewArray extends AbstractExpr{
         LOG.debug("verify NewArray: start");
 
         // Check array type (int or float):
-        Type arrayPrimitiveType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create(type.getName().getName())).getType();
-        if(!(arrayPrimitiveType.isFloat() || arrayPrimitiveType.isInt())){
+        Type arrayPrimitiveType = this.type.verifyType(compiler);
+        if (!(arrayPrimitiveType.isFloat() || arrayPrimitiveType.isInt())){
             throw new ContextualError("An array must contain float or int", this.getLocation());
         }
         this.setType(arrayPrimitiveType);
 
         // Check that every index is an int
-        for (AbstractExpr abstractExpr : indexList.getList()) {
+        for (AbstractExpr abstractExpr : this.indexList.getList()) {
             Type currentType = abstractExpr.verifyExpr(compiler, localEnv, currentClass);
             if (!currentType.isInt()) {
                 throw new ContextualError("Index of array must be an integer", this.getLocation());
@@ -64,28 +64,46 @@ public class NewArray extends AbstractExpr{
         }
 
         Type returnType;
-        if(indexList.getList().size() == 1){
-            if(arrayPrimitiveType.isInt()){
-                returnType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("int[]")).getType();
-            }else if(arrayPrimitiveType.isFloat()){
-                returnType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("float[]")).getType();
-            }else{
+        int arraySize = this.indexList.getList().size();
+        if (arraySize <= 2) {
+            // Generate brackets
+            StringBuilder brackets = new StringBuilder();
+            for (int i = 0 ; i < arraySize ; ++i) {
+                brackets.append("[]");
+            }
+
+            if (arrayPrimitiveType.isInt()) {
+                returnType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("int" + brackets)).getType();
+            } else if (arrayPrimitiveType.isFloat()) {
+                returnType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("float" + brackets)).getType();
+            } else {
                 throw new ContextualError("An array must contain float or int", this.getLocation());
             }
-        }else if(indexList.getList().size() == 2){
-            if(arrayPrimitiveType.isInt()){
-                returnType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("int[][]")).getType();
-            }else if(arrayPrimitiveType.isFloat()){
-                returnType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("float[][]")).getType();
-            }else{
-                throw new ContextualError("An array must contain float or int", this.getLocation());
-            }
-        }else{
+        } else {
             throw new ContextualError("The dimension of an array cannot be greater than 2", this.getLocation());
         }
+
+//        if (indexList.getList().size() == 1){
+//            if (arrayPrimitiveType.isInt()){
+//                returnType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("int[]")).getType();
+//            } else if (arrayPrimitiveType.isFloat()){
+//                returnType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("float[]")).getType();
+//            } else {
+//                throw new ContextualError("An array must contain float or int", this.getLocation());
+//            }
+//        } else if (indexList.getList().size() == 2){
+//            if (arrayPrimitiveType.isInt()){
+//                returnType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("int[][]")).getType();
+//            } else if (arrayPrimitiveType.isFloat()){
+//                returnType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("float[][]")).getType();
+//            } else {
+//                throw new ContextualError("An array must contain float or int", this.getLocation());
+//            }
+//        } else {
+//            throw new ContextualError("The dimension of an array cannot be greater than 2", this.getLocation());
+//        }
 
         LOG.debug("verify NewArray: end");
         return returnType;
     }
-
 }
