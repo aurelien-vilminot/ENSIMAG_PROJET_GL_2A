@@ -73,4 +73,9 @@ public class ArrayAccess extends AbstractLValue{
         LOG.debug("verify ArrayAccess: end");
         return returnType;
     }
+
+    @Override
+    protected void codeGenStore(DecacCompiler compiler, int n) {
+        throw new UnsupportedOperationException("not yet implemented");
+    }
 }
