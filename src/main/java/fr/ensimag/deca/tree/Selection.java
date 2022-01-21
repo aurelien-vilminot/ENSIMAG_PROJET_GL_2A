@@ -28,10 +28,9 @@ public class Selection extends AbstractLValue {
         LOG.debug("verify Selection: start");
 
         Type classType = this.expr.verifyExpr(compiler, localEnv, currentClass);
-        boolean isArray = classType.isVectorInt() || classType.isVectorFloat() || classType.isMatrixFloat() || classType.isMatrixInt();
         Type identType;
 
-        if (isArray) {
+        if (classType.isArray()) {
             // Array case
             identType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("int")).getType();
         } else {
@@ -43,7 +42,7 @@ public class Selection extends AbstractLValue {
             identType = this.ident.verifyExpr(compiler, ((ClassDefinition)compiler.getEnvironmentTypes().get(classType.getName())).getMembers(), currentClass);
         }
 
-        if (isArray || this.ident.getFieldDefinition().getVisibility() == Visibility.PUBLIC) {
+        if (classType.isArray() || this.ident.getFieldDefinition().getVisibility() == Visibility.PUBLIC) {
             // Case PUBLIC
             this.setType(identType);
             LOG.debug("verify Selection: end");
