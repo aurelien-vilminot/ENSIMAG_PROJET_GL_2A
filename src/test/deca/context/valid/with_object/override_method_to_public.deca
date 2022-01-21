@@ -1,11 +1,7 @@
 class A{ // not sure of this one ...
-    protected void m(){
-        print("ok");
-    }
+    protected int m = 1;
 }
 
 class B extends A{
-    void m(){
-        print("OK");
-    }
+    int m = 2;
 }

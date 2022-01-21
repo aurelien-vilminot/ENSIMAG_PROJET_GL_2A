@@ -1,0 +1,17 @@
+class A{ // not sure of this one ...
+    protected int m = 1;
+    int getM(){
+        return m;
+    }
+}
+
+class B extends A{
+    int m = 2;
+}
+
+{
+    A a = new A();
+    B b = new B();
+    println(a.getM());
+    println(b.m);
+}
