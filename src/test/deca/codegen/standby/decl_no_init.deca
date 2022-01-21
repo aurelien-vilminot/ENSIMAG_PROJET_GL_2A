@@ -1,4 +1,0 @@
-{
-    int c;
-    print(c);
-}

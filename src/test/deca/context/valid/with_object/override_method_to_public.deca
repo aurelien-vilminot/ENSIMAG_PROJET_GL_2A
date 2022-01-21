@@ -1,7 +1,0 @@
-class A{ // not sure of this one ...
-    protected int m = 1;
-}
-
-class B extends A{
-    int m = 2;
-}
