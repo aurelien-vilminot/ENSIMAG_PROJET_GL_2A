@@ -1,4 +1,8 @@
 {
     int a = 100 % 2;
+    int b = 101 % 2;
     print(a);
+    print(b);
+    print(100 % 2);
+    print(101 % 2);
 }

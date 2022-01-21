@@ -1,0 +1,7 @@
+class A{
+}
+{
+    if(new A()){
+        println("Hello World !");
+    }
+}
