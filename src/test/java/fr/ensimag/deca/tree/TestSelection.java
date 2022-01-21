@@ -53,6 +53,7 @@ public class TestSelection {
         ClassType pangolinType = new ClassType(classSymbol, Location.BUILTIN, superClassDefinition);
         classDefinition = new ClassDefinition(pangolinType,Location.BUILTIN, superClassDefinition);
         compiler.getEnvironmentTypes().declare(classSymbol, classDefinition);
+        when(pangolinInstance.verifyExpr(compiler, localEnv, null)).thenReturn(pangolinType);
         when(pangolinInstance.verifyExpr(eq(compiler), eq(localEnv), any(ClassDefinition.class))).thenReturn(pangolinType);
         when(pangolinInstance.getType()).thenReturn(pangolinType);
 
