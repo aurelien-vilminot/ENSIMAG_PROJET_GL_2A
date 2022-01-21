@@ -67,4 +67,13 @@ public class TestMethodCall {
         methodCall = new MethodCall(obj, meth, param);
         assertTrue(methodCall.verifyExpr(compiler, localEnv, null).isVoid());
     }
+
+    @Test
+    public void testVerifyExprNumParamMismatchError(){
+        obj = classInstance;
+        param = new ListExpr();
+        methodCall = new MethodCall(obj, meth, param);
+        Exception exception = assertThrows(ContextualError.class, () -> methodCall.verifyExpr(compiler, localEnv, null));
+        assertEquals("Number of parameters doesn't match method signature", exception.getMessage());
+    }
 }
