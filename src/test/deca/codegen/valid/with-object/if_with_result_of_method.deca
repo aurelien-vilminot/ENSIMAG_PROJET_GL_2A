@@ -1,0 +1,12 @@
+class A{
+    boolean f(){
+        return true;
+    }
+}
+
+{
+    A a = new A();
+    if(a.f()){
+        println("Hello World 2 !");
+    }
+}
