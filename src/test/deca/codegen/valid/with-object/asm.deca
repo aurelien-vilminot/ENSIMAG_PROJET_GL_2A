@@ -7,5 +7,5 @@ class A{
 
 {
     A a = new A();
-    a.print_methode();
+    a.print_method();
 }

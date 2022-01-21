@@ -1,11 +1,11 @@
 class A{
     void print_method() asm ("
-                                // ajouter autre chose
+                                WSTR \"Print !\"
                             ");
 
 }
 
 {
     A a = new A();
-    a.print_methode();
+    a.print_method();
 }
