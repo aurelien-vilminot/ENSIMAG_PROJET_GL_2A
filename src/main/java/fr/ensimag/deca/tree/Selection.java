@@ -28,15 +28,22 @@ public class Selection extends AbstractLValue {
         LOG.debug("verify Selection: start");
 
         Type classType = this.expr.verifyExpr(compiler, localEnv, currentClass);
+        boolean isArray = classType.isVectorInt() || classType.isVectorFloat() || classType.isMatrixFloat() || classType.isMatrixInt();
+        Type identType;
 
-        TypeDefinition typeDefinition = compiler.getEnvironmentTypes().get(classType.getName());
-        if (typeDefinition == null || !typeDefinition.isClass()) {
-            throw new ContextualError("Can't select field from non-class type : " + this.expr.getType().getName(), this.getLocation());
+        if (isArray) {
+            // Array case
+            identType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("int")).getType();
+        } else {
+            TypeDefinition typeDefinition = compiler.getEnvironmentTypes().get(classType.getName());
+            if (typeDefinition == null || !typeDefinition.isClass()) {
+                throw new ContextualError("Can't select field from non-class type : " + this.expr.getType().getName(), this.getLocation());
+            }
+
+            identType = this.ident.verifyExpr(compiler, ((ClassDefinition)compiler.getEnvironmentTypes().get(classType.getName())).getMembers(), currentClass);
         }
 
-        Type identType = this.ident.verifyExpr(compiler, ((ClassDefinition)compiler.getEnvironmentTypes().get(classType.getName())).getMembers(), currentClass);
-
-        if (this.ident.getFieldDefinition().getVisibility() == Visibility.PUBLIC) {
+        if (isArray || this.ident.getFieldDefinition().getVisibility() == Visibility.PUBLIC) {
             // Case PUBLIC
             this.setType(identType);
             LOG.debug("verify Selection: end");
