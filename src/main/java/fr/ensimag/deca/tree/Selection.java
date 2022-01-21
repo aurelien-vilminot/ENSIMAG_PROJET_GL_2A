@@ -32,6 +32,12 @@ public class Selection extends AbstractLValue {
 
         if (classType.isArray()) {
             // Array case
+            if (!this.ident.getName().getName().equals("length")) {
+                throw new ContextualError(
+                        "Only 'length' field is allowed for array",
+                        this.getLocation()
+                );
+            }
             identType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("int")).getType();
         } else {
             TypeDefinition typeDefinition = compiler.getEnvironmentTypes().get(classType.getName());
