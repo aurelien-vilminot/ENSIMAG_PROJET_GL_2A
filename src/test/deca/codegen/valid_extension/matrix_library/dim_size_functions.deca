@@ -1,0 +1,29 @@
+#include "Library.decah"
+
+{
+    AlgebraLib Mat=new AlgebraLib();
+
+    // Creation of an uniform matrix, an uniform vector and a linear space vector
+    float[][] matrix = Mat.uniformMatrix(2, 2, 1.787956), matrix2 = Mat.uniformMatrix(4, 7, 2);
+    float[] vector = Mat.uniformVector(8, 1.888), vector2 = Mat.linspace(-2, 8, 0.25);
+
+    // Test the dimension functions of the library
+    println("##########################");
+    println("Test dimension/size functions");
+
+    if(Mat.isSquarred(matrix)){
+        println("Matrix is a squarred matrix");
+    }
+
+    if(Mat.isSquarred(matrix2)){
+        println("Matrix2 isn't a squarred matrix");
+    }
+
+    if(Mat.sameSize(vector, vector)){
+        println("Vector has, of course the same dimension than itself");
+    }
+
+    if(!(Mat.sameDim(matrix1, matrix2))){
+        println("Matrix 1 and Matrix2 are not of the same dimensions");
+    }
+}

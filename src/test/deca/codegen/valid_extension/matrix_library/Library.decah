@@ -32,7 +32,7 @@ class AlgebraLib{
     Returns a matrix filled with elem at each component.
     The size of the matrix is height x width.
      */
-    float[][] uniformMat(int height, int width, float value){
+    float[][] uniformMatrix(int height, int width, float value){
         float[][] mat = new float[height][width];
         int i = 0;
 
@@ -46,7 +46,7 @@ class AlgebraLib{
     /*
     Returns a vector of length len with each component equals to value.
      */
-    float[] uniformVec(int len, float value){
+    float[] uniformVector(int len, float value){
         float[] vect = new float[len];
         int i = 0;
 
@@ -375,7 +375,5 @@ class AlgebraLib{
         }
         return mat2;
     }
-
-
 }
 

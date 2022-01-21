@@ -1,0 +1,23 @@
+#include "Library.decah"
+
+{
+    AlgebraLib Mat=new AlgebraLib();
+
+    // Creation of an uniform matrix, an uniform vector and a linear space vector
+    float[][] matrix = Mat.uniformMatrix(2, 2, 3.141592);
+    float[] vector = Mat.uniformVector(8, 1.6), vector2 = Mat.linspace(0, 1, 0.1);
+
+    // Print the uniform vector, matrix and the linear space vector
+    println("##########################");
+    println("Test print functions for matrices and vectors :");
+    Mat.printVector(vector);
+    Mat.printVector(vector2);
+    Mat.printMatrix(matrix);
+
+    // Reshape the uniform vector in a 4 * 2 matrix
+    println("##########################");
+    println("Test reshape function on the previous uniform vector");
+    matrix = Mat.reshape(4, 2, vector);
+    matrix[0][2] = 1.999999;
+    Mat.printMatrix(matrix);
+}
