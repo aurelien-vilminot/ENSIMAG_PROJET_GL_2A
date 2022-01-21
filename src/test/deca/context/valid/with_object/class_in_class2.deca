@@ -1,0 +1,21 @@
+class A {}
+class B {
+    A a = new A();
+    A aa;
+}
+
+class C {
+    B b = new B();
+    A a = new A();
+    A retA(){
+        return new A();
+    }
+
+    B retBB(B bb){
+        return bb;
+    }
+
+    B retB(){
+        return b;
+    }
+}

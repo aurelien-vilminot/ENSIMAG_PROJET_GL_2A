@@ -1,0 +1,15 @@
+class A {}
+class B {}
+class C extends B{}
+class D {}
+class E extends C{}
+class F {}
+class G {}
+class H {}
+class I extends G{}
+class J extends I{}
+class K {}
+class L extends K{}
+class M {}
+class N extends J{}
+class O {}

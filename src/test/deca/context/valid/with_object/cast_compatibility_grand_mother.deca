@@ -1,0 +1,39 @@
+class Animal {}
+class Horse extends Animal {}
+class DarkHorse extends Horse {}
+
+class T{}
+{
+    Object o = new Object();
+    Animal a = new Animal();
+    Horse b = new Horse();
+    DarkHorse c = new DarkHorse();
+
+    Animal aa = (Animal) (a);
+    Animal bb = (Horse) (a);
+    Animal cc = (DarkHorse) (o);
+    Horse dd = (DarkHorse) (o);
+    Horse ddd = (Horse) (a);
+
+    (Object) (o);
+    (Object) (a);
+    (Object) (b);
+    (Object) (c);
+
+    (Animal) (o);
+    (Animal) (a);
+    (Animal) (b);
+    (Animal) (c);
+
+    (Horse) (o);
+    (Horse) (a);
+    (Horse) (b);
+    (Horse) (c);
+
+    (DarkHorse) (o);
+    (DarkHorse) (a);
+    (DarkHorse) (b);
+    (DarkHorse) (c);
+
+
+}

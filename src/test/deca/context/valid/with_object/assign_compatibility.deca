@@ -1,0 +1,12 @@
+class Animal {}
+class Horse extends Animal {}
+
+{
+    Animal a = new Horse();
+    Horse aa = null;
+    Animal aaa = null;
+
+    // Horse c = new Animal();
+    // Horse b = new Horse();
+    // Horse bb = null;
+}

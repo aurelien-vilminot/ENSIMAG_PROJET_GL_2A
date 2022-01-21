@@ -1,0 +1,22 @@
+class A {
+    int a (){
+        return 1;
+    }
+    int x (){
+        return 1;
+    }
+}
+
+class B extends A {
+    int b(int c){
+        return c;
+    }
+}
+
+{
+    A a = new B();
+    B b = (B) (a);
+
+    print(a.a(), a.x());
+    print(b.b(2), b.x());
+}

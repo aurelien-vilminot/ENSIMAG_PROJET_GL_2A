@@ -1,0 +1,8 @@
+class A {}
+
+class B {
+    A a = new A();
+    A metA(A a){
+        return a;
+    }
+}

@@ -1,0 +1,10 @@
+class A {
+    int a;
+    int method(){
+        return this.a;
+    }
+
+    int method2(){
+        return a;
+    }
+}
