@@ -35,11 +35,14 @@ class AlgebraLib{
     float[][] uniformMatrix(int height, int width, float value){
         float[][] mat = new float[height][width];
         int i = 0;
+        println("Rentre dans uniform Matrix ");
 
         while(i < height){
+            print("i : ", i);
             mat[i] = this.uniformVector(width, value);
             i = i + 1;
         }
+        print("Sort de uniform Matrix");
         return mat;
     }
 
@@ -50,7 +53,10 @@ class AlgebraLib{
         float[] vect = new float[len];
         int i = 0;
 
+        println("Rentre dans uniform Vector");
         while(i < len){
+
+            println("passe dans la boucle uniformVector");
             vect[i] = value;
             i = i + 1;
         }
@@ -151,7 +157,7 @@ class AlgebraLib{
     If mat1 and mat2 don't have same dimensions, return null.
      */
     float[][] addMat(float[][] mat1, float[][] mat2){
-        float[][] mat = new float[mat1.length][mat1[0].length];
+        float[][] mat = new float[2][8];
         int i = 0, j = 0;
         println("Hello WOrld !");
 
