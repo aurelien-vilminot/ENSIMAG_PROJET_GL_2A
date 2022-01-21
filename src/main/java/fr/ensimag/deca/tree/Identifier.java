@@ -277,13 +277,13 @@ public class Identifier extends AbstractIdentifier {
                 compiler.addInstruction(new STORE(Register.getR(n), new RegisterOffset(index, Register.getR(n+1))));
             } else {
                 compiler.incTempStackCurrent(1);
-                compiler.addInstruction(new PUSH(Register.getR(n)), "save");
+                compiler.addInstruction(new PUSH(Register.getR(n)));
                 // Calculate heap address of the object into Rn
                 compiler.addInstruction(new LOAD(dAddr, Register.getR(n)));
 
                 compiler.addInstruction(new LOAD(Register.getR(n), Register.R0));
                 // R0 contains heap address of the object
-                compiler.addInstruction(new POP(Register.getR(n)), "restore");
+                compiler.addInstruction(new POP(Register.getR(n)));
                 compiler.incTempStackCurrent(-1);
                 // Load R0 into correct field in the object
                 compiler.addInstruction(new STORE(Register.getR(n), new RegisterOffset(index, Register.R0)));
