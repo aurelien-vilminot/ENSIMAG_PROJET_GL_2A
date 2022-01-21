@@ -166,7 +166,8 @@ public class DeclMethod extends AbstractDeclMethod {
 
     @Override
     protected void codeGenMethodTable(DecacCompiler compiler, AbstractIdentifier className) {
-        Label methodLabel = new Label(className.getName().toString() + "." + methodName.getName().toString());
+        Label methodLabel = new Label(compiler.getLabelGenerator()
+                .generateLabel(className.getName().toString() + "." + methodName.getName().toString()));
         methodName.getMethodDefinition().setLabel(methodLabel);
         Label codeLabel = new Label("code." + methodLabel);
         int index = methodName.getMethodDefinition().getIndex() - 1;

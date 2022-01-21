@@ -1,0 +1,5 @@
+{
+    int[] a = new int[5], b = new int [6], c, d = new int[9+7];
+    int[][] aa = new int[5][5+9], bb = new int [6][7*8], cc, dd = new int[9+7][8*9];
+    float[] aaa = new float[5], bbb = new float [6], ccc, ddd = new float[9+7];
+}

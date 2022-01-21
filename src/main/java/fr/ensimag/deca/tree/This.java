@@ -16,7 +16,6 @@ import java.io.PrintStream;
 public class This extends AbstractExpr {
     private static final Logger LOG = Logger.getLogger(Main.class);
     private final boolean impl;
-    private ClassDefinition currentClass;
 
     public This(boolean impl) {
         this.impl = impl;
@@ -25,8 +24,6 @@ public class This extends AbstractExpr {
     @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
         LOG.debug("verify This: start");
-
-        this.currentClass = currentClass;
 
         if (currentClass == null || !currentClass.getType().isClass()) {
             throw new ContextualError("Impossible to use 'this' identifier in the main program", this.getLocation());

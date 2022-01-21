@@ -77,6 +77,13 @@ public class MethodCall extends AbstractExpr {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
+        boolean pop = false;
+        if (compiler.getCurrentRegister() >= 2) {
+            compiler.incTempStackCurrent(1);
+            compiler.addInstruction(new PUSH(Register.getR(2)));
+            pop = true;
+        }
+
         compiler.addInstruction(new ADDSP(new ImmediateInteger(param.size() + 1)));
 
         // Load implicit parameter
@@ -97,6 +104,11 @@ public class MethodCall extends AbstractExpr {
         int methodIndex = meth.getMethodDefinition().getIndex();
         compiler.addInstruction(new BSR(new RegisterOffset(methodIndex, Register.getR(2))));
         compiler.addInstruction(new SUBSP(param.size() + 1));
+
+        if (pop) {
+            compiler.addInstruction(new POP(Register.getR(2)));
+            compiler.incTempStackCurrent(-1);
+        }
     }
 
     @Override
