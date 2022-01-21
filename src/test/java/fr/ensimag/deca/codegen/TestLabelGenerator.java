@@ -28,7 +28,7 @@ public class TestLabelGenerator {
         int labelTemplateNumber = 1;
         String labelTemplate = "template";
         String labelTemplateWithPoint = labelTemplate + '.';
-        assertEquals(labelTemplateWithPoint + labelTemplateNumber, this.labelGenerator.generateLabel(labelTemplate));
+        assertEquals(labelTemplate, this.labelGenerator.generateLabel(labelTemplate));
         assertEquals(labelTemplateWithPoint + ++labelTemplateNumber, this.labelGenerator.generateLabel(labelTemplate));
         assertEquals(labelTemplateWithPoint + ++labelTemplateNumber, this.labelGenerator.generateLabel(labelTemplate));
 
@@ -36,7 +36,7 @@ public class TestLabelGenerator {
         int labelTemplate2Number = 1;
         String labelTemplate2 = "foo";
         String labelTemplate2WithPoint = labelTemplate2 + '.';
-        assertEquals(labelTemplate2WithPoint + labelTemplate2Number, this.labelGenerator.generateLabel(labelTemplate2));
+        assertEquals(labelTemplate2, this.labelGenerator.generateLabel(labelTemplate2));
         assertEquals(labelTemplateWithPoint + ++labelTemplateNumber, this.labelGenerator.generateLabel(labelTemplate));
         assertEquals(labelTemplate2WithPoint + ++labelTemplate2Number, this.labelGenerator.generateLabel(labelTemplate2));
         assertEquals(labelTemplateWithPoint + ++labelTemplateNumber, this.labelGenerator.generateLabel(labelTemplate));
