@@ -44,7 +44,8 @@ public class DeclMethod extends AbstractDeclMethod {
         EnvironmentExp environmentExpCurrentClass = currentClassDefinition.getMembers();
 
         // Default index
-        int indexMethod = currentClassDefinition.incNumberOfMethods();
+        int indexMethod = currentClassDefinition.getNumberOfMethods() + 1;
+        boolean isOverride = false;
 
         if (envExpName.get(this.methodName.getName()) != null) {
             if (envExpName.get(this.methodName.getName()).isMethod()) {
@@ -66,10 +67,16 @@ public class DeclMethod extends AbstractDeclMethod {
 
                 // Get index of override method
                 indexMethod = methodDefinitionSuperEnvExp.getIndex();
+                isOverride = true;
 
             } else {
                 throw new ContextualError("Super-class symbol must be a method definition", this.getLocation());
             }
+        }
+
+        // Increment number of methods only if it is not an override
+        if (!isOverride) {
+            currentClassDefinition.incNumberOfMethods();
         }
 
         // Method declaration
