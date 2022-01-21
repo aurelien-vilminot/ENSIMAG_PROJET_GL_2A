@@ -1,0 +1,16 @@
+class A{
+    float foo(float f){
+        return f;
+    }
+
+    int foo2(int i){
+        return i;
+    }
+}
+
+{
+    A x = new A();
+    println(x.foo(2));
+    println(x.foo(2.0));
+    println(x.foo2((int) (5)))
+}

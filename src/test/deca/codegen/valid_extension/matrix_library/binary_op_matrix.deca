@@ -1,22 +1,10 @@
 #include "Library.decah"
 
 {
-    float[][] matrix = Mat.uniformMatrix(2, 2, -3), matrix2 = Mat.uniformMatrix(2, 2, 5.0);
-    float[][] matrix3 = Mat.uniformMatrix(2, 4, 2.0), matrix4 = Mat.uniformMatrix(4, 1, 7.0);
+    AlgebraLib Mat = new AlgebraLib();
 
-    println("##########################");
-    println("Test binary operations on matrices");
+    float[][] matrix = Mat.uniformMatrix(2, 2, -3.0), matrix2 = Mat.uniformMatrix(2, 2, 5.0);
+    float[][] matrix5 = matrix = Mat.addMat(matrix, matrix2);
 
-    Mat.printMatrix(Mat.addMat(matrix1, matrix2));
-    Mat.printMatrix(Mat.subMat(matrix1, matrix2));
-    Mat.printMatrix(Mat.multMat(matrix1, matrix2));
-
-    // Test binary functions on vectors
-    vector1 = Mat.uniformVector(8, 1);
-    println("##########################");
-    println("Test binary operations on matrices");
-
-    Mat.printMatrix(Mat.addMat(matrix1, matrix2));
-    Mat.printMatrix(Mat.subMat(matrix1, matrix2));
-    Mat.printMatrix(Mat.multMat(matrix1, matrix2));
+    Mat.printMatrix(matrix5);
 }

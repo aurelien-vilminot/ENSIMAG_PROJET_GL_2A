@@ -5,7 +5,7 @@
 
     // Creation of an uniform matrix, an uniform vector and a linear space vector
     float[][] matrix = Mat.uniformMatrix(2, 2, 1.787956), matrix2 = Mat.uniformMatrix(4, 7, 2);
-    float[] vector = Mat.uniformVector(8, 1.888), vector2 = Mat.linspace(-2, 8, 0.25);
+    float[] vector = Mat.uniformVector(8, 1.888), vector2 = Mat.linspace(-2.0, 8.0, 0.25);
 
     // Test the dimension functions of the library
     println("##########################");
@@ -23,7 +23,7 @@
         println("Vector has, of course the same dimension than itself");
     }
 
-    if(!(Mat.sameDim(matrix1, matrix2))){
+    if(!(Mat.sameDim(matrix, matrix2))){
         println("Matrix 1 and Matrix2 are not of the same dimensions");
     }
 }

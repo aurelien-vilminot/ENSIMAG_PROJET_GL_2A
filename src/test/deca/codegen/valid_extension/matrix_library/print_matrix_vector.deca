@@ -5,7 +5,7 @@
 
     // Creation of an uniform matrix, an uniform vector and a linear space vector
     float[][] matrix = Mat.uniformMatrix(2, 2, 3.141592);
-    float[] vector = Mat.uniformVector(8, 1.6), vector2 = Mat.linspace(0, 1, 0.1);
+    float[] vector = Mat.uniformVector(8, 1.6), vector2 = Mat.linspace(0.0, 1.0, 0.1);
 
     // Print the uniform vector, matrix and the linear space vector
     println("##########################");
@@ -18,6 +18,6 @@
     println("##########################");
     println("Test reshape function on the previous uniform vector");
     matrix = Mat.reshape(4, 2, vector);
-    matrix[0][2] = 1.999999;
+    matrix[0][0] = 1.99;
     Mat.printMatrix(matrix);
 }

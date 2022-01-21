@@ -37,7 +37,7 @@ class AlgebraLib{
         int i = 0;
 
         while(i < height){
-            mat[i] = this.uniformVec(width, value);
+            mat[i] = this.uniformVector(width, value);
             i = i + 1;
         }
         return mat;
@@ -58,7 +58,7 @@ class AlgebraLib{
     }
 
     float[] linspace(float min, float max, float step){
-        int len = (int) ((max - min) / step), i = 0;
+        int len = (int) ((max - min) / step); int i = 0;
         float[] vec = new float[len];
 
         while(i < len){
@@ -90,7 +90,7 @@ class AlgebraLib{
         while(i < height){
             j = 0;
             while(j < width){
-                mat[i][j] = vector[i * height + j];
+                mat[i][j] = vector[i * width + j];
                 j = j + 1;
             }
             i = i + 1;
@@ -153,6 +153,7 @@ class AlgebraLib{
     float[][] addMat(float[][] mat1, float[][] mat2){
         float[][] mat = new float[mat1.length][mat1[0].length];
         int i = 0, j = 0;
+        println("Hello WOrld !");
 
         // Verify mat1 and mat2 have same dimensions.
         if(!sameDim(mat1, mat2)){
@@ -200,7 +201,7 @@ class AlgebraLib{
 
     float[][] multMat(float[][] mat1, float[][] mat2){
         float[][] mat = new float[mat1.length][mat2[0].length];
-        int i_mat = 0, j_mat = 0, result;
+        int i_mat = 0, j_mat; float result = 1.0;
 
         // Verify mat1 is a matrix
         int i = 1, j = 0, rowLength = mat1[0].length;
@@ -250,7 +251,7 @@ class AlgebraLib{
         int i = 0;
 
         // Verify the length of vec1 is equals to the length of vec2
-        if(!sameSize(vec1, vec2)) {
+        if(!sameSize(vector1, vector2)) {
             println("The length of vector1 must be equals to length of vector2");
             return null;
         }
@@ -269,7 +270,7 @@ class AlgebraLib{
         int i = 0;
 
         // Verify the length of vec1 is equals to the length of vec2
-        if(!sameSize(vec1, vec2)) {
+        if(!sameSize(vector1, vector2)) {
             println("The length of vector1 must be equals to length of vector2");
             return null;
         }
@@ -284,19 +285,18 @@ class AlgebraLib{
 
     float multVector(float[] vec1, float[] vec2){
         float result = 0; int i = 0;
-
         // Verify the length of vec1 is equals to the length of vec2
         if(!sameSize(vec1, vec2)) {
             println("The length of vector1 must be equals to length of vector2");
-            return null;
+            return result;
+        } else {
+            // Mult each component of the vector and returns the float corresponding to
+            while(i < vec1.length){
+                result = result + vec1[i] * vec2[i];
+                i = i + 1;
+            }
+            return result;
         }
-
-        // Mult each component of the vector and returns the float corresponding to
-        while(i < vec1.length){
-            result = result + vec1[i] * vec2[i];
-            i = i + 1;
-        }
-        return result;
     }
 
 
