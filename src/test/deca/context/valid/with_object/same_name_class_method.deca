@@ -1,0 +1,10 @@
+class A{
+    int A(int A){
+        return 1;
+    }
+}
+
+{
+    A a = new A();
+    println(a.A(1));
+}

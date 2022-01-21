@@ -1,0 +1,6 @@
+class A{
+    int method(int a){
+        int a;
+        return a;
+    }
+}

@@ -1,0 +1,5 @@
+class A{
+    int A(int A){
+        return A;
+    }
+}
