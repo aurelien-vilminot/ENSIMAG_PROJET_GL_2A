@@ -1,0 +1,381 @@
+class AlgebraLib{
+
+    //////////////////////////////////
+    ///// Print Algebra Elements /////
+    //////////////////////////////////
+
+    void printVector(float[] vector){
+        int i = 0, len = vector.length - 1;
+        print("{ ");
+        while(i < len){
+            print(vector[i], ", ");
+            i = i + 1;
+        }
+        println(vector[len], " }");
+    }
+
+    void printMatrix(float[][] matrix){
+        int i = 0;
+        println("{");
+        while(i < matrix.length){
+            this.printVector(matrix[i]);
+            i = i + 1;
+        }
+        println("}");
+    }
+
+    ///////////////////////////////////////////
+    ///// Generation of vector and matrix /////
+    ///////////////////////////////////////////
+
+    /*
+    Returns a matrix filled with elem at each component.
+    The size of the matrix is height x width.
+     */
+    float[][] uniformMat(int height, int width, float value){
+        float[][] mat = new float[height][width];
+        int i = 0;
+
+        while(i < height){
+            mat[i] = this.uniformVec(width, value);
+            i = i + 1;
+        }
+        return mat;
+    }
+
+    /*
+    Returns a vector of length len with each component equals to value.
+     */
+    float[] uniformVec(int len, float value){
+        float[] vect = new float[len];
+        int i = 0;
+
+        while(i < len){
+            vect[i] = value;
+            i = i + 1;
+        }
+        return vect;
+    }
+
+    float[] linspace(float min, float max, float step){
+        int len = (int) ((max - min) / step), i = 0;
+        float[] vec = new float[len];
+
+        while(i < len){
+            vec[i] = min + step * i;
+            i = i + 1;
+        }
+        return vec;
+    }
+
+    //////////////////////
+    ///// About size /////
+    //////////////////////
+
+    /*
+    Reshapes a vector in matrix of height * width size.
+    The length of vector parameter must be equals to height * width.
+     */
+    float[][] reshape(int height, int width, float[] vector){
+        float[][] mat = new float[height][width];
+        int i = 0, j = 0;
+
+        // Verify if the vector can be reshaped
+        if(vector.length != height * width){
+            println("The length of the vector must be equals to height x width");
+            return null;
+        }
+
+        // Reshape the vector and returns the corresponding matrix
+        while(i < height){
+            j = 0;
+            while(j < width){
+                mat[i][j] = vector[i * height + j];
+                j = j + 1;
+            }
+            i = i + 1;
+        }
+        return mat;
+    }
+
+    /*
+    Returns true if the matrix is squarred. Otherwise returns false.
+     */
+    boolean isSquarred(float[][] mat){
+        int i = 1, rowLength = mat[0].length;
+        if(mat.length != rowLength){
+            return false;
+        }
+        while(i < mat.length){
+            if(mat[i].length != rowLength){
+                return false;
+            }
+            i = i + 1;
+        }
+        return true;
+    }
+
+    /*
+        Returns true if vec1 and vec2 have same size. Otherwise return null.
+         */
+    boolean sameSize(float[] vec1, float[] vec2){
+        return vec1.length == vec2.length;
+    }
+
+    /*
+    Returns true if mat1 and mat2 have same dimension. Otherwise returns false.
+    This method is used in all methods which need to verify if two matrices have same dimensions (add, sub...).
+     */
+    boolean sameDim(float[][] mat1, float[][] mat2){
+        int rowLength = mat1[0].length, i = 0;
+
+        if(mat1.length != mat2.length) {
+            return false;
+        } else {
+            while(i < mat1.length){
+                if((mat1[i].length != rowLength) || (mat1[i].length != mat2[i].length)){
+                    return false;
+                }
+                i = i + 1;
+            }
+            return true;
+        }
+    }
+
+    /////////////////////////////
+    ///// Binary Operations /////
+    /////////////////////////////
+
+    /*
+    Returns a matrix corresponding to the sum of mat1 and mat2.
+    If mat1 and mat2 don't have same dimensions, return null.
+     */
+    float[][] addMat(float[][] mat1, float[][] mat2){
+        float[][] mat = new float[mat1.length][mat1[0].length];
+        int i = 0, j = 0;
+
+        // Verify mat1 and mat2 have same dimensions.
+        if(!sameDim(mat1, mat2)){
+            println("The length of mat1 must be equals to the length of mat2");
+            return null;
+        }
+
+        // Sum each component of mat1 with each of mat2
+        while(i < mat1.length){
+            j = 0;
+            while(j < mat1[0].length){
+                mat[i][j] = mat1[i][j] + mat2[i][j];
+                j = j + 1;
+            }
+            i = i + 1;
+        }
+        return mat;
+    }
+
+    /*
+    Returns a matrix corresponding to the difference of mat1 and mat2.
+    If mat1 and mat2 don't have same dimensions, return null.
+     */
+    float[][] subMat(float[][] mat1, float[][] mat2){
+        float[][] mat = new float[mat1.length][mat1[0].length];
+        int i = 0, j = 0;
+
+        // Verify mat1 and mat2 have same dimensions.
+        if(!sameDim(mat1, mat2)){
+            println("The length of mat1 must be equals to the length of mat2");
+            return null;
+        }
+
+        // Sub each component of mat1 with each of mat2
+        while(i < mat1.length){
+            j = 0;
+            while(j < mat1[0].length){
+                mat[i][j] = mat1[i][j] - mat2[i][j];
+                j = j + 1;
+            }
+            i = i + 1;
+        }
+        return mat;
+    }
+
+    float[][] multMat(float[][] mat1, float[][] mat2){
+        float[][] mat = new float[mat1.length][mat2[0].length];
+        int i_mat = 0, j_mat = 0, result;
+
+        // Verify mat1 is a matrix
+        int i = 1, j = 0, rowLength = mat1[0].length;
+        while(i < mat1.length){
+            if(mat1[i].length != rowLength){
+                println("mat1 must be a correct matrix");
+                return null;
+            }
+            i = i + 1;
+        }
+
+        // Verify mat2 is a matrix
+        i = 1; rowLength = mat2[0].length;
+        while(i < mat2.length){
+            if(mat2[i].length != rowLength){
+                println("mat2 must be a correct matrix");
+                return null;
+            }
+            i = i + 1;
+        }
+
+        // Verify the two matrices can be multiplied
+        if(mat1[0].length != mat2.length){
+            println("The two matrices cannot be multiplied due to their dimension");
+            return null;
+        }
+
+        // Calculus of the multiplication between mat1 and mat2
+        while(i_mat < mat1.length){
+            j_mat = 0;
+            while(j_mat < mat2[0].length){
+                i = 0; result = 0;
+                while(i < mat1[0].length){
+                    result = result + mat1[i_mat][i] * mat2[i][j_mat];
+                    i = i + 1;
+                }
+                mat[i_mat][j_mat] = result;
+                j_mat = j_mat + 1;
+            }
+            i_mat = i_mat + 1;
+        }
+        return mat;
+    }
+
+    float[] addVector(float[] vector1, float[] vector2){
+        float[] vec = new float[vector1.length];
+        int i = 0;
+
+        // Verify the length of vec1 is equals to the length of vec2
+        if(!sameSize(vec1, vec2)) {
+            println("The length of vector1 must be equals to length of vector2");
+            return null;
+        }
+
+        // Sum each component of vec1 with each of vec2
+        while(i<vec.length){
+            vec[i] = vector1[i] + vector2[i];
+            i = i + 1;
+        }
+        return vec;
+    }
+
+
+    float[] subVector(float[] vector1, float[] vector2){
+        float[] vec = new float[vector1.length];
+        int i = 0;
+
+        // Verify the length of vec1 is equals to the length of vec2
+        if(!sameSize(vec1, vec2)) {
+            println("The length of vector1 must be equals to length of vector2");
+            return null;
+        }
+
+        // sub each component of vec1 with each one of vec2
+        while(i<vec.length){
+            vec[i] = vector1[i] - vector2[i];
+            i = i + 1;
+        }
+        return vec;
+    }
+
+    float multVector(float[] vec1, float[] vec2){
+        float result = 0; int i = 0;
+
+        // Verify the length of vec1 is equals to the length of vec2
+        if(!sameSize(vec1, vec2)) {
+            println("The length of vector1 must be equals to length of vector2");
+            return null;
+        }
+
+        // Mult each component of the vector and returns the float corresponding to
+        while(i < vec1.length){
+            result = result + vec1[i] * vec2[i];
+            i = i + 1;
+        }
+        return result;
+    }
+
+
+    ////////////////////////////
+    ///// Unary operations /////
+    ////////////////////////////
+
+    // Function to get cofactor of
+    // mat[p][q] in temp[][]. n is
+    // current dimension of mat[][]
+    void getCofactor(int[][] mat, int[][] temp, int p, int q, int n)
+    {
+        int i = 0, j = 0, row = 0, col = 0;
+        while(row < n){
+            while(col < n){
+                if(row != p && col != q){
+                    temp[i][j] = mat[row][col];
+                    j = j + 1;
+                    if(j == n - 1){
+                        j = 0;
+                        i = i + 1;
+                    }
+                }
+                col = col + 1;
+            }
+            row = row + 1;
+        }
+    }
+
+    /* Recursive function for finding determinant
+    of matrix. n is current dimension of mat[][]. */
+    int determinantOfMatrix(int[][] mat, int n){
+        int[][] temp = new int[n][n];
+        int sign = 1, f = 0, D = 0;
+
+        // Base case : if matrix contains single
+        // element
+        if (n == 1){
+            return mat[0][0];
+        }
+
+        // Iterate for each element of first row
+        while(f < n){
+            this.getCofactor(mat, temp, 0, f, n);
+            D = D + sign * mat[0][f] * determinantOfMatrix(temp, n - 1);
+            sign = -sign;
+            f = f + 1;
+        }
+
+        return D;
+    }
+
+    /*
+    Returns the transpose
+     */
+    float[][] transpose(float[][] mat){
+        int i = 1, j, rowLength = mat[0].length;
+        float[][] mat2 = new float[mat[0].length][mat.length];
+
+        // Verify mat is a matrix
+        while(i < mat.length){
+            if(mat[i].length != rowLength){
+                println("mat1 must be a correct matrix");
+                return null;
+            }
+            i = i + 1;
+        }
+
+        // Compute the transpose and returns it
+        i = 0;
+        while(i < mat.length){
+            j = 0;
+            while(j < mat[0].length) {
+                mat2[j][i] = mat[i][j];
+            }
+        }
+        return mat2;
+    }
+
+
+}
+
