@@ -294,12 +294,8 @@ public class Identifier extends AbstractIdentifier {
 
     @Override
     protected void codeGenExprBool(DecacCompiler compiler, boolean bool, Label branch, int n) {
-        compiler.setAndVerifyCurrentRegister(n);
+        this.codeGenExpr(compiler, n);
 
-        DVal dval = getExpDefinition().getOperand();
-        compiler.addInstruction(new LOAD(dval, Register.getR(n)));
-        int index = getFieldDefinition().getIndex();
-        compiler.addInstruction(new LOAD(new RegisterOffset(index, Register.getR(n)), Register.getR(n)));
         compiler.addInstruction(new CMP(new ImmediateInteger(0), Register.getR(n)));
         if (bool) {
             compiler.addInstruction(new BNE(branch));
