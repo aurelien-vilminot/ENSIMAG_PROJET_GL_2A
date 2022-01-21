@@ -30,8 +30,8 @@ public class Selection extends AbstractLValue {
         Type classType = this.expr.verifyExpr(compiler, localEnv, currentClass);
 
         TypeDefinition typeDefinition = compiler.getEnvironmentTypes().get(classType.getName());
-        if (typeDefinition == null || !typeDefinition.isClass()) { // TODO: consider changing "expr" type to AbstractIdentifier
-            throw new ContextualError("Identifier type is undefined or non class : " + ((Identifier) this.expr).getName(), this.getLocation());
+        if (typeDefinition == null || !typeDefinition.isClass()) {
+            throw new ContextualError("Can't select field from non-class type : " + this.expr.getType().getName(), this.getLocation());
         }
 
         Type identType = this.ident.verifyExpr(compiler, ((ClassDefinition)compiler.getEnvironmentTypes().get(classType.getName())).getMembers(), currentClass);
