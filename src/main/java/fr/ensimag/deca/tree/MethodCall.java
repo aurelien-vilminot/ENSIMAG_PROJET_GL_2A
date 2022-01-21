@@ -53,8 +53,16 @@ public class MethodCall extends AbstractExpr {
 
         int i = 0;
         for (AbstractExpr param: this.param.getList()) {
-            Type expectedType = methodDefinition.getSignature().paramNumber(i++);
+            Type expectedType = methodDefinition.getSignature().paramNumber(i);
             param.verifyRValue(compiler, localEnv, (ClassDefinition) compiler.getEnvironmentTypes().get(typeClass.getName()), expectedType);
+
+            if (expectedType.isFloat() && param.getType().isInt()) {
+                // Implicit float conversion
+                AbstractExpr convFloat = new ConvFloat(param);
+                convFloat.setType(expectedType);
+                this.param.set(i, convFloat);
+            }
+            i++;
         }
 
         this.setType(methodDefinition.getType());
