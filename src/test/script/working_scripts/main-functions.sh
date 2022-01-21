@@ -265,8 +265,8 @@ exec_test_from_dir (){
                         echo "  ${red}[INCORRECT] $4 does not produce an .ass file.${reset}"
                       else
                         log_output="$TEST_PATH"/"$name_test".res
-                        ima  "$TEST_PATH"/"$name_test".ass 1> /dev/null 2> "$log_output"
-                        # rm "$2"
+                        ima  "$TEST_PATH"/"$name_test".ass > "$log_output" 2>&1
+                        rm "$TEST_PATH"/"$name_test".ass
                         non_empty_file "$log_output" "$name_test"
                       fi
                   else

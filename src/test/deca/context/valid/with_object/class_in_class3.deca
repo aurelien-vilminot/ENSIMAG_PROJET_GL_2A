@@ -1,9 +1,0 @@
-class A {}
-
-class B extends A{
-    A a = new A();
-    A aa;
-    A metA(A w){
-        return w;
-    }
-}

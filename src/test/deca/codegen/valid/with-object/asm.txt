@@ -1,2 +1,1 @@
-Hé oui, ceci s'affiche !
-et ceci aussi !
+Hé oui, ceci s'affiche !et ceci aussi !
