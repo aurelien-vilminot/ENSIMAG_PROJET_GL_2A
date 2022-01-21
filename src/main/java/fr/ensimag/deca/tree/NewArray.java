@@ -89,13 +89,12 @@ public class NewArray extends AbstractExpr{
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
+        // TODO: at return, restore R1 & R2
         indexList.getList().get(0).codeGenExpr(compiler, 3);
         if (indexList.getList().size() == 1) {
             createEmptyTable(compiler);
         } else if (indexList.getList().size() == 2) {
-            indexList.getList().get(1).codeGenExpr(compiler, 2);
-            compiler.addInstruction(new MUL(Register.getR(2), Register.getR(3)));
-            createEmptyTable(compiler);
+            createEmptyTableOfTable(compiler);
         } else {
             throw new UnsupportedOperationException("Arrays of dimension >2 are not supported.");
         }
@@ -152,15 +151,14 @@ public class NewArray extends AbstractExpr{
     }
 
     /**
-     * Fill an empty table of tables
+     * Fill an empty table of tables, return its heap address in R2
      * Precondition : size of this empty table is in R3
      *
      * @param compiler
      */
     protected void createEmptyTableOfTable(DecacCompiler compiler) {
-        // TODO: remove method
         compiler.addComment("Matrix begin");
-        compiler.addInstruction(new ADDSP(new ImmediateInteger(2)));
+        compiler.addInstruction(new ADDSP(new ImmediateInteger(3)));
 
         // Load size of array in R1
         compiler.addInstruction(new LOAD(Register.getR(3), Register.R1));
@@ -168,6 +166,7 @@ public class NewArray extends AbstractExpr{
 
         // R0 <- heap address of size (length + 1)
         compiler.addInstruction(new NEW(Register.R1, Register.R0));
+        compiler.addInstruction(new PUSH(Register.R0));
 
         // Store array length inside 0(heap address)
         compiler.addInstruction(new SUB(new ImmediateInteger(1), Register.R1));
@@ -188,9 +187,11 @@ public class NewArray extends AbstractExpr{
         // R2 <- heap address of the empty table created (erase R0, R1, R2)
         compiler.addInstruction(new PUSH(Register.R0));
         compiler.addInstruction(new PUSH(Register.R1));
+        compiler.addInstruction(new PUSH(Register.getR(3)));
         createEmptyTable(compiler);
-        compiler.addInstruction(new POP(Register.R0));
+        compiler.addInstruction(new POP(Register.getR(3)));
         compiler.addInstruction(new POP(Register.R1));
+        compiler.addInstruction(new POP(Register.R0));
         // 0(R0) <- R2
         compiler.addInstruction(new STORE(Register.getR(2), new RegisterOffset(0, Register.R0)));
         // size -= 1
@@ -201,7 +202,8 @@ public class NewArray extends AbstractExpr{
         compiler.addInstruction(new BNE(begin_fill));
 
         // Restore erased register
-        compiler.addInstruction(new SUBSP(new ImmediateInteger(2)));
+        compiler.addInstruction(new POP(Register.getR(2)));
+        compiler.addInstruction(new SUBSP(new ImmediateInteger(3)));
         compiler.addComment("Matrix end");
     }
 }
