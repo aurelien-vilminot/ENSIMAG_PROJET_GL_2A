@@ -1,0 +1,22 @@
+class A{
+    int a = 0;
+    void print_a(){
+        println("a");
+    }
+}
+
+class B extends A{
+    int b = 1;
+    void print_b(){
+        println("b");
+    }
+}
+
+{
+    B b = new B();
+    int i = 0;
+    while((i = i + 1) < 10){
+        b.b = b.b + 1;
+        print(b.b);
+    }
+}

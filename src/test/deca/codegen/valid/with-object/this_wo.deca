@@ -7,19 +7,18 @@ class A{
 class B extends A{
     void m(){
         this.a = 5;
-        this.aa = 5;
+        this.aa = 18;
         this.aaa = 90;
     }
 
-    int m2(int aa){
+    int m2(){
         int a = 10;
-        return a + this.aa + this.aaa;
+        return a + aa + this.aaa;
     }
 }
 
 {
     B b = new B();
     b.m();
-    println(b.m2(12)); // 10 + 5+ 90 = 107
-
+    println(b.m2()); // 10 + 18 + 90 = 118
 }
