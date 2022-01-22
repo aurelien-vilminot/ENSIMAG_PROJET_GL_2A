@@ -1,0 +1,19 @@
+class A{
+    int x;
+}
+
+class B extends A{
+    float f;
+}
+
+class C{
+    A f(int i) {
+        return new A();
+    }
+}
+
+class D extends C{
+    B f(int i){
+        return new B();
+    }
+}
