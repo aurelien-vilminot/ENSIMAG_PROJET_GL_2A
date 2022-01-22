@@ -160,7 +160,6 @@ class AlgebraLib{
         int x = mat1[0].length;
         float[][] mat = new float[mat1.length][mat1[0].length];
         int i = 0, j = 0;
-        println("Hello WOrld !");
 
         // Verify mat1 and mat2 have same dimensions.
         if(!sameDim(mat1, mat2)){

@@ -1,0 +1,36 @@
+#include "Library.decah"
+
+{
+    AlgebraLib Mat = new AlgebraLib();
+    float[][] matrix = Mat.uniformMatrix(2, 2, -3.0), matrix2 = Mat.uniformMatrix(2, 4, 5.0);
+    float[][] matrix3 = Mat.uniformMatrix(2, 2, 1.0), matrix4 = Mat.uniformMatrix(4, 7, 1.0), mat;
+    matrix3[0][1] = 0.5; matrix2[0][0] = 2.7589;
+
+    println("#####################");
+    println("Test the multiplication of the two following matrices (squarred matrices)");
+    Mat.printMatrix(matrix);
+    Mat.printMatrix(matrix3);
+    mat = Mat.multMat(matrix, matrix3);
+    Mat.printMatrix(mat);
+
+    println("#####################");
+    println("Test the multiplication of the two following matrices (one squarred)");
+    Mat.printMatrix(matrix);
+    Mat.printMatrix(matrix2);
+    mat = Mat.multMat(matrix, matrix2);
+    Mat.printMatrix(mat);
+
+    println("#####################");
+    println("Test the multiplication of the two following matrices (no one squarred)");
+    Mat.printMatrix(matrix2);
+    Mat.printMatrix(matrix4);
+    mat = Mat.subMat(matrix2, matrix4);
+    Mat.printMatrix(mat);
+
+    println("#####################");
+    println("Test the multiplication of the two following matrices (no one squarred)");
+    Mat.printMatrix(matrix);
+    Mat.printMatrix(matrix4);
+    mat = Mat.subMat(matrix, matrix4);
+    Mat.printMatrix(mat);
+}
