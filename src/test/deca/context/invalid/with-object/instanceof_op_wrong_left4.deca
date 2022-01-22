@@ -1,0 +1,7 @@
+class A{}
+
+{
+    A a = new A();
+    int[] tab = new int[2];
+    tab instanceof A;
+}

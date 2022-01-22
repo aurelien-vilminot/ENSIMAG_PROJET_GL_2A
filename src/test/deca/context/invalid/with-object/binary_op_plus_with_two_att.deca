@@ -1,0 +1,6 @@
+class A{
+    int x = 0, y = 1;
+}
+{
+    println(x + y);
+}
