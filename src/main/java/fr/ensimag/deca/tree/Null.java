@@ -19,7 +19,6 @@ public class Null extends AbstractExpr {
         LOG.debug("verify Null: start");
 
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
-//        Validate.notNull(localEnv, "Env_exp object should not be null");
 
         NullType nullType = new NullType(compiler.getSymbolTable().create("null"));
         this.setType(nullType);

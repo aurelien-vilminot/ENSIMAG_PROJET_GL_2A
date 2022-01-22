@@ -90,6 +90,14 @@ public class NewArray extends AbstractExpr{
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
         // TODO: at return, restore R1 & R2
+        if (n > 2) {
+            compiler.incTempStackCurrent(1);
+            compiler.addInstruction(new PUSH(Register.getR(2)));
+        }
+        if (n > 3) {
+            compiler.incTempStackCurrent(1);
+            compiler.addInstruction(new PUSH(Register.getR(3)));
+        }
         indexList.getList().get(0).codeGenExpr(compiler, 3);
         if (indexList.getList().size() == 1) {
             createEmptyTable(compiler);
@@ -99,6 +107,14 @@ public class NewArray extends AbstractExpr{
             throw new UnsupportedOperationException("Arrays of dimension >2 are not supported.");
         }
         compiler.addInstruction(new LEA(new RegisterOffset(0, Register.getR(2)), Register.getR(n)));
+        if (n > 3) {
+            compiler.addInstruction(new PUSH(Register.getR(3)));
+            compiler.incTempStackCurrent(-1);
+        }
+        if (n > 2) {
+            compiler.addInstruction(new POP(Register.getR(2)));
+            compiler.incTempStackCurrent(-1);
+        }
     }
 
     /**
@@ -114,13 +130,16 @@ public class NewArray extends AbstractExpr{
         compiler.addInstruction(new LOAD(Register.getR(3), Register.R1));
         compiler.addInstruction(new ADD(new ImmediateInteger(1), Register.R1));
 
-        // R0, R2 <- heap address of size (length + 1)
-        compiler.addInstruction(new NEW(Register.R1, Register.R0));
-        compiler.addInstruction(new LEA(new RegisterOffset(0, Register.R0), Register.getR(2)));
+        // R2 <- heap address of size (length + 1)
+        compiler.addInstruction(new NEW(Register.R1, Register.getR(2)));
+        compiler.addHeapOverflowError();
+        //compiler.addInstruction(new LEA(new RegisterOffset(0, Register.R0), Register.getR(2)));
+        compiler.incTempStackCurrent(1);
+        compiler.addInstruction(new PUSH(Register.getR(2)));
 
         // Store array length inside 0(heap address)
         compiler.addInstruction(new SUB(new ImmediateInteger(1), Register.R1));
-        compiler.addInstruction(new STORE(Register.R1, new RegisterOffset(0, Register.R0)));
+        compiler.addInstruction(new STORE(Register.R1, new RegisterOffset(0, Register.getR(2))));
 
         // Fill table with zeros
         Label begin_fill = new Label(compiler.getLabelGenerator().generateLabel("begin_fill"));
@@ -137,15 +156,18 @@ public class NewArray extends AbstractExpr{
         compiler.addInstruction(new BRA(cond_fill));
         compiler.addLabel(begin_fill);
         // R0 <- address of 1(R0)
-        compiler.addInstruction(new LEA(new RegisterOffset(1, Register.R0), Register.R0));
+        compiler.addInstruction(new LEA(new RegisterOffset(1, Register.getR(2)), Register.getR(2)));
         // 0(R0) <- default value
-        compiler.addInstruction(new STORE(Register.getR(3), new RegisterOffset(0, Register.R0)));
+        compiler.addInstruction(new STORE(Register.getR(3), new RegisterOffset(0, Register.getR(2))));
         // size -= 1
         compiler.addInstruction(new SUB(new ImmediateInteger(1), Register.R1));
 
         compiler.addLabel(cond_fill);
         compiler.addInstruction(new CMP(new ImmediateInteger(0), Register.R1));
         compiler.addInstruction(new BNE(begin_fill));
+
+        compiler.addInstruction(new POP(Register.getR(2)));
+        compiler.incTempStackCurrent(-1);
 
         compiler.addComment("Array end");
     }
@@ -158,7 +180,6 @@ public class NewArray extends AbstractExpr{
      */
     protected void createEmptyTableOfTable(DecacCompiler compiler) {
         compiler.addComment("Matrix begin");
-        compiler.addInstruction(new ADDSP(new ImmediateInteger(3)));
 
         // Load size of array in R1
         compiler.addInstruction(new LOAD(Register.getR(3), Register.R1));
@@ -166,6 +187,8 @@ public class NewArray extends AbstractExpr{
 
         // R0 <- heap address of size (length + 1)
         compiler.addInstruction(new NEW(Register.R1, Register.R0));
+        compiler.addHeapOverflowError();
+        compiler.incTempStackCurrent(1);
         compiler.addInstruction(new PUSH(Register.R0));
 
         // Store array length inside 0(heap address)
@@ -173,7 +196,11 @@ public class NewArray extends AbstractExpr{
         compiler.addInstruction(new STORE(Register.R1, new RegisterOffset(0, Register.R0)));
 
         // R3 <- size of the empty tables to generate inside
+        compiler.incTempStackCurrent(1);
+        compiler.addInstruction(new PUSH(Register.R0));
         indexList.getList().get(1).codeGenExpr(compiler, 3);
+        compiler.addInstruction(new POP(Register.R0));
+        compiler.incTempStackCurrent(-1);
 
         // Fill table with empty tables
         Label begin_fill = new Label(compiler.getLabelGenerator().generateLabel("begin_fill"));
@@ -185,6 +212,7 @@ public class NewArray extends AbstractExpr{
         compiler.addInstruction(new LEA(new RegisterOffset(1, Register.R0), Register.R0));
 
         // R2 <- heap address of the empty table created (erase R0, R1, R2)
+        compiler.incTempStackCurrent(3);
         compiler.addInstruction(new PUSH(Register.R0));
         compiler.addInstruction(new PUSH(Register.R1));
         compiler.addInstruction(new PUSH(Register.getR(3)));
@@ -192,6 +220,7 @@ public class NewArray extends AbstractExpr{
         compiler.addInstruction(new POP(Register.getR(3)));
         compiler.addInstruction(new POP(Register.R1));
         compiler.addInstruction(new POP(Register.R0));
+        compiler.incTempStackCurrent(-3);
         // 0(R0) <- R2
         compiler.addInstruction(new STORE(Register.getR(2), new RegisterOffset(0, Register.R0)));
         // size -= 1
@@ -201,9 +230,9 @@ public class NewArray extends AbstractExpr{
         compiler.addInstruction(new CMP(new ImmediateInteger(0), Register.R1));
         compiler.addInstruction(new BNE(begin_fill));
 
-        // Restore erased register
+        // R2 <- heap address of the matrix
         compiler.addInstruction(new POP(Register.getR(2)));
-        compiler.addInstruction(new SUBSP(new ImmediateInteger(3)));
+        compiler.incTempStackCurrent(-1);
         compiler.addComment("Matrix end");
     }
 }

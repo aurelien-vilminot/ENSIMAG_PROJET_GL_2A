@@ -43,7 +43,6 @@ public class FloatLiteral extends AbstractExpr {
         LOG.debug("verify FloatLiteral: start");
 
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
-//        Validate.notNull(localEnv, "Env_exp object should not be null");
 
         Type floatType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("float")).getType();
         this.setType(floatType);

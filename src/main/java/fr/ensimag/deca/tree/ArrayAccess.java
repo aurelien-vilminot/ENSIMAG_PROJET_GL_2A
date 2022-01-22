@@ -103,16 +103,23 @@ public class ArrayAccess extends AbstractLValue{
         // TODO: verify that n >= 0 and n < size
         // TODO: restore R0
 
+        // Rn <- heap address of array
         tab.codeGenExpr(compiler, n);
         compiler.addInstruction(new LEA(new RegisterOffset(0, Register.getR(n)), Register.R0));
-        // Start at index 0
+        // R0 <- heap address of index 0
         compiler.addInstruction(new LEA(new RegisterOffset(1, Register.R0), Register.R0));
+
+        // Rn <- index
+        compiler.incTempStackCurrent(1);
+        compiler.addInstruction(new PUSH(Register.R0));
         index.codeGenExpr(compiler, n);
+        compiler.addInstruction(new POP(Register.R0));
+        compiler.incTempStackCurrent(-1);
 
         // R0 <- address of tab[index]
         codeGenAddress(compiler, n);
 
-        // Load tab[index] into Rn
+        // Rn <- value of tab[index]
         compiler.addInstruction(new LOAD(new RegisterOffset(0, Register.R0), Register.getR(n)));
     }
 
@@ -120,19 +127,34 @@ public class ArrayAccess extends AbstractLValue{
     protected void codeGenStore(DecacCompiler compiler, int n) {
         // TODO: verify n
         // TODO: if n+1 > maxRegister ; also restore R0
-        // Rn = value to store
-        // Rn+1 <- value to store
-        compiler.addInstruction(new LOAD(Register.getR(n), Register.getR(n+1)));
 
+        // Rn = value to store inside tab[index]
+        compiler.incTempStackCurrent(1);
+        compiler.addInstruction(new PUSH(Register.getR(n)));
+
+        //compiler.addInstruction(new LOAD(Register.getR(n), Register.getR(n+1)));
+
+        // Rn <- heap address of array
         tab.codeGenExpr(compiler, n);
         compiler.addInstruction(new LEA(new RegisterOffset(0, Register.getR(n)), Register.R0));
-        // Start at index 0
+        // R0 <- heap address of index 0
         compiler.addInstruction(new LEA(new RegisterOffset(1, Register.R0), Register.R0));
+
+        // Rn <- index
+        compiler.incTempStackCurrent(1);
+        compiler.addInstruction(new PUSH(Register.R0));
         index.codeGenExpr(compiler, n);
+        compiler.addInstruction(new POP(Register.R0));
+        compiler.incTempStackCurrent(-1);
 
         // R0 <- address of tab[index]
         codeGenAddress(compiler, n);
 
-        compiler.addInstruction(new STORE(Register.getR(n+1), new RegisterOffset(0, Register.getR(0))));
+        // Rn = value to store inside tab[index]
+        compiler.addInstruction(new POP(Register.getR(n)));
+        compiler.incTempStackCurrent(-1);
+
+        // 0(R0) <- value of Rn
+        compiler.addInstruction(new STORE(Register.getR(n), new RegisterOffset(0, Register.getR(0))));
     }
 }

@@ -49,14 +49,9 @@ public class IfThenElse extends AbstractInst {
             throws ContextualError {
         LOG.debug("verify ifThenElse: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
-//        Validate.notNull(localEnv, "Env_exp object should not be null");
         Validate.notNull(returnType, "Return type should not be null");
 
-        this.condition.verifyInst(compiler, localEnv, currentClass, returnType);
-
-        if (!this.condition.getType().isBoolean()) {
-            throw new ContextualError("The condition must be only boolean type", this.getLocation());
-        }
+        this.condition.verifyCondition(compiler, localEnv, currentClass);
 
         this.thenBranch.verifyListInst(compiler, localEnv, currentClass, returnType);
         this.elseBranch.verifyListInst(compiler, localEnv, currentClass, returnType);

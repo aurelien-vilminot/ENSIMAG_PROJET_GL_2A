@@ -62,14 +62,9 @@ public class While extends AbstractInst {
             throws ContextualError {
         LOG.debug("verify while: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
-//        Validate.notNull(localEnv, "Env_exp object should not be null");
         Validate.notNull(returnType, "Return type should not be null");
 
         this.condition.verifyCondition(compiler, localEnv, currentClass);
-
-        if (!this.condition.getType().isBoolean()) {
-            throw new ContextualError("The condition must be only boolean type", this.getLocation());
-        }
 
         this.body.verifyListInst(compiler, localEnv, currentClass, returnType);
         LOG.debug("verify while: end");

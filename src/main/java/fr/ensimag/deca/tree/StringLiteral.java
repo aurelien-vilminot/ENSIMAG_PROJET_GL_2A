@@ -37,7 +37,6 @@ public class StringLiteral extends AbstractStringLiteral {
         LOG.debug("verify StringLiteral: start");
 
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
-//        Validate.notNull(localEnv, "Env_exp object should not be null");
 
         StringType stringType = new StringType(compiler.getSymbolTable().create("string"));
         this.setType(stringType);
