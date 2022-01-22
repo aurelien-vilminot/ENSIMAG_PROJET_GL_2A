@@ -56,7 +56,7 @@ public class TestWhile {
             w.verifyInst(compiler, localEnv, null, fakeBoolType);
         });
 
-        String expectedMessage = "The condition must be only boolean type";
+        String expectedMessage = "Expression type must be boolean";
         String actualMessage = exception.getMessage();
         assertEquals(expectedMessage, actualMessage);
     }
