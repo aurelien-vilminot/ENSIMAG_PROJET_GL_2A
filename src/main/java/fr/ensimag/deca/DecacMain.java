@@ -17,13 +17,13 @@ public class DecacMain {
     private static Logger LOG = Logger.getLogger(DecacMain.class);
 
     public static void printAvailableOptions() {
-        String[] options = {"-b (banner) : affiche une bannière indiquant le nom de l’équipe",
-        "-p (parse) : arrête decac après l’étape de construction de l’arbre, et affiche la décompilation de ce dernier (i.e. s’il n’y a qu’un fichier source à compiler, la sortie doit être un programme deca syntaxiquement correct)",
-        "-v (verification) : arrête decac après l’étape de vérifications (ne produit aucune sortie en l’absence d’erreur)",
-        "-n (no check) : supprime les tests à l’exécution spécifiés dans les points 11.1 et 11.3 de la sémantique de Deca.",
-        "-r X (registers) : limite les registres banalisés disponibles à R0 ... R{X-1}, avec 4 <= X <= 16",
-        "-d (debug) : active les traces de debug. Répéter l’option plusieurs fois pour avoir plus de traces.",
-        "-P (parallel) : s’il y a plusieurs fichiers sources, lance la compilation des fichiers en parallèle (pour accélérer la compilation)"};
+        String[] options = {"-b (banner) : show the team banner",
+        "-p (parse) : stop decac after the tree construction, and show its decompilation (i.e. if there is only one source file, the output must be a deca program with a valid syntax)",
+        "-v (verification) : stop decac after the verification step (no output if there is no error)",
+        "-n (no check) : ignore the tests during execution specified from 11.1 to 11.3 in the [Semantique] section",
+        "-r X (registers) : limit the available registers to R0, ..., R{X-1}, with 4 <= X <= 16",
+        "-d (debug) : activate debug traces. Repeat the option multiple times for more traces.",
+        "-P (parallel) : if there are multiple source files, launch the parallel compilation of those files (to speed up compilation)"};
         for (String s : options) {
             System.out.println(s);
         }
