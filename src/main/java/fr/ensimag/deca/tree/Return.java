@@ -51,6 +51,12 @@ public class Return extends AbstractInst {
 
         this.expr.verifyRValue(compiler, localEnv, currentClass, returnType);
 
+        if (returnType.isFloat() && this.expr.getType().isInt()) {
+            // Implicit float conversion
+            this.expr = new ConvFloat(this.expr);
+            this.expr.setType(returnType);
+        }
+
         LOG.debug("verify Return: end");
     }
 
