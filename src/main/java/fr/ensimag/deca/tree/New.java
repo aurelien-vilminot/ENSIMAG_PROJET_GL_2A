@@ -60,7 +60,7 @@ public class New extends AbstractExpr {
         int size = ident.getClassDefinition().getNumberOfFields() + 1;
         DAddr methodAddr = ((ClassDefinition) (compiler.getEnvironmentTypes().get(ident.getName()))).getOperand();
         compiler.addInstruction(new NEW(size, Register.getR(n)));
-        compiler.addStackOverflowError(false);
+        compiler.addHeapOverflowError();
         // store method table adress in Rn
         compiler.addInstruction(new LEA(methodAddr, Register.getR(zero)));
         compiler.addInstruction(new STORE(Register.getR(zero), new RegisterOffset(0, Register.getR(n))));

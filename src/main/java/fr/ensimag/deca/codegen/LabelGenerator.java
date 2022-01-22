@@ -16,6 +16,7 @@ public class LabelGenerator {
 
     private boolean overflowError = false;
     private boolean stackOverflowError = false;
+    private boolean heapOverflowError = false;
     private boolean ioError = false;
     private boolean dereferenceError = false;
     private boolean returnError = false;
@@ -43,6 +44,18 @@ public class LabelGenerator {
     }
     public void setStackOverflowError() {
         this.stackOverflowError = true;
+    }
+
+    public Label getHeapOverFlowLabel() {
+        setHeapOverflowError();
+        return new Label("heap_overflow_error");
+    }
+
+    public boolean getHeapOverflowError() {
+        return heapOverflowError;
+    }
+    public void setHeapOverflowError() {
+        this.heapOverflowError = true;
     }
 
     public Label getIoLabel() {

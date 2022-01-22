@@ -132,7 +132,7 @@ public class NewArray extends AbstractExpr{
 
         // R2 <- heap address of size (length + 1)
         compiler.addInstruction(new NEW(Register.R1, Register.getR(2)));
-        compiler.addStackOverflowError(false);
+        compiler.addHeapOverflowError();
         //compiler.addInstruction(new LEA(new RegisterOffset(0, Register.R0), Register.getR(2)));
         compiler.incTempStackCurrent(1);
         compiler.addInstruction(new PUSH(Register.getR(2)));
@@ -187,7 +187,7 @@ public class NewArray extends AbstractExpr{
 
         // R0 <- heap address of size (length + 1)
         compiler.addInstruction(new NEW(Register.R1, Register.R0));
-        compiler.addStackOverflowError(false);
+        compiler.addHeapOverflowError();
         compiler.incTempStackCurrent(1);
         compiler.addInstruction(new PUSH(Register.R0));
 
