@@ -157,6 +157,12 @@ public class DecacCompiler implements Runnable {
         }
     }
 
+    public void addHeapOverflowError() {
+        if (!this.compilerOptions.getNoCheck()) {
+            addInstruction(new BOV(getLabelGenerator().getHeapOverFlowLabel()));
+        }
+    }
+
     public void addIoError() {
         if (!this.compilerOptions.getNoCheck()) {
             addInstruction(new BOV(getLabelGenerator().getIoLabel()));

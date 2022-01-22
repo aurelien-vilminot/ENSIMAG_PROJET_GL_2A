@@ -7,14 +7,8 @@ import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import java.io.PrintStream;
 
-import fr.ensimag.ima.pseudocode.DAddr;
-import fr.ensimag.ima.pseudocode.DVal;
-import fr.ensimag.ima.pseudocode.Register;
-import fr.ensimag.ima.pseudocode.RegisterOffset;
-import fr.ensimag.ima.pseudocode.instructions.LOAD;
-import fr.ensimag.ima.pseudocode.instructions.POP;
-import fr.ensimag.ima.pseudocode.instructions.PUSH;
-import fr.ensimag.ima.pseudocode.instructions.STORE;
+import fr.ensimag.ima.pseudocode.*;
+import fr.ensimag.ima.pseudocode.instructions.*;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -247,12 +241,18 @@ public class Identifier extends AbstractIdentifier {
 
     @Override
     public DVal dval(DecacCompiler compiler) {
+        if (definition.isField()) {
+            return null;
+        }
         return getExpDefinition().getOperand();
     }
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
-        super.codeGenExpr(compiler, n);
+        compiler.setAndVerifyCurrentRegister(n);
+
+        DVal dval = getExpDefinition().getOperand();
+        compiler.addInstruction(new LOAD(dval, Register.getR(n)));
 
         if (definition.isField()) {
             // if identifier is field, Rn contains its heap address
@@ -265,7 +265,7 @@ public class Identifier extends AbstractIdentifier {
     protected void codeGenStore(DecacCompiler compiler, int n) {
         int maxRegister = compiler.setAndVerifyCurrentRegister(n);
 
-        DAddr dAddr = (DAddr) dval(compiler);
+        DAddr dAddr = getExpDefinition().getOperand();
         if (definition.isField()) {
             int index = getFieldDefinition().getIndex();
             if (n < maxRegister) {
@@ -290,6 +290,18 @@ public class Identifier extends AbstractIdentifier {
             }
         } else {
             compiler.addInstruction(new STORE(Register.getR(n), dAddr));
+        }
+    }
+
+    @Override
+    protected void codeGenExprBool(DecacCompiler compiler, boolean bool, Label branch, int n) {
+        this.codeGenExpr(compiler, n);
+
+        compiler.addInstruction(new CMP(new ImmediateInteger(0), Register.getR(n)));
+        if (bool) {
+            compiler.addInstruction(new BNE(branch));
+        } else {
+            compiler.addInstruction(new BEQ(branch));
         }
     }
 
