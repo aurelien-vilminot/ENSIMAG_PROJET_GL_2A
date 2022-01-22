@@ -293,7 +293,6 @@ class AlgebraLib{
         // Verify the length of vec1 is equals to the length of vec2
         if(!sameSize(vec1, vec2)) {
             println("The length of vector1 must be equals to length of vector2");
-            return result;
         } else {
             // Mult each component of the vector and returns the float corresponding to
             while(i < vec1.length){
