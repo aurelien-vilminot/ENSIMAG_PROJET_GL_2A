@@ -19,7 +19,6 @@ public class LabelGenerator {
     private boolean heapOverflowError = false;
     private boolean ioError = false;
     private boolean dereferenceError = false;
-    private boolean returnError = false;
     private Label endLabel;
 
     public Label getOverFlowLabel() {
@@ -81,19 +80,6 @@ public class LabelGenerator {
 
     public boolean getDereferenceError() {
         return dereferenceError;
-    }
-
-    public void setReturnError() {
-        this.returnError = true;
-    }
-
-    public boolean getReturnError() {
-        return returnError;
-    }
-
-    public Label getReturnLabel() {
-        setReturnError();
-        return new Label("no_return");
     }
 
     public void setEndLabel(Label endLabel) {
