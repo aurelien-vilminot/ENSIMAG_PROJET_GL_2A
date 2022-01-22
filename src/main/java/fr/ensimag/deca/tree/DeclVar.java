@@ -40,7 +40,6 @@ public class DeclVar extends AbstractDeclVar {
             throws ContextualError {
         LOG.debug("verify DeclVar: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
-//        Validate.notNull(localEnv, "Env_exp object should not be null");
 
         this.currentClass = currentClass;
 

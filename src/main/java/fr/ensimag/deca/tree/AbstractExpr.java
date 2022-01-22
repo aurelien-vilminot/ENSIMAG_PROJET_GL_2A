@@ -87,7 +87,6 @@ public abstract class AbstractExpr extends AbstractInst {
             throws ContextualError {
         LOG.debug("verify RValue: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
-//        Validate.notNull(localEnv, "Env_exp object should not be null");
         Validate.notNull(expectedType, "Expected type should not be null");
 
         Type currentType = this.verifyExpr(compiler, localEnv, currentClass);
@@ -112,7 +111,6 @@ public abstract class AbstractExpr extends AbstractInst {
             throws ContextualError {
         LOG.debug("verify Inst: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
-//        Validate.notNull(localEnv, "Env_exp object should not be null");
 
         this.setType(this.verifyExpr(compiler, localEnv, currentClass));
         LOG.debug("verify Inst: end");
@@ -132,7 +130,6 @@ public abstract class AbstractExpr extends AbstractInst {
             ClassDefinition currentClass) throws ContextualError {
         LOG.debug("verify Condition: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
-//        Validate.notNull(localEnv, "Env_exp object should not be null");
 
         Type currentType = this.verifyExpr(compiler, localEnv, currentClass);
 
