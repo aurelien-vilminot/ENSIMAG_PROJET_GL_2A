@@ -24,7 +24,11 @@ public class MethodAsmBody extends AbstractMethodBody{
     }
 
     @Override
-    protected void verifyMethodBody(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass, Type returnType) throws ContextualError {
+    protected void verifyMethodBody(DecacCompiler compiler,
+                                    EnvironmentExp localEnv,
+                                    ClassDefinition currentClass,
+                                    Type returnType)
+            throws ContextualError {
         LOG.debug("verify MethodAsmBody: start");
         Validate.notNull(compiler, "Compiler object should not be null");
 

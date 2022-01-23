@@ -5,8 +5,6 @@ import fr.ensimag.deca.tools.SymbolTable.Symbol;
 import fr.ensimag.deca.tree.Location;
 import org.apache.commons.lang.Validate;
 
-import java.util.Objects;
-
 /**
  * Type defined by a class.
  *

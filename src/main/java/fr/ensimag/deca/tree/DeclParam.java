@@ -30,7 +30,10 @@ public class DeclParam extends AbstractDeclParam {
 
         Type type = this.type.verifyType(compiler);
         if (type.isVoid()) {
-            throw new ContextualError("Void type is not allowed for this parameter : " + this.type.getName(), this.getLocation());
+            throw new ContextualError(
+                    "Void type is not allowed for this parameter : " + this.type.getName(),
+                    this.getLocation()
+            );
         }
         this.name.setType(type);
         LOG.debug("verify DeclParam: end");
