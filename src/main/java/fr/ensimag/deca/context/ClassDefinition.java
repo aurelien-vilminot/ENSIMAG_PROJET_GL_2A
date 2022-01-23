@@ -72,7 +72,7 @@ public class ClassDefinition extends TypeDefinition {
         // Cast succeeds by construction because the type has been correctly set
         // in the constructor.
         return (ClassType) super.getType();
-    };
+    }
 
     public ClassDefinition getSuperClass() {
         return superClass;

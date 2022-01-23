@@ -5,9 +5,7 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 
-import fr.ensimag.deca.tools.SymbolTable;
 import fr.ensimag.ima.pseudocode.DAddr;
-import fr.ensimag.ima.pseudocode.GPRegister;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
 import org.apache.commons.lang.Validate;
@@ -54,7 +52,10 @@ public class DeclVar extends AbstractDeclVar {
         try {
             localEnv.declare(this.varName.getName(), new VariableDefinition(currentType, this.getLocation()));
         } catch (EnvironmentExp.DoubleDefException doubleDefException) {
-            throw new ContextualError("Variable name '"+ this.varName.getName() + "' already declared", this.getLocation());
+            throw new ContextualError(
+                    "Variable name '"+ this.varName.getName() + "' already declared",
+                    this.getLocation()
+            );
         }
 
         // Check var definition

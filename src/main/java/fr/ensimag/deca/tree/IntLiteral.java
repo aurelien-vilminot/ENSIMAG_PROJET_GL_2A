@@ -8,9 +8,7 @@ import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.WINT;
-import fr.ensimag.ima.pseudocode.instructions.WSTR;
 
-import fr.ensimag.deca.tools.SymbolTable;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 

@@ -21,7 +21,10 @@ public class DeclMethod extends AbstractDeclMethod {
     private final AbstractMethodBody methodBody;
     private EnvironmentExp localEnv;
 
-    public DeclMethod(AbstractIdentifier returnType, AbstractIdentifier methodName, ListDeclParam listDeclParam, AbstractMethodBody methodBody) {
+    public DeclMethod(AbstractIdentifier returnType,
+                      AbstractIdentifier methodName,
+                      ListDeclParam listDeclParam,
+                      AbstractMethodBody methodBody) {
         Validate.notNull(returnType);
         Validate.notNull(methodName);
         Validate.notNull(methodBody);
@@ -32,7 +35,10 @@ public class DeclMethod extends AbstractDeclMethod {
     }
 
     @Override
-    protected void verifyDeclMethod(DecacCompiler compiler, SymbolTable.Symbol superSymbol, SymbolTable.Symbol classSymbol) throws ContextualError {
+    protected void verifyDeclMethod(DecacCompiler compiler,
+                                    SymbolTable.Symbol superSymbol,
+                                    SymbolTable.Symbol classSymbol)
+            throws ContextualError {
         LOG.debug("verify DeclMethod: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
 
@@ -62,7 +68,10 @@ public class DeclMethod extends AbstractDeclMethod {
 
                 if (!compiler.getEnvironmentTypes().subTypes(returnType, methodDefinitionSuperEnvExp.getType())) {
                     // Both return types must be the same
-                    throw new ContextualError("Return type must be a subtype of inherited method return", this.getLocation());
+                    throw new ContextualError(
+                            "Return type must be a subtype of inherited method return",
+                            this.getLocation()
+                    );
                 }
 
                 // Get index of override method

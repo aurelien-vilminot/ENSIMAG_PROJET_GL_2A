@@ -38,7 +38,6 @@ public class Program extends AbstractProgram {
     public void verifyProgram(DecacCompiler compiler) throws ContextualError {
         LOG.debug("verify program: start");
         Validate.notNull(compiler, "Compiler object should not be null");
-        // TODO: reactivate pass 2 after hello world
         // Pass 1
         classes.verifyListClass(compiler);
         // Pass 2
