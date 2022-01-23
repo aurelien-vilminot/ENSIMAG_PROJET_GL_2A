@@ -31,10 +31,17 @@ public class Selection extends AbstractLValue {
 
         TypeDefinition typeDefinition = compiler.getEnvironmentTypes().get(classType.getName());
         if (typeDefinition == null || !typeDefinition.isClass()) {
-            throw new ContextualError("Can't select field from non-class type : " + this.expr.getType().getName(), this.getLocation());
+            throw new ContextualError(
+                    "Cannot select field from non-class type : " + this.expr.getType().getName(),
+                    this.getLocation()
+            );
         }
 
-        Type identType = this.ident.verifyExpr(compiler, ((ClassDefinition)compiler.getEnvironmentTypes().get(classType.getName())).getMembers(), currentClass);
+        Type identType = this.ident.verifyExpr(
+                compiler,
+                ((ClassDefinition)compiler.getEnvironmentTypes().get(classType.getName())).getMembers(),
+                currentClass
+        );
 
         if (this.ident.getFieldDefinition().getVisibility() == Visibility.PUBLIC) {
             // Case PUBLIC
@@ -50,7 +57,10 @@ public class Selection extends AbstractLValue {
                         this.getLocation());
             }
             boolean isSubClass = compiler.getEnvironmentTypes().subTypes(classType, currentClass.getType());
-            boolean isSubClassField = compiler.getEnvironmentTypes().subTypes(classType, this.ident.getFieldDefinition().getContainingClass().getType());
+            boolean isSubClassField = compiler.getEnvironmentTypes().subTypes(
+                    classType,
+                    this.ident.getFieldDefinition().getContainingClass().getType()
+            );
 
             if (isSubClass && isSubClassField) {
                 this.setType(identType);
@@ -59,7 +69,10 @@ public class Selection extends AbstractLValue {
             }
         }
 
-        throw new ContextualError("Impossible to select this identifier : " + this.ident.getName(), this.getLocation());
+        throw new ContextualError(
+                "Impossible to select this identifier : " + this.ident.getName(),
+                this.getLocation()
+        );
     }
 
     @Override
