@@ -66,6 +66,10 @@ public class While extends AbstractInst {
 
         this.condition.verifyCondition(compiler, localEnv, currentClass);
 
+        if (!this.condition.getType().isBoolean()) {
+            throw new ContextualError("Expression type must be boolean", this.getLocation());
+        }
+
         this.body.verifyListInst(compiler, localEnv, currentClass, returnType);
         LOG.debug("verify while: end");
     }
