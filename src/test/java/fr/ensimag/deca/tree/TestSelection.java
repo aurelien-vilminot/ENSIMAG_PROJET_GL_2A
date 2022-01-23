@@ -70,9 +70,11 @@ public class TestSelection {
 
         // Class Canard
         otherClassSymbol = compiler.getSymbolTable().create("Canard");
-        ClassType canardType = new ClassType(superClassSymbol, Location.BUILTIN, null);
+        ClassType canardType = new ClassType(otherClassSymbol, Location.BUILTIN, null);
         otherClassDefinition = new ClassDefinition(canardType, Location.BUILTIN,null);
         compiler.getEnvironmentTypes().declare(otherClassSymbol, otherClassDefinition);
+        when(otherInstance.verifyExpr(compiler, localEnv, null)).thenReturn(canardType);
+        when(otherInstance.getType()).thenReturn(canardType);
     }
 
     @Test
@@ -94,7 +96,7 @@ public class TestSelection {
         selection = new Selection(undefClassInstance, publicField);
         Exception exception = assertThrows(ContextualError.class, () -> selection.verifyExpr(compiler, localEnv, null));
 
-        String expectedMessage = "Can't select field from non-class type : " + this.undefClassInstance.getType().getName();
+        String expectedMessage = "Cannot select field from non-class type : " + this.undefClassInstance.getType().getName();
         String actualMessage = exception.getMessage();
         assertEquals(expectedMessage, actualMessage);
     }
@@ -111,10 +113,13 @@ public class TestSelection {
 
     @Test
     public void testVerifyExprImpossibleToAccess() {
-        selection = new Selection(pangolinInstance, protectedField);
-        Exception exception = assertThrows(ContextualError.class, () -> selection.verifyExpr(compiler, localEnv, otherClassDefinition));
+        selection = new Selection(otherInstance, protectedField);
+        Exception exception = assertThrows(
+                ContextualError.class,
+                () -> selection.verifyExpr(compiler, localEnv, null)
+        );
 
-        String expectedMessage = "Impossible to select this identifier : " + this.protectedField.getName();
+        String expectedMessage = "Undeclared identifier : " + this.protectedField.getName();
         String actualMessage = exception.getMessage();
         assertEquals(expectedMessage, actualMessage);
     }
