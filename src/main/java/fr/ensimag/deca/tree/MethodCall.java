@@ -37,7 +37,8 @@ public class MethodCall extends AbstractExpr {
 
         Type typeClass = this.obj.verifyExpr(compiler, localEnv, currentClass);
 
-        if (!compiler.getEnvironmentTypes().get(typeClass.getName()).isClass()) {
+        if (compiler.getEnvironmentTypes().get(typeClass.getName()) == null ||
+                !compiler.getEnvironmentTypes().get(typeClass.getName()).isClass()) {
             // If object is not a class type
             throw new ContextualError("This identifier is not a class: " + this.obj.decompile(), this.getLocation());
         }
