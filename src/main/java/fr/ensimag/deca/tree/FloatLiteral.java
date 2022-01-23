@@ -5,8 +5,6 @@ import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import java.io.PrintStream;
 
-import fr.ensimag.deca.tools.SymbolTable;
-
 import fr.ensimag.ima.pseudocode.DVal;
 import fr.ensimag.ima.pseudocode.ImmediateFloat;
 import fr.ensimag.ima.pseudocode.Register;
@@ -43,7 +41,6 @@ public class FloatLiteral extends AbstractExpr {
         LOG.debug("verify FloatLiteral: start");
 
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
-//        Validate.notNull(localEnv, "Env_exp object should not be null");
 
         Type floatType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("float")).getType();
         this.setType(floatType);

@@ -93,13 +93,16 @@ public class EnvironmentExp {
     /**
      * Add all members of a super environment expr to the current
      * @param superEnvironmentExp The members need to be stacked
-     * @throws DoubleDefException
      */
-    public void addSuperExpDefinition(EnvironmentExp superEnvironmentExp) throws DoubleDefException {
+    public void addSuperExpDefinition(EnvironmentExp superEnvironmentExp) {
         Set<Map.Entry<Symbol, LinkedList<ExpDefinition>>> couples = superEnvironmentExp.associationTable.entrySet();
         for (Map.Entry<Symbol, LinkedList<ExpDefinition>> couple : couples) {
             for (ExpDefinition expDefinition: couple.getValue()) {
-                this.declare(couple.getKey(), expDefinition);
+                if (!this.associationTable.containsKey(couple.getKey())) {
+                    LinkedList<ExpDefinition> linkedList = new LinkedList<>();
+                    linkedList.add(expDefinition);
+                    this.associationTable.put(couple.getKey(), linkedList);
+                }
             }
         }
     }

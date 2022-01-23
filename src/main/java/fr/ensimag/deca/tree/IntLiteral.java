@@ -8,9 +8,7 @@ import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
 import fr.ensimag.ima.pseudocode.instructions.WINT;
-import fr.ensimag.ima.pseudocode.instructions.WSTR;
 
-import fr.ensimag.deca.tools.SymbolTable;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -40,7 +38,6 @@ public class IntLiteral extends AbstractExpr {
         LOG.debug("verify IntegerLiteral: start");
 
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
-//        Validate.notNull(localEnv, "Env_exp object should not be null");
 
         Type intType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("int")).getType();
         this.setType(intType);

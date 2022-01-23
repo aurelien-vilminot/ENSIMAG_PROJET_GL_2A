@@ -47,8 +47,8 @@ public class DeclClass extends AbstractDeclClass {
         TypeDefinition superClassType = compiler.getEnvironmentTypes().get(this.superClass.getName());
         if (superClassType == null || !superClassType.isClass()) {
             throw new ContextualError(
-                    "The super-class name is a not a class : " + this.superClass.getName()
-                    , this.getLocation()
+                    "The super-class name is a not a class : " + this.superClass.getName(),
+                    this.getLocation()
             );
         }
 
@@ -67,7 +67,10 @@ public class DeclClass extends AbstractDeclClass {
                     )
             );
         } catch (EnvironmentTypes.DoubleDefException e) {
-            throw new ContextualError("The class name '"+ this.name.getName() + "' is already declared", this.getLocation());
+            throw new ContextualError(
+                    "The class name '"+ this.name.getName() + "' is already declared",
+                    this.getLocation()
+            );
         }
 
         // Tree decoration for classes identifiers
@@ -86,12 +89,18 @@ public class DeclClass extends AbstractDeclClass {
         ClassDefinition currentClassDefinition = (ClassDefinition) compiler.getEnvironmentTypes().get(this.name.getName());
         ClassDefinition superClassDefinition = (ClassDefinition) compiler.getEnvironmentTypes().get(this.superClass.getName());
 
+        EnvironmentExp environmentExpSuperClass = superClassDefinition.getMembers();
+        EnvironmentExp environmentExpClass = currentClassDefinition.getMembers();
+
         // Increment fields and methods number for current class depending on super-class members
         currentClassDefinition.setNumberOfFields(superClassDefinition.getNumberOfFields());
         currentClassDefinition.setNumberOfMethods(superClassDefinition.getNumberOfMethods());
 
         this.listDeclField.verifyListDeclField(compiler, this.superClass.getName(), this.name.getName());
         this.listDeclMethod.verifyListDeclMethod(compiler, this.superClass.getName(), this.name.getName());
+
+        // Stack super-class members
+        environmentExpClass.addSuperExpDefinition(environmentExpSuperClass);
 
         LOG.debug("verify ClassMembers: end");
     }
@@ -129,6 +138,7 @@ public class DeclClass extends AbstractDeclClass {
         int index = compiler.incGlobalStackSize(1);
         DAddr dAddr = new RegisterOffset(index, Register.GB);
         name.getClassDefinition().setOperand(dAddr);
+        compiler.getLabelGenerator().generateLabel(name.getName().toString());
         DAddr superClassDaddr = superClass.getClassDefinition().getOperand();
         // Load @superClass inside dAddr
         compiler.addInstruction(new LEA(superClassDaddr, Register.R0));
@@ -139,7 +149,8 @@ public class DeclClass extends AbstractDeclClass {
 
     @Override
     protected void codeGenDeclClass(DecacCompiler compiler) {
-        compiler.addLabel(new Label("init." + name.getName().toString()));
+        Label classLabel = new Label(compiler.getLabelGenerator().getLabel(name.getName().toString()));
+        compiler.addLabel(new Label("init." + classLabel));
 
         // Create a new IMAProgram to be able to add instructions at the beginning of the block
         IMAProgram backupProgram = compiler.getProgram();
@@ -152,7 +163,8 @@ public class DeclClass extends AbstractDeclClass {
             // TODO: not optimized ?
             listDeclField.codeGenListDeclFieldDefault(compiler);
             compiler.addInstruction(new PUSH(Register.R1));
-            compiler.addInstruction(new BSR(new Label("init."+superClass.getName().getName())));
+            Label superClassLabel = new Label(compiler.getLabelGenerator().getLabel(superClass.getName().getName()));
+            compiler.addInstruction(new BSR(new Label("init."+superClassLabel)));
             // TODO: verify why SUBSP #1
             compiler.addInstruction(new SUBSP(new ImmediateInteger(1)));
         }

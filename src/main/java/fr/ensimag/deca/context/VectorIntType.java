@@ -22,6 +22,11 @@ public class VectorIntType extends Type {
     }
 
     @Override
+    public boolean isArray() {
+        return true;
+    }
+
+    @Override
     public boolean sameType(Type otherType) {
         Validate.notNull(otherType, "otherType object should not be null");
         return otherType.isVectorInt();

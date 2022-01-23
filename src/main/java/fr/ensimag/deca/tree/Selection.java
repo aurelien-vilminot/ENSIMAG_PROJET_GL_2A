@@ -28,14 +28,29 @@ public class Selection extends AbstractLValue {
         LOG.debug("verify Selection: start");
 
         Type classType = this.expr.verifyExpr(compiler, localEnv, currentClass);
-        Type identType = this.ident.verifyExpr(compiler, ((ClassDefinition)compiler.getEnvironmentTypes().get(classType.getName())).getMembers(), currentClass);
+        Type identType;
 
-        TypeDefinition typeDefinition = compiler.getEnvironmentTypes().get(classType.getName());
-        if (typeDefinition == null || !typeDefinition.isClass()) {
-            throw new ContextualError("Undefined class : " + this.ident.getName(), this.getLocation());
+        if (classType.isArray()) {
+            // Array case
+            if (!this.ident.getName().getName().equals("length")) {
+                throw new ContextualError(
+                        "Only 'length' field is allowed for array",
+                        this.getLocation()
+                );
+            }
+            identType = compiler.getEnvironmentTypes().get(compiler.getSymbolTable().create("int")).getType();
+        } else {
+            TypeDefinition typeDefinition = compiler.getEnvironmentTypes().get(classType.getName());
+            if (typeDefinition == null || !typeDefinition.isClass()) {
+                throw new ContextualError(
+                        "Cannot select field from non-class type : " + this.expr.getType().getName(),
+                        this.getLocation()
+                );
+            }
+            identType = this.ident.verifyExpr(compiler, ((ClassDefinition)compiler.getEnvironmentTypes().get(classType.getName())).getMembers(), currentClass);
         }
 
-        if (this.ident.getFieldDefinition().getVisibility() == Visibility.PUBLIC) {
+        if (classType.isArray() || this.ident.getFieldDefinition().getVisibility() == Visibility.PUBLIC) {
             // Case PUBLIC
             this.setType(identType);
             LOG.debug("verify Selection: end");
@@ -49,7 +64,10 @@ public class Selection extends AbstractLValue {
                         this.getLocation());
             }
             boolean isSubClass = compiler.getEnvironmentTypes().subTypes(classType, currentClass.getType());
-            boolean isSubClassField = compiler.getEnvironmentTypes().subTypes(classType, this.ident.getFieldDefinition().getContainingClass().getType());
+            boolean isSubClassField = compiler.getEnvironmentTypes().subTypes(
+                    classType,
+                    this.ident.getFieldDefinition().getContainingClass().getType()
+            );
 
             if (isSubClass && isSubClassField) {
                 this.setType(identType);
@@ -58,7 +76,10 @@ public class Selection extends AbstractLValue {
             }
         }
 
-        throw new ContextualError("Impossible to select this identifier : " + this.ident.getName(), this.getLocation());
+        throw new ContextualError(
+                "Impossible to select this identifier : " + this.ident.getName(),
+                this.getLocation()
+        );
     }
 
     @Override
@@ -79,12 +100,12 @@ public class Selection extends AbstractLValue {
             compiler.addInstruction(new STORE(Register.getR(n), new RegisterOffset(index, Register.getR(n+1))));
         } else {
             compiler.incTempStackCurrent(1);
-            compiler.addInstruction(new PUSH(Register.getR(n)), "save");
+            compiler.addInstruction(new PUSH(Register.getR(n)));
             // Calculate heap address of the object into Rn
             expr.codeGenExpr(compiler, n);
             compiler.addInstruction(new LOAD(Register.getR(n), Register.R0));
             // R0 contains heap address of the object
-            compiler.addInstruction(new POP(Register.getR(n)), "restore");
+            compiler.addInstruction(new POP(Register.getR(n)));
             compiler.incTempStackCurrent(-1);
             // Load R0 into correct field in the object
             compiler.addInstruction(new STORE(Register.getR(n), new RegisterOffset(index, Register.R0)));
@@ -95,10 +116,11 @@ public class Selection extends AbstractLValue {
     protected void codeGenExpr(DecacCompiler compiler, int n) {
         compiler.setAndVerifyCurrentRegister(n);
 
-        int index = ident.getFieldDefinition().getIndex();
+        int index = 0;
         // Calculate heap address of the object into Rn
         expr.codeGenExpr(compiler, n);
         if (expr.getType().isClass()) {
+            index = ident.getFieldDefinition().getIndex();
             compiler.addDereference(n);
         }
         compiler.addInstruction(new LOAD(new RegisterOffset(index, Register.getR(n)), Register.getR(n)));

@@ -25,7 +25,6 @@ options {
 // which packages should be imported?
 @header {
     import fr.ensimag.deca.tree.*;
-    import fr.ensimag.deca.syntax.RuntimeLocationException;
     import fr.ensimag.deca.tools.SymbolTable;
     import java.io.PrintStream;
 }
@@ -486,23 +485,23 @@ literal returns[AbstractExpr tree]
         } catch (NumberFormatException e) {
             // Integer could not be parsed
             $tree = null;
-            throw new RuntimeLocationException("Integer could not be parsed", tokenLocation($INT));
+            throw new DecaNumberFormatException(this, $ctx, "literal integer could not be parsed");
         }
         }
     | fd=FLOAT {
         try {
             Float f = Float.parseFloat($fd.text);
             if (Float.isInfinite(f)) {
-                    throw new RuntimeLocationException("Literal float cannot be infinite", tokenLocation($fd));
+                    throw new DecaNumberFormatException(this, $ctx, "literal float cannot be infinite");
             } else if (Float.isNaN(f)) {
-                    throw new RuntimeLocationException("Literal float cannot be NaN", tokenLocation($fd));
+                    throw new DecaNumberFormatException(this, $ctx, "literal float cannot be NaN");
             }
             $tree = new FloatLiteral(Float.parseFloat($fd.text));
             setLocation($tree, $fd);
         } catch (NumberFormatException e) {
             // Float could not be parsed
             $tree = null;
-            throw new RuntimeLocationException("Float could not be parsed", tokenLocation($fd));
+            throw new DecaNumberFormatException(this, $ctx, "literal float could not be parsed");
         }
         }
     | STRING {

@@ -21,7 +21,10 @@ public class DeclMethod extends AbstractDeclMethod {
     private final AbstractMethodBody methodBody;
     private EnvironmentExp localEnv;
 
-    public DeclMethod(AbstractIdentifier returnType, AbstractIdentifier methodName, ListDeclParam listDeclParam, AbstractMethodBody methodBody) {
+    public DeclMethod(AbstractIdentifier returnType,
+                      AbstractIdentifier methodName,
+                      ListDeclParam listDeclParam,
+                      AbstractMethodBody methodBody) {
         Validate.notNull(returnType);
         Validate.notNull(methodName);
         Validate.notNull(methodBody);
@@ -32,7 +35,10 @@ public class DeclMethod extends AbstractDeclMethod {
     }
 
     @Override
-    protected void verifyDeclMethod(DecacCompiler compiler, SymbolTable.Symbol superSymbol, SymbolTable.Symbol classSymbol) throws ContextualError {
+    protected void verifyDeclMethod(DecacCompiler compiler,
+                                    SymbolTable.Symbol superSymbol,
+                                    SymbolTable.Symbol classSymbol)
+            throws ContextualError {
         LOG.debug("verify DeclMethod: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
 
@@ -44,7 +50,8 @@ public class DeclMethod extends AbstractDeclMethod {
         EnvironmentExp environmentExpCurrentClass = currentClassDefinition.getMembers();
 
         // Default index
-        int indexMethod = currentClassDefinition.incNumberOfMethods();
+        int indexMethod = currentClassDefinition.getNumberOfMethods() + 1;
+        boolean isOverride = false;
 
         if (envExpName.get(this.methodName.getName()) != null) {
             if (envExpName.get(this.methodName.getName()).isMethod()) {
@@ -61,15 +68,24 @@ public class DeclMethod extends AbstractDeclMethod {
 
                 if (!compiler.getEnvironmentTypes().subTypes(returnType, methodDefinitionSuperEnvExp.getType())) {
                     // Both return types must be the same
-                    throw new ContextualError("Return type must be a subtype of inherited method return", this.getLocation());
+                    throw new ContextualError(
+                            "Return type must be a subtype of inherited method return",
+                            this.getLocation()
+                    );
                 }
 
                 // Get index of override method
                 indexMethod = methodDefinitionSuperEnvExp.getIndex();
+                isOverride = true;
 
             } else {
                 throw new ContextualError("Super-class symbol must be a method definition", this.getLocation());
             }
+        }
+
+        // Increment number of methods only if it is not an override
+        if (!isOverride) {
+            currentClassDefinition.incNumberOfMethods();
         }
 
         // Method declaration
@@ -84,7 +100,10 @@ public class DeclMethod extends AbstractDeclMethod {
                     )
                     );
         } catch (EnvironmentExp.DoubleDefException e) {
-            throw new ContextualError("Method name '" + this.methodName.getName() + "' already declared in the class", this.getLocation());
+            throw new ContextualError(
+                    "Method name '" + this.methodName.getName() + "' already declared in the class",
+                    this.getLocation()
+            );
         }
 
         this.methodName.verifyExpr(compiler, environmentExpCurrentClass, currentClassDefinition);
@@ -166,7 +185,8 @@ public class DeclMethod extends AbstractDeclMethod {
 
     @Override
     protected void codeGenMethodTable(DecacCompiler compiler, AbstractIdentifier className) {
-        Label methodLabel = new Label(className.getName().toString() + "." + methodName.getName().toString());
+        Label methodLabel = new Label(compiler.getLabelGenerator()
+                .generateLabel(className.getName().toString() + "." + methodName.getName().toString()));
         methodName.getMethodDefinition().setLabel(methodLabel);
         Label codeLabel = new Label("code." + methodLabel);
         int index = methodName.getMethodDefinition().getIndex() - 1;

@@ -6,7 +6,6 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.Label;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
@@ -32,7 +31,6 @@ public class ListInst extends TreeList<AbstractInst> {
             throws ContextualError {
         LOG.debug("verify ListInt: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
-//        Validate.notNull(localEnv, "Env_exp object should not be null");
         Validate.notNull(returnType, "Return type should not be null");
 
         for (AbstractInst abstractInst: getList()) {

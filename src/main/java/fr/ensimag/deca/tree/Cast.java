@@ -31,7 +31,6 @@ public class Cast extends AbstractExpr {
             throws ContextualError {
         LOG.debug("verify Cast: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
-//        Validate.notNull(localEnv, "Env_exp object should not be null");
 
         // Get cast type
         Type castType = this.type.verifyType(compiler);
@@ -40,8 +39,8 @@ public class Cast extends AbstractExpr {
         boolean isCastCompatible = compiler.getEnvironmentTypes().castCompatible(exprType, castType);
         if (!isCastCompatible) {
             throw new ContextualError(
-                    "The origin type (" + exprType + ") cannot be cast into the destination type (" + castType +")"
-                    , this.getLocation()
+                    "The origin type (" + exprType + ") cannot be cast into the destination type (" + castType +")",
+                    this.getLocation()
             );
         }
 
@@ -76,7 +75,7 @@ public class Cast extends AbstractExpr {
             // Rn <- ConversionEntier(V[Rn])
             compiler.addInstruction(new INT(Register.getR(n), Register.getR(n)));
         } else {
-            throw new UnsupportedOperationException("Class not yet implemented, or cast conversion is not allowed");
+            // Nothing to do
         }
     }
 

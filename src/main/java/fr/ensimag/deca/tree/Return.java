@@ -6,7 +6,7 @@ import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.Label;
+import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.instructions.*;
 
 import java.io.PrintStream;
@@ -34,7 +34,8 @@ public class Return extends AbstractInst {
 
     @Override
     protected void codeGenInst(DecacCompiler compiler) {
-        expr.codeGenExpr(compiler, 0);
+        expr.codeGenExpr(compiler, 2);
+        compiler.addInstruction(new LOAD(Register.getR(2), Register.R0));
         compiler.addInstruction(new BRA(compiler.getLabelGenerator().getEndLabel()));
     }
 
@@ -49,6 +50,12 @@ public class Return extends AbstractInst {
         }
 
         this.expr.verifyRValue(compiler, localEnv, currentClass, returnType);
+
+        if (returnType.isFloat() && this.expr.getType().isInt()) {
+            // Implicit float conversion
+            this.expr = new ConvFloat(this.expr);
+            this.expr.setType(returnType);
+        }
 
         LOG.debug("verify Return: end");
     }
