@@ -37,7 +37,8 @@ public class MethodCall extends AbstractExpr {
 
         Type typeClass = this.obj.verifyExpr(compiler, localEnv, currentClass);
 
-        if (!compiler.getEnvironmentTypes().get(typeClass.getName()).isClass()) {
+        if (compiler.getEnvironmentTypes().get(typeClass.getName()) == null ||
+                !compiler.getEnvironmentTypes().get(typeClass.getName()).isClass()) {
             // If object is not a class type
             throw new ContextualError("This identifier is not a class: " + this.obj.decompile(), this.getLocation());
         }
@@ -54,7 +55,12 @@ public class MethodCall extends AbstractExpr {
         int i = 0;
         for (AbstractExpr param: this.param.getList()) {
             Type expectedType = methodDefinition.getSignature().paramNumber(i);
-            param.verifyRValue(compiler, localEnv, (ClassDefinition) compiler.getEnvironmentTypes().get(typeClass.getName()), expectedType);
+            param.verifyRValue(
+                    compiler,
+                    localEnv,
+                    (ClassDefinition) compiler.getEnvironmentTypes().get(typeClass.getName()),
+                    expectedType
+            );
 
             if (expectedType.isFloat() && param.getType().isInt()) {
                 // Implicit float conversion

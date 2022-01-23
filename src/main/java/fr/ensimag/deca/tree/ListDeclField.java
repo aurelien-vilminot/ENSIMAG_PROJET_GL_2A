@@ -1,23 +1,21 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.tools.IndentPrintStream;
 import fr.ensimag.deca.tools.SymbolTable;
-import fr.ensimag.ima.pseudocode.DAddr;
-import fr.ensimag.ima.pseudocode.ImmediateInteger;
 import fr.ensimag.ima.pseudocode.Register;
 import fr.ensimag.ima.pseudocode.RegisterOffset;
 import fr.ensimag.ima.pseudocode.instructions.LOAD;
-import fr.ensimag.ima.pseudocode.instructions.PUSH;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
 
 public class ListDeclField extends TreeList<AbstractDeclField> {
     private static final Logger LOG = Logger.getLogger(ListDeclClass.class);
 
-    protected void verifyListDeclField(DecacCompiler compiler, SymbolTable.Symbol superSymbol, SymbolTable.Symbol symbolCurrentClass)
+    protected void verifyListDeclField(DecacCompiler compiler,
+                                       SymbolTable.Symbol superSymbol,
+                                       SymbolTable.Symbol symbolCurrentClass)
             throws ContextualError {
         LOG.debug("verify listDeclField: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");

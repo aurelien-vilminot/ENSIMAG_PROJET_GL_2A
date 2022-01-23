@@ -8,7 +8,6 @@ import fr.ensimag.ima.pseudocode.instructions.WSTR;
 import org.apache.commons.lang.Validate;
 
 import java.util.HashMap;
-import java.util.HashSet;
 
 public class LabelGenerator {
     private HashMap<String, Integer> caseSensitiveMap = new HashMap<>();
