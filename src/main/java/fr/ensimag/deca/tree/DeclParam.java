@@ -68,6 +68,7 @@ public class DeclParam extends AbstractDeclParam {
         name.decompile(s);
     }
 
+    @Override
     protected void codeGenDeclMethod(DecacCompiler compiler, EnvironmentExp localEnv, int index) {
         localEnv.get(name.getName()).setOperand(new RegisterOffset(index, Register.LB));
     }

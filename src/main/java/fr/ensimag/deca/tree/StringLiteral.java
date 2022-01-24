@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 /**
  * String literal
  *
- * @author Aurélien VILMINOT
+ * @author gl07
  * @date 04/01/2022
  */
 public class StringLiteral extends AbstractStringLiteral {

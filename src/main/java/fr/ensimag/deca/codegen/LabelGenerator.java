@@ -29,6 +29,7 @@ public class LabelGenerator {
     public boolean getOverflowError() {
         return overflowError;
     }
+
     public void setOverflowError() {
         this.overflowError = true;
     }
@@ -41,6 +42,7 @@ public class LabelGenerator {
     public boolean getStackOverflowError() {
         return stackOverflowError;
     }
+
     public void setStackOverflowError() {
         this.stackOverflowError = true;
     }
@@ -65,6 +67,7 @@ public class LabelGenerator {
     public boolean getIoError() {
         return ioError;
     }
+
     public void setIoError() {
         this.ioError = true;
     }
@@ -107,7 +110,9 @@ public class LabelGenerator {
 
     /**
      * Generate unique label based on the typeOfLabel given.
-     * For example: generateLabel("begin_while") will result the label "begin_while.1" if it is the first declared.
+     * For example: generateLabel("begin_while") will result the label "begin_while" if it is the first declared,
+     * and in "begin_while.2" if it is the second declared.
+     * n.b: IMA labels are case insensitive
      *
      * @param typeOfLabel The name of label
      * @return A string which contains the name of label with a unique number
@@ -134,6 +139,14 @@ public class LabelGenerator {
         return newLabel;
     }
 
+    /**
+     * Get the unique label based on the typeOfLabel given. Do not increment the label number
+     * if typeOfLabel already exists, but generate it if it is the first occurence.
+     * n.b: IMA labels are case insensitive
+     *
+     * @param typeOfLabel The name of label
+     * @return A string which contains the name of label with a unique number
+     */
     public String getLabel(String typeOfLabel) {
         Validate.notNull(typeOfLabel, "The label should not be null element");
         String newLabel;
@@ -157,6 +170,13 @@ public class LabelGenerator {
         return newLabel;
     }
 
+    /**
+     * Generate assembly code for the error label
+     *
+     * @param compiler Deca Compiler used to add IMA instructions
+     * @param label Label corresponding to the error
+     * @param message Message to be printed when error is caught
+     */
     public void generateErrorLabel(DecacCompiler compiler, Label label, String message) {
         compiler.addLabel(label);
         compiler.addInstruction(new WSTR(message));

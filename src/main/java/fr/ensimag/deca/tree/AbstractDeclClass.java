@@ -35,14 +35,14 @@ public abstract class AbstractDeclClass extends Tree {
     /**
      * Generate assembly code for the class declaration.
      *
-     * @param compiler
+     * @param compiler Deca Compiler used to add IMA instructions
      */
     protected abstract void codeGenDeclClass(DecacCompiler compiler);
 
     /**
      * Generate assembly code to build the virtual methods table
      *
-     * @param compiler
+     * @param compiler Deca Compiler used to add IMA instructions
      */
     protected abstract void codeGenMethodTable(DecacCompiler compiler);
 }
