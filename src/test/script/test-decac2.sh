@@ -65,3 +65,5 @@ echo ""
 
 echo "[-P]"
 echo ""
+
+exit 0

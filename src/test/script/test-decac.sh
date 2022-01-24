@@ -43,3 +43,5 @@ echo ""
 echo "[-p et -v] Incompatible"
 decac -p -v "$HELLO_WORLD_PATH"/hello-world.deca
 echo ""
+
+exit 0
