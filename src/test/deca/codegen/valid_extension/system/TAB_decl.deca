@@ -1,0 +1,13 @@
+{
+    // Init one dimension
+    int[] tab = new int[3];
+
+    // Init two dimensions
+    float[][] tab2 = new int[3][2];
+
+    println(tab[0], tab[1], tab[2]);
+    println(tab2[0][0], tab2[0][1], tab2[1][0], tab2[1][1], tab2[2][0], tab2[2][1]);
+
+    println((new int[5][5])[0][0], (new int[5][5])[1][2], (new int[5][5])[0][3]);
+
+}

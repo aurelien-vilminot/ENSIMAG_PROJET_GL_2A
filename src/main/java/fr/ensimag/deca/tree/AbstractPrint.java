@@ -1,14 +1,12 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.context.Type;
-import fr.ensimag.deca.context.FloatType;
-import fr.ensimag.deca.context.IntType;
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.ClassDefinition;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.EnvironmentExp;
 import fr.ensimag.deca.tools.IndentPrintStream;
-import fr.ensimag.ima.pseudocode.Label;
+
 import java.io.PrintStream;
 import org.apache.commons.lang.Validate;
 import org.apache.log4j.Logger;
@@ -51,7 +49,10 @@ public abstract class AbstractPrint extends AbstractInst {
             if (argType.isInt() || argType.isFloat() || argType.isString()) {
                 expr.setType(argType);
             } else {
-                throw new ContextualError("Impossible to print this type of element : " + argType, this.getLocation());
+                throw new ContextualError(
+                        "Impossible to print this type of element : " + argType,
+                        this.getLocation()
+                );
             }
         }
         LOG.debug("verify Print" + getSuffix() + ": end");

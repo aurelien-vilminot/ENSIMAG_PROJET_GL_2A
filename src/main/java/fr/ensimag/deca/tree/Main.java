@@ -1,7 +1,6 @@
 package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.codegen.LabelGenerator;
 import fr.ensimag.deca.context.ContextualError;
 import fr.ensimag.deca.context.VoidType;
 import fr.ensimag.deca.tools.IndentPrintStream;
@@ -33,7 +32,12 @@ public class Main extends AbstractMain {
         LOG.debug("verify Main: start");
         Validate.notNull(compiler, "Compiler object should not be null");
         this.declVariables.verifyListDeclVariable(compiler, compiler.getEnvironmentExp(), null);
-        this.insts.verifyListInst(compiler, compiler.getEnvironmentExp(), null, new VoidType(compiler.getSymbolTable().create("void")));
+        this.insts.verifyListInst(
+                compiler,
+                compiler.getEnvironmentExp(),
+                null,
+                new VoidType(compiler.getSymbolTable().create("void"))
+        );
         LOG.debug("verify Main: end");
     }
 

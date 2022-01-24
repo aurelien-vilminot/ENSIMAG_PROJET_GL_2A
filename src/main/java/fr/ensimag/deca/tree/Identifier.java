@@ -212,7 +212,10 @@ public class Identifier extends AbstractIdentifier {
             throw new ContextualError("Impossible to find the method : " + this.getName(), this.getLocation());
         }
         // Convert the expression into a method definition
-        MethodDefinition methodDefinition = expDefinition.asMethodDefinition("This identifier is not a method : " + this.getName(), this.getLocation());
+        MethodDefinition methodDefinition = expDefinition.asMethodDefinition(
+                "This identifier is not a method : " + this.getName(),
+                this.getLocation()
+        );
 
         this.setDefinition(methodDefinition);
         LOG.debug("verify Method: end");

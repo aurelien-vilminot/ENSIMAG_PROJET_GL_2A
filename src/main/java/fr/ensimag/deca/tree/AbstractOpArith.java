@@ -55,7 +55,10 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
                     this.getLeftOperand().setType(typeRightOp);
                 }
             } else {
-                throw new ContextualError("Binary operation is only allowed for int or float types", this.getLocation());
+                throw new ContextualError(
+                        "Binary operation is only allowed for int or float types",
+                        this.getLocation()
+                );
             }
 
             LOG.debug("verify OpArith: end");
