@@ -8,10 +8,23 @@ PATH=./src/test/script/launchers:"$PATH"
 # Import script with stored functions :
 . ./src/test/script/working_scripts/call-functions.sh
 
-exec_test_from_dir "./src/test/deca/context/valid/ext" "CONTEXT" "VALID" "ORACLE"
+# -- LEXER ---
+exec_test_from_dir "./src/test/deca/syntax/extension/lexer/valid" "LEXER" "VALID" "ORACLE"
 
-exec_test_from_dir "./src/test/deca/context/invalid/ext" "CONTEXT" "INVALID" "ORACLE"
+# -- PARSER (all oracle tests) ---
+exec_test_from_dir "./src/test/deca/syntax/extension/parser/valid" "PARSER" "VALID" "ORACLE"
 
-exec_test_from_dir "./src/test/deca/syntax/valid/parser/extension" "PARSER" "VALID" "ORACLE"
+exec_test_from_dir "./src/test/deca/syntax/extension/parser/invalid" "PARSER" "INVALID" "ORACLE"
 
-exec_test_from_dir "./src/test/deca/syntax/invalid/parser/extension" "PARSER" "INVALID" "ORACLE"
+# -- CONTEXT (all oracle tests) ---
+exec_test_from_dir "./src/test/deca/context/extension/valid" "CONTEXT" "VALID" "ORACLE"
+
+exec_test_from_dir "./src/test/deca/context/extension/invalid" "CONTEXT" "INVALID" "ORACLE"
+
+# -- CODEGEN ---
+exec_test_from_dir "./src/test/deca/codegen/extension/valid/oracle" "CODEGEN" "VALID" "ORACLE"
+
+exec_test_from_dir "./src/test/deca/codegen/extension/valid/black-box" "CODEGEN" "VALID" "BLACK_BOX"
+
+exec_test_from_dir "./src/test/deca/codegen/extension/invalid/black-box" "CODEGEN" "INVALID" "BLACK_BOX"
+
