@@ -6,7 +6,7 @@ import org.apache.commons.lang.Validate;
 
 /**
  *
- * @author Aurélien VILMINOT
+ * @author gl07
  * @date 04/01/2022
  */
 public class BooleanType extends Type {

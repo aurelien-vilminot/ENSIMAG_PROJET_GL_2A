@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
 
 /**
  * 
- * @author Aurélien VILMINOT
+ * @author gl07
  * @date 04/01/2022
  */
 public class ListInst extends TreeList<AbstractInst> {
