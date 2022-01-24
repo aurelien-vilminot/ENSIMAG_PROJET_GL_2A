@@ -22,6 +22,9 @@ nb_file_total=0
 # $2 : string in path ./src/test/deca$2/invalid$3/black-box
 # $3 : string in path ./src/test/deca$2/invalid$3/black-box
 exec_part(){
+  nb_correct_total=0
+  nb_file_total=0
+
   # Recap string is used to store score and print it at the end.
   recap_string="    ${base}[RECAP]${reset}"
 
@@ -44,7 +47,7 @@ exec_part(){
   # Echo recap :
   echo "$recap_string"
 
-  # !!! Exit status !!!
+  # ! Exit status !
   if [ "$nb_correct_total" = "$nb_file_total" ]
     then
       echo "    ${base}[$1 TOTAL] ${green}Results : $nb_correct_total / $nb_file_total${reset}"
@@ -71,7 +74,40 @@ increment_total_score (){
 # Execute until lexing with test_lex.
 #
 exec_lexer(){
-  exec_part "LEXER" "/syntax" "/lexer"
+  nb_correct_total=0
+  nb_file_total=0
+
+  # Recap string is used to store score and print it at the end.
+  recap_string="    ${base}[RECAP]${reset}"
+
+  exec_test_from_dir "./src/test/deca/syntax/invalid/lexer/black-box" "LEXER" "INVALID" "BLACK_BOX"
+  increment_total_score
+  recap_string="$recap_string \n    ${base}  [LEXER INVALID TESTS] $result_string"
+
+  exec_test_from_dir "./src/test/deca/lexico/valid/black-box" "LEXER" "VALID" "BLACK_BOX"
+  increment_total_score
+  recap_string="$recap_string \n    ${base}  [LEXER VALID TESTS] $result_string"
+
+  exec_test_from_dir "./src/test/deca/syntax/invalid/lexer/oracle" "LEXER" "INVALID" "ORACLE"
+  increment_total_score
+  recap_string="$recap_string \n    ${base}  [LEXER ORACLE INVALID TESTS] $result_string"
+
+  exec_test_from_dir "./src/test/deca/lexico/valid/oracle" "LEXER" "VALID" "ORACLE"
+  increment_total_score
+  recap_string="$recap_string \n    ${base}  [LEXER ORACLE VALID TESTS] $result_string"
+
+  # Echo recap :
+  echo "$recap_string"
+
+  # ! Exit status !
+  if [ "$nb_correct_total" = "$nb_file_total" ]
+    then
+      echo "    ${base}[LEXER TOTAL] ${green}Results : $nb_correct_total / $nb_file_total${reset}"
+      exit 0
+    else
+      echo "    ${base}[LEXER TOTAL] ${red}Results : $nb_correct_total / $nb_file_total${reset}"
+      exit 1
+  fi
 }
 
 # Execute until parsing with test_synt.
