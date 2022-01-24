@@ -11,6 +11,11 @@ import fr.ensimag.deca.context.ContextualError;
  */
 public abstract class AbstractMain extends Tree {
 
+    /**
+     * Generate code for the main declarations and the main instructions
+     *
+     * @param compiler Deca Compiler used to add IMA instructions
+     */
     protected abstract void codeGenMain(DecacCompiler compiler);
 
 

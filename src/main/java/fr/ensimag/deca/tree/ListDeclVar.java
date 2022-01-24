@@ -17,6 +17,12 @@ import org.apache.log4j.Logger;
 public class ListDeclVar extends TreeList<AbstractDeclVar> {
     private static final Logger LOG = Logger.getLogger(Main.class);
 
+    /**
+     * Generate assembly code for the declaration list
+     *
+     * @param compiler Deca Compiler used to add IMA instructions
+     * @param localEnv Corresponds to the "env_exp" attribute
+     */
     public void codeGenListDeclVar(DecacCompiler compiler, EnvironmentExp localEnv) {
         for (AbstractDeclVar d : getList()) {
             d.codeGenDeclVar(compiler, localEnv);
@@ -56,7 +62,6 @@ public class ListDeclVar extends TreeList<AbstractDeclVar> {
         }
 
         LOG.debug("verify ListDeclVar: end");
-
     }
 
 

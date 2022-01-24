@@ -297,7 +297,7 @@ public abstract class Tree {
      * 
      * Useful for debugging.
      * 
-     * @param compiler
+     * @param compiler Deca Compiler used to add IMA instructions
      * @return Decompilation, or the empty string.
      */
     protected String decompileIfDebug(DecacCompiler compiler) {

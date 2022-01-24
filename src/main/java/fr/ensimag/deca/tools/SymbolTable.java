@@ -14,7 +14,7 @@ import java.util.Map;
  * method of Symbols can be used to define efficient HashMap (no string
  * comparison or hashing required).
  * 
- * @author Aurélien VILMINOT
+ * @author gl07
  * @date 04/01/2022
  */
 public class SymbolTable {

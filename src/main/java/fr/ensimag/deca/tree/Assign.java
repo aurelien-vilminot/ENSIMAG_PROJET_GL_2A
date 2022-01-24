@@ -79,8 +79,8 @@ public class Assign extends AbstractBinaryExpr {
     /**
      * Generate assembly code for the instruction, and store the result in Rn
      *
-     * @param compiler
-     * @param n
+     * @param compiler Deca Compiler used to add IMA instructions
+     * @param n Register number
      */
     protected void codeGenInst(DecacCompiler compiler, int n) {
         compiler.setAndVerifyCurrentRegister(n);
