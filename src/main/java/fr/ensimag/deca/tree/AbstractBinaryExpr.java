@@ -61,10 +61,10 @@ public abstract class AbstractBinaryExpr extends AbstractExpr {
     /**
      * Generate code that sends to "branch" if "this" is evaluated to "bool", then load evaluation of "this" to Rn
      *
-     * @param compiler
-     * @param bool
-     * @param branch
-     * @param n
+     * @param compiler Deca Compiler used to add IMA instructions
+     * @param bool Boolean to determine which branch to go to
+     * @param branch Branch to go to if "this" is evaluted to "bool"
+     * @param n Register number
      */
     protected void codeGenExpr(DecacCompiler compiler, boolean bool, Label branch, int n) {
         compiler.setAndVerifyCurrentRegister(n);
@@ -89,8 +89,8 @@ public abstract class AbstractBinaryExpr extends AbstractExpr {
     /**
      * Generate code so that the boolean evaluation of the binary expression is loaded into Rn
      *
-     * @param compiler
-     * @param n
+     * @param compiler Deca Compiler used to add IMA instructions
+     * @param n Register number
      */
     protected void codeGenExprBool(DecacCompiler compiler, int n) {
         Label trueBranch = new Label(compiler.getLabelGenerator().generateLabel("boolIsTrue"));
@@ -100,8 +100,8 @@ public abstract class AbstractBinaryExpr extends AbstractExpr {
     /**
      * Calculate right operand expression, and load it into R(n+1) or R(0)
      *
-     * @param compiler
-     * @param n
+     * @param compiler Deca Compiler used to add IMA instructions
+     * @param n Register number
      * @return register number where right operand is loaded
      */
     protected int codeGenExprRightOperand(DecacCompiler compiler, int n) {

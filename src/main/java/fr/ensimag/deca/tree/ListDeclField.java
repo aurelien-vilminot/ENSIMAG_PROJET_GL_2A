@@ -79,7 +79,7 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
     /**
      * Initialize fields
      *
-     * @param compiler
+     * @param compiler Deca Compiler used to add IMA instructions
      */
     protected void codeGenListDeclField(DecacCompiler compiler) {
         for (AbstractDeclField c : getList()) {
