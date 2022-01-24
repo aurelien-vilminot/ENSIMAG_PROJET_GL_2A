@@ -84,7 +84,7 @@ public class Program extends AbstractProgram {
             gen.generateErrorLabel(compiler, gen.getStackOverFlowLabel(), "Error: stack overflow");
         }
         if (gen.getHeapOverflowError()) {
-            gen.generateErrorLabel(compiler, gen.getHeapOverFlowLabel(), "Error: Heap Overflow");
+            gen.generateErrorLabel(compiler, gen.getHeapOverFlowLabel(), "Error: heap overflow");
         }
         if (gen.getIoError()) {
             gen.generateErrorLabel(compiler, gen.getIoLabel(), "Error: input/output error");
