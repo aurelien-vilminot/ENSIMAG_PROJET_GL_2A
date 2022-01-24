@@ -8,7 +8,7 @@ import org.apache.commons.lang.Validate;
 /**
  * Type defined by a class.
  *
- * @author Aurélien VILMINOT
+ * @author gl07
  * @date 04/01/2022
  */
 public class ClassType extends Type {

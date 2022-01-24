@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 /**
  * Deca complete program (class definition plus main block)
  *
- * @author Aurélien VILMINOT
+ * @author gl07
  * @date 04/01/2022
  */
 public class Program extends AbstractProgram {

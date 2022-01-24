@@ -28,6 +28,7 @@ public class LabelGenerator {
     public boolean getOverflowError() {
         return overflowError;
     }
+
     public void setOverflowError() {
         this.overflowError = true;
     }
@@ -40,6 +41,7 @@ public class LabelGenerator {
     public boolean getStackOverflowError() {
         return stackOverflowError;
     }
+
     public void setStackOverflowError() {
         this.stackOverflowError = true;
     }
@@ -52,6 +54,7 @@ public class LabelGenerator {
     public boolean getIoError() {
         return ioError;
     }
+
     public void setIoError() {
         this.ioError = true;
     }
@@ -119,6 +122,11 @@ public class LabelGenerator {
         return newLabel;
     }
 
+    /**
+     * //TODO
+     * @param typeOfLabel
+     * @return
+     */
     public String getLabel(String typeOfLabel) {
         Validate.notNull(typeOfLabel, "The label should not be null element");
         String newLabel;
@@ -142,6 +150,12 @@ public class LabelGenerator {
         return newLabel;
     }
 
+    /**
+     * //TODO
+     * @param compiler
+     * @param label
+     * @param message
+     */
     public void generateErrorLabel(DecacCompiler compiler, Label label, String message) {
         compiler.addLabel(label);
         compiler.addInstruction(new WSTR(message));
