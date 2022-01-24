@@ -100,8 +100,7 @@ public class ArrayAccess extends AbstractLValue{
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
-        // TODO: verify that n >= 0 and n < size
-        // TODO: restore R0
+        int maxRegister = compiler.setAndVerifyCurrentRegister(n);
 
         // Rn <- heap address of array
         tab.codeGenExpr(compiler, n);
@@ -115,6 +114,24 @@ public class ArrayAccess extends AbstractLValue{
         index.codeGenExpr(compiler, n);
         compiler.addInstruction(new POP(Register.R0));
         compiler.incTempStackCurrent(-1);
+
+        // Verify index >= 0
+        compiler.addInstruction(new CMP(new ImmediateInteger(0), Register.getR(n)));
+        compiler.addInstruction(new BLT(compiler.getLabelGenerator().getIndexOutOfBoundsLabel()));
+        // Verify index < -1(R0)
+        if (n < maxRegister) {
+            compiler.addInstruction(new LOAD(new RegisterOffset(-1, Register.R0), Register.getR(n+1)));
+            compiler.addInstruction(new CMP(Register.getR(n), Register.getR(n+1)));
+        } else {
+            compiler.incTempStackCurrent(1);
+            compiler.addInstruction(new PUSH(Register.R0));
+            compiler.addInstruction(new LOAD(new RegisterOffset(-1, Register.R0), Register.R0));
+            compiler.addInstruction(new CMP(Register.getR(n), Register.R0));
+            compiler.addInstruction(new POP(Register.R0));
+            compiler.incTempStackCurrent(-1);
+        }
+        compiler.addInstruction(new BLE(compiler.getLabelGenerator().getIndexOutOfBoundsLabel()));
+
 
         // R0 <- address of tab[index]
         codeGenAddress(compiler, n);
@@ -125,14 +142,11 @@ public class ArrayAccess extends AbstractLValue{
 
     @Override
     protected void codeGenStore(DecacCompiler compiler, int n) {
-        // TODO: verify n
-        // TODO: if n+1 > maxRegister ; also restore R0
+        int maxRegister = compiler.setAndVerifyCurrentRegister(n);
 
         // Rn = value to store inside tab[index]
         compiler.incTempStackCurrent(1);
         compiler.addInstruction(new PUSH(Register.getR(n)));
-
-        //compiler.addInstruction(new LOAD(Register.getR(n), Register.getR(n+1)));
 
         // Rn <- heap address of array
         tab.codeGenExpr(compiler, n);
@@ -146,6 +160,23 @@ public class ArrayAccess extends AbstractLValue{
         index.codeGenExpr(compiler, n);
         compiler.addInstruction(new POP(Register.R0));
         compiler.incTempStackCurrent(-1);
+
+        // Verify index >= 0
+        compiler.addInstruction(new CMP(new ImmediateInteger(0), Register.getR(n)));
+        compiler.addInstruction(new BLT(compiler.getLabelGenerator().getIndexOutOfBoundsLabel()));
+        // Verify index < -1(R0)
+        if (n < maxRegister) {
+            compiler.addInstruction(new LOAD(new RegisterOffset(-1, Register.R0), Register.getR(n+1)));
+            compiler.addInstruction(new CMP(Register.getR(n), Register.getR(n+1)));
+        } else {
+            compiler.incTempStackCurrent(1);
+            compiler.addInstruction(new PUSH(Register.R0));
+            compiler.addInstruction(new LOAD(new RegisterOffset(-1, Register.R0), Register.R0));
+            compiler.addInstruction(new CMP(Register.getR(n), Register.R0));
+            compiler.addInstruction(new POP(Register.R0));
+            compiler.incTempStackCurrent(-1);
+        }
+        compiler.addInstruction(new BLE(compiler.getLabelGenerator().getIndexOutOfBoundsLabel()));
 
         // R0 <- address of tab[index]
         codeGenAddress(compiler, n);

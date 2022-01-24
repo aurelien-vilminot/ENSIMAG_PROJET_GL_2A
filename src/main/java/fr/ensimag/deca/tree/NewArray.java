@@ -89,7 +89,6 @@ public class NewArray extends AbstractExpr{
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
-        // TODO: at return, restore R1 & R2
         if (n > 2) {
             compiler.incTempStackCurrent(1);
             compiler.addInstruction(new PUSH(Register.getR(2)));
