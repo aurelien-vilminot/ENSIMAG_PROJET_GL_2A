@@ -74,8 +74,6 @@ public class Cast extends AbstractExpr {
             expr.codeGenExpr(compiler, n);
             // Rn <- ConversionEntier(V[Rn])
             compiler.addInstruction(new INT(Register.getR(n), Register.getR(n)));
-        } else {
-            // Nothing to do
         }
     }
 
