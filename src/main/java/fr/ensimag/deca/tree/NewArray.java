@@ -22,6 +22,7 @@ public class NewArray extends AbstractExpr{
         this.indexList = indexList;
     }
 
+    @Override
     public void decompile(IndentPrintStream s){
         s.print("new ");
         type.decompile(s);
@@ -45,6 +46,7 @@ public class NewArray extends AbstractExpr{
         indexList.prettyPrint(s, prefix, false);
     }
 
+    @Override
     public Type verifyExpr(DecacCompiler compiler, EnvironmentExp localEnv, ClassDefinition currentClass) throws ContextualError {
         LOG.debug("verify NewArray: start");
 
@@ -117,7 +119,7 @@ public class NewArray extends AbstractExpr{
      * Fill empty table, return its heap address in R2
      * Precondition : size of array is in R3
      *
-     * @param compiler
+     * @param compiler Deca Compiler used to add IMA instructions
      */
     protected void createEmptyTable(DecacCompiler compiler) {
         compiler.addComment("Array begin");
@@ -172,7 +174,7 @@ public class NewArray extends AbstractExpr{
      * Fill an empty table of tables, return its heap address in R2
      * Precondition : size of this empty table is in R3
      *
-     * @param compiler
+     * @param compiler Deca Compiler used to add IMA instructions
      */
     protected void createEmptyTableOfTable(DecacCompiler compiler) {
         compiler.addComment("Matrix begin");
