@@ -1,2 +1,0 @@
-STRING '"Hello world, I am a string !"' 10:0
-STRING '"Hello world, I am also a string but with special carac \\" \\\\ éèêàâôûç& \\" !"' 11:0
