@@ -13,13 +13,15 @@ class Vector{
 {
     Vector x = new Vector();
     float[] vec;
-    vec = x.linspace(0, 1, 0.1);
     float[] vec2 = x.linspace(0, 1, 0.1);
     int i = 0;
+    vec = x.linspace(0, 1, 0.1);
+
     while(i < vec.length){
-        if(vec[i] == vec2[i]{
+        if(vec[i] == vec2[i]){
             println(vec[i]);
         }
+        i = i + 1;
     }
 }
 

@@ -3,7 +3,7 @@
     int[] tab = new int[3];
 
     // Init two dimensions
-    float[][] tab2 = new int[3][2];
+    float[][] tab2 = new float[3][2];
 
     println(tab[0], tab[1], tab[2]);
     println(tab2[0][0], tab2[0][1], tab2[1][0], tab2[1][1], tab2[2][0], tab2[2][1]);

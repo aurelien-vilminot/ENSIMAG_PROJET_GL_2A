@@ -33,5 +33,5 @@ class B extends A{
 {
     A a = new A();
     float[][] f = a.method2();
-    int[] i = (new A()).tab;
+    // int[] i = (new A()).tab;
 }
