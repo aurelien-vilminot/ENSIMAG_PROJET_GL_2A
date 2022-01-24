@@ -160,12 +160,10 @@ public class DeclClass extends AbstractDeclClass {
         // Call parent init
         if (superClass.getClassDefinition().getNumberOfFields() != 0 ) {
             // Initialize fields address, and store default value if superClass has fields
-            // TODO: not optimized ?
             listDeclField.codeGenListDeclFieldDefault(compiler);
             compiler.addInstruction(new PUSH(Register.R1));
             Label superClassLabel = new Label(compiler.getLabelGenerator().getLabel(superClass.getName().getName()));
             compiler.addInstruction(new BSR(new Label("init."+superClassLabel)));
-            // TODO: verify why SUBSP #1
             compiler.addInstruction(new SUBSP(new ImmediateInteger(1)));
         }
 

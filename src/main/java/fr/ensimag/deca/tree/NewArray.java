@@ -50,18 +50,6 @@ public class NewArray extends AbstractExpr{
 
         // Check array type (int or float):
         Type arrayPrimitiveType = this.type.verifyType(compiler);
-        if (!(arrayPrimitiveType.isFloat() || arrayPrimitiveType.isInt())){
-            throw new ContextualError("An array must contain float or int", this.getLocation());
-        }
-        this.setType(arrayPrimitiveType);
-
-        // Check that every index is an int
-        for (AbstractExpr abstractExpr : this.indexList.getList()) {
-            Type currentType = abstractExpr.verifyExpr(compiler, localEnv, currentClass);
-            if (!currentType.isInt()) {
-                throw new ContextualError("Index of array must be an integer", this.getLocation());
-            }
-        }
 
         Type returnType;
         int arraySize = this.indexList.getList().size();
@@ -82,6 +70,15 @@ public class NewArray extends AbstractExpr{
         } else {
             throw new ContextualError("The dimension of an array cannot be greater than 2", this.getLocation());
         }
+        this.setType(arrayPrimitiveType);
+
+        // Check that every index is an int
+        for (AbstractExpr abstractExpr : this.indexList.getList()) {
+            Type currentType = abstractExpr.verifyExpr(compiler, localEnv, currentClass);
+            if (!currentType.isInt()) {
+                throw new ContextualError("Index of array must be an integer", this.getLocation());
+            }
+        }
 
         LOG.debug("verify NewArray: end");
         return returnType;
@@ -89,7 +86,6 @@ public class NewArray extends AbstractExpr{
 
     @Override
     protected void codeGenExpr(DecacCompiler compiler, int n) {
-        // TODO: at return, restore R1 & R2
         if (n > 2) {
             compiler.incTempStackCurrent(1);
             compiler.addInstruction(new PUSH(Register.getR(2)));
