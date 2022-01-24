@@ -12,5 +12,5 @@ class A{
     A x = new A();
     println(x.foo(2));
     println(x.foo(2.0));
-    println(x.foo2((int) (5)))
+    println(x.foo2((int) (5)));
 }
