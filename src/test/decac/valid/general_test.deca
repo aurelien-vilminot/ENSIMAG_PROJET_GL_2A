@@ -1,11 +1,11 @@
 class A{
     protected int aaa = 5;
     int x;
-    float f;
+    float i;
     boolean b = true;
 
     float f(int a, float ttt){
-        return a + this.x / f
+        return a + this.x / i;
     }
 }
 
