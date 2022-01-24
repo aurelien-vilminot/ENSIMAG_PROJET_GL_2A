@@ -19,7 +19,7 @@ public class TestSelection {
     AbstractIdentifier VOID, INT, BOOL;
     AbstractIdentifier publicField, protectedField;
     ClassDefinition classDefinition, superClassDefinition, otherClassDefinition;
-    @Mock AbstractExpr pangolinInstance, superPangolinInstance, undefClassInstance, otherInstance;
+    @Mock AbstractExpr pangolinInstance, superPangolinInstance, undefClassInstance, otherInstance, arrayInstance;
 
     @BeforeEach
     void setup() throws EnvironmentTypes.DoubleDefException, ContextualError {
@@ -75,6 +75,10 @@ public class TestSelection {
         compiler.getEnvironmentTypes().declare(otherClassSymbol, otherClassDefinition);
         when(otherInstance.verifyExpr(compiler, localEnv, null)).thenReturn(canardType);
         when(otherInstance.getType()).thenReturn(canardType);
+
+        // Array Instance Mock Config
+        Type INT_ARRAY = new VectorIntType(compiler.getSymbolTable().create("int[]"));
+        when(arrayInstance.verifyExpr(compiler, localEnv, null)).thenReturn(INT_ARRAY);
     }
 
     @Test
@@ -120,6 +124,26 @@ public class TestSelection {
         );
 
         String expectedMessage = "Undeclared identifier : " + this.protectedField.getName();
+        String actualMessage = exception.getMessage();
+        assertEquals(expectedMessage, actualMessage);
+    }
+
+    @Test
+    public void testVerifyExprArrayField() throws ContextualError {
+        Identifier lengthField = new Identifier(compiler.getSymbolTable().create("length"));
+        selection = new Selection(arrayInstance, lengthField);
+        assertTrue(selection.verifyExpr(compiler, localEnv, null).isInt());
+    }
+
+    @Test
+    public void testVerifyExprArrayFieldNotLengthError() {
+        selection = new Selection(arrayInstance, publicField);
+        Exception exception = assertThrows(
+                ContextualError.class,
+                () -> selection.verifyExpr(compiler, localEnv, null)
+        );
+
+        String expectedMessage = "Only 'length' field is allowed for array";
         String actualMessage = exception.getMessage();
         assertEquals(expectedMessage, actualMessage);
     }
