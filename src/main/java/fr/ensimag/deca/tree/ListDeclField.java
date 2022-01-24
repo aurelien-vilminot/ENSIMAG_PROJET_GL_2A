@@ -67,7 +67,7 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
     /**
      * Initialize fields address, and store default value if superClass has fields
      *
-     * @param compiler //TODO
+     * @param compiler Deca Compiler used to add IMA instructions
      */
     protected void codeGenListDeclFieldDefault(DecacCompiler compiler) {
         compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), Register.R1));

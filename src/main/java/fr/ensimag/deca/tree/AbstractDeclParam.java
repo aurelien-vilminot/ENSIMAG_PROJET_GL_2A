@@ -23,7 +23,7 @@ public abstract class AbstractDeclParam extends Tree {
      * Generate assembly code for the method declaration (pass 2 of [Gencode])
      * Sets the operand of each parameter in the local environment
      *
-     * @param compiler Deca Compiler used to add IMA instruction
+     * @param compiler Deca Compiler used to add IMA instructions
      * @param localEnv Corresponds to the "env_exp" attribute
      * @param index Parameter index
      */

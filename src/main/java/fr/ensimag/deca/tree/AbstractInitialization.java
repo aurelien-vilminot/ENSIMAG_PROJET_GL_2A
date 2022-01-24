@@ -30,7 +30,7 @@ public abstract class AbstractInitialization extends Tree {
     /**
      * Calculate and store an expression in the specified memory location
      *
-     * @param compiler Deca Compiler used to add IMA instruction
+     * @param compiler Deca Compiler used to add IMA instructions
      * @param dAddr The address where the expression must be load
      */
     protected abstract void codeGenInit(DecacCompiler compiler, DAddr dAddr);
@@ -40,9 +40,9 @@ public abstract class AbstractInitialization extends Tree {
      * If initialization is null (NoInitialization), load a null value
      * in the n-th register (0 for int, false for boolean...)
      *
-     * @param compiler //TODO
-     * @param n
-     * @param type
+     * @param compiler Deca Compiler used to add IMA instructions
+     * @param n Register number
+     * @param type Type of the initialization
      */
     protected abstract void codeGenExpr(DecacCompiler compiler, int n, Type type);
 }

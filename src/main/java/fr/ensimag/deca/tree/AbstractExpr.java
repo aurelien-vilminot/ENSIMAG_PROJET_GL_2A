@@ -144,7 +144,7 @@ public abstract class AbstractExpr extends AbstractInst {
     /**
      * Generate code to print the expression
      *
-     * @param compiler Deca Compiler used to add IMA instruction
+     * @param compiler Deca Compiler used to add IMA instructions
      * @param printHex True if the print must be in hexadecimal
      */
     protected void codeGenPrint(DecacCompiler compiler, boolean printHex) {
@@ -162,7 +162,7 @@ public abstract class AbstractExpr extends AbstractInst {
     /**
      * Generate code to print the expression
      *
-     * @param compiler Deca Compiler used to add IMA instruction
+     * @param compiler Deca Compiler used to add IMA instructions
      */
     protected void codeGenPrint(DecacCompiler compiler) {
         this.codeGenPrint(compiler, false);
@@ -171,7 +171,7 @@ public abstract class AbstractExpr extends AbstractInst {
     /**
      * Generate code to print the expression using hexadecimal value for floats
      *
-     * @param compiler Deca Compiler used to add IMA instruction
+     * @param compiler Deca Compiler used to add IMA instructions
      */
     protected void codeGenPrintx(DecacCompiler compiler) {
         this.codeGenPrint(compiler, true);
@@ -185,7 +185,7 @@ public abstract class AbstractExpr extends AbstractInst {
     /**
      * Get the DVal of the expression
      *
-     * @param compiler Deca Compiler used to add IMA instruction
+     * @param compiler Deca Compiler used to add IMA instructions
      * @return The DVal of expression. Can be null if there is no associated dval
      */
     public DVal dval(DecacCompiler compiler) {
@@ -215,7 +215,7 @@ public abstract class AbstractExpr extends AbstractInst {
     /**
      * Calculate and load an expression in the n-th register
      *
-     * @param compiler Deca Compiler used to add IMA instruction
+     * @param compiler Deca Compiler used to add IMA instructions
      * @param n Register number
      */
     protected void codeGenExpr(DecacCompiler compiler, int n) {
@@ -230,7 +230,7 @@ public abstract class AbstractExpr extends AbstractInst {
     /**
      * Generate code so that if "this" is evaluated to "bool", then goto "branch"
      *
-     * @param compiler Deca Compiler used to add IMA instruction
+     * @param compiler Deca Compiler used to add IMA instructions
      * @param bool Condition for goto "branch"
      * @param branch The branch where to program need to go
      */

@@ -30,7 +30,7 @@ public abstract class AbstractDeclMethod extends Tree {
     /**
      * Generate assembly code for the method declaration (pass 2 of [Gencode])
      *
-     * @param compiler Deca Compiler used to add IMA instruction
+     * @param compiler Deca Compiler used to add IMA instructions
      */
     protected abstract void codeGenDeclMethod(DecacCompiler compiler);
 
@@ -39,7 +39,7 @@ public abstract class AbstractDeclMethod extends Tree {
      * Generate assembly code to build the virtual methods table (pass 1 of [Gencode])
      * Construct the labelArrayList for the current class
      *
-     * @param compiler Deca Compiler used to add IMA instruction
+     * @param compiler Deca Compiler used to add IMA instructions
      * @param className Identifier of the class
      */
     protected abstract void codeGenMethodTable(DecacCompiler compiler, AbstractIdentifier className);

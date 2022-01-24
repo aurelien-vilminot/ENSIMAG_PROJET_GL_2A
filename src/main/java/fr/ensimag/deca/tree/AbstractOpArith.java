@@ -67,7 +67,7 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
     /**
      * Add an instruction corresponding to the arithmetical operator, between dval and gpRegister
      *
-     * @param compiler Deca Compiler used to add IMA instruction
+     * @param compiler Deca Compiler used to add IMA instructions
      * @param dval The left operand of the operation
      * @param gpRegister The right operand of the operation
      */

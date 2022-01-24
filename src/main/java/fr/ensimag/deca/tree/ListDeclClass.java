@@ -59,7 +59,8 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
 
     /**
      * Pass 1 of [Gencode]
-     * @param compiler //TODO
+     *
+     * @param compiler Deca Compiler used to add IMA instructions
      */
     protected void codeGenMethodTable(DecacCompiler compiler) {
         if (!getList().isEmpty()) {
@@ -86,7 +87,8 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
 
     /**
      * Pass 2 of [Gencode]
-     * @param compiler //TODO
+     *
+     * @param compiler Deca Compiler used to add IMA instructions
      */
     protected void codeGenListDeclClass(DecacCompiler compiler) {
         if (!getList().isEmpty()) {
@@ -101,8 +103,9 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
     }
 
     /**
-     * //TODO
-     * @param compiler
+     * Generate assembly code for the Object.equals method
+     *
+     * @param compiler Deca Compiler used to add IMA instructions
      */
     protected void codeGenObjectEquals(DecacCompiler compiler) {
         Label equalsLabel = new Label("code.Object.equals");

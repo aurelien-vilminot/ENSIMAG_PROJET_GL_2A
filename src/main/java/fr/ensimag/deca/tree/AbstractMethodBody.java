@@ -24,9 +24,11 @@ public abstract class AbstractMethodBody extends Tree {
             throws ContextualError;
 
     /**
-     * //TODO
-     * @param compiler
-     * @param localEnv
+     * Generate assembly code for the method declaration (pass 2 of [Gencode])
+     * Generate the method's declarations and instructions
+     *
+     * @param compiler Deca Compiler used to add IMA instructions
+     * @param localEnv Corresponds to the "env_exp" attribute
      */
     protected abstract void codeGenDeclMethod(DecacCompiler compiler, EnvironmentExp localEnv);
 }
