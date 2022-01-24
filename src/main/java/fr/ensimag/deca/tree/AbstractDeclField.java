@@ -6,26 +6,37 @@ import fr.ensimag.deca.tools.SymbolTable;
 
 public abstract class AbstractDeclField extends Tree{
 
-    // TODO: comment, pass2
+    /**
+     * Implements non-terminal "DeclField" of [SyntaxeContextuelle] in pass 2
+     *
+     * @param compiler Contains "env_types" attribute
+     * @param superSymbol Superclass symbol
+     * @param symbolCurrentClass Current class symbol
+     */
     protected abstract void verifyDeclField(DecacCompiler compiler,
                                             SymbolTable.Symbol superSymbol, SymbolTable.Symbol symbolCurrentClass)
             throws ContextualError;
 
-    // TODO: comment, pass3
+    /**
+     * Implements non-terminal "DeclField" of [SyntaxeContextuelle] in pass 3
+     *
+     * @param compiler Contains "env_types" attribute
+     * @param currentClass Current class symbol
+     */
     protected abstract void verifyInitField(DecacCompiler compiler, SymbolTable.Symbol currentClass)
             throws ContextualError;
 
     /**
      * Generate assembly code for the field declaration.
      *
-     * @param compiler
+     * @param compiler Deca Compiler used to add IMA instruction
      */
     protected abstract void codeGenDeclFieldDefault(DecacCompiler compiler);
 
     /**
      * Generate assembly code for the field declaration.
      *
-     * @param compiler
+     * @param compiler Deca Compiler used to add IMA instruction
      */
     protected abstract void codeGenDeclField(DecacCompiler compiler);
 }

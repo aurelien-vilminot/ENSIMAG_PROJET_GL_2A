@@ -50,7 +50,7 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
     /**
      * Generate assembly code for the method declaration (pass 2 of [Gencode])
      *
-     * @param compiler
+     * @param compiler //TODO
      */
     protected void codeGenListDeclMethod(DecacCompiler compiler) {
         for (AbstractDeclMethod m : getList()) {
@@ -62,7 +62,7 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
      * Generate assembly code to build the virtual methods table (pass 1 of [Gencode])
      *
      *
-     * @param compiler
+     * @param compiler //TODO
      * @param className
      * @param superClass
      */

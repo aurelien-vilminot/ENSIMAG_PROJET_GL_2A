@@ -13,6 +13,13 @@ import org.apache.log4j.Logger;
 public class ListDeclField extends TreeList<AbstractDeclField> {
     private static final Logger LOG = Logger.getLogger(ListDeclClass.class);
 
+    /**
+     * Implements non-terminal "list_decl_field" of [SyntaxeContextuelle] in pass 2
+     *
+     * @param compiler Contains the "env_types" attribute
+     * @param superSymbol Super-class symbol
+     * @param symbolCurrentClass Current class symbol
+     */
     protected void verifyListDeclField(DecacCompiler compiler,
                                        SymbolTable.Symbol superSymbol,
                                        SymbolTable.Symbol symbolCurrentClass)
@@ -28,6 +35,12 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
         LOG.debug("verify listDeclField: end");
     }
 
+    /**
+     * Implements non-terminal "list_decl_field" of [SyntaxeContextuelle] in pass 3
+     *
+     * @param compiler Contains the "env_types" attribute
+     * @param symbolCurrentClass Symbol of the current class
+     */
     protected void verifyListInitField(DecacCompiler compiler, SymbolTable.Symbol symbolCurrentClass)
             throws ContextualError {
         LOG.debug("verify listInitField: start");
@@ -54,7 +67,7 @@ public class ListDeclField extends TreeList<AbstractDeclField> {
     /**
      * Initialize fields address, and store default value if superClass has fields
      *
-     * @param compiler
+     * @param compiler //TODO
      */
     protected void codeGenListDeclFieldDefault(DecacCompiler compiler) {
         compiler.addInstruction(new LOAD(new RegisterOffset(-2, Register.LB), Register.R1));

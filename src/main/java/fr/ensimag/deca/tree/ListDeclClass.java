@@ -59,7 +59,7 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
 
     /**
      * Pass 1 of [Gencode]
-     * @param compiler
+     * @param compiler //TODO
      */
     protected void codeGenMethodTable(DecacCompiler compiler) {
         if (!getList().isEmpty()) {
@@ -86,7 +86,7 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
 
     /**
      * Pass 2 of [Gencode]
-     * @param compiler
+     * @param compiler //TODO
      */
     protected void codeGenListDeclClass(DecacCompiler compiler) {
         if (!getList().isEmpty()) {
@@ -100,6 +100,10 @@ public class ListDeclClass extends TreeList<AbstractDeclClass> {
         }
     }
 
+    /**
+     * //TODO
+     * @param compiler
+     */
     protected void codeGenObjectEquals(DecacCompiler compiler) {
         Label equalsLabel = new Label("code.Object.equals");
         Label endEqualsLabel = new Label("fin.Object.equals");

@@ -40,7 +40,7 @@ public abstract class AbstractInitialization extends Tree {
      * If initialization is null (NoInitialization), load a null value
      * in the n-th register (0 for int, false for boolean...)
      *
-     * @param compiler
+     * @param compiler //TODO
      * @param n
      * @param type
      */

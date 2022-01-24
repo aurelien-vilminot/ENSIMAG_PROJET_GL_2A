@@ -141,6 +141,12 @@ public abstract class AbstractExpr extends AbstractInst {
         LOG.debug("verify Condition: end");
     }
 
+    /**
+     * Generate code to print the expression
+     *
+     * @param compiler Deca Compiler used to add IMA instruction
+     * @param printHex True if the print must be in hexadecimal
+     */
     protected void codeGenPrint(DecacCompiler compiler, boolean printHex) {
         Instruction outputInstruction = this.outputExpr(printHex);
         if (outputInstruction != null) {
@@ -176,6 +182,12 @@ public abstract class AbstractExpr extends AbstractInst {
         codeGenExpr(compiler, 2);
     }
 
+    /**
+     * Get the DVal of the expression
+     *
+     * @param compiler Deca Compiler used to add IMA instruction
+     * @return The DVal of expression. Can be null if there is no associated dval
+     */
     public DVal dval(DecacCompiler compiler) {
         return null;
     }

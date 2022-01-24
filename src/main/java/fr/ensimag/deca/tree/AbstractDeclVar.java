@@ -32,7 +32,7 @@ public abstract class AbstractDeclVar extends Tree {
     /**
      * Generate assembly code for the variable declaration.
      *
-     * @param compiler
+     * @param compiler Deca Compiler used to add IMA instruction
      */
     protected abstract void codeGenDeclVar(DecacCompiler compiler, EnvironmentExp localEnv);
 }
