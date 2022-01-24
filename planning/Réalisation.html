@@ -1,0 +1,3775 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:date="http://exslt.org/dates-and-times">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!--
+              This file is generated from xml source: DO NOT EDIT
+      -->
+    <title> - Planner</title>
+    <meta name="GENERATOR" content="Planner HTML output" />
+    <style type="text/css">
+
+/* CSS Stylesheet for Planner HTML output.
+ * 
+ * Copyright (C) 2004-2005 Imendio AB
+ * Copyright (C) 2003 CodeFactory AB
+ * Copyright (C) 2003 Daniel Lundin (daniel@edgewall.com)
+ * Copyright (C) 2004 Chris Ladd (caladd@particlestorm.net)
+ */
+
+/*
+ * Fonts 
+ */
+html,body,table { 
+ font-family: "Bitstream Vera Sans", helvetica, Arial, sans-serif;
+ font-size: 12px;
+ white-space: nowrap;
+}
+
+tr,td,th,table,font,span,div,h1,h2,h3 {
+ font-family: "Bitstream Vera Sans", helvetica, Arial, sans-serif;
+}
+
+h1 {
+ font-size: 16px;
+}
+
+h2 {
+ font-size: 12px;
+ margin-bottom: 2px;
+}
+
+div.separator {
+ margin: 1em;
+}
+
+/*
+ * Header
+ */
+table.proj-header {
+ border: 0;
+ margin: 0;
+ width: auto;
+}
+
+table.proj-header .header {
+ font-weight: bold;
+}
+
+/*
+ * Footer
+ */
+.footer {
+ float: left;
+ width: 100%;
+ margin-top: 50px;  
+ padding-top: 2px;
+ border-style: dotted;
+ border-width: 1px 0 0 0;
+ border-color: #999;
+ font-size: 9px;
+ text-align: right;
+ clear: both;
+ color: #666;
+}
+
+a:link, a:visited {
+ text-decoration: none;
+ color: #666;
+}
+
+a:hover[href] {
+ text-decoration: underline;
+}
+
+
+/*
+ * Layout
+ */
+
+.gantt, .gantt-tasklist, .gantt-chart, .tasklist, .resourcelist {
+ float: left;
+}
+
+.gantt-tasklist, .gantt-chart, .tasklist-table, .resourcelist-table {
+ border-style: solid;
+ border-width: 1px;
+ border-color: #aaa;
+}
+
+.gantt-tasklist, .gantt-chart, .tasklist, .resourcelist {
+ overflow: auto;
+}
+
+.gantt, .tasklist, .resourcelist {
+  clear: both;
+  width: 100%;
+}
+
+.gantt-tasklist {
+ border-width: 1px 0px 1px 1px;
+ width: 30%;
+}
+
+.gantt-chart {
+ border-color: #aaa #aaa #aaa #fff;
+ width: 69.5%;
+}
+
+.tasklist, .resourcelist {
+ clear: left;
+}
+
+table {
+ width: 100%;
+ border-collapse: collapse;
+ border-style: none;
+ border-color: #fff;
+ white-space: nowrap;
+ margin: 0;
+}
+
+tr, td, th {
+ white-space: nowrap;
+ vertical-align: top;
+ padding-top: 1px;
+ padding-bottom: 1px;
+}
+
+th {
+ vertical-align: top;
+}
+
+tr {
+ height: 1.5em;
+}
+
+tr.header {
+ background-color: #aaa;
+ color: #fff;
+}
+
+tr.even {
+ background-color: #eee;
+}
+
+tr.odd {
+ background-color: #fff;
+}
+
+th span, td span {
+ margin-left: 6px;
+ margin-right: 6px;
+}
+
+th.note {
+ min-width: 20em;
+}
+
+td.note {
+ white-space: normal;
+}
+
+/*
+ * Gantt
+ */
+div.gantt-empty-begin, div.gantt-empty-end, div.gantt-complete-done, div.gantt-complete-notdone, div.gantt-summary {
+ overflow: hidden;
+ clear: none;
+ float: left; 
+ height: 0.75em;
+ margin-top: 0.15em;
+ margin-bottom: 0;
+}
+
+div.gantt-complete-done {
+ background-color: #495f6b;
+ height: 0.75em;
+ margin-top: 0;
+ margin-bottom: 0;
+}
+
+div.gantt-complete-notdone {
+ background-color: #8db6cd;
+ border-style: solid;
+ border-width: 1px;
+}
+
+div.gantt-summary {
+ height: 0.3em;
+ margin-top: 0.25em;
+ border-bottom: 2px dashed #000;
+}
+
+div.gantt-empty-end {
+ margin-left: 0;
+}
+
+div.gantt-milestone {
+ float: left;
+ font-size: 0.9em;
+ color: #000000;
+ position: relative;
+ margin-left: 0;
+ margin-right: 0;
+}
+
+div.gantt-resources {
+ float: left;
+ margin-left: 0.5em;
+ white-space: nowrap;
+}
+
+th.gantt-1day-header {
+  width: 19px;
+}
+
+th.gantt-2day-header {
+  width: 39px;
+}
+
+th.gantt-3day-header {
+  width: 59px;
+}
+
+th.gantt-4day-header {
+  width: 79px;
+}
+
+th.gantt-5day-header {
+  width: 99px;
+}
+
+th.gantt-6day-header {
+  width: 119px;
+}
+
+th.gantt-week-header, .gantt-resources {
+ width: 139px;
+}
+
+th.gantt-day-header {
+ margin: 0;
+ padding-top: 1px;
+ padding-bottom: 1px;
+ width: 19px;
+}
+
+</style>
+<!--[if IE]><style type="text/css">
+
+/* IE specific overrides to compensate for the different box model used by IE
+ * (see http://en.wikipedia.org/wiki/Internet_Explorer_box_model_bug)
+ */
+
+.gantt-resources {
+  overflow: hidden;
+}
+
+
+.tasklist, .resourcelist {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 1em;
+}
+
+
+.gantt-tasklist, .gantt-chart {
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+
+
+.gantt-chart {
+  padding-bottom: 1px;
+}
+
+
+
+.tasklist-table, .resourcelist-table {
+  width: 99.8%;
+}
+
+/*
+div.gantt-empty-begin, div.gantt-empty-end, div.gantt-complete-done, div.gantt-complete-notdone, div.gantt-summary {
+ height: 1.75em;
+}
+
+div.gantt-complete-done {
+ height: 0.75em;
+}
+
+div.gantt-summary {
+ height: 0.3em;
+}
+*/
+th.gantt-1day-header {
+  width: 20px;
+}
+
+th.gantt-2day-header {
+  width: 40px;
+}
+
+th.gantt-3day-header {
+  width: 60px;
+}
+
+th.gantt-4day-header {
+  width: 80px;
+}
+
+th.gantt-5day-header {
+  width: 100px;
+}
+
+th.gantt-6day-header {
+  width: 120px;
+}
+
+th.gantt-week-header {
+ width: 140px;
+}
+
+th.gantt-day-header {
+ width: 20px;
+}
+
+</style><![endif]-->
+<!--[if gte IE 7]><style type="text/css">
+
+.gantt-chart {
+  padding-bottom: 0px;
+}
+
+</style><![endif]-->
+  </head>
+  <body>
+    <h1 class="proj-title">
+      <a name="project" id="project">Unnamed Project</a>
+    </h1>
+    <table class="proj-header">
+      <tr>
+        <td class="header">Start:</td>
+        <td>January 3, 2022</td>
+      </tr>
+      <tr>
+        <td class="header">Finish:</td>
+        <td>January 26, 2022</td>
+      </tr>
+      <tr>
+        <td class="header">Report Date:</td>
+        <td>January 23, 2022</td>
+      </tr>
+    </table>
+    <div class="separator"></div>
+    <div class="gantt">
+      <h2>
+        <a name="gantt" id="gantt">Gantt Chart</a>
+      </h2>
+      <div class="gantt-tasklist">
+        <table cellspacing="0" cellpadding="0" border="1">
+          <tr class="header" align="left">
+            <th>
+              <span>WBS</span>
+            </th>
+            <th>
+              <span>Name</span>
+            </th>
+            <th>
+              <span>Work</span>
+            </th>
+          </tr>
+          <tr class="header">
+            <th> </th>
+            <th> </th>
+            <th> </th>
+          </tr>
+          <tr class="odd">
+            <td>
+              <span>1</span>
+            </td>
+            <td>
+              <a name="task-1" style="white-space: nowrap; font-weight: bold; margin-left: 0px;" id="task-1">
+                <span>Sprint 1 - Hello World</span>
+              </a>
+            </td>
+            <td>
+              <span style="white-space: nowrap; font-weight: bold;">21d 4h </span>
+            </td>
+          </tr>
+          <tr class="even">
+            <td>
+              <span>1.1</span>
+            </td>
+            <td>
+              <a name="gantt-2" style="white-space: nowrap; margin-left: 18px;" id="gantt-2">
+                <span>Organisation Projet + Séance machine</span>
+              </a>
+            </td>
+            <td>
+              <span>1d </span>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td>
+              <span>1.2</span>
+            </td>
+            <td>
+              <a name="task-3" style="white-space: nowrap; font-weight: bold; margin-left: 18px;" id="task-3">
+                <span>Développement</span>
+              </a>
+            </td>
+            <td>
+              <span style="white-space: nowrap; font-weight: bold;">6d </span>
+            </td>
+          </tr>
+          <tr class="even">
+            <td>
+              <span>1.2.1</span>
+            </td>
+            <td>
+              <a name="gantt-4" style="white-space: nowrap; margin-left: 36px;" id="gantt-4">
+                <span>Lexer Complet</span>
+              </a>
+            </td>
+            <td>
+              <span>1d </span>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td>
+              <span>1.2.2</span>
+            </td>
+            <td>
+              <a name="gantt-5" style="white-space: nowrap; margin-left: 36px;" id="gantt-5">
+                <span>Parser</span>
+              </a>
+            </td>
+            <td>
+              <span>2d </span>
+            </td>
+          </tr>
+          <tr class="even">
+            <td>
+              <span>1.2.3</span>
+            </td>
+            <td>
+              <a name="gantt-6" style="white-space: nowrap; margin-left: 36px;" id="gantt-6">
+                <span>Analyse Contextuelle/Décoration Arbre</span>
+              </a>
+            </td>
+            <td>
+              <span>2d </span>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td>
+              <span>1.2.4</span>
+            </td>
+            <td>
+              <a name="gantt-7" style="white-space: nowrap; margin-left: 36px;" id="gantt-7">
+                <span>Génération de code</span>
+              </a>
+            </td>
+            <td>
+              <span>1d </span>
+            </td>
+          </tr>
+          <tr class="even">
+            <td>
+              <span>1.3</span>
+            </td>
+            <td>
+              <a name="task-8" style="white-space: nowrap; font-weight: bold; margin-left: 18px;" id="task-8">
+                <span>Tests </span>
+              </a>
+            </td>
+            <td>
+              <span style="white-space: nowrap; font-weight: bold;">10d 6h </span>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td>
+              <span>1.3.1</span>
+            </td>
+            <td>
+              <a name="gantt-9" style="white-space: nowrap; margin-left: 36px;" id="gantt-9">
+                <span>Tests conformité Lexer/Parser</span>
+              </a>
+            </td>
+            <td>
+              <span>3d </span>
+            </td>
+          </tr>
+          <tr class="even">
+            <td>
+              <span>1.3.2</span>
+            </td>
+            <td>
+              <a name="gantt-10" style="white-space: nowrap; margin-left: 36px;" id="gantt-10">
+                <span>Tests conformité Ana Contextuelle</span>
+              </a>
+            </td>
+            <td>
+              <span>3d </span>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td>
+              <span>1.3.3</span>
+            </td>
+            <td>
+              <a name="gantt-11" style="white-space: nowrap; margin-left: 36px;" id="gantt-11">
+                <span>Test conformité génération code</span>
+              </a>
+            </td>
+            <td>
+              <span>2d </span>
+            </td>
+          </tr>
+          <tr class="even">
+            <td>
+              <span>1.3.4</span>
+            </td>
+            <td>
+              <a name="gantt-12" style="white-space: nowrap; margin-left: 36px;" id="gantt-12">
+                <span>Tests unitaires Analyse/Décoration</span>
+              </a>
+            </td>
+            <td>
+              <span>2d </span>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td>
+              <span>1.3.5</span>
+            </td>
+            <td>
+              <a name="gantt-13" style="white-space: nowrap; margin-left: 36px;" id="gantt-13">
+                <span>Automatisation des tests</span>
+              </a>
+            </td>
+            <td>
+              <span>6h </span>
+            </td>
+          </tr>
+          <tr class="even">
+            <td>
+              <span>1.4</span>
+            </td>
+            <td>
+              <a name="task-14" style="white-space: nowrap; font-weight: bold; margin-left: 18px;" id="task-14">
+                <span>Documentation Sprint 1</span>
+              </a>
+            </td>
+            <td>
+              <span style="white-space: nowrap; font-weight: bold;">1d 6h </span>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td>
+              <span>1.4.1</span>
+            </td>
+            <td>
+              <a name="gantt-15" style="white-space: nowrap; margin-left: 36px;" id="gantt-15">
+                <span>Doc Conception</span>
+              </a>
+            </td>
+            <td>
+              <span>6h </span>
+            </td>
+          </tr>
+          <tr class="even">
+            <td>
+              <span>1.4.2</span>
+            </td>
+            <td>
+              <a name="gantt-16" style="white-space: nowrap; margin-left: 36px;" id="gantt-16">
+                <span>Doc Validation</span>
+              </a>
+            </td>
+            <td>
+              <span>1d </span>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td>
+              <span>1.5</span>
+            </td>
+            <td>
+              <a name="task-17" style="white-space: nowrap; font-weight: bold; margin-left: 18px;" id="task-17">
+                <span>Recheches bibliographiques</span>
+              </a>
+            </td>
+            <td>
+              <span style="white-space: nowrap; font-weight: bold;">2d </span>
+            </td>
+          </tr>
+          <tr class="even">
+            <td>
+              <span>1.5.1</span>
+            </td>
+            <td>
+              <a name="gantt-18" style="white-space: nowrap; margin-left: 36px;" id="gantt-18">
+                <span>Analyse énergétique</span>
+              </a>
+            </td>
+            <td>
+              <span>1d </span>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td>
+              <span>1.5.2</span>
+            </td>
+            <td>
+              <a name="gantt-19" style="white-space: nowrap; margin-left: 36px;" id="gantt-19">
+                <span>Extension TAB (ajout grammaire)</span>
+              </a>
+            </td>
+            <td>
+              <span>1d </span>
+            </td>
+          </tr>
+          <tr class="even">
+            <td>
+              <span>2</span>
+            </td>
+            <td>
+              <a name="task-20" style="white-space: nowrap; font-weight: bold; margin-left: 0px;" id="task-20">
+                <span>Sprint 2 - Sans Objet</span>
+              </a>
+            </td>
+            <td>
+              <span style="white-space: nowrap; font-weight: bold;">24d 5h </span>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td>
+              <span>2.1</span>
+            </td>
+            <td>
+              <a name="task-21" style="white-space: nowrap; font-weight: bold; margin-left: 18px;" id="task-21">
+                <span>Développement 2</span>
+              </a>
+            </td>
+            <td>
+              <span style="white-space: nowrap; font-weight: bold;">9d </span>
+            </td>
+          </tr>
+          <tr class="even">
+            <td>
+              <span>2.1.1</span>
+            </td>
+            <td>
+              <a name="gantt-22" style="white-space: nowrap; margin-left: 36px;" id="gantt-22">
+                <span>Déclaration de varibles et assignation</span>
+              </a>
+            </td>
+            <td>
+              <span>4d </span>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td>
+              <span>2.1.2</span>
+            </td>
+            <td>
+              <a name="gantt-23" style="white-space: nowrap; margin-left: 36px;" id="gantt-23">
+                <span>Expressions booléennes</span>
+              </a>
+            </td>
+            <td>
+              <span>3d </span>
+            </td>
+          </tr>
+          <tr class="even">
+            <td>
+              <span>2.1.3</span>
+            </td>
+            <td>
+              <a name="gantt-24" style="white-space: nowrap; margin-left: 36px;" id="gantt-24">
+                <span>Boucle while et clauses if/else</span>
+              </a>
+            </td>
+            <td>
+              <span>2d </span>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td>
+              <span>2.2</span>
+            </td>
+            <td>
+              <a name="task-25" style="white-space: nowrap; font-weight: bold; margin-left: 18px;" id="task-25">
+                <span>Tests 2</span>
+              </a>
+            </td>
+            <td>
+              <span style="white-space: nowrap; font-weight: bold;">11d 2h </span>
+            </td>
+          </tr>
+          <tr class="even">
+            <td>
+              <span>2.2.1</span>
+            </td>
+            <td>
+              <a name="gantt-26" style="white-space: nowrap; margin-left: 36px;" id="gantt-26">
+                <span>Tests conformité Parser</span>
+              </a>
+            </td>
+            <td>
+              <span>2d </span>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td>
+              <span>2.2.2</span>
+            </td>
+            <td>
+              <a name="gantt-27" style="white-space: nowrap; margin-left: 36px;" id="gantt-27">
+                <span>Tests conformité Analyse/Décoration</span>
+              </a>
+            </td>
+            <td>
+              <span>3d </span>
+            </td>
+          </tr>
+          <tr class="even">
+            <td>
+              <span>2.2.3</span>
+            </td>
+            <td>
+              <a name="gantt-28" style="white-space: nowrap; margin-left: 36px;" id="gantt-28">
+                <span>Tests conformité Génération de code</span>
+              </a>
+            </td>
+            <td>
+              <span>3d </span>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td>
+              <span>2.2.4</span>
+            </td>
+            <td>
+              <a name="gantt-29" style="white-space: nowrap; margin-left: 36px;" id="gantt-29">
+                <span>Tests unitaires</span>
+              </a>
+            </td>
+            <td>
+              <span>2d </span>
+            </td>
+          </tr>
+          <tr class="even">
+            <td>
+              <span>2.2.5</span>
+            </td>
+            <td>
+              <a name="gantt-30" style="white-space: nowrap; margin-left: 36px;" id="gantt-30">
+                <span>Automatisation des tests 2</span>
+              </a>
+            </td>
+            <td>
+              <span>1d 2h </span>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td>
+              <span>2.3</span>
+            </td>
+            <td>
+              <a name="task-31" style="white-space: nowrap; font-weight: bold; margin-left: 18px;" id="task-31">
+                <span>Documentation Sprint 2</span>
+              </a>
+            </td>
+            <td>
+              <span style="white-space: nowrap; font-weight: bold;">1d 5h </span>
+            </td>
+          </tr>
+          <tr class="even">
+            <td>
+              <span>2.3.1</span>
+            </td>
+            <td>
+              <a name="gantt-32" style="white-space: nowrap; margin-left: 36px;" id="gantt-32">
+                <span>Doc Conception</span>
+              </a>
+            </td>
+            <td>
+              <span>5h </span>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td>
+              <span>2.3.2</span>
+            </td>
+            <td>
+              <a name="gantt-33" style="white-space: nowrap; margin-left: 36px;" id="gantt-33">
+                <span>Doc Validation</span>
+              </a>
+            </td>
+            <td>
+              <span>1d </span>
+            </td>
+          </tr>
+          <tr class="even">
+            <td>
+              <span>2.4</span>
+            </td>
+            <td>
+              <a name="task-34" style="white-space: nowrap; font-weight: bold; margin-left: 18px;" id="task-34">
+                <span>Extension</span>
+              </a>
+            </td>
+            <td>
+              <span style="white-space: nowrap; font-weight: bold;">2d </span>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td>
+              <span>2.4.1</span>
+            </td>
+            <td>
+              <a name="gantt-35" style="white-space: nowrap; margin-left: 36px;" id="gantt-35">
+                <span>Extension des grammaires (doc extension)</span>
+              </a>
+            </td>
+            <td>
+              <span>2d </span>
+            </td>
+          </tr>
+          <tr class="even">
+            <td>
+              <span>2.5</span>
+            </td>
+            <td>
+              <a name="task-36" style="white-space: nowrap; font-weight: bold; margin-left: 18px;" id="task-36">
+                <span>Recherches bibliographiques</span>
+              </a>
+            </td>
+            <td>
+              <span style="white-space: nowrap; font-weight: bold;">6h </span>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td>
+              <span>2.5.1</span>
+            </td>
+            <td>
+              <a name="gantt-37" style="white-space: nowrap; margin-left: 36px;" id="gantt-37">
+                <span>Analyse énergétique</span>
+              </a>
+            </td>
+            <td>
+              <span>6h </span>
+            </td>
+          </tr>
+          <tr class="even">
+            <td>
+              <span>3</span>
+            </td>
+            <td>
+              <a name="task-38" style="white-space: nowrap; font-weight: bold; margin-left: 0px;" id="task-38">
+                <span>Sprint 3 - Avec Objet</span>
+              </a>
+            </td>
+            <td>
+              <span style="white-space: nowrap; font-weight: bold;">28d 2h </span>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td>
+              <span>3.1</span>
+            </td>
+            <td>
+              <a name="task-39" style="white-space: nowrap; font-weight: bold; margin-left: 18px;" id="task-39">
+                <span>Développement 3</span>
+              </a>
+            </td>
+            <td>
+              <span style="white-space: nowrap; font-weight: bold;">10d </span>
+            </td>
+          </tr>
+          <tr class="even">
+            <td>
+              <span>3.1.1</span>
+            </td>
+            <td>
+              <a name="gantt-40" style="white-space: nowrap; margin-left: 36px;" id="gantt-40">
+                <span>Déclaration/Assignation classes et attributs</span>
+              </a>
+            </td>
+            <td>
+              <span>4d </span>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td>
+              <span>3.1.2</span>
+            </td>
+            <td>
+              <a name="gantt-41" style="white-space: nowrap; margin-left: 36px;" id="gantt-41">
+                <span>Visibilité attributs, déf et appels de méthodes</span>
+              </a>
+            </td>
+            <td>
+              <span>4d </span>
+            </td>
+          </tr>
+          <tr class="even">
+            <td>
+              <span>3.1.3</span>
+            </td>
+            <td>
+              <a name="gantt-42" style="white-space: nowrap; margin-left: 36px;" id="gantt-42">
+                <span>Héritage, Cast et retour de méthodes</span>
+              </a>
+            </td>
+            <td>
+              <span>2d </span>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td>
+              <span>3.2</span>
+            </td>
+            <td>
+              <a name="task-43" style="white-space: nowrap; font-weight: bold; margin-left: 18px;" id="task-43">
+                <span>Tests 3</span>
+              </a>
+            </td>
+            <td>
+              <span style="white-space: nowrap; font-weight: bold;">5d </span>
+            </td>
+          </tr>
+          <tr class="even">
+            <td>
+              <span>3.2.1</span>
+            </td>
+            <td>
+              <a name="gantt-44" style="white-space: nowrap; margin-left: 36px;" id="gantt-44">
+                <span>Tests conformité Lexer/Parser</span>
+              </a>
+            </td>
+            <td>
+              <span>1d </span>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td>
+              <span>3.2.2</span>
+            </td>
+            <td>
+              <a name="gantt-45" style="white-space: nowrap; margin-left: 36px;" id="gantt-45">
+                <span>Tests conformité Analyse/Décoration</span>
+              </a>
+            </td>
+            <td>
+              <span>1d </span>
+            </td>
+          </tr>
+          <tr class="even">
+            <td>
+              <span>3.2.3</span>
+            </td>
+            <td>
+              <a name="gantt-46" style="white-space: nowrap; margin-left: 36px;" id="gantt-46">
+                <span>Tests conformité Génération de code </span>
+              </a>
+            </td>
+            <td>
+              <span>1d </span>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td>
+              <span>3.2.4</span>
+            </td>
+            <td>
+              <a name="gantt-47" style="white-space: nowrap; margin-left: 36px;" id="gantt-47">
+                <span>Tests unitaires</span>
+              </a>
+            </td>
+            <td>
+              <span>2d </span>
+            </td>
+          </tr>
+          <tr class="even">
+            <td>
+              <span>3.3</span>
+            </td>
+            <td>
+              <a name="task-48" style="white-space: nowrap; font-weight: bold; margin-left: 18px;" id="task-48">
+                <span>Documentation</span>
+              </a>
+            </td>
+            <td>
+              <span style="white-space: nowrap; font-weight: bold;">2d 2h </span>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td>
+              <span>3.3.1</span>
+            </td>
+            <td>
+              <a name="gantt-49" style="white-space: nowrap; margin-left: 36px;" id="gantt-49">
+                <span>Manuel Utilisateur</span>
+              </a>
+            </td>
+            <td>
+              <span>6h </span>
+            </td>
+          </tr>
+          <tr class="even">
+            <td>
+              <span>3.3.2</span>
+            </td>
+            <td>
+              <a name="gantt-50" style="white-space: nowrap; margin-left: 36px;" id="gantt-50">
+                <span>Doc Conception</span>
+              </a>
+            </td>
+            <td>
+              <span>6h </span>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td>
+              <span>3.3.3</span>
+            </td>
+            <td>
+              <a name="gantt-51" style="white-space: nowrap; margin-left: 36px;" id="gantt-51">
+                <span>Doc Validation</span>
+              </a>
+            </td>
+            <td>
+              <span>6h </span>
+            </td>
+          </tr>
+          <tr class="even">
+            <td>
+              <span>3.4</span>
+            </td>
+            <td>
+              <a name="task-52" style="white-space: nowrap; font-weight: bold; margin-left: 18px;" id="task-52">
+                <span>Extension</span>
+              </a>
+            </td>
+            <td>
+              <span style="white-space: nowrap; font-weight: bold;">10d </span>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td>
+              <span>3.4.1</span>
+            </td>
+            <td>
+              <a name="gantt-53" style="white-space: nowrap; margin-left: 36px;" id="gantt-53">
+                <span>Dév Parser/Analyse Contextuelle</span>
+              </a>
+            </td>
+            <td>
+              <span>4d </span>
+            </td>
+          </tr>
+          <tr class="even">
+            <td>
+              <span>3.4.2</span>
+            </td>
+            <td>
+              <a name="gantt-54" style="white-space: nowrap; margin-left: 36px;" id="gantt-54">
+                <span>Dév génération de code/librairie</span>
+              </a>
+            </td>
+            <td>
+              <span>4d </span>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td>
+              <span>3.4.3</span>
+            </td>
+            <td>
+              <a name="gantt-55" style="white-space: nowrap; margin-left: 36px;" id="gantt-55">
+                <span>Tests Conformité/Unitaires</span>
+              </a>
+            </td>
+            <td>
+              <span>2d </span>
+            </td>
+          </tr>
+          <tr class="even">
+            <td>
+              <span>3.5</span>
+            </td>
+            <td>
+              <a name="task-56" style="white-space: nowrap; font-weight: bold; margin-left: 18px;" id="task-56">
+                <span>Analyse énergétique</span>
+              </a>
+            </td>
+            <td>
+              <span style="white-space: nowrap; font-weight: bold;">1d </span>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td>
+              <span>3.5.1</span>
+            </td>
+            <td>
+              <a name="gantt-57" style="white-space: nowrap; margin-left: 36px;" id="gantt-57">
+                <span>Mesures énergétiques</span>
+              </a>
+            </td>
+            <td>
+              <span>1d </span>
+            </td>
+          </tr>
+          <tr class="even">
+            <td>
+              <span>4</span>
+            </td>
+            <td>
+              <a name="task-58" style="white-space: nowrap; font-weight: bold; margin-left: 0px;" id="task-58">
+                <span>Fin du projet</span>
+              </a>
+            </td>
+            <td>
+              <span style="white-space: nowrap; font-weight: bold;">12d </span>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td>
+              <span>4.1</span>
+            </td>
+            <td>
+              <a name="gantt-59" style="white-space: nowrap; margin-left: 18px;" id="gantt-59">
+                <span>Bilan d'équipe</span>
+              </a>
+            </td>
+            <td>
+              <span>3d </span>
+            </td>
+          </tr>
+          <tr class="even">
+            <td>
+              <span>4.2</span>
+            </td>
+            <td>
+              <a name="gantt-60" style="white-space: nowrap; margin-left: 18px;" id="gantt-60">
+                <span>Doc Conception</span>
+              </a>
+            </td>
+            <td>
+              <span>3d </span>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td>
+              <span>4.3</span>
+            </td>
+            <td>
+              <a name="gantt-61" style="white-space: nowrap; margin-left: 18px;" id="gantt-61">
+                <span>Doc Validation</span>
+              </a>
+            </td>
+            <td>
+              <span>3d </span>
+            </td>
+          </tr>
+          <tr class="even">
+            <td>
+              <span>4.4</span>
+            </td>
+            <td>
+              <a name="gantt-62" style="white-space: nowrap; margin-left: 18px;" id="gantt-62">
+                <span>Doc Analyse énergétique</span>
+              </a>
+            </td>
+            <td>
+              <span>3d </span>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="gantt-chart">
+        <table cellspacing="0" cellpadding="0" border="1" style="table-layout: fixed;">
+          <tr class="header" align="left">
+            <th class="gantt-week-header" align="center" colspan="7">Week 1, 2022</th>
+            <th class="gantt-week-header" align="center" colspan="7">Week 2, 2022</th>
+            <th class="gantt-week-header" align="center" colspan="7">Week 3, 2022</th>
+            <th class="gantt-week-header" align="center" colspan="7">Week 4, 2022</th>
+            <th class="gantt-3day-header" colspan="3"></th>
+            <th></th>
+          </tr>
+          <tr class="header" align="left">
+            <th class="gantt-day-header" align="center">3</th>
+            <th class="gantt-day-header" align="center">4</th>
+            <th class="gantt-day-header" align="center">5</th>
+            <th class="gantt-day-header" align="center">6</th>
+            <th class="gantt-day-header" align="center">7</th>
+            <th class="gantt-day-header" align="center">8</th>
+            <th class="gantt-day-header" align="center">9</th>
+            <th class="gantt-day-header" align="center">10</th>
+            <th class="gantt-day-header" align="center">11</th>
+            <th class="gantt-day-header" align="center">12</th>
+            <th class="gantt-day-header" align="center">13</th>
+            <th class="gantt-day-header" align="center">14</th>
+            <th class="gantt-day-header" align="center">15</th>
+            <th class="gantt-day-header" align="center">16</th>
+            <th class="gantt-day-header" align="center">17</th>
+            <th class="gantt-day-header" align="center">18</th>
+            <th class="gantt-day-header" align="center">19</th>
+            <th class="gantt-day-header" align="center">20</th>
+            <th class="gantt-day-header" align="center">21</th>
+            <th class="gantt-day-header" align="center">22</th>
+            <th class="gantt-day-header" align="center">23</th>
+            <th class="gantt-day-header" align="center">24</th>
+            <th class="gantt-day-header" align="center">25</th>
+            <th class="gantt-day-header" align="center">26</th>
+            <th class="gantt-day-header" align="center">27</th>
+            <th class="gantt-day-header" align="center">28</th>
+            <th class="gantt-day-header" align="center">29</th>
+            <th class="gantt-day-header" align="center">30</th>
+            <th class="gantt-day-header" align="center">31</th>
+            <th class="gantt-day-header" align="center">1</th>
+            <th class="gantt-day-header" align="center">2</th>
+            <th align="center"></th>
+          </tr>
+          <tr class="odd">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;"></div>
+            </td>
+          </tr>
+          <tr class="even">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 6px;"></div>
+                <div class="gantt-complete-notdone" style="width: 8px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Aurélien[20], Damien[20], Guilherme[20], Léon[20], Pierre[20]</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;"></div>
+            </td>
+          </tr>
+          <tr class="even">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 26px;"></div>
+                <div class="gantt-complete-notdone" style="width: 28px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Guilherme[50]</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 26px;"></div>
+                <div class="gantt-complete-notdone" style="width: 28px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Damien</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="even">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 26px;"></div>
+                <div class="gantt-complete-notdone" style="width: 48px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Aurélien[67]</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 46px;"></div>
+                <div class="gantt-complete-notdone" style="width: 28px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Damien[50]</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="even">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;"></div>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 26px;"></div>
+                <div class="gantt-complete-notdone" style="width: 48px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Léon[50], Pierre[50]</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="even">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 26px;"></div>
+                <div class="gantt-complete-notdone" style="width: 48px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Guilherme[33], Léon[33], Pierre[33]</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 46px;"></div>
+                <div class="gantt-complete-notdone" style="width: 28px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Léon[50], Pierre[50]</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="even">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 46px;"></div>
+                <div class="gantt-complete-notdone" style="width: 48px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Aurélien[33], Pierre[33]</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 46px;"></div>
+                <div class="gantt-complete-notdone" style="width: 6px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Léon</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="even">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;"></div>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 86px;"></div>
+                <div class="gantt-complete-notdone" style="width: 8px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Aurélien[25], Damien[25], Guilherme[25]</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="even">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 86px;"></div>
+                <div class="gantt-complete-notdone" style="width: 8px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Guilherme[33], Léon[33], Pierre[33]</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;"></div>
+            </td>
+          </tr>
+          <tr class="even">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 46px;"></div>
+                <div class="gantt-complete-notdone" style="width: 28px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Aurélien[25], Pierre[25]</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 26px;"></div>
+                <div class="gantt-complete-notdone" style="width: 68px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Léon[25]</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="even">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;"></div>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;"></div>
+            </td>
+          </tr>
+          <tr class="even">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 146px;"></div>
+                <div class="gantt-complete-notdone" style="width: 28px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Aurélien, Damien</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 186px;"></div>
+                <div class="gantt-complete-notdone" style="width: 8px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Aurélien, Damien, Pierre</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="even">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 206px;"></div>
+                <div class="gantt-complete-notdone" style="width: 8px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Aurélien[67], Damien[67], Guilherme[67]</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;"></div>
+            </td>
+          </tr>
+          <tr class="even">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 146px;"></div>
+                <div class="gantt-complete-notdone" style="width: 28px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Léon[50], Pierre[50]</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 146px;"></div>
+                <div class="gantt-complete-notdone" style="width: 48px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Léon[50], Pierre[50]</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="even">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 186px;"></div>
+                <div class="gantt-complete-notdone" style="width: 47px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Léon[52], Pierre[52]</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 166px;"></div>
+                <div class="gantt-complete-notdone" style="width: 48px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Guilherme[67]</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="even">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 186px;"></div>
+                <div class="gantt-complete-notdone" style="width: 28px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Léon[63]</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;"></div>
+            </td>
+          </tr>
+          <tr class="even">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 226px;"></div>
+                <div class="gantt-complete-notdone" style="width: 8px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Aurélien[31], Damien[31]</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 226px;"></div>
+                <div class="gantt-complete-notdone" style="width: 8px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Guilherme[50], Pierre[50]</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="even">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;"></div>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 206px;"></div>
+                <div class="gantt-complete-notdone" style="width: 28px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Damien[50], Léon[50]</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="even">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;"></div>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 206px;"></div>
+                <div class="gantt-complete-notdone" style="width: 6px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Aurélien[33], Guilherme[33], Pierre[33]</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="even">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;"></div>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;"></div>
+            </td>
+          </tr>
+          <tr class="even">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 286px;"></div>
+                <div class="gantt-complete-notdone" style="width: 28px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Aurélien, Damien</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 326px;"></div>
+                <div class="gantt-complete-notdone" style="width: 28px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Aurélien, Damien</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="even">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 366px;"></div>
+                <div class="gantt-complete-notdone" style="width: 8px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Aurélien, Damien</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;"></div>
+            </td>
+          </tr>
+          <tr class="even">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 286px;"></div>
+                <div class="gantt-complete-notdone" style="width: 28px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Léon[25], Pierre[25]</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 286px;"></div>
+                <div class="gantt-complete-notdone" style="width: 28px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Léon[25], Pierre[25]</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="even">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 306px;"></div>
+                <div class="gantt-complete-notdone" style="width: 28px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Guilherme[17], Léon[17], Pierre[17]</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 326px;"></div>
+                <div class="gantt-complete-notdone" style="width: 48px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Guilherme[67]</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="even">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;"></div>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 366px;"></div>
+                <div class="gantt-complete-notdone" style="width: 6px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Aurélien[33], Damien[33], Léon[33]</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="even">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 366px;"></div>
+                <div class="gantt-complete-notdone" style="width: 6px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Aurélien[50], Damien[50]</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 366px;"></div>
+                <div class="gantt-complete-notdone" style="width: 6px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Léon[50], Pierre[50]</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="even">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;"></div>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 286px;"></div>
+                <div class="gantt-complete-notdone" style="width: 48px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Léon[67], Pierre[67]</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="even">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 346px;"></div>
+                <div class="gantt-complete-notdone" style="width: 28px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Damien, Pierre</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 306px;"></div>
+                <div class="gantt-complete-notdone" style="width: 48px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Guilherme[33], Léon[33]</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="even">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;"></div>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 306px;"></div>
+                <div class="gantt-complete-notdone" style="width: 28px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Aurélien[25], Guilherme[25]</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="even">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;"></div>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 426px;"></div>
+                <div class="gantt-complete-notdone" style="width: 28px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Aurélien[30], Damien[30], Guilherme[30], Léon[30], Pierre[30]</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="even">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 446px;"></div>
+                <div class="gantt-complete-notdone" style="width: 28px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Aurélien[50], Damien[50], Guilherme[50]</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 446px;"></div>
+                <div class="gantt-complete-notdone" style="width: 28px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Léon[75], Pierre[75]</div>
+              </div>
+            </td>
+          </tr>
+          <tr class="even">
+            <td colspan="32">
+              <div style="width: 621px; white-space: nowrap;">
+                <div class="gantt-empty-begin" style="width: 446px;"></div>
+                <div class="gantt-complete-notdone" style="width: 28px;"></div>
+                <div class="gantt-empty-end"></div>
+                <div class="gantt-resources">Aurélien[50], Guilherme[50], Pierre[50]</div>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="separator"></div>
+    <div class="tasklist">
+      <h2>
+        <a name="tasks" id="tasks">Tasks</a>
+      </h2>
+      <div class="tasklist-table">
+        <table cellspacing="0" cellpadding="0" border="1">
+          <tr class="header" align="left">
+            <th>
+              <span>WBS</span>
+            </th>
+            <th>
+              <span>Name</span>
+            </th>
+            <th>
+              <span>Start</span>
+            </th>
+            <th>
+              <span>Finish</span>
+            </th>
+            <th>
+              <span>Work</span>
+            </th>
+            <th>
+              <span>Complete</span>
+            </th>
+            <th>
+              <span>Cost</span>
+            </th>
+            <th>
+              <span>Assigned to</span>
+            </th>
+            <th class="note">
+              <span>Notes</span>
+            </th>
+          </tr>
+          <tr class="odd" style="&#10;            font-weight: bold;&#10;          ">
+            <td>
+              <span>1</span>
+            </td>
+            <td>
+              <a name="task1" style="margin-left: 0px" id="task1">
+                <span>Sprint 1 - Hello World</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 3</span>
+            </td>
+            <td>
+              <span>Jan 7</span>
+            </td>
+            <td>
+              <span>21d 4h </span>
+            </td>
+            <td></td>
+            <td>
+              <span></span>
+            </td>
+            <td></td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="even" style="">
+            <td>
+              <span>1.1</span>
+            </td>
+            <td>
+              <a name="task2" style="margin-left: 18px" id="task2">
+                <span>Organisation Projet + Séance machine</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 3</span>
+            </td>
+            <td>
+              <span>Jan 3</span>
+            </td>
+            <td>
+              <span>1d </span>
+            </td>
+            <td>
+              <span>7%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Aurélien[20], Damien[20], Guilherme[20], Léon[20], Pierre[20]</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="odd" style="&#10;            font-weight: bold;&#10;          ">
+            <td>
+              <span>1.2</span>
+            </td>
+            <td>
+              <a name="task3" style="margin-left: 18px" id="task3">
+                <span>Développement</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 4</span>
+            </td>
+            <td>
+              <span>Jan 6</span>
+            </td>
+            <td>
+              <span>6d </span>
+            </td>
+            <td></td>
+            <td>
+              <span></span>
+            </td>
+            <td>Aurélien, Damien, Guilherme</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="even" style="">
+            <td>
+              <span>1.2.1</span>
+            </td>
+            <td>
+              <a name="task4" style="margin-left: 36px" id="task4">
+                <span>Lexer Complet</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 4</span>
+            </td>
+            <td>
+              <span>Jan 5</span>
+            </td>
+            <td>
+              <span>1d </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Guilherme[50]</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="odd" style="">
+            <td>
+              <span>1.2.2</span>
+            </td>
+            <td>
+              <a name="task5" style="margin-left: 36px" id="task5">
+                <span>Parser</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 4</span>
+            </td>
+            <td>
+              <span>Jan 5</span>
+            </td>
+            <td>
+              <span>2d </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Damien</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="even" style="">
+            <td>
+              <span>1.2.3</span>
+            </td>
+            <td>
+              <a name="task6" style="margin-left: 36px" id="task6">
+                <span>Analyse Contextuelle/Décoration Arbre</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 4</span>
+            </td>
+            <td>
+              <span>Jan 6</span>
+            </td>
+            <td>
+              <span>2d </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Aurélien[67]</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="odd" style="">
+            <td>
+              <span>1.2.4</span>
+            </td>
+            <td>
+              <a name="task7" style="margin-left: 36px" id="task7">
+                <span>Génération de code</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 5</span>
+            </td>
+            <td>
+              <span>Jan 6</span>
+            </td>
+            <td>
+              <span>1d </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Damien[50]</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="even" style="&#10;            font-weight: bold;&#10;          ">
+            <td>
+              <span>1.3</span>
+            </td>
+            <td>
+              <a name="task8" style="margin-left: 18px" id="task8">
+                <span>Tests </span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 4</span>
+            </td>
+            <td>
+              <span>Jan 7</span>
+            </td>
+            <td>
+              <span>10d 6h </span>
+            </td>
+            <td></td>
+            <td>
+              <span></span>
+            </td>
+            <td>Guilherme, Léon, Pierre</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="odd" style="">
+            <td>
+              <span>1.3.1</span>
+            </td>
+            <td>
+              <a name="task9" style="margin-left: 36px" id="task9">
+                <span>Tests conformité Lexer/Parser</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 4</span>
+            </td>
+            <td>
+              <span>Jan 6</span>
+            </td>
+            <td>
+              <span>3d </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Léon[50], Pierre[50]</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="even" style="">
+            <td>
+              <span>1.3.2</span>
+            </td>
+            <td>
+              <a name="task10" style="margin-left: 36px" id="task10">
+                <span>Tests conformité Ana Contextuelle</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 4</span>
+            </td>
+            <td>
+              <span>Jan 6</span>
+            </td>
+            <td>
+              <span>3d </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Guilherme[33], Léon[33], Pierre[33]</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="odd" style="">
+            <td>
+              <span>1.3.3</span>
+            </td>
+            <td>
+              <a name="task11" style="margin-left: 36px" id="task11">
+                <span>Test conformité génération code</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 5</span>
+            </td>
+            <td>
+              <span>Jan 6</span>
+            </td>
+            <td>
+              <span>2d </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Léon[50], Pierre[50]</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="even" style="">
+            <td>
+              <span>1.3.4</span>
+            </td>
+            <td>
+              <a name="task12" style="margin-left: 36px" id="task12">
+                <span>Tests unitaires Analyse/Décoration</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 5</span>
+            </td>
+            <td>
+              <span>Jan 7</span>
+            </td>
+            <td>
+              <span>2d </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Aurélien[33], Pierre[33]</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="odd" style="">
+            <td>
+              <span>1.3.5</span>
+            </td>
+            <td>
+              <a name="task13" style="margin-left: 36px" id="task13">
+                <span>Automatisation des tests</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 5</span>
+            </td>
+            <td>
+              <span>Jan 5</span>
+            </td>
+            <td>
+              <span>6h </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Léon</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="even" style="&#10;            font-weight: bold;&#10;          ">
+            <td>
+              <span>1.4</span>
+            </td>
+            <td>
+              <a name="task14" style="margin-left: 18px" id="task14">
+                <span>Documentation Sprint 1</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 7</span>
+            </td>
+            <td>
+              <span>Jan 7</span>
+            </td>
+            <td>
+              <span>1d 6h </span>
+            </td>
+            <td></td>
+            <td>
+              <span></span>
+            </td>
+            <td>Aurélien[20], Damien[20], Guilherme[20], Léon[20], Pierre[20]</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="odd" style="">
+            <td>
+              <span>1.4.1</span>
+            </td>
+            <td>
+              <a name="task15" style="margin-left: 36px" id="task15">
+                <span>Doc Conception</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 7</span>
+            </td>
+            <td>
+              <span>Jan 7</span>
+            </td>
+            <td>
+              <span>6h </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Aurélien[25], Damien[25], Guilherme[25]</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="even" style="">
+            <td>
+              <span>1.4.2</span>
+            </td>
+            <td>
+              <a name="task16" style="margin-left: 36px" id="task16">
+                <span>Doc Validation</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 7</span>
+            </td>
+            <td>
+              <span>Jan 7</span>
+            </td>
+            <td>
+              <span>1d </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Guilherme[33], Léon[33], Pierre[33]</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="odd" style="&#10;            font-weight: bold;&#10;          ">
+            <td>
+              <span>1.5</span>
+            </td>
+            <td>
+              <a name="task17" style="margin-left: 18px" id="task17">
+                <span>Recheches bibliographiques</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 4</span>
+            </td>
+            <td>
+              <span>Jan 7</span>
+            </td>
+            <td>
+              <span>2d </span>
+            </td>
+            <td></td>
+            <td>
+              <span></span>
+            </td>
+            <td></td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="even" style="">
+            <td>
+              <span>1.5.1</span>
+            </td>
+            <td>
+              <a name="task18" style="margin-left: 36px" id="task18">
+                <span>Analyse énergétique</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 5</span>
+            </td>
+            <td>
+              <span>Jan 6</span>
+            </td>
+            <td>
+              <span>1d </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Aurélien[25], Pierre[25]</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="odd" style="">
+            <td>
+              <span>1.5.2</span>
+            </td>
+            <td>
+              <a name="task19" style="margin-left: 36px" id="task19">
+                <span>Extension TAB (ajout grammaire)</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 4</span>
+            </td>
+            <td>
+              <span>Jan 7</span>
+            </td>
+            <td>
+              <span>1d </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Léon[25]</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="even" style="&#10;            font-weight: bold;&#10;          ">
+            <td>
+              <span>2</span>
+            </td>
+            <td>
+              <a name="task20" style="margin-left: 0px" id="task20">
+                <span>Sprint 2 - Sans Objet</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 10</span>
+            </td>
+            <td>
+              <span>Jan 14</span>
+            </td>
+            <td>
+              <span>24d 5h </span>
+            </td>
+            <td></td>
+            <td>
+              <span></span>
+            </td>
+            <td></td>
+            <td class="note">
+              <span>Mon 24 Jan 2022, 10:51
+</span>
+            </td>
+          </tr>
+          <tr class="odd" style="&#10;            font-weight: bold;&#10;          ">
+            <td>
+              <span>2.1</span>
+            </td>
+            <td>
+              <a name="task21" style="margin-left: 18px" id="task21">
+                <span>Développement 2</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 10</span>
+            </td>
+            <td>
+              <span>Jan 13</span>
+            </td>
+            <td>
+              <span>9d </span>
+            </td>
+            <td></td>
+            <td>
+              <span></span>
+            </td>
+            <td>Aurélien, Damien</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="even" style="">
+            <td>
+              <span>2.1.1</span>
+            </td>
+            <td>
+              <a name="task22" style="margin-left: 36px" id="task22">
+                <span>Déclaration de varibles et assignation</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 10</span>
+            </td>
+            <td>
+              <span>Jan 11</span>
+            </td>
+            <td>
+              <span>4d </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Aurélien, Damien</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="odd" style="">
+            <td>
+              <span>2.1.2</span>
+            </td>
+            <td>
+              <a name="task23" style="margin-left: 36px" id="task23">
+                <span>Expressions booléennes</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 12</span>
+            </td>
+            <td>
+              <span>Jan 12</span>
+            </td>
+            <td>
+              <span>3d </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Aurélien, Damien, Pierre</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="even" style="">
+            <td>
+              <span>2.1.3</span>
+            </td>
+            <td>
+              <a name="task24" style="margin-left: 36px" id="task24">
+                <span>Boucle while et clauses if/else</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 13</span>
+            </td>
+            <td>
+              <span>Jan 13</span>
+            </td>
+            <td>
+              <span>2d </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Aurélien[67], Damien[67], Guilherme[67]</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="odd" style="&#10;            font-weight: bold;&#10;          ">
+            <td>
+              <span>2.2</span>
+            </td>
+            <td>
+              <a name="task25" style="margin-left: 18px" id="task25">
+                <span>Tests 2</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 10</span>
+            </td>
+            <td>
+              <span>Jan 14</span>
+            </td>
+            <td>
+              <span>11d 2h </span>
+            </td>
+            <td></td>
+            <td>
+              <span></span>
+            </td>
+            <td>Guilherme, Léon, Pierre</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="even" style="">
+            <td>
+              <span>2.2.1</span>
+            </td>
+            <td>
+              <a name="task26" style="margin-left: 36px" id="task26">
+                <span>Tests conformité Parser</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 10</span>
+            </td>
+            <td>
+              <span>Jan 11</span>
+            </td>
+            <td>
+              <span>2d </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Léon[50], Pierre[50]</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="odd" style="">
+            <td>
+              <span>2.2.2</span>
+            </td>
+            <td>
+              <a name="task27" style="margin-left: 36px" id="task27">
+                <span>Tests conformité Analyse/Décoration</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 10</span>
+            </td>
+            <td>
+              <span>Jan 12</span>
+            </td>
+            <td>
+              <span>3d </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Léon[50], Pierre[50]</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="even" style="">
+            <td>
+              <span>2.2.3</span>
+            </td>
+            <td>
+              <a name="task28" style="margin-left: 36px" id="task28">
+                <span>Tests conformité Génération de code</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 12</span>
+            </td>
+            <td>
+              <span>Jan 14</span>
+            </td>
+            <td>
+              <span>3d </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Léon[52], Pierre[52]</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="odd" style="">
+            <td>
+              <span>2.2.4</span>
+            </td>
+            <td>
+              <a name="task29" style="margin-left: 36px" id="task29">
+                <span>Tests unitaires</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 11</span>
+            </td>
+            <td>
+              <span>Jan 13</span>
+            </td>
+            <td>
+              <span>2d </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Guilherme[67]</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="even" style="">
+            <td>
+              <span>2.2.5</span>
+            </td>
+            <td>
+              <a name="task30" style="margin-left: 36px" id="task30">
+                <span>Automatisation des tests 2</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 12</span>
+            </td>
+            <td>
+              <span>Jan 13</span>
+            </td>
+            <td>
+              <span>1d 2h </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Léon[63]</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="odd" style="&#10;            font-weight: bold;&#10;          ">
+            <td>
+              <span>2.3</span>
+            </td>
+            <td>
+              <a name="task31" style="margin-left: 18px" id="task31">
+                <span>Documentation Sprint 2</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 14</span>
+            </td>
+            <td>
+              <span>Jan 14</span>
+            </td>
+            <td>
+              <span>1d 5h </span>
+            </td>
+            <td></td>
+            <td>
+              <span></span>
+            </td>
+            <td>Aurélien[4], Damien[4], Guilherme[4], Pierre[4]</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="even" style="">
+            <td>
+              <span>2.3.1</span>
+            </td>
+            <td>
+              <a name="task32" style="margin-left: 36px" id="task32">
+                <span>Doc Conception</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 14</span>
+            </td>
+            <td>
+              <span>Jan 14</span>
+            </td>
+            <td>
+              <span>5h </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Aurélien[31], Damien[31]</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="odd" style="">
+            <td>
+              <span>2.3.2</span>
+            </td>
+            <td>
+              <a name="task33" style="margin-left: 36px" id="task33">
+                <span>Doc Validation</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 14</span>
+            </td>
+            <td>
+              <span>Jan 14</span>
+            </td>
+            <td>
+              <span>1d </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Guilherme[50], Pierre[50]</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="even" style="&#10;            font-weight: bold;&#10;          ">
+            <td>
+              <span>2.4</span>
+            </td>
+            <td>
+              <a name="task34" style="margin-left: 18px" id="task34">
+                <span>Extension</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 13</span>
+            </td>
+            <td>
+              <span>Jan 14</span>
+            </td>
+            <td>
+              <span>2d </span>
+            </td>
+            <td></td>
+            <td>
+              <span></span>
+            </td>
+            <td></td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="odd" style="">
+            <td>
+              <span>2.4.1</span>
+            </td>
+            <td>
+              <a name="task35" style="margin-left: 36px" id="task35">
+                <span>Extension des grammaires (doc extension)</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 13</span>
+            </td>
+            <td>
+              <span>Jan 14</span>
+            </td>
+            <td>
+              <span>2d </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Damien[50], Léon[50]</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="even" style="&#10;            font-weight: bold;&#10;          ">
+            <td>
+              <span>2.5</span>
+            </td>
+            <td>
+              <a name="task36" style="margin-left: 18px" id="task36">
+                <span>Recherches bibliographiques</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 13</span>
+            </td>
+            <td>
+              <span>Jan 13</span>
+            </td>
+            <td>
+              <span>6h </span>
+            </td>
+            <td></td>
+            <td>
+              <span></span>
+            </td>
+            <td></td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="odd" style="">
+            <td>
+              <span>2.5.1</span>
+            </td>
+            <td>
+              <a name="task37" style="margin-left: 36px" id="task37">
+                <span>Analyse énergétique</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 13</span>
+            </td>
+            <td>
+              <span>Jan 13</span>
+            </td>
+            <td>
+              <span>6h </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Aurélien[33], Guilherme[33], Pierre[33]</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="even" style="&#10;            font-weight: bold;&#10;          ">
+            <td>
+              <span>3</span>
+            </td>
+            <td>
+              <a name="task38" style="margin-left: 0px" id="task38">
+                <span>Sprint 3 - Avec Objet</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 17</span>
+            </td>
+            <td>
+              <span>Jan 21</span>
+            </td>
+            <td>
+              <span>28d 2h </span>
+            </td>
+            <td></td>
+            <td>
+              <span></span>
+            </td>
+            <td></td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="odd" style="&#10;            font-weight: bold;&#10;          ">
+            <td>
+              <span>3.1</span>
+            </td>
+            <td>
+              <a name="task39" style="margin-left: 18px" id="task39">
+                <span>Développement 3</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 17</span>
+            </td>
+            <td>
+              <span>Jan 21</span>
+            </td>
+            <td>
+              <span>10d </span>
+            </td>
+            <td></td>
+            <td>
+              <span></span>
+            </td>
+            <td>Aurélien, Damien</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="even" style="">
+            <td>
+              <span>3.1.1</span>
+            </td>
+            <td>
+              <a name="task40" style="margin-left: 36px" id="task40">
+                <span>Déclaration/Assignation classes et attributs</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 17</span>
+            </td>
+            <td>
+              <span>Jan 18</span>
+            </td>
+            <td>
+              <span>4d </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Aurélien, Damien</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="odd" style="">
+            <td>
+              <span>3.1.2</span>
+            </td>
+            <td>
+              <a name="task41" style="margin-left: 36px" id="task41">
+                <span>Visibilité attributs, déf et appels de méthodes</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 19</span>
+            </td>
+            <td>
+              <span>Jan 20</span>
+            </td>
+            <td>
+              <span>4d </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Aurélien, Damien</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="even" style="">
+            <td>
+              <span>3.1.3</span>
+            </td>
+            <td>
+              <a name="task42" style="margin-left: 36px" id="task42">
+                <span>Héritage, Cast et retour de méthodes</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 21</span>
+            </td>
+            <td>
+              <span>Jan 21</span>
+            </td>
+            <td>
+              <span>2d </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Aurélien, Damien</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="odd" style="&#10;            font-weight: bold;&#10;          ">
+            <td>
+              <span>3.2</span>
+            </td>
+            <td>
+              <a name="task43" style="margin-left: 18px" id="task43">
+                <span>Tests 3</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 17</span>
+            </td>
+            <td>
+              <span>Jan 21</span>
+            </td>
+            <td>
+              <span>5d </span>
+            </td>
+            <td></td>
+            <td>
+              <span></span>
+            </td>
+            <td>Léon, Pierre</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="even" style="">
+            <td>
+              <span>3.2.1</span>
+            </td>
+            <td>
+              <a name="task44" style="margin-left: 36px" id="task44">
+                <span>Tests conformité Lexer/Parser</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 17</span>
+            </td>
+            <td>
+              <span>Jan 18</span>
+            </td>
+            <td>
+              <span>1d </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Léon[25], Pierre[25]</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="odd" style="">
+            <td>
+              <span>3.2.2</span>
+            </td>
+            <td>
+              <a name="task45" style="margin-left: 36px" id="task45">
+                <span>Tests conformité Analyse/Décoration</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 17</span>
+            </td>
+            <td>
+              <span>Jan 18</span>
+            </td>
+            <td>
+              <span>1d </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Léon[25], Pierre[25]</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="even" style="">
+            <td>
+              <span>3.2.3</span>
+            </td>
+            <td>
+              <a name="task46" style="margin-left: 36px" id="task46">
+                <span>Tests conformité Génération de code </span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 18</span>
+            </td>
+            <td>
+              <span>Jan 19</span>
+            </td>
+            <td>
+              <span>1d </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Guilherme[17], Léon[17], Pierre[17]</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="odd" style="">
+            <td>
+              <span>3.2.4</span>
+            </td>
+            <td>
+              <a name="task47" style="margin-left: 36px" id="task47">
+                <span>Tests unitaires</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 19</span>
+            </td>
+            <td>
+              <span>Jan 21</span>
+            </td>
+            <td>
+              <span>2d </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Guilherme[67]</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="even" style="&#10;            font-weight: bold;&#10;          ">
+            <td>
+              <span>3.3</span>
+            </td>
+            <td>
+              <a name="task48" style="margin-left: 18px" id="task48">
+                <span>Documentation</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 21</span>
+            </td>
+            <td>
+              <span>Jan 21</span>
+            </td>
+            <td>
+              <span>2d 2h </span>
+            </td>
+            <td></td>
+            <td>
+              <span></span>
+            </td>
+            <td>Aurélien[20], Damien[20], Guilherme[20], Léon[20], Pierre[20]</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="odd" style="">
+            <td>
+              <span>3.3.1</span>
+            </td>
+            <td>
+              <a name="task49" style="margin-left: 36px" id="task49">
+                <span>Manuel Utilisateur</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 21</span>
+            </td>
+            <td>
+              <span>Jan 21</span>
+            </td>
+            <td>
+              <span>6h </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Aurélien[33], Damien[33], Léon[33]</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="even" style="">
+            <td>
+              <span>3.3.2</span>
+            </td>
+            <td>
+              <a name="task50" style="margin-left: 36px" id="task50">
+                <span>Doc Conception</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 21</span>
+            </td>
+            <td>
+              <span>Jan 21</span>
+            </td>
+            <td>
+              <span>6h </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Aurélien[50], Damien[50]</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="odd" style="">
+            <td>
+              <span>3.3.3</span>
+            </td>
+            <td>
+              <a name="task51" style="margin-left: 36px" id="task51">
+                <span>Doc Validation</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 21</span>
+            </td>
+            <td>
+              <span>Jan 21</span>
+            </td>
+            <td>
+              <span>6h </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Léon[50], Pierre[50]</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="even" style="&#10;            font-weight: bold;&#10;          ">
+            <td>
+              <span>3.4</span>
+            </td>
+            <td>
+              <a name="task52" style="margin-left: 18px" id="task52">
+                <span>Extension</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 17</span>
+            </td>
+            <td>
+              <span>Jan 21</span>
+            </td>
+            <td>
+              <span>10d </span>
+            </td>
+            <td></td>
+            <td>
+              <span></span>
+            </td>
+            <td></td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="odd" style="">
+            <td>
+              <span>3.4.1</span>
+            </td>
+            <td>
+              <a name="task53" style="margin-left: 36px" id="task53">
+                <span>Dév Parser/Analyse Contextuelle</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 17</span>
+            </td>
+            <td>
+              <span>Jan 19</span>
+            </td>
+            <td>
+              <span>4d </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Léon[67], Pierre[67]</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="even" style="">
+            <td>
+              <span>3.4.2</span>
+            </td>
+            <td>
+              <a name="task54" style="margin-left: 36px" id="task54">
+                <span>Dév génération de code/librairie</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 20</span>
+            </td>
+            <td>
+              <span>Jan 21</span>
+            </td>
+            <td>
+              <span>4d </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Damien, Pierre</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="odd" style="">
+            <td>
+              <span>3.4.3</span>
+            </td>
+            <td>
+              <a name="task55" style="margin-left: 36px" id="task55">
+                <span>Tests Conformité/Unitaires</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 18</span>
+            </td>
+            <td>
+              <span>Jan 20</span>
+            </td>
+            <td>
+              <span>2d </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Guilherme[33], Léon[33]</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="even" style="&#10;            font-weight: bold;&#10;          ">
+            <td>
+              <span>3.5</span>
+            </td>
+            <td>
+              <a name="task56" style="margin-left: 18px" id="task56">
+                <span>Analyse énergétique</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 18</span>
+            </td>
+            <td>
+              <span>Jan 19</span>
+            </td>
+            <td>
+              <span>1d </span>
+            </td>
+            <td></td>
+            <td>
+              <span></span>
+            </td>
+            <td></td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="odd" style="">
+            <td>
+              <span>3.5.1</span>
+            </td>
+            <td>
+              <a name="task57" style="margin-left: 36px" id="task57">
+                <span>Mesures énergétiques</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 18</span>
+            </td>
+            <td>
+              <span>Jan 19</span>
+            </td>
+            <td>
+              <span>1d </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Aurélien[25], Guilherme[25]</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="even" style="&#10;            font-weight: bold;&#10;          ">
+            <td>
+              <span>4</span>
+            </td>
+            <td>
+              <a name="task58" style="margin-left: 0px" id="task58">
+                <span>Fin du projet</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 24</span>
+            </td>
+            <td>
+              <span>Jan 26</span>
+            </td>
+            <td>
+              <span>12d </span>
+            </td>
+            <td></td>
+            <td>
+              <span></span>
+            </td>
+            <td></td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="odd" style="">
+            <td>
+              <span>4.1</span>
+            </td>
+            <td>
+              <a name="task59" style="margin-left: 18px" id="task59">
+                <span>Bilan d'équipe</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 24</span>
+            </td>
+            <td>
+              <span>Jan 25</span>
+            </td>
+            <td>
+              <span>3d </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Aurélien[30], Damien[30], Guilherme[30], Léon[30], Pierre[30]</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="even" style="">
+            <td>
+              <span>4.2</span>
+            </td>
+            <td>
+              <a name="task60" style="margin-left: 18px" id="task60">
+                <span>Doc Conception</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 25</span>
+            </td>
+            <td>
+              <span>Jan 26</span>
+            </td>
+            <td>
+              <span>3d </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Aurélien[50], Damien[50], Guilherme[50]</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="odd" style="">
+            <td>
+              <span>4.3</span>
+            </td>
+            <td>
+              <a name="task61" style="margin-left: 18px" id="task61">
+                <span>Doc Validation</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 25</span>
+            </td>
+            <td>
+              <span>Jan 26</span>
+            </td>
+            <td>
+              <span>3d </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Léon[75], Pierre[75]</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="even" style="">
+            <td>
+              <span>4.4</span>
+            </td>
+            <td>
+              <a name="task62" style="margin-left: 18px" id="task62">
+                <span>Doc Analyse énergétique</span>
+              </a>
+            </td>
+            <td>
+              <span>Jan 25</span>
+            </td>
+            <td>
+              <span>Jan 26</span>
+            </td>
+            <td>
+              <span>3d </span>
+            </td>
+            <td>
+              <span>0%
+              </span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>Aurélien[50], Guilherme[50], Pierre[50]</td>
+            <td class="note">
+              <span></span>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="separator"></div>
+    <div class="resourcelist">
+      <h2>
+        <a name="resources" id="resources">Resources</a>
+      </h2>
+      <div class="resourcelist-table">
+        <table cellspacing="0" cellpadding="0" border="1" width="100%">
+          <tr class="header" align="left">
+            <th>
+              <span>Name</span>
+            </th>
+            <th>
+              <span>Short name</span>
+            </th>
+            <th>
+              <span>Type</span>
+            </th>
+            <th>
+              <span>Group</span>
+            </th>
+            <th>
+              <span>Email</span>
+            </th>
+            <th>
+              <span>Cost</span>
+            </th>
+          </tr>
+          <tr class="odd">
+            <td>
+              <a name="res-1" id="res-1">
+                <span>Aurélien VILMINOT</span>
+              </a>
+            </td>
+            <td>
+              <span>Aurélien</span>
+            </td>
+            <td>
+              <span>Work</span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>
+              <a href="mailto:aurelien.vilminot@grenoble-inp.org">
+                <span>aurelien.vilminot@grenoble-inp.org</span>
+              </a>
+            </td>
+            <td align="right">
+              <span>0</span>
+            </td>
+          </tr>
+          <tr class="even">
+            <td>
+              <a name="res-2" id="res-2">
+                <span>Damien CLAUZON</span>
+              </a>
+            </td>
+            <td>
+              <span>Damien</span>
+            </td>
+            <td>
+              <span>Work</span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>
+              <a href="mailto:damien.clauzon@grenoble-inp.org">
+                <span>damien.clauzon@grenoble-inp.org</span>
+              </a>
+            </td>
+            <td align="right">
+              <span>0</span>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td>
+              <a name="res-3" id="res-3">
+                <span>Guilherme KLEIN</span>
+              </a>
+            </td>
+            <td>
+              <span>Guilherme</span>
+            </td>
+            <td>
+              <span>Work</span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>
+              <a href="mailto:">
+                <span></span>
+              </a>
+            </td>
+            <td align="right">
+              <span>0</span>
+            </td>
+          </tr>
+          <tr class="even">
+            <td>
+              <a name="res-4" id="res-4">
+                <span>Léon ROUSSEL</span>
+              </a>
+            </td>
+            <td>
+              <span>Léon</span>
+            </td>
+            <td>
+              <span>Work</span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>
+              <a href="mailto:leon.roussel@grenoble-inp.org">
+                <span>leon.roussel@grenoble-inp.org</span>
+              </a>
+            </td>
+            <td align="right">
+              <span>0</span>
+            </td>
+          </tr>
+          <tr class="odd">
+            <td>
+              <a name="res-5" id="res-5">
+                <span>Pierre ARVY</span>
+              </a>
+            </td>
+            <td>
+              <span>Pierre</span>
+            </td>
+            <td>
+              <span>Work</span>
+            </td>
+            <td>
+              <span></span>
+            </td>
+            <td>
+              <a href="mailto:pierre.arvy@grenoble-inp.org">
+                <span>pierre.arvy@grenoble-inp.org</span>
+              </a>
+            </td>
+            <td align="right">
+              <span>0</span>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="footer">
+      <div>This file was generated by 
+      <a href="http://live.gnome.org/Planner/" style="text-decoration: underline;">Planner</a></div>
+    </div>
+  </body>
+</html>
