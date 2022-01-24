@@ -65,7 +65,7 @@ public abstract class AbstractOpCmp extends AbstractBinaryExpr {
     /**
      * Add a branch instruction corresponding to the comparison operator
      *
-     * @param compiler Deca Compiler used to add IMA instruction
+     * @param compiler Deca Compiler used to add IMA instructions
      * @param bool Condition for goto branch
      * @param branch The branch where the program needs to go
      */

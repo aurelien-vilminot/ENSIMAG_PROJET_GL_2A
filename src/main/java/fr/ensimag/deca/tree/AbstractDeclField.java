@@ -29,14 +29,14 @@ public abstract class AbstractDeclField extends Tree{
     /**
      * Generate assembly code for the field declaration.
      *
-     * @param compiler Deca Compiler used to add IMA instruction
+     * @param compiler Deca Compiler used to add IMA instructions
      */
     protected abstract void codeGenDeclFieldDefault(DecacCompiler compiler);
 
     /**
      * Generate assembly code for the field declaration.
      *
-     * @param compiler Deca Compiler used to add IMA instruction
+     * @param compiler Deca Compiler used to add IMA instructions
      */
     protected abstract void codeGenDeclField(DecacCompiler compiler);
 }

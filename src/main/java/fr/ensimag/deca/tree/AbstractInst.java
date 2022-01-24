@@ -30,7 +30,7 @@ public abstract class AbstractInst extends Tree {
     /**
      * Generate assembly code for the instruction.
      * 
-     * @param compiler Deca Compiler used to add IMA instruction
+     * @param compiler Deca Compiler used to add IMA instructions
      */
     protected abstract void codeGenInst(DecacCompiler compiler);
 

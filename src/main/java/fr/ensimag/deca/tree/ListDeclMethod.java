@@ -50,7 +50,7 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
     /**
      * Generate assembly code for the method declaration (pass 2 of [Gencode])
      *
-     * @param compiler //TODO
+     * @param compiler Deca Compiler used to add IMA instructions
      */
     protected void codeGenListDeclMethod(DecacCompiler compiler) {
         for (AbstractDeclMethod m : getList()) {
@@ -61,10 +61,9 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
     /**
      * Generate assembly code to build the virtual methods table (pass 1 of [Gencode])
      *
-     *
-     * @param compiler //TODO
-     * @param className
-     * @param superClass
+     * @param compiler Deca Compiler used to add IMA instructions
+     * @param className Identifier of the class
+     * @param superClass Identifier of the superclass
      */
     protected void codeGenMethodTable(DecacCompiler compiler, AbstractIdentifier className, AbstractIdentifier superClass) {
         // Construct labelArrayList from parent
