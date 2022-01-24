@@ -187,7 +187,4 @@ public class TestDeclMethod {
         String actualMessage = exception.getMessage();
         assertEquals(expectedMessage, actualMessage);
     }
-
-    // TODO: Test errors from verifyDeclMethod()
-
 }
