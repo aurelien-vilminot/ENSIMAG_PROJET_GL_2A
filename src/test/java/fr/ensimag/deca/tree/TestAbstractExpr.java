@@ -23,9 +23,7 @@ public class TestAbstractExpr {
         // with contextual syntax
         expr = new BooleanLiteral(true);
 
-        Exception exception = assertThrows(DecacInternalError.class, () -> {
-            expr.checkDecoration();
-        });
+        Exception exception = assertThrows(DecacInternalError.class, () -> expr.checkDecoration());
 
         String expectedMessage = "Expression " + expr.decompile() + " has no Type decoration";
         String actualMessage = exception.getMessage();
@@ -49,7 +47,7 @@ public class TestAbstractExpr {
     @Test
     public void testIsImplicit() {
         expr = new BooleanLiteral(true);
-        assertEquals(false, expr.isImplicit());
+        assertFalse(expr.isImplicit());
     }
     
 }

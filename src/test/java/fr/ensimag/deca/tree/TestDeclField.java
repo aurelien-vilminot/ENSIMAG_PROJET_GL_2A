@@ -7,7 +7,6 @@ import fr.ensimag.deca.context.*;
 import fr.ensimag.deca.tools.SymbolTable;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
-import org.mockito.Mock;
 
 public class TestDeclField {
     DecacCompiler compiler;

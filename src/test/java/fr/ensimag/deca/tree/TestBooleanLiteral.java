@@ -28,6 +28,6 @@ public class TestBooleanLiteral {
     @Test
     public void testGetValue() {
         BooleanLiteral literal = new BooleanLiteral(true);
-        assertEquals(true, literal.getValue());
+        assertTrue(literal.getValue());
     }
 }

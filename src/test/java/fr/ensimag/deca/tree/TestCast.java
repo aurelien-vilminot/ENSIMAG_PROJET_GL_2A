@@ -2,11 +2,9 @@ package fr.ensimag.deca.tree;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
-import fr.ensimag.deca.tools.SymbolTable;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import static fr.ensimag.deca.tree.Location.BUILTIN;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestCast {
@@ -14,7 +12,6 @@ public class TestCast {
     private static BooleanLiteral booleanLiteral;
     private static FloatLiteral floatLiteral;
     private static IntLiteral intLiteral;
-    private static StringLiteral stringLiteral;
     private static AbstractIdentifier identInt;
     private static AbstractIdentifier identFloat;
     private static AbstractIdentifier identBoolean;
@@ -25,7 +22,6 @@ public class TestCast {
         booleanLiteral = new BooleanLiteral(true);
         floatLiteral = new FloatLiteral(2);
         intLiteral = new IntLiteral(1);
-        stringLiteral = new StringLiteral("foo");
         identInt = new Identifier(compiler.getSymbolTable().create("int"));
         identFloat = new Identifier(compiler.getSymbolTable().create("float"));
         identBoolean = new Identifier(compiler.getSymbolTable().create("boolean"));

@@ -8,10 +8,6 @@ import fr.ensimag.deca.tools.SymbolTable;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
-import org.mockito.Mock;
-import static org.mockito.Mockito.*;
-import org.mockito.MockitoAnnotations;
-
 public class TestDeclMethod {
     DecacCompiler compiler;
     EnvironmentExp localEnv;

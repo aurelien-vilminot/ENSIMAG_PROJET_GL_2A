@@ -2,13 +2,10 @@ package fr.ensimag.deca.tree;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import fr.ensimag.deca.DecacCompiler;
-import fr.ensimag.deca.context.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
 import org.mockito.Mock;
-import static org.mockito.Mockito.*;
 import org.mockito.MockitoAnnotations;
 
 public class TestProgram {

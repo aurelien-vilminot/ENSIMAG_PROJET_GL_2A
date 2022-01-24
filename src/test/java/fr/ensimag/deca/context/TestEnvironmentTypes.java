@@ -5,19 +5,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertSame;
 
 public class TestEnvironmentTypes {
 
     private EnvironmentTypes environmentTypes;
-    private SymbolTable symbolTable;
     private SymbolTable.Symbol symbolTest;
     private TypeDefinition typeDefinition;
 
     @BeforeEach
     public void setup() {
         this.environmentTypes = new EnvironmentTypes();
-        this.symbolTable = new SymbolTable();
+        SymbolTable symbolTable = new SymbolTable();
         this.symbolTest = symbolTable.create("test");
         this.typeDefinition = new TypeDefinition(null, null);
     }
