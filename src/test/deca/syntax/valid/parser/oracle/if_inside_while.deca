@@ -8,8 +8,8 @@
 //    created on 07/01/2022
 
 {
-    while( a == 4 ){
-        if( r - 4 ){
+    while(((( a == 4 )))){
+        if((( r - 4 ))){
             println("r - 4");
         }else{
         println("else {r - 4}");
