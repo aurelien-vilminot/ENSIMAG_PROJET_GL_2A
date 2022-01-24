@@ -5,7 +5,7 @@ import org.apache.commons.lang.Validate;
 
 /**
  *
- * @author Pierre ARVY
+ * @author gl07
  * @date 19/01/2022
  */
 public class MatrixFloatType extends Type {
