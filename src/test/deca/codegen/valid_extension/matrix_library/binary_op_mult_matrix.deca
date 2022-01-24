@@ -1,4 +1,4 @@
-#include "Library.decah"
+q#include "Library.decah"
 
 {
     AlgebraLib Mat = new AlgebraLib();
