@@ -7,11 +7,8 @@ cd "$(dirname "$0")"/../../.. || exit 1
 
 # There will be some command in a random order to do basic tests ... :
 
-PATH_VALID_SYNTAX="./src/test/deca/syntax/valid/parser/oracle"
-PATH_INVALID_SYNTAX="./src/test/deca/syntax/invalid/parser/oracle"
-PATH_VALID_CONTEXT="./src/test/deca/context/valid/oracle"
-PATH_INVALID_CONTEXT="./src/test/deca/context/invalid/oracle"
-PATH_VALID_CODEGEN="./src/test/deca/codegen/valid/black-box"
+PATH_VALID="./src/test/decac/valid"
+PATH_INVALID="./src/test/decac/invalid"
 
 
 echo "[-b] option"
@@ -20,46 +17,46 @@ echo ""
 
 echo "[-p] option"
 echo "[VALID TESTS]"
-decac -p "$PATH_VALID_SYNTAX"/if_inside_while.deca
-echo ""
-decac -p "$PATH_VALID_SYNTAX"/decl_all_deriv.deca
+decac -p "$PATH_VALID"/general_test.deca
 echo ""
 echo "[INVALID TEST]"
-decac -p "$PATH_INVALID_SYNTAX"/else_with_expression.deca
+decac -p "$PATH_INVALID"/test_parser.deca
 echo ""
 
 echo "[-v] option"
 echo "[VALID TESTS] (nothing should be printed)"
-decac -v "$PATH_VALID_CONTEXT"/cast_same_type_float.deca
-decac -v "$PATH_VALID_CONTEXT"/type_binary_op_geq.deca
+decac -v "$PATH_VALID"/general_test.deca
 echo ""
 echo "[INVALID TEST]"
-decac -v "$PATH_INVALID_CONTEXT"/modulo_op_with_wrong_type.deca
+decac -v "$PATH_INVALID"/test_context.deca
 echo ""
 
 echo "[-p -v] Incompatible"
-decac -p -v "$PATH_VALID_CONTEXT"/cast_same_type_float.deca
+decac -p -v "$PATH_VALID"/general_test.deca
 echo ""
 
 echo "[-r 4]"
-decac -r 4 "$PATH_VALID_CODEGEN"/overflow_register_int.deca
+decac -r 4 "$PATH_VALID"/general_test.deca
 echo "Please check there isn't any register > 4"
-cat "$PATH_VALID_CODEGEN"/overflow_register_int.ass
+cat "$PATH_VALID"/general_test.ass
 echo ""
 
 echo "[-r 7]"
-decac -r 7 "$PATH_VALID_CODEGEN"/overflow_register_int.deca
+decac -r 4 "$PATH_VALID"/general_test.deca
 echo "Please check there isn't any register > "
-cat "$PATH_VALID_CODEGEN"/overflow_register_int.ass
+cat "$PATH_VALID"/general_test.ass
 echo ""
 
 echo "[-n]"
+decac -n "$PATH_VALID"/general_test.deca
 echo ""
 
 echo "[-d]"
+decac -d "$PATH_VALID"/general_test.deca
 echo ""
 
 echo "[-P]"
+decac -P "$PATH_VALID"/general_test.deca
 echo ""
 
 exit 0
