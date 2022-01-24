@@ -1,4 +1,4 @@
-#include "Library.decah"
+#include "MatrixLibrary.decah"
 
 {
     AlgebraLib Mat = new AlgebraLib();
@@ -17,12 +17,5 @@
     Mat.printMatrix(matrix2);
     Mat.printMatrix(matrix3);
     mat = Mat.addMat(matrix2, matrix3);
-    Mat.printMatrix(mat);
-
-    println("#####################");
-    println("Test the addition of the two following matrices (op not defined)");
-    Mat.printMatrix(matrix);
-    Mat.printMatrix(matrix4);
-    mat = Mat.addMat(matrix, matrix4);
     Mat.printMatrix(mat);
 }
