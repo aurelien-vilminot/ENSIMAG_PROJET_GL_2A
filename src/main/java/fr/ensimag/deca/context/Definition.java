@@ -6,7 +6,7 @@ import org.apache.commons.lang.Validate;
 /**
  * Definition of an identifier.
  * 
- * @author Aurélien VILMINOT
+ * @author gl07
  * @date 04/01/2022
  */
 public abstract class Definition {

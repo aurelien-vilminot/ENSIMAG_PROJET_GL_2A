@@ -86,7 +86,13 @@ public abstract class AbstractIdentifier extends AbstractLValue {
      */
     public abstract Type verifyType(DecacCompiler compiler) throws ContextualError;
 
-    // TODO: comment
+    /**
+     * Check if method exists and if the identifier corresponds to a method definition
+     *
+     * @param compiler Contains "env_types" attribute
+     * @param localEnv Corresponds to the "env_exp" attribute
+     * @return The definition of the method
+     */
     public abstract MethodDefinition verifyMethod(DecacCompiler compiler, EnvironmentExp localEnv) throws ContextualError;
 
 }

@@ -14,7 +14,7 @@ import org.apache.log4j.Logger;
 /**
  * Print statement (print, println, ...).
  *
- * @author Aurélien VILMINOT
+ * @author gl07
  * @date 04/01/2022
  */
 public abstract class AbstractPrint extends AbstractInst {

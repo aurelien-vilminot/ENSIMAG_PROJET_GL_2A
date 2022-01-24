@@ -89,6 +89,7 @@ public class DeclField extends AbstractDeclField {
         LOG.debug("verify InitField: end");
     }
 
+    @Override
     protected void codeGenDeclFieldDefault(DecacCompiler compiler) {
         if (type.getType().isBoolean() || type.getType().isInt()) {
             compiler.addInstruction(new LOAD(new ImmediateInteger(0), Register.R0));

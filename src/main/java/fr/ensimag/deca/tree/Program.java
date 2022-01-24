@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 /**
  * Deca complete program (class definition plus main block)
  *
- * @author Aurélien VILMINOT
+ * @author gl07
  * @date 04/01/2022
  */
 public class Program extends AbstractProgram {
@@ -57,6 +57,11 @@ public class Program extends AbstractProgram {
         this.codeGenError(compiler);
     }
 
+    /**
+     * Generate assembly code for the first lines of the program
+     *
+     * @param compiler Corresponds to the "env_exp" attribute
+     */
     protected void codeGenInit(DecacCompiler compiler) {
         compiler.addFirst(new Line(new ADDSP(compiler.getGlobalStackSize())));
         compiler.addStackOverflowError(true);
@@ -64,6 +69,11 @@ public class Program extends AbstractProgram {
         compiler.addFirst(new Line("Main program"));
     }
 
+    /**
+     * Generate assembly code for the main errors
+     *
+     * @param compiler Deca Compiler used to add IMA instructions
+     */
     protected void codeGenError(DecacCompiler compiler) {
         compiler.addComment("Main errors");
         LabelGenerator gen = compiler.getLabelGenerator();

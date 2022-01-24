@@ -8,7 +8,7 @@ import fr.ensimag.deca.tree.Location;
 /**
  * Deca Type (internal representation of the compiler)
  *
- * @author Aurélien VILMINOT
+ * @author gl07
  * @date 04/01/2022
  */
 

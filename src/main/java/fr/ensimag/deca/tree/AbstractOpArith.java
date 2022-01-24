@@ -30,7 +30,6 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
             ClassDefinition currentClass) throws ContextualError {
             LOG.debug("verify OpArith: start");
             Validate.notNull(compiler, "Compiler (env_types) object should not be null");
-//            Validate.notNull(localEnv, "Env_exp object should not be null");
 
             Type typeLeftOp = this.getLeftOperand().verifyExpr(compiler, localEnv, currentClass);
             Type typeRightOp = this.getRightOperand().verifyExpr(compiler, localEnv, currentClass);
@@ -68,7 +67,7 @@ public abstract class AbstractOpArith extends AbstractBinaryExpr {
     /**
      * Add an instruction corresponding to the arithmetical operator, between dval and gpRegister
      *
-     * @param compiler Deca Compiler used to add IMA instruction
+     * @param compiler Deca Compiler used to add IMA instructions
      * @param dval The left operand of the operation
      * @param gpRegister The right operand of the operation
      */
