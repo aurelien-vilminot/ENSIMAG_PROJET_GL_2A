@@ -173,7 +173,6 @@ inst returns[AbstractInst tree]
         }
     ;
 
-// sans objet: done
 if_then_else returns[IfThenElse tree]
 @init {
     IfThenElse lastBranch;
@@ -201,8 +200,6 @@ if_then_else returns[IfThenElse tree]
       )?
     ;
 
-// hello world: done
-// sans objet: done
 list_expr returns[ListExpr tree]
 @init   {
             $tree = new ListExpr();
@@ -389,7 +386,6 @@ unary_expr returns[AbstractExpr tree]
     ;
 
 
-// TODO
 select_expr returns[AbstractExpr tree]
     : e=primary_expr {
             assert($e.tree != null);
@@ -476,6 +472,7 @@ type returns[AbstractIdentifier tree]
             setLocation($tree, $ident_tab.start);
     }
     ;
+
 
 literal returns[AbstractExpr tree]
     : INT {
@@ -721,8 +718,6 @@ array_creator_expr returns[NewArray tree]
     }
     ;
 
-// sans objet: done
-// TODO : Should be verified by Clauzon D.
 dim_expr returns[ListExpr tree]
 @init   {
         $tree = new ListExpr();
