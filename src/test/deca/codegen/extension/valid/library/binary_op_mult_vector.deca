@@ -1,4 +1,4 @@
-#include "Library.decah"
+#include "MatrixLibrary.decah"
 
 {
     AlgebraLib Vec = new AlgebraLib();
@@ -18,9 +18,4 @@
     Vec.printVector(vector3);
     println(Vec.multVector(vector2, vector3));
 
-    println("#####################");
-    println("Test the multiplication of the two following vectors (op not defined)");
-    Vec.printVector(vector);
-    Vec.printVector(vector4);
-    println(Vec.multVector(vector, vector4));
 }

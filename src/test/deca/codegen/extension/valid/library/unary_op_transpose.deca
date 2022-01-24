@@ -1,0 +1,18 @@
+#include "MatrixLibrary.decah"
+
+        {
+        AlgebraLib Mat=new AlgebraLib();
+        float[][] matrix = Mat.uniformMatrix(2, 2, 3.141592);
+
+        float[] vector = Mat.uniformVector(6, 1.0);
+        float[][] matrix2 = Mat.reshape(3, 2, vector);
+
+        matrix[0][1] = 1.0;
+        println("##########################");
+        println("Test transpose functions for squarred matrix");
+        Mat.printMatrix(matrix);
+
+        println("##########################");
+        println("Test transpose functions for not squarred matrix");
+        Mat.printMatrix(matrix2);
+        }

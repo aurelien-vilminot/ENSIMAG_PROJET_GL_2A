@@ -4,6 +4,9 @@ class AlgebraLib{
     ///// Print Algebra Elements /////
     //////////////////////////////////
 
+    /*
+    Print the vector passed as parameter
+     */
     void printVector(float[] vector){
         int i = 0, len = vector.length - 1;
         print("{ ");
@@ -14,6 +17,9 @@ class AlgebraLib{
         println(vector[len], " }");
     }
 
+    /*
+    Print the matrix passed as parameter
+     */
     void printMatrix(float[][] matrix){
         int i = 0;
         println("{");
@@ -63,6 +69,9 @@ class AlgebraLib{
         return vect;
     }
 
+    /*
+    Returns a vector regularly espaced by step
+     */
     float[] linspace(float min, float max, float step){
         int len = (int) ((max - min) / step); int i = 0;
         float[] vec = new float[len];
@@ -204,6 +213,9 @@ class AlgebraLib{
         return mat;
     }
 
+    /*
+    returns a matrix corresponding to the product of two matrices
+     */
     float[][] multMat(float[][] mat1, float[][] mat2){
         float[][] mat = new float[mat1.length][mat2[0].length];
         int i_mat = 0, j_mat; float result = 1.0;
@@ -251,6 +263,9 @@ class AlgebraLib{
         return mat;
     }
 
+    /*
+    returns a vector corresponding to the sum of the two vectors
+     */
     float[] addVector(float[] vector1, float[] vector2){
         float[] vec = new float[vector1.length];
         int i = 0;
@@ -269,7 +284,9 @@ class AlgebraLib{
         return vec;
     }
 
-
+    /*
+    returns a vector corresponding to the sub of the two vectors
+     */
     float[] subVector(float[] vector1, float[] vector2){
         float[] vec = new float[vector1.length];
         int i = 0;
@@ -288,6 +305,9 @@ class AlgebraLib{
         return vec;
     }
 
+    /*
+    returns a float corresponding to the product of the two vectors
+     */
     float multVector(float[] vec1, float[] vec2){
         float result = 0; int i = 0;
         // Verify the length of vec1 is equals to the length of vec2
@@ -307,51 +327,6 @@ class AlgebraLib{
     ////////////////////////////
     ///// Unary operations /////
     ////////////////////////////
-
-    // Function to get cofactor of
-    // mat[p][q] in temp[][]. n is
-    // current dimension of mat[][]
-    void getCofactor(int[][] mat, int[][] temp, int p, int q, int n)
-    {
-        int i = 0, j = 0, row = 0, col = 0;
-        while(row < n){
-            while(col < n){
-                if(row != p && col != q){
-                    temp[i][j] = mat[row][col];
-                    j = j + 1;
-                    if(j == n - 1){
-                        j = 0;
-                        i = i + 1;
-                    }
-                }
-                col = col + 1;
-            }
-            row = row + 1;
-        }
-    }
-
-    /* Recursive function for finding determinant
-    of matrix. n is current dimension of mat[][]. */
-    int determinantOfMatrix(int[][] mat, int n){
-        int[][] temp = new int[n][n];
-        int sign = 1, f = 0, D = 0;
-
-        // Base case : if matrix contains single
-        // element
-        if (n == 1){
-            return mat[0][0];
-        }
-
-        // Iterate for each element of first row
-        while(f < n){
-            this.getCofactor(mat, temp, 0, f, n);
-            D = D + sign * mat[0][f] * determinantOfMatrix(temp, n - 1);
-            sign = -sign;
-            f = f + 1;
-        }
-
-        return D;
-    }
 
     /*
     Returns the transpose

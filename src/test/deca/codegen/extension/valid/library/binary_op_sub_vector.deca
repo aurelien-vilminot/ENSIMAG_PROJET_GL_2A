@@ -1,0 +1,21 @@
+#include "MatrixLibrary.decah"
+{
+    AlgebraLib Vec = new AlgebraLib();
+    float[] vector = Vec.uniformVector(3, -3.0), vector2 = Vec.uniformVector(3, 5.0);
+    float[] vector3 = Vec.uniformVector(3, 1.0), vector4 = Vec.uniformVector(5, 1.758), vec;
+    vector[0] = 0.5; vector2[1] = 2.7589;
+
+    println("#####################");
+    println("Test the difference of the two following vectors (negative result)");
+    Vec.printVector(vector);
+    Vec.printVector(vector3);
+    vec = Vec.subVector(vector, vector3);
+    Vec.printVector(vec);
+
+    println("Test the difference of the two following vectors (positive result)");
+    Vec.printVector(vector2);
+    Vec.printVector(vector3);
+    vec = Vec.subVector(vector2, vector3);
+    Vec.printVector(vec);
+
+}
