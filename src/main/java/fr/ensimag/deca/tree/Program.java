@@ -78,16 +78,16 @@ public class Program extends AbstractProgram {
         compiler.addComment("Main errors");
         LabelGenerator gen = compiler.getLabelGenerator();
         if (gen.getOverflowError()) {
-            gen.generateErrorLabel(compiler, gen.getOverFlowLabel(), "Error: Overflow during arithmetic operation");
+            gen.generateErrorLabel(compiler, gen.getOverFlowLabel(), "Error: overflow during arithmetic operation");
         }
         if (gen.getStackOverflowError()) {
-            gen.generateErrorLabel(compiler, gen.getStackOverFlowLabel(), "Error: Stack Overflow");
+            gen.generateErrorLabel(compiler, gen.getStackOverFlowLabel(), "Error: stack overflow");
         }
         if (gen.getHeapOverflowError()) {
             gen.generateErrorLabel(compiler, gen.getHeapOverFlowLabel(), "Error: Heap Overflow");
         }
         if (gen.getIoError()) {
-            gen.generateErrorLabel(compiler, gen.getIoLabel(), "Error: Input/Output error");
+            gen.generateErrorLabel(compiler, gen.getIoLabel(), "Error: input/output error");
         }
         if (gen.getDereferenceError()) {
             gen.generateErrorLabel(compiler, gen.getDereferenceLabel(), "Error: null dereference");

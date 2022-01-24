@@ -159,7 +159,9 @@ public class DeclMethod extends AbstractDeclMethod {
 
         // Instructions added at the beginning of the block
         compiler.saveRegisters();
+        // ADDSP: number of local variables
         int v = compiler.getLocalStackSize();
+        // TSTO: number of elements added to the stack
         int d = compiler.getNumberOfRegistersUsed() + compiler.getTempStackMax();
         if (v > 0) {
             compiler.addFirst(new Line(new ADDSP(new ImmediateInteger(v))));
