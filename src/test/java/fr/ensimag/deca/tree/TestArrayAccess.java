@@ -1,7 +1,6 @@
 package fr.ensimag.deca.tree;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
 
 import fr.ensimag.deca.DecacCompiler;
 import fr.ensimag.deca.context.*;
