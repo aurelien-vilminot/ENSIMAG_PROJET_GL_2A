@@ -1,4 +1,4 @@
 {
-    float[] vec = float[600];
-    int[] vec2 = int[80000];
+    float[] vec = new float[600];
+    int[] vec2 = new int[80000];
 }

@@ -1,4 +1,4 @@
 {
-    int[][] mat = int[400][20];
-    float[][] mat = int[500][500];
+    int[][] mat = new int[400][20];
+    float[][] mat2 = new float[500][500];
 }

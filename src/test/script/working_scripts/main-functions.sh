@@ -267,7 +267,7 @@ exec_test_from_dir (){
                         log_output="$TEST_PATH"/"$name_test".res
                         ima  "$TEST_PATH"/"$name_test".ass > "$log_output" 2>&1
                         rm "$TEST_PATH"/"$name_test".ass
-                        non_empty_file "$log_output" "$name_test"
+                        differences "$TEST_PATH"/"$name_test".txt "$log_output" "$name_test"
                       fi
                   else
                       specify_error "Development error about 'VALIDITY'"

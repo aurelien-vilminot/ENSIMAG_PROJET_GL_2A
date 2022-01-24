@@ -1,1 +1,1 @@
-Error: Overflow during arithmetic operation
+Error: overflow during arithmetic operation
