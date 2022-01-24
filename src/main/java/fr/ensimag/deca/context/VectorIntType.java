@@ -5,7 +5,7 @@ import org.apache.commons.lang.Validate;
 
 /**
  *
- * @author Léon ROUSSEL
+ * @author gl07
  * @date 19/01/2022
  */
 public class VectorIntType extends Type {

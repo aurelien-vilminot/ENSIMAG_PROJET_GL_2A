@@ -16,6 +16,13 @@ import org.apache.log4j.Logger;
 public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
     private static final Logger LOG = Logger.getLogger(ListDeclClass.class);
 
+    /**
+     * Implements non-terminal "list_decl_method" of [SyntaxeContextuelle] in pass 2
+     *
+     * @param compiler Contains the "env_types" attribute
+     * @param superSymbol Super-class symbol
+     * @param classSymbol Current class symbol
+     */
     protected void verifyListDeclMethod(DecacCompiler compiler, SymbolTable.Symbol superSymbol, SymbolTable.Symbol classSymbol)
             throws ContextualError {
         LOG.debug("verify listDeclMethod: start");
@@ -28,6 +35,13 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
         LOG.debug("verify listDeclMethod: end");
     }
 
+    /**
+     * Implements non-terminal "list_decl_method" of [SyntaxeContextuelle] in pass 3
+     *
+     * @param compiler Contains the "env_types" attribute
+     * @param superSymbol Super-class symbol
+     * @param classSymbol Current class symbol
+     */
     protected void verifyListMethodBody(DecacCompiler compiler, SymbolTable.Symbol superSymbol, SymbolTable.Symbol classSymbol)
             throws ContextualError {
         LOG.debug("verify listMethodBody: start");
@@ -50,7 +64,7 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
     /**
      * Generate assembly code for the method declaration (pass 2 of [Gencode])
      *
-     * @param compiler
+     * @param compiler Deca Compiler used to add IMA instructions
      */
     protected void codeGenListDeclMethod(DecacCompiler compiler) {
         for (AbstractDeclMethod m : getList()) {
@@ -61,10 +75,9 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
     /**
      * Generate assembly code to build the virtual methods table (pass 1 of [Gencode])
      *
-     *
-     * @param compiler
-     * @param className
-     * @param superClass
+     * @param compiler Deca Compiler used to add IMA instructions
+     * @param className Identifier of the class
+     * @param superClass Identifier of the superclass
      */
     protected void codeGenMethodTable(DecacCompiler compiler, AbstractIdentifier className, AbstractIdentifier superClass) {
         // Construct labelArrayList from parent

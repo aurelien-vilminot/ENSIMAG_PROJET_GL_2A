@@ -77,8 +77,8 @@ public class ArrayAccess extends AbstractLValue{
      * Load into R0 the address of tab[index]
      * Precondition: R0 = heap address of array ; Rn = index
      *
-     * @param compiler
-     * @param n
+     * @param compiler Deca Compiler used to add IMA instructions
+     * @param n Register number
      */
     protected void codeGenAddress(DecacCompiler compiler, int n) {
         // Iterate through array

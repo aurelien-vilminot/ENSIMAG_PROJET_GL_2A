@@ -19,7 +19,7 @@ import java.util.*;
  * 
  * Insertion (through method declare) is always done in the "current" dictionary.
  * 
- * @author Aurélien VILMINOT
+ * @author gl07
  * @date 04/01/2022
  */
 public class EnvironmentExp {
