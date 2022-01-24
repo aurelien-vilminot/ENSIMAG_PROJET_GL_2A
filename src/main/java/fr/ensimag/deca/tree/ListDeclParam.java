@@ -64,9 +64,11 @@ public class ListDeclParam extends TreeList<AbstractDeclParam> {
     }
 
     /**
-     * //TODO
-     * @param compiler
-     * @param localEnv
+     * Generate assembly code for the method declaration (pass 2 of [Gencode])
+     * Calls the codeGenDeclMethod for each object in list
+     *
+     * @param compiler Corresponds to the "env_exp" attribute
+     * @param localEnv Corresponds to the "env_exp" attribute
      */
     protected void codeGenDeclMethod(DecacCompiler compiler, EnvironmentExp localEnv) {
         int index = -3;

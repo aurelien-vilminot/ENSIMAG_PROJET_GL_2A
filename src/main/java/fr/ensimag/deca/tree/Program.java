@@ -58,8 +58,9 @@ public class Program extends AbstractProgram {
     }
 
     /**
-     * //TODO
-     * @param compiler
+     * Generate assembly code for the first lines of the program
+     *
+     * @param compiler Corresponds to the "env_exp" attribute
      */
     protected void codeGenInit(DecacCompiler compiler) {
         compiler.addFirst(new Line(new ADDSP(compiler.getGlobalStackSize())));
@@ -69,8 +70,9 @@ public class Program extends AbstractProgram {
     }
 
     /**
-     * //TODO
-     * @param compiler
+     * Generate assembly code for the main errors
+     *
+     * @param compiler Deca Compiler used to add IMA instructions
      */
     protected void codeGenError(DecacCompiler compiler) {
         compiler.addComment("Main errors");

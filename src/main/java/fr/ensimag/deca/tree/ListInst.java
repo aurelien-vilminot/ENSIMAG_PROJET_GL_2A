@@ -40,8 +40,9 @@ public class ListInst extends TreeList<AbstractInst> {
     }
 
     /**
-     * //TODO
-     * @param compiler
+     * Generate assembly code for the instruction list
+     *
+     * @param compiler Deca Compiler used to add IMA instructions
      */
     public void codeGenListInst(DecacCompiler compiler) {
         for (AbstractInst i : getList()) {
