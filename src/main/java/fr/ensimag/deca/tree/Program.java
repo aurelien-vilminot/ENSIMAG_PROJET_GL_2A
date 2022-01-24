@@ -57,6 +57,10 @@ public class Program extends AbstractProgram {
         this.codeGenError(compiler);
     }
 
+    /**
+     * //TODO
+     * @param compiler
+     */
     protected void codeGenInit(DecacCompiler compiler) {
         compiler.addFirst(new Line(new ADDSP(compiler.getGlobalStackSize())));
         compiler.addStackOverflowError(true);
@@ -64,6 +68,10 @@ public class Program extends AbstractProgram {
         compiler.addFirst(new Line("Main program"));
     }
 
+    /**
+     * //TODO
+     * @param compiler
+     */
     protected void codeGenError(DecacCompiler compiler) {
         compiler.addComment("Main errors");
         LabelGenerator gen = compiler.getLabelGenerator();

@@ -13,6 +13,12 @@ import java.util.Iterator;
 public class ListDeclParam extends TreeList<AbstractDeclParam> {
     private static final Logger LOG = Logger.getLogger(ListDeclClass.class);
 
+    /**
+     * Implements non-terminal "list_decl_param" of [SyntaxeContextuelle] in pass 2
+     *
+     * @param compiler Contains the "env_types" attribute
+     * @return The method signature fill with parameters
+     */
     protected Signature verifyDeclParam(DecacCompiler compiler)
             throws ContextualError {
         LOG.debug("verify ListDeclParam: start");
@@ -26,6 +32,13 @@ public class ListDeclParam extends TreeList<AbstractDeclParam> {
         return signature;
     }
 
+    /**
+     * Implements non-terminal "list_decl_param" of [SyntaxeContextuelle] in pass 3
+     *
+     * @param compiler Contains the "env_types" attribute
+     * @param localEnv Corresponds to the "env_exp" attribute
+     * @return The new env_exp with localEnv in parent env_exp
+     */
     protected EnvironmentExp verifyParamEnvExp(DecacCompiler compiler, EnvironmentExp localEnv) throws ContextualError {
         LOG.debug("verify ListParamEnvExp: start");
         Validate.notNull(compiler, "Compiler (env_types) object should not be null");
@@ -50,6 +63,11 @@ public class ListDeclParam extends TreeList<AbstractDeclParam> {
         }
     }
 
+    /**
+     * //TODO
+     * @param compiler
+     * @param localEnv
+     */
     protected void codeGenDeclMethod(DecacCompiler compiler, EnvironmentExp localEnv) {
         int index = -3;
         for (AbstractDeclParam p : getList()) {

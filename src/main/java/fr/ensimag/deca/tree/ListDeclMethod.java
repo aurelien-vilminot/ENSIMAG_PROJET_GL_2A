@@ -16,6 +16,13 @@ import org.apache.log4j.Logger;
 public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
     private static final Logger LOG = Logger.getLogger(ListDeclClass.class);
 
+    /**
+     * Implements non-terminal "list_decl_method" of [SyntaxeContextuelle] in pass 2
+     *
+     * @param compiler Contains the "env_types" attribute
+     * @param superSymbol Super-class symbol
+     * @param classSymbol Current class symbol
+     */
     protected void verifyListDeclMethod(DecacCompiler compiler, SymbolTable.Symbol superSymbol, SymbolTable.Symbol classSymbol)
             throws ContextualError {
         LOG.debug("verify listDeclMethod: start");
@@ -28,6 +35,13 @@ public class ListDeclMethod extends TreeList<AbstractDeclMethod> {
         LOG.debug("verify listDeclMethod: end");
     }
 
+    /**
+     * Implements non-terminal "list_decl_method" of [SyntaxeContextuelle] in pass 3
+     *
+     * @param compiler Contains the "env_types" attribute
+     * @param superSymbol Super-class symbol
+     * @param classSymbol Current class symbol
+     */
     protected void verifyListMethodBody(DecacCompiler compiler, SymbolTable.Symbol superSymbol, SymbolTable.Symbol classSymbol)
             throws ContextualError {
         LOG.debug("verify listMethodBody: start");
