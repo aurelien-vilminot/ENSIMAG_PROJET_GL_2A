@@ -1,0 +1,3 @@
+Invalid tests for the lexer are in directory : ./src/test/deca/syntax/invalid/lexer
+
+This was made to fit with the client expectations.
