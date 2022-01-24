@@ -382,10 +382,24 @@ exec_ima_log_error (){
    if [ $1 -eq 1 ]; then
         echo "  ${red}[INCORRECT] $4 does not produce an .ass file.${reset}"
       else
-        ima "$2" 1> /dev/null 2> "$3"
+        ima "$2" > "$3" 2>&1
         rm "$2"
-        empty_file "$3" "$4"
+        do_not_contains_error "$3" "$4"
     fi
+}
+
+# Check if file contains the word "Error".
+#
+# $1 : file
+# $2 : name of the test
+do_not_contains_error(){
+  grep_result=$(grep "Error" "$1")
+  if [ "$grep_result" = "" ]; then
+      nb_correct=$((nb_correct+1))
+      rm "$1"
+    else
+      echo "  ${red}[INCORRECT] $2 ${reset}"
+  fi
 }
 
 # Check if file is empty.
