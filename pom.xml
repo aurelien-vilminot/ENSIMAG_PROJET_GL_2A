@@ -270,6 +270,36 @@
                         </goals>
                     </execution>
                     <execution>
+                        <id>test-ext</id>
+                        <configuration>
+                            <executable>./src/test/script/test-ext.sh</executable>
+                        </configuration>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>test-decac</id>
+                        <configuration>
+                            <executable>./src/test/script/test-decac.sh</executable>
+                        </configuration>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>test-decac2</id>
+                        <configuration>
+                            <executable>./src/test/script/test-decac2.sh</executable>
+                        </configuration>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                    <execution>
                         <id>test-lex</id>
                         <configuration>
                             <executable>./src/test/script/test-lex.sh</executable>
@@ -309,36 +339,7 @@
                             <goal>exec</goal>
                         </goals>
                     </execution>
-                    <execution>
-                        <id>test-ext</id>
-                        <configuration>
-                            <executable>./src/test/script/test-ext.sh</executable>
-                        </configuration>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>test-decac</id>
-                        <configuration>
-                            <executable>./src/test/script/test-decac.sh</executable>
-                        </configuration>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>test-decac2</id>
-                        <configuration>
-                            <executable>./src/test/script/test-decac2.sh</executable>
-                        </configuration>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                    </execution>
+
                 </executions>
             </plugin>
 

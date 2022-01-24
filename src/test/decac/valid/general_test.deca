@@ -1,0 +1,48 @@
+class A{
+    protected int aaa = 5;
+    int x;
+    float f;
+    boolean b = true;
+
+    float f(int a, float ttt){
+        return a + this.x / f
+    }
+}
+
+class B extends A{
+    void g(){
+        println("Hello World !");
+    }
+}
+
+{
+    int yes, no;
+    float p, l = 5.0;
+    A a = new A();
+    B b = new B();
+
+    println(a.x);
+    (A) (b);
+
+    if(a.b){
+        printlnx("Hello Moon !");
+    } else if(!a.b && true) {
+        1 * 5 + 6 / 5 % 2;
+    } else if(2 == 5){
+        18 != 7;
+        5 <= 2;
+        5 >= 8;
+        7 < 9;
+        !!! true;
+        -5;
+    } else if(false || false){
+        print("Hello !");
+    } else if(8 > 9){
+        printx(18);
+        }
+    else{
+        while(l < 80){
+            print("Hello !");
+        }
+    }
+}
