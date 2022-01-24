@@ -13,10 +13,6 @@ PATH_VALID_CONTEXT="./src/test/deca/context/valid/oracle"
 PATH_INVALID_CONTEXT="./src/test/deca/context/invalid/oracle"
 PATH_VALID_CODEGEN="./src/test/deca/codegen/valid/black-box"
 
-echo "[Classic launch on one system tests]"
-decac "./src/test/deca/codegen/interactive/system"/w-o_euclidian_division.deca
-ima "./src/test/deca/codegen/interactive/system"/w-o_euclidian_division.ass
-echo ""
 
 echo "[-b] option"
 decac -b
