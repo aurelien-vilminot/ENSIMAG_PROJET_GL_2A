@@ -18,6 +18,7 @@ public class LabelGenerator {
     private boolean heapOverflowError = false;
     private boolean ioError = false;
     private boolean dereferenceError = false;
+    private boolean indexOutOfBounds = false;
     private Label endLabel;
 
     public Label getOverFlowLabel() {
@@ -80,6 +81,21 @@ public class LabelGenerator {
     public boolean getDereferenceError() {
         return dereferenceError;
     }
+
+    public Label getIndexOutOfBoundsLabel() {
+        setIndexOutOfBoundsError();
+        return new Label("index_out_of_bounds");
+    }
+
+    public void setIndexOutOfBoundsError() {
+        this.indexOutOfBounds = true;
+    }
+
+    public boolean getIndexOutOfBoundsError() {
+        return indexOutOfBounds;
+    }
+
+
 
     public void setEndLabel(Label endLabel) {
         this.endLabel = endLabel;

@@ -82,6 +82,9 @@ public class Program extends AbstractProgram {
         if (gen.getDereferenceError()) {
             gen.generateErrorLabel(compiler, gen.getDereferenceLabel(), "Error: null dereference");
         }
+        if (gen.getIndexOutOfBoundsError()) {
+            gen.generateErrorLabel(compiler, gen.getIndexOutOfBoundsLabel(), "Error: index out of bounds");
+        }
     }
 
     @Override
