@@ -1,0 +1,3 @@
+class ABC{}
+class B extends ABC{}
+{}

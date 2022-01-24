@@ -1,0 +1,10 @@
+class A{
+    void f(){
+        println("Hello WOrld !");
+    }
+}
+
+{
+    A a = new A();
+    f();
+        }

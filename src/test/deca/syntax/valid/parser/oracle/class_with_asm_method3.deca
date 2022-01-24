@@ -1,0 +1,4 @@
+class H{
+	int f(int x, float f) asm("Hello 
+ World !");
+}

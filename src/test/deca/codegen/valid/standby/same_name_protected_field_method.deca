@@ -1,0 +1,12 @@
+class A{
+    protected int x;
+
+    void x(){
+        println("hello World !");
+    }
+}
+
+{
+    A a = new A();
+    println(a.x);
+}

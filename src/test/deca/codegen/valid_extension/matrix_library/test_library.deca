@@ -1,0 +1,60 @@
+#include "Library.decah"
+
+{
+    AlgebraLib Mat = new AlgebraLib();
+
+    // Creation of an uniform matrix, an uniform vector and a linear space vector
+    float[][] matrix1, matrix2 = Mat.uniformMatrix(2, 2, 3);
+    float[] vector1, vector2 = Mat.uniformVector(8, 1), vector3 = Mat.linspace(0, 1, 0.1);
+
+    // Print the uniform vector, matrix and the linear space vector
+    println("##########################");
+    println("Test print functions for matrices and vectors");
+    Mat.printVector(vector2);
+    Mat.printVector(vector3);
+    Mat.printMatrix(matrix2);
+
+    // Reshape the uniform vector in a 4 * 2 matrix
+    println("##########################");
+    println("Test dimension/size functions");
+    matrix1 = Mat.reshape(4, 2, vector2);
+    Mat.printMatrix(matrix1);
+
+    // Test the dimension functions of the library
+    println("##########################");
+    println("Test dimension/size functions");
+    if(Mat.isSquarred(matrix2)){
+        println("Matrix2 is a squarred matrix");
+    }
+
+    if(Mat.isSquarred(matrix1)){
+        println("Matrix1 isn't a squarred matrix");
+    }
+
+    if(Mat.sameSize(vector2, vector2)){
+        println("Vector2 has the same dimension than itself");
+    }
+
+    if(!(Mat.sameDim(matrix1, matrix2))){
+        println("Matrix 1 and Matrix2 has not the same dimensions");
+    }
+
+    // Test binary functions on matrices
+    matrix1 = Mat.uniformMatrix(2, 2, -3);
+    println("##########################");
+    println("Test binary operations on matrices");
+
+    Mat.printMatrix(Mat.addMat(matrix1, matrix2));
+    Mat.printMatrix(Mat.subMat(matrix1, matrix2));
+    Mat.printMatrix(Mat.multMat(matrix1, matrix2));
+
+    // Test binary functions on vectors
+    vector1 = Mat.uniformVector(8, 1);
+    println("##########################");
+    println("Test binary operations on matrices");
+
+    Mat.printMatrix(Mat.addMat(matrix1, matrix2));
+    Mat.printMatrix(Mat.subMat(matrix1, matrix2));
+    Mat.printMatrix(Mat.multMat(matrix1, matrix2));
+
+}

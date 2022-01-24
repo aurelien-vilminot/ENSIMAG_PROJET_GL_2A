@@ -1,0 +1,8 @@
+{
+	identifier;
+	function();
+	function(x.height);
+	function(1, "Hello World !");
+	function(x + 2, "Hello World !" / "Hello Moon !", true && true);
+	function(function(50.0, "Hello World !"), function(25));
+}

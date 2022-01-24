@@ -1,0 +1,10 @@
+class M{
+	protected int x, p;
+	float h, z;
+	int y = 0;
+	protected float foo = 1.0;
+	int o, u = 0;
+	float a = 1.0, b;
+	protected float f = 1.0, float;
+
+}

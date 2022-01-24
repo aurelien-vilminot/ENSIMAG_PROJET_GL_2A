@@ -1,0 +1,22 @@
+class Car {
+    void motor(int x, float f, boolean b){
+        if(b){
+            println("vroum");
+        }
+        if(!b){
+            println("VROUM");
+        }
+    }
+
+    void accident(){
+        println("Boum");
+    }
+}
+
+{
+    int x = 5;
+    Car Rosalie;
+    Rosalie = new Car();
+    Rosalie.motor(2, 50.0 * x - 6, true);
+    Rosalie.accident();
+}

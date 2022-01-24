@@ -1,0 +1,9 @@
+class A {
+    int a = 0;
+}
+
+class B extends A{
+    int method(){
+        return this.a;
+    }
+}

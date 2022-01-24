@@ -1,0 +1,7 @@
+class A{}
+class B{}
+
+{
+    A a = new A();
+    a != null;
+}

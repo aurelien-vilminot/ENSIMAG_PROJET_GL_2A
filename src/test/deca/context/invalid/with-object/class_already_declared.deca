@@ -1,0 +1,14 @@
+class A {
+    int x;
+}
+
+class B{
+    int y;
+    float u;
+}
+
+class A{
+    void f(){
+        println("Hello World !");
+    }
+}

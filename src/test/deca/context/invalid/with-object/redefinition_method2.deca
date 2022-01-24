@@ -1,0 +1,11 @@
+class A{
+    int x(){
+        return 1;
+    }
+}
+
+class B extends A{
+    void x(){
+        println("Hello World!");
+    }
+}

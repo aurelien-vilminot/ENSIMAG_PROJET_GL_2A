@@ -1,0 +1,50 @@
+class A{
+    int a = 0;
+    void print_a(){
+        println("a");
+    }
+}
+
+class B extends A{
+    int b = 1;
+    void print_b(){
+        println("b");
+    }
+}
+
+class C extends B{
+    int c = 2;
+    void print_c(){
+        println("c");
+    }
+}
+
+class D extends C{
+    int d = 3;
+    void print_d(){
+        println("d");
+    }
+}
+
+class E extends D{
+    int e = 4;
+    void print_e(){
+        println("e");
+    }
+}
+
+{
+    E e = new E();
+
+    e.print_a();
+    e.print_b();
+    e.print_c();
+    e.print_d();
+    e.print_e();
+
+    println(e.a);
+    println(e.b);
+    println(e.c);
+    println(e.d);
+    println(e.e);
+}

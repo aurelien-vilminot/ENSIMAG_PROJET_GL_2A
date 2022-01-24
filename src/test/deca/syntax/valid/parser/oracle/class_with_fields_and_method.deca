@@ -1,0 +1,6 @@
+class Q{
+	flaot f(int x) asm("Hello 
+ World !");
+	int x;
+	protected float f;
+}

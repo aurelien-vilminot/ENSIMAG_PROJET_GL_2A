@@ -270,6 +270,26 @@
                         </goals>
                     </execution>
                     <execution>
+                        <id>context-object-shell</id>
+                        <configuration>
+                            <executable>./src/test/script/context-object-shell.sh</executable>
+                        </configuration>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>codegen-object-shell</id>
+                        <configuration>
+                            <executable>./src/test/script/codegen-object-shell.sh</executable>
+                        </configuration>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                    <execution>
                         <id>test-lex</id>
                         <configuration>
                             <executable>./src/test/script/test-lex.sh</executable>

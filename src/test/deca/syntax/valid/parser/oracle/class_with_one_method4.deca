@@ -1,0 +1,4 @@
+class A{
+    inf f(){ int i = 0; println(i); }
+}
+{}

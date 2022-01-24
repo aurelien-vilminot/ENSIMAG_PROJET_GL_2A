@@ -1,0 +1,4 @@
+{
+	printlnx("Comment multi line
+	not possible in block");
+}

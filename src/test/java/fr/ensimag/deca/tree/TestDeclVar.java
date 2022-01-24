@@ -31,7 +31,7 @@ public class TestDeclVar {
             declVar.verifyDeclVar(compiler, localEnv, null);
         });
 
-        String expectedMessage = "Identifier already declared";
+        String expectedMessage = "Variable name 'x' already declared";
         String actualMessage = exception.getMessage();
         assertEquals(expectedMessage, actualMessage);
     }

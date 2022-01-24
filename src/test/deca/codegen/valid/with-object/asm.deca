@@ -1,0 +1,11 @@
+class A{
+    void print_method() asm ("WSTR \"Hé oui, ceci s'affiche !\"
+                    WSTR \"et ceci aussi !\"
+                  ");
+
+}
+
+{
+    A a = new A();
+    a.print_method();
+}

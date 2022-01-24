@@ -1,0 +1,11 @@
+class A{
+    int f(int x, float f){
+        int i = 0;
+        println(x + i / f);
+        if(true){
+            return 1;
+        }
+    }
+}
+class B{}
+{}

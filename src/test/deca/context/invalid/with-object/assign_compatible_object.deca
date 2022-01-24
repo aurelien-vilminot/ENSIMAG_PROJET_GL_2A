@@ -1,0 +1,7 @@
+class Animal{
+    int x, y;
+}
+
+{
+     Animal animal =  new Object();
+}

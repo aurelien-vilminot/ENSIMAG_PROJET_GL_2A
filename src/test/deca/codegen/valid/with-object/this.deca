@@ -1,0 +1,25 @@
+class A{
+    int a;
+    int aa = 1;
+    int aaa = 1344;
+}
+
+class B extends A{
+    void m(){
+        this.a = 5;
+        this.aa = 5;
+        this.aaa = 90;
+    }
+
+    int m2(int aa){
+        int a = 10;
+        return a + this.aa + this.aaa;
+    }
+}
+
+{
+    B b = new B();
+    b.m();
+    println(b.m2(12)); // 10 + 5+ 90 = 107
+
+}

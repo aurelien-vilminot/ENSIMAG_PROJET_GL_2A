@@ -1,0 +1,22 @@
+class A{
+    void f(){
+        println("Yes !");
+    }
+
+    void g(){
+        f();
+    }
+
+    void h(int i){
+        if(i > 0){
+            this.g();
+        }
+    }
+}
+
+{
+    A x = new A();
+    x.f();
+    x.g();
+    x.h(1);
+}

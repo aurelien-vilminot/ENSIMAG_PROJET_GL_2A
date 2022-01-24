@@ -1,0 +1,16 @@
+class A{
+    boolean b = true;
+    boolean b2 = false;
+    boolean b3;
+}
+
+{
+    A a = new A();
+    if(a.b){
+        println("Hello World !");
+    } else if(a.b2){
+        println("Hello Moon !");
+    } else if(a.b3){
+        println("Hello Mars !");
+    }
+}

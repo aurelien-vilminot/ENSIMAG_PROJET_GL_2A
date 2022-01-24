@@ -1,0 +1,15 @@
+class A{
+	float f(int x){
+		return x;
+	}
+	int x;
+}
+
+class X{
+	protected int x;
+	float f = 1.0;
+
+	float f(int x, float f) asm("Hello World !");
+
+	protected boolean b;
+}

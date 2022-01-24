@@ -1,0 +1,13 @@
+{
+    return 1;
+    return x.o() + 25;
+    return x.y / 5;
+    return 50.55 < 60;
+    return "Hello WOlrd !";
+    return ident;
+    return x.p.a(x.o(), y.y.u);
+    return true && false;
+    return this.x;
+    return --!-50.63;
+    return false || true;
+}

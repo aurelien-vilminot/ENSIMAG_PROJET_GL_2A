@@ -1,0 +1,16 @@
+class A{
+    int x = 1;
+    int y = 2;
+}
+
+class a extends A{
+    int a = 0;
+    int b = -1;
+}
+
+{
+    A first = new A();
+    a second = new a();
+    println(first.x);
+    println(second.b);
+}

@@ -1,0 +1,28 @@
+class A{
+    int x = 21;
+    float f = 1.0;
+
+    void g(){
+        println("Hello Moon !");
+    }
+}
+
+class B extends A{
+    int x = 12;
+    float s = 0;
+
+    void h(){
+        println("Hello World !");
+    }
+}
+
+{
+    A a = new A();
+    B b = new B();
+
+    println(((B) (a)).x);
+    ((B) (a)).h();
+
+    println(((A) (b)).x);
+    ((A) (b)).g();
+}

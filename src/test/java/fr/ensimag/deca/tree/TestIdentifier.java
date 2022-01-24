@@ -37,16 +37,14 @@ public class TestIdentifier {
     }
 
     @Test
-    public void testVerifyExprUndeclaredError() throws DoubleDefException {
+    public void testVerifyExprUndeclaredError(){
         Identifier ident = new Identifier(compiler.getSymbolTable().create("ident"));
 
         // ident to be an undeclared variable
 
-        Exception exception = assertThrows(ContextualError.class, () -> {
-            ident.verifyExpr(compiler, localEnv, null);
-        });
+        Exception exception = assertThrows(ContextualError.class, () -> ident.verifyExpr(compiler, localEnv, null));
 
-        String expectedMessage = "Undeclared identifier";
+        String expectedMessage = "Undeclared identifier : " + ident.getName();
         String actualMessage = exception.getMessage();
         assertEquals(expectedMessage, actualMessage);
     }
@@ -63,9 +61,7 @@ public class TestIdentifier {
     @Test
     public void testVerifyTypeUndefined() {
         Identifier ident = new Identifier(compiler.getSymbolTable().create("typo"));
-        Exception exception = assertThrows(ContextualError.class, () -> {
-            ident.verifyType(compiler);
-        });
+        Exception exception = assertThrows(ContextualError.class, () -> ident.verifyType(compiler));
 
         String expectedMessage = "Undefined type identifier: typo";
         String actualMessage = exception.getMessage();
@@ -89,9 +85,7 @@ public class TestIdentifier {
 
         // test cast with wrong identifier type
         ident.setDefinition(wrongDef);
-        Exception exception = assertThrows(DecacInternalError.class, () -> {
-            ident.getClassDefinition();
-        });
+        Exception exception = assertThrows(DecacInternalError.class, ident::getClassDefinition);
 
         String expectedMessage = "Identifier ident is not a class identifier, you can't call getClassDefinition on it";
         String actualMessage = exception.getMessage();
@@ -116,9 +110,7 @@ public class TestIdentifier {
 
         // test cast with wrong identifier type
         ident.setDefinition(wrongDef);
-        Exception exception = assertThrows(DecacInternalError.class, () -> {
-            ident.getMethodDefinition();
-        });
+        Exception exception = assertThrows(DecacInternalError.class, ident::getMethodDefinition);
 
         String expectedMessage = "Identifier ident is not a method identifier, you can't call getMethodDefinition on it";
         String actualMessage = exception.getMessage();
@@ -142,9 +134,7 @@ public class TestIdentifier {
 
         // test cast with wrong identifier type
         ident.setDefinition(wrongDef);
-        Exception exception = assertThrows(DecacInternalError.class, () -> {
-            ident.getFieldDefinition();
-        });
+        Exception exception = assertThrows(DecacInternalError.class, ident::getFieldDefinition);
 
         String expectedMessage = "Identifier ident is not a field identifier, you can't call getFieldDefinition on it";
         String actualMessage = exception.getMessage();
@@ -168,9 +158,7 @@ public class TestIdentifier {
 
         // test cast with wrong identifier type
         ident.setDefinition(wrongDef);
-        Exception exception = assertThrows(DecacInternalError.class, () -> {
-            ident.getVariableDefinition();
-        });
+        Exception exception = assertThrows(DecacInternalError.class, ident::getVariableDefinition);
 
         String expectedMessage = "Identifier ident is not a variable identifier, you can't call getVariableDefinition on it";
         String actualMessage = exception.getMessage();
@@ -194,9 +182,7 @@ public class TestIdentifier {
 
         // test cast with wrong identifier type
         ident.setDefinition(wrongDef);
-        Exception exception = assertThrows(DecacInternalError.class, () -> {
-            ident.getExpDefinition();
-        });
+        Exception exception = assertThrows(DecacInternalError.class, ident::getExpDefinition);
 
         String expectedMessage = "Identifier ident is not a Exp identifier, you can't call getExpDefinition on it";
         String actualMessage = exception.getMessage();
@@ -208,9 +194,7 @@ public class TestIdentifier {
         Identifier ident = new Identifier(compiler.getSymbolTable().create("ident"));
         ident.setDefinition(null);
 
-        Exception exception = assertThrows(DecacInternalError.class, () -> {
-            ident.checkDecoration();
-        });
+        Exception exception = assertThrows(DecacInternalError.class, ident::checkDecoration);
 
         String expectedMessage = "Identifier ident has no attached Definition";
         String actualMessage = exception.getMessage();
@@ -224,5 +208,15 @@ public class TestIdentifier {
         ident.setDefinition(myDefinition);
 
         assertEquals(myDefinition, ident.getDefinition());
+    }
+
+    @Test
+    public void testVerifyMethod() {
+        Identifier ident = new Identifier(compiler.getSymbolTable().create("ident"));
+        Exception exception = assertThrows(ContextualError.class, () -> ident.verifyMethod(compiler, localEnv));
+
+        String expectedMessage = "Impossible to find the method : " + ident.getName();
+        String actualMessage = exception.getMessage();
+        assertEquals(expectedMessage, actualMessage);
     }
 }

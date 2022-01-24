@@ -1,0 +1,44 @@
+class Hello{
+	protected int x = 5;
+
+	float f(){
+		return this.x==1.5;
+	}
+
+	float f = 5;
+
+	void f() asm("Hello");
+}
+
+class World extends Hello{
+	int g(){
+		new Hello();
+		return 1;
+	}
+
+	protected protec f;
+
+	void foo(int x) asm("World !
+");
+}
+
+{
+	int a = 5, b;
+	while(a > 1){
+		ident = new Hello();
+		ident2 = new World();
+		ident.f();
+		ident2.foo(a);
+		a = a - 500000.0 * 8;
+	}
+
+	if(b){
+		println("Hello !");
+	} else if(!b) {
+		print(b);
+	} else {
+		a = a + 1;
+	}
+
+	5 == 4 + 1;
+}

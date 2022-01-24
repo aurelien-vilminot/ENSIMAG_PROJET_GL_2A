@@ -1,0 +1,11 @@
+class A {
+    int a = 0;
+}
+
+class B extends A {
+    int b = 0;
+}
+
+{
+    B b = new A();
+}

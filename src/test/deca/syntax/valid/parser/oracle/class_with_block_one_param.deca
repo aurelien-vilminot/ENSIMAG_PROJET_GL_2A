@@ -1,0 +1,10 @@
+class A{
+    int f(boolean b){
+        int i = 0;
+        if(b){print(i);
+        } else {
+        return 1;
+        }
+    }
+}
+{}

@@ -1,0 +1,20 @@
+class A {}
+class B extends A {}
+class C {}
+
+{
+    Object o = new Object();
+    A a = new A();
+    B b = new B();
+    C c = new C();
+    boolean bool1 = a == b;
+    boolean bool2 = a == o;
+    a == b; a == o; b == o;
+    o == b; a == a; b == b; o == o;
+    a == c; b == c; o == c;
+    a == null; b == null; o == null;
+    a != b; a != o; b != o;
+    o != b; a != a; b != b; o != o;
+    o != c; a != c; c != b;
+    a != null; b != null; o != null;
+}
