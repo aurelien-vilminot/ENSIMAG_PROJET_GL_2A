@@ -1,0 +1,20 @@
+#include "Vehicule.deca"
+
+{
+    Vehicule v1, v2, v3;
+    Voiture voiture = new Voiture();
+    Fourgonnette fourgonnette = new Fourgonnette();
+    Camion camion = new Camion();
+
+    voiture.initVoiture(1, 500, 10);
+    fourgonnette.initFourgonnette(2, 500, 20, 3);
+    camion.initCamion(3, 500, 50, 4, 2200);
+
+    v1 = voiture;
+    v2 = fourgonnette;
+    v3 = camion;
+
+    println("v1: cout=", v1.calculerCout());
+    println("v2: cout=", v2.calculerCout());
+    println("v3: cout=", v3.calculerCout());
+}
