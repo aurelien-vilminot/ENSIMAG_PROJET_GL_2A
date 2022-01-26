@@ -2,9 +2,9 @@ class MaClasse {
     /*
     Attributs
      */
-    int attributEntier = 1.3; // 4) Un entier ne peut pas avoir une valeur flottante
+    int attributEntier;
     protected float attributFlottant = 3;
-    string attributChaine = "Hello World"; // 3) Une variable ne peut avoir le type "string"
+    string attributChaine = "Hello World"; // 2) Une variable ne peut avoir le type "string"
 
     /*
     Méthodes
@@ -12,7 +12,7 @@ class MaClasse {
     int maMethode(int monParametre, ) { // 1) Virgule en trop
         if (monParametre != 5) {
             return (5 / monParametre);
-        } // 8) L'instruction "return" est manquante dans un cas !
+        }
     }
 }
 
@@ -20,16 +20,11 @@ class MaClasse {
     /*
     Déclarations
      */
-    MaClasse maClasseNull = null;
-    MaClasse maVariableDeClasse = new MaClasse();
+    MaClasse maVariableDeClasse=new MaClasse();
 
     /*
     Instructions
      */
-    maVariableDeClasse.maMethode(5, 0); // 5) Trop de paramètres
-    maVariableDeClasse.maMethode(0); // 6) Division par zéro
-    println(maClasseNull.maMethode(4)); // 7) Déréférencement de null
+    maVariableDeClasse.maMethode(0); // 3) Division par zéro
     println("Hello World !");
-/*
-2) Oubli d'accolade fermante
- */
+}
