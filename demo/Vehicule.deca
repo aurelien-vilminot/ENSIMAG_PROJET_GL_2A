@@ -1,0 +1,83 @@
+class Vehicule {
+    int identificateur;
+    int puissance; // (chevals)
+    float consommation; // (L/100km)
+    int prixDeBase;
+
+    void initVehicule(int id, int p, float c, int pdb) {
+        identificateur = id;
+        puissance = p;
+        consommation = c;
+        prixDeBase = pdb;
+    }
+
+    float calculerCout() {
+        return prixDeBase + 2*puissance;
+    }
+
+    boolean egal(Vehicule v) {
+        return identificateur == v.identificateur;
+    }
+
+    void description() {
+        println("  identificateur=", identificateur);
+        println("  puissance=", puissance, " chevals");
+        println("  consommation=", consommation, " L/100km");
+        println("  cout=", calculerCout(), " euros");
+    }
+}
+
+class Voiture extends Vehicule {
+    void initVoiture(int id, int p, float c) {
+        initVehicule(id,p,c,20);
+    }
+}
+
+class Utilitaire extends Vehicule {
+    float hauteur; // (m)
+
+    void initUtilitaire(int id, int p, float c, float h) {
+        initVehicule(id,p,c,30);
+        hauteur = h;
+    }
+
+    void description() {
+            println("  identificateur=", identificateur);
+            println("  puissance=", puissance, " chevals");
+            println("  consommation=", consommation, " L/100km");;
+            println("  hauteur=", hauteur, " m");
+            println("  cout=", calculerCout(), " euros");
+    }
+}
+
+class Fourgonnette extends Utilitaire {
+    void initFourgonnette(int id, int p, float c, float h) {
+        initUtilitaire(id,p,c,h);
+    }
+}
+
+class Camion extends Utilitaire {
+    float poids; // (kg)
+
+    void initCamion(int id, int p, float c, float h, float ps) {
+            initUtilitaire(id,p,c,h);
+            poids = ps;
+    }
+
+    float calculerCout() {
+        float cout = prixDeBase + 2*puissance;
+        if (poids > 2000) {
+            cout = cout + 2*(poids-2000)/200;
+        }
+        return cout;
+    }
+
+    void description() {
+                println("  identificateur=", identificateur);
+                println("  puissance=", puissance, " chevals");
+                println("  consommation=", consommation, " L/100km");
+                println("  hauteur=", hauteur, " m");
+                println("  poids=", poids, " kg");
+                println("  cout=", calculerCout(), " euros");
+        }
+}

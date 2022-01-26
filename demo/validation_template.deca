@@ -1,0 +1,30 @@
+class MaClasse {
+    /*
+    Attributs
+     */
+    int attributEntier;
+    protected float attributFlottant = 3;
+    string attributChaine = "Hello World"; // 2) Une variable ne peut avoir le type "string"
+
+    /*
+    Méthodes
+     */
+    int maMethode(int monParametre, ) { // 1) Virgule en trop
+        if (monParametre != 5) {
+            return (5 / monParametre);
+        }
+    }
+}
+
+{
+    /*
+    Déclarations
+     */
+    MaClasse maVariableDeClasse=new MaClasse();
+
+    /*
+    Instructions
+     */
+    maVariableDeClasse.maMethode(0); // 3) Division par zéro
+    println("Hello World !");
+}
