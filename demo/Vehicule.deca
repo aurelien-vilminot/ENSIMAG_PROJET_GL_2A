@@ -11,12 +11,19 @@ class Vehicule {
         prixDeBase = pdb;
     }
 
-    void setConsommation(float c) {
-        consommation = c;
-    }
-
     float calculerCout() {
         return prixDeBase + 2*puissance;
+    }
+
+    boolean egal(Vehicule v) {
+        return identificateur == v.identificateur;
+    }
+
+    void description() {
+        println("  identificateur=", identificateur);
+        println("  puissance=", puissance, " chevals");
+        println("  consommation=", consommation, " L/100km");
+        println("  cout=", calculerCout(), " euros");
     }
 }
 
@@ -32,6 +39,14 @@ class Utilitaire extends Vehicule {
     void initUtilitaire(int id, int p, float c, float h) {
         initVehicule(id,p,c,30);
         hauteur = h;
+    }
+
+    void description() {
+            println("  identificateur=", identificateur);
+            println("  puissance=", puissance, " chevals");
+            println("  consommation=", consommation, " L/100km");;
+            println("  hauteur=", hauteur, " m");
+            println("  cout=", calculerCout(), " euros");
     }
 }
 
@@ -56,4 +71,13 @@ class Camion extends Utilitaire {
         }
         return cout;
     }
+
+    void description() {
+                println("  identificateur=", identificateur);
+                println("  puissance=", puissance, " chevals");
+                println("  consommation=", consommation, " L/100km");
+                println("  hauteur=", hauteur, " m");
+                println("  poids=", poids, " kg");
+                println("  cout=", calculerCout(), " euros");
+        }
 }

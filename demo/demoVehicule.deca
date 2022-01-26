@@ -6,15 +6,29 @@
     Fourgonnette fourgonnette = new Fourgonnette();
     Camion camion = new Camion();
 
-    voiture.initVoiture(1, 500, 10);
-    fourgonnette.initFourgonnette(2, 500, 20, 3);
-    camion.initCamion(3, 500, 50, 4, 2200);
+    int puissance = 500;
+
+    voiture.initVoiture(1, puissance, 10);
+    fourgonnette.initFourgonnette(2, puissance, 20, 3);
+    camion.initCamion(3, puissance, 50, 4, 2200);
+
+    print("voiture == voiture? ");
+    if (voiture.egal(voiture)) {println("true");} else {println("false");}
+
+    print("voiture == fourgonnette? ");
+    if (voiture.egal(fourgonnette)) {println("true");} else {println("false");}
+
+    print("fourgonnette == camion? ");
+    if (fourgonnette.egal(camion)) {println("true");} else {println("false");}
 
     v1 = voiture;
     v2 = fourgonnette;
     v3 = camion;
 
-    println("v1: cout=", v1.calculerCout());
-    println("v2: cout=", v2.calculerCout());
-    println("v3: cout=", v3.calculerCout());
+    println("v1:");
+    v1.description();
+    println("v2:");
+    v2.description();
+    println("v3:");
+    v3.description();
 }
