@@ -1,0 +1,43 @@
+#include "MatrixLibrary.decah"
+
+{
+    // Initialisation des matrices
+    AlgebraLib lib = new AlgebraLib();
+    float[][] materiaux = new float[3][2];
+    float[][] demandes = new float[2][2];
+    float[][] resultat;
+
+    // Rentre les bonnes valeurs en composantes
+    materiaux[0][0] = 0.094; // Poupée B nécessite 0.094kg de coton biologique
+    materiaux[1][0] = 0.2; // Poupée B nécessite 0.2kg de plastique végétal
+    materiaux[2][0] = 0.4; // Poupée B nécessite 0.4 kg de pièces métalliques
+
+    materiaux[0][1] = 0.08; // Poupée K nécessite 0.08kg de coton bio
+    materiaux[1][1] = 0.3; // Poupée K nécessite 0.3kg de plastiques végétal
+    materiaux[2][1] = 0.1; // Poupée K nécessite 0.1kg de pièces métalliques
+
+    demandes[0][0] = 1000; // 1000 poupées B vendues en Novembre
+    demandes[0][1] = 2500; // 2500 poupées B vendues en Décembre
+
+    demandes[1][0] = 800; // 800 poupées K vendues en Novembre
+    demandes[1][1] = 1200; // 1200 poupées K vendues en Décembre
+
+    // Affiche les matrices
+    println("Les matériaux requis pour chaque poupées :");
+    lib.printMatrix(materiaux);
+    println("Les demandes en poupées chaque mois :");
+    lib.printMatrix(demandes);
+
+    // Affiche le résultat
+    println("On fait un calcul matriciel pour déterminer les matériaux requis chaque mois");
+    resultat = lib.multMat(materiaux, demandes);
+    println("Les matériaux requis chaque mois :");
+    lib.printMatrix(resultat);
+
+    // Phrase réponse
+    println("");
+    println("Conclusion :");
+    println("Il faut donc ", (int) (resultat[0][1]), "kg de coton biologique en décembre");
+    println("Et ", (int) (resultat[1][0]), "kg de plastique végétal en novembre");
+
+}
