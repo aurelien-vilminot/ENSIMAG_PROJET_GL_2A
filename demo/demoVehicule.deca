@@ -21,14 +21,16 @@
     print("fourgonnette == camion? ");
     if (fourgonnette.egal(camion)) {println("true");} else {println("false");}
 
+    println("");
+
     v1 = voiture;
     v2 = fourgonnette;
     v3 = camion;
 
-    println("v1:");
+    println("v1 (Voiture):");
     v1.description();
-    println("v2:");
+    println("v2 (Fourgonnette):");
     v2.description();
-    println("v3:");
+    println("v3 (Camion):");
     v3.description();
 }
