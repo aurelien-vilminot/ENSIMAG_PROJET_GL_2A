@@ -23,7 +23,7 @@ class Vehicule {
         println("  identificateur = ", identificateur);
         println("  puissance = ", puissance, " chevaux");
         println("  consommation = ", consommation, "L/100km");
-        println("  cout = ", calculerCout(), " euros");
+        println("  coût = ", calculerCout(), " euros");
     }
 }
 
@@ -43,10 +43,10 @@ class Utilitaire extends Vehicule {
 
     void description() {
         println("  identificateur = ", identificateur);
-        println("  puissance = ", puissance, " chevals");
+        println("  puissance = ", puissance, " chevaux");
         println("  consommation = ", consommation, "L/100km");;
         println("  hauteur = ", hauteur, "m");
-        println("  cout = ", calculerCout(), " euros");
+        println("  coût = ", calculerCout(), " euros");
     }
 }
 
@@ -74,10 +74,10 @@ class Camion extends Utilitaire {
 
     void description() {
             println("  identificateur = ", identificateur);
-            println("  puissance = ", puissance, " chevals");
+            println("  puissance = ", puissance, " chevaux");
             println("  consommation = ", consommation, "L/100km");
             println("  hauteur = ", hauteur, "m");
             println("  poids = ", poids, "kg");
-            println("  cout = ", calculerCout(), " euros");
+            println("  coût = ", calculerCout(), " euros");
         }
 }
